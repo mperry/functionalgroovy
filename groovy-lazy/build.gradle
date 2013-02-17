@@ -1,0 +1,63 @@
+// Build for KDS test utilities
+// John Turner, Oct 2012
+
+// to clean build and load to repo:
+// $ gradle clean build uploadArchives
+
+apply plugin: 'java'
+apply plugin: 'groovy'
+
+sourceCompatibility = 1.7
+group = 'perry'
+version = '0.1-SNAPSHOT'
+
+//ant.importBuild "${projectDir}/../config/build.xml"
+
+defaultTasks 'build', 'uploadArchives'
+
+ext.projectRoot = "${projectDir}"
+ext.repoBase = "${projectRoot}/../lib"
+ext.repoGenBase = "${projectRoot}/../build/lib"
+
+//build(dependsOn: ':groovy-lazy-extensions:uploadArchives') << {
+//}
+
+repositories {
+	ivy {
+		name = 'LocalRepo'
+		ivyPattern "${repoBase}/[organisation]/[module]/ivy-[revision].xml"
+		artifactPattern "${repoBase}/[organisation]/[module]/[type]s/[artifact]-[revision].[ext]"
+		artifactPattern "${repoBase}/[artifact]-[revision].[ext]"
+	}
+	ivy {
+		name = 'DynamicRepo'
+		ivyPattern "${repoGenBase}/[organisation]/[module]/ivy-[revision].xml"
+		artifactPattern "${repoGenBase}/[organisation]/[module]/[type]s/[artifact]-[revision].[ext]"
+	}
+
+	mavenCentral()
+}
+
+dependencies {
+	groovy group: 'org.codehaus.groovy', name: 'groovy', version: '2.0.5'
+	groovy group: 'org.codehaus.groovy', name: 'groovy-test', version: '2.0.5'
+	groovy group: 'org.functionaljava', name: 'functionaljava', version: '3.1'
+	groovy group: 'perry', name: 'groovy-lazy-extension', version: '0.1-SNAPSHOT'
+//	compile group: 'org.dbunit', name: 'dbunit', version: '2.4.8'
+//	compile group: 'org.springframework', name: 'spring-core', version: '3.1.1.RELEASE'
+	compile group: 'junit', name: 'junit', version: '4.10'
+
+	compile project(':groovy-lazy-extension')
+}
+
+jar {
+	manifest {
+		attributes 'Created-By': 'Mark Perry', 'Signature-Version': version
+	}
+}
+
+uploadArchives {
+	repositories {
+		add project.repositories.DynamicRepo
+	}
+}

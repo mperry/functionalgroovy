@@ -1,0 +1,4 @@
+
+//defaultTasks 'build', 'uploadArchives'
+//defaultTasks 'uploadArchives'
+defaultTasks 'build', 'uploadArchives'

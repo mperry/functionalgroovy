@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="groovy-lazy-extension-0.1-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/build/lib/perry/groovy-lazy-extension/jars/groovy-lazy-extension-0.1-SNAPSHOT.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

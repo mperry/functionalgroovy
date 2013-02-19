@@ -1,5 +1,5 @@
 
-moduleName=string-module
-moduleVersion=1.0-test
+moduleName=functional-groovy
+moduleVersion=0.1
 extensionClasses=perry.groovy.lazy.OptionExtension,perry.groovy.lazy.EitherExtension,perry.groovy.lazy.IntegerExtension,perry.groovy.lazy.StreamExtension
 staticExtensionClasses=perry.groovy.lazy.OptionStaticExtension

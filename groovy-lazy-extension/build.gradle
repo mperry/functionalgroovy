@@ -8,8 +8,7 @@ version = '0.1-SNAPSHOT'
 
 defaultTasks 'build', 'uploadArchives'
 
-ext.projectRoot = "${projectDir}"
-ext.repoBase = "${projectRoot}/../lib"
+ext.repoBase = "${projectDir}/../lib"
 ext.repoGenBase = "${projectDir}/../build/lib"
 
 repositories {
@@ -24,13 +23,12 @@ repositories {
 		ivyPattern "${repoGenBase}/[organisation]/[module]/ivy-[revision].xml"
 		artifactPattern "${repoGenBase}/[organisation]/[module]/[type]s/[artifact]-[revision].[ext]"
 	}
-
 	mavenCentral()
 }
 
 dependencies {
-	groovy group: 'org.codehaus.groovy', name: 'groovy', version: '2.0.5'
-	groovy group: 'org.functionaljava', name: 'functionaljava', version: '3.1'
+	compile group: 'org.codehaus.groovy', name: 'groovy', version: '2.0.5'
+	compile group: 'org.functionaljava', name: 'functionaljava', version: '3.1'
 	compile group: 'junit', name: 'junit', version: '4.10'
 }
 

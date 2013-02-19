@@ -18,7 +18,7 @@ class LazyTest1 {
 	@Test
 	void test1() {
 		def a = 1.to(6)
-		def b = a.findAll({it % 2 == 0})
+		def b = a.filter({it % 2 == 0})
 		assert(b.toJList() == [2, 4, 6])
 
 	}
@@ -28,7 +28,7 @@ class LazyTest1 {
 	@Test
 	void test2() {
 		def a = 1.to(2)
-		def b = a.collect({it.to(2)})
+		def b = a.map({it.to(2)})
 		assert(b.toJList() == [[1, 2], [2]])
 	}
 

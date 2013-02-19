@@ -13,9 +13,6 @@ import groovy.transform.TypeChecked
 //@TypeChecked
 class OptionStaticExtension {
 
-	/**
-	 * t -> M t
-	 */
 	public static <A> Option<A> unit(Option option, A value) {
 		Option.<A>some(value)
 	}

@@ -24,6 +24,7 @@
     <orderEntry type="library" exported="" name="asm-util-4.0" level="project" />
     <orderEntry type="library" exported="" name="junit-4.10" level="project" />
     <orderEntry type="library" exported="" name="asm-tree-4.0" level="project" />
+    <orderEntry type="library" name="groovy-test-2.0.5" level="project" />
   </component>
 </module>
 

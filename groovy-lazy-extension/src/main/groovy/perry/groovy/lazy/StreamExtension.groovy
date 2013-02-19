@@ -2,6 +2,7 @@ package perry.groovy.lazy
 
 import fj.data.Stream
 import fj.F
+import groovy.transform.TypeChecked
 
 /**
  * Created with IntelliJ IDEA.
@@ -10,13 +11,14 @@ import fj.F
  * Time: 9:11 PM
  * To change this template use File | Settings | File Templates.
  */
+//@TypeChecked
 class StreamExtension {
 
-	public static <T> Stream<T> findAll(Stream<T> s, Closure<Boolean> c) {
+	public static <T> Stream<T> filter(Stream<T> s, Closure<Boolean> c) {
 		s.filter(c as F)
 	}
 
-	public static <T> Stream<T> collect(Stream<T> s, Closure<Boolean> c) {
+	public static <T> Stream<T> map(Stream<T> s, Closure<Boolean> c) {
 		s.map(c as F)
 	}
 
@@ -25,10 +27,10 @@ class StreamExtension {
 	}
 
 	public static <A> List<A> toJList(Stream<A> s) {
-		s.map({
+		s.map({ A it ->
 			def isRecursive = Stream.isInstance(it)
 			if (isRecursive) {
-				toJList(it)
+				toJList((Stream<A>) it)
 			} else {
 				it
 			}

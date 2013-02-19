@@ -1,5 +1,7 @@
 package perry.lazy
 
+import org.junit.Test
+
 /**
  * Created with IntelliJ IDEA.
  * User: MarkPerry
@@ -7,13 +9,15 @@ package perry.lazy
  * Time: 12:04 AM
  * To change this template use File | Settings | File Templates.
  */
-class LazyRangeElementTest extends GroovyTestCase {
+class LazyRangeElementTest {
 
 //	@LazyTest
+	@Test
 	void test1() {
 		assert(true)
 	}
 
+	@Test
 	void test2() {
 		def a = new LazyRangeInteger(1)
 		def b = new LazyRangeInteger(5)

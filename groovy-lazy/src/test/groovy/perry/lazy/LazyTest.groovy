@@ -41,7 +41,7 @@ class LazyTest {
 
 		def a = 1.to(6)
 		def b = a.findAll({it % 2 == 0})
-		assert (b == [2, 4, 6])
+		assert (b.toJList() == [2, 4, 6])
 
 	}
 

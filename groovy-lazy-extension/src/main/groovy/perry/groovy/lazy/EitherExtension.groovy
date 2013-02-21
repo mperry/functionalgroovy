@@ -21,14 +21,10 @@ class EitherExtension {
 	 * @return
 	 */
 	public static <A, B, C> Either<A, C> bind(Either<A, B> either, Closure<Either<B, C>> f) {
-
 		(Either<A, C>) either.isLeft() ?
 //			Either.left(either.left().value()) :
 			either :
 			f.call(either.right().value())
 	}
-
-
-
 
 }

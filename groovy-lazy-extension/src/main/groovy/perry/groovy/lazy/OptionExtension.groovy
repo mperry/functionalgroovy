@@ -19,7 +19,6 @@ class OptionExtension {
 	 */
 	public static <A, B> Option<B> bind(Option<A> option, Closure<Option<B>> f) {
 		option.bind(f as F)
-//		option.isNone() ? option : f.call(option.some())
 	}
 
 }

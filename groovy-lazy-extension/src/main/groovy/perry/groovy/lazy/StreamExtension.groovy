@@ -22,7 +22,7 @@ class StreamExtension {
 		s.map(c as F)
 	}
 
-	public static <A, B> Stream<Stream<B>> bind(Stream<A> s, Closure<Stream<B>> c) {
+	public static <A, B> Stream<B> bind(Stream<A> s, Closure<Stream<B>> c) {
 		s.bind(c as F)
 	}
 
@@ -36,5 +36,30 @@ class StreamExtension {
 			}
 		} as F).toCollection().toList()
 	}
+
+	public static <A> Stream<Stream<A>> combos1(Stream<A> s1, Stream<A> s2) {
+		s1.bind({ A a ->
+			s2.map({ A b ->
+				Stream.stream(a, b)
+			})
+		})
+	}
+
+	public static <A> Stream<A> combos(Stream<A> s1, Stream<A> s2) {
+		s1.bind({ A a ->
+			s2.map({ A b ->
+				if (Stream.isInstance(a)) {
+					Stream c = (Stream) a
+					c.append(Stream.stream(b))
+				} else {
+					Stream.stream(a, b)
+				}
+			})
+		})
+	}
+
+
+
+
 
 }

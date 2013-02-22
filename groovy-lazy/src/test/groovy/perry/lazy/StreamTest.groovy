@@ -31,21 +31,24 @@ class StreamTest {
 	}
 
 	@Test
-	void substreamsToJList() {
-		def a = Stream.stream(1.to(2), 2.to(3))
-		assertTrue(a.toJList() == [[1, 2], [2, 3]])
+	void combos4() {
+		def b = 1.to(2).combos(3.to(4)).combos(5.to(6)).combos(7.to(8))
+		def expected = [[1, 3, 5, 7], [1, 3, 5, 8], [1, 3, 6, 7], [1, 3, 6, 8], [1, 4, 5, 7], [1, 4, 5, 8],
+				[1, 4, 6, 7], [1, 4, 6, 8], [2, 3, 5, 7], [2, 3, 5, 8], [2, 3, 6, 7], [2, 3, 6, 8],
+				[2, 4, 5, 7], [2, 4, 5, 8], [2, 4, 6, 7], [2, 4, 6, 8]]
+		assertTrue(b.toJList() == expected)
 	}
 
 	@Test
 	void mapWithSubstreams() {
-		def b = 1.to(2).map({it.to(2)})
-		assertTrue(b.toJList() == [[1, 2], [2]])
+		def b = 1.to(2).map({it.to(4)})
+		assertTrue(b.toJList() == [[1, 2, 3, 4], [2, 3, 4]])
 	}
 
 	@Test
 	void mixedToJList() {
-		def a = Stream.stream(5, 3.to(4))
-		assertTrue(a.toJList() == [5, [3, 4]])
+		def a = Stream.stream(1, 2.to(3))
+		assertTrue(a.toJList() == [1, [2, 3]])
 	}
 
 	@Test

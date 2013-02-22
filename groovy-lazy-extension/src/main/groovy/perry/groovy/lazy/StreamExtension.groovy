@@ -58,8 +58,4 @@ class StreamExtension {
 		})
 	}
 
-
-
-
-
 }

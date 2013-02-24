@@ -2,8 +2,8 @@ package perry.lazy
 
 import org.junit.Test
 
-import static perry.lazy.MonadComprehension.foreach
 import static junit.framework.Assert.assertTrue
+import static perry.lazy.Comprehension.foreach
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,25 +13,6 @@ import static junit.framework.Assert.assertTrue
  * To change this template use File | Settings | File Templates.
  */
 class ComprehensionTest {
-
-
-//	@Test
-	void test1() {
-		def inputs = [[1, 2], [3, 4]]
-		def operation = { a, b -> a + b }
-		def expected = [4, 5, 5, 6]
-		def res = MonadComprehension.foreach {
-			a = takeFrom { inputs[0] }
-//			a = 1.to(2)
-			b = takeFrom { inputs[1] }
-//			b = 3.to(4)
-			yield {
-				a + b
-			}
-		}
-		assertTrue(res == expected)
-	}
-
 
 	@Test
 	void test2() {

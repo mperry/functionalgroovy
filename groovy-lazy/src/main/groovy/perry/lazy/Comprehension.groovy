@@ -16,7 +16,7 @@ class Comprehension {
 
 	private Map<String, Object> variables = [:]
 
-//	@TypeChecked
+	@TypeChecked
 	List<?> yield(Closure yieldClosure) {
 		def combined = createStreams(variables)
 		createYieldResults(combined, variables.keySet().toList(), yieldClosure)
@@ -53,13 +53,13 @@ class Comprehension {
 		yieldResults
 	}
 
-//	@TypeChecked
-	def propertyMissing(String name, Object val) {
+	@TypeChecked
+	void propertyMissing(String name, Object val) {
 		variables[name] = val
 	}
 
-//	@TypeChecked
-	static def foreach(def comprehension) {
+	@TypeChecked
+	static List<?> foreach(Closure<List<?>> comprehension) {
 		comprehension.delegate = new Comprehension()
 		comprehension.resolveStrategy = Closure.DELEGATE_ONLY
 		(List<?>) comprehension.call()

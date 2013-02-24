@@ -1,5 +1,7 @@
 package perry.lazy
 
+import groovy.transform.TypeChecked
+
 /**
  * Created with IntelliJ IDEA.
  * User: MarkPerry
@@ -7,11 +9,12 @@ package perry.lazy
  * Time: 9:54 PM
  * To change this template use File | Settings | File Templates.
  */
+@TypeChecked
 class Yield {
 
 	private Map<String, Object> values = [:]
 
-	def propertyMissing(String name) {
+	Object propertyMissing(String name) {
 		values[name]
 	}
 

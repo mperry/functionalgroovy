@@ -29,27 +29,17 @@ class ComprehensionTest {
 
 	@Test
 	void testBinding() {
-
 		def m = [a: 1, b: 2, c: 3]
 		def f = {
 			a + b
 		}
 		f.setDelegate(m)
-//		f.setBinding(new Binding(m))
-
-
-
 		def g = {
 			f.setDelegate(m)
 			f()
 		}
-
 		def t = g()
 		assertTrue(t == 3)
-
 	}
-
-
-
 
 }

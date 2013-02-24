@@ -48,7 +48,8 @@ class Comprehension {
 			yieldClosure.setDelegate(new Yield(values: varMap._2()))
 			yieldClosure.resolveStrategy = Closure.DELEGATE_ONLY
 			def yieldValue = yieldClosure.call()
-			yieldResultsAcc + yieldValue
+			yieldResultsAcc.add(yieldValue)
+			yieldResultsAcc
 		})
 		yieldResults
 	}

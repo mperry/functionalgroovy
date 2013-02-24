@@ -12,10 +12,11 @@ import static perry.lazy.Comprehension.foreach
  * Time: 10:04 AM
  * To change this template use File | Settings | File Templates.
  */
+// Test examples from http://jira.codehaus.org/browse/GROOVY-4105
 class ComprehensionTest {
 
 	@Test
-	void test2() {
+	void simple() {
 		def expected = [4, 5, 5, 6]
 		def res = Comprehension.foreach {
 			a = 1.to(2)
@@ -25,6 +26,22 @@ class ComprehensionTest {
 			}
 		}
 		assertTrue(res == expected)
+	}
+
+//	[ (x,y) for x in range(5) for y in range(3) if (y+x) % (x+2) == 0 ]  // python
+	// guards not implemented
+	@Test
+	void testPyhtonExample() {
+		def list = foreach {
+			x = 1.to(2)
+			y = 1.to(3)
+			yield {
+				[x, y]
+			}
+		}
+		def expected = [[1, 1], [1, 2], [1, 3], [2, 1], [2, 2], [2, 3]]
+		assertTrue(list == expected)
+		assertTrue(expected == 1.to(2).combos(1.to(3)).toJList())
 	}
 
 	@Test

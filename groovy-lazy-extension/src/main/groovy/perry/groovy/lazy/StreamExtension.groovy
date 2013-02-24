@@ -42,14 +42,6 @@ class StreamExtension {
 		} as F).toCollection().toList()
 	}
 
-	public static <A> Stream<Stream<A>> combos1(Stream<A> s1, Stream<A> s2) {
-		s1.bind({ A a ->
-			s2.map({ A b ->
-				Stream.stream(a, b)
-			})
-		})
-	}
-
 	public static <A> Stream<A> combos(Stream<A> s1, Stream<A> s2) {
 		s1.bind({ A a ->
 			s2.map({ A b ->

@@ -18,7 +18,7 @@ class ComprehensionTest {
 	@Test
 	void simple() {
 		def expected = [4, 5, 5, 6]
-		def res = Comprehension.foreach {
+		def res = foreach {
 			a = 1.to(2)
 			b = 3.to(4)
 			yield {

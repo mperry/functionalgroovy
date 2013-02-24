@@ -18,6 +18,13 @@ import fj.F2
 class StreamTest {
 
 	@Test
+	void simple() {
+		def s = Stream.range(1)
+		def s2 = s.filter({it % 2 == 0}).take(4)
+		assertTrue(s2.toJList() == [2, 4, 6, 8])
+	}
+
+	@Test
 	void combos2() {
 		def a = 1.to(2).combos(3.to(4))
 		def expected = [[1, 3], [1, 4], [2, 3], [2, 4]]
@@ -65,8 +72,10 @@ class StreamTest {
 		def f2 = {Integer x -> {Integer y -> x + y} as F } as F
 		def a = s.foldLeft(f2, 0)
 		def b = s.foldLeft({Integer x, Integer y -> x + y} as F2, 0)
+		def c = s.fold(0, {Integer x, Integer y -> x + y})
 		assertTrue(a == 15)
 		assertTrue(b == 15)
+		assertTrue(c == 15)
 	}
 
 

@@ -3,6 +3,7 @@ package perry.groovy.lazy
 import fj.data.Stream
 import fj.F
 import groovy.transform.TypeChecked
+import fj.F2
 
 /**
  * Created with IntelliJ IDEA.
@@ -24,6 +25,10 @@ class StreamExtension {
 
 	public static <A, B> Stream<B> bind(Stream<A> s, Closure<Stream<B>> c) {
 		s.bind(c as F)
+	}
+
+	public static <A, B> B fold(Stream<A> s, B initialValue, Closure<B> c) {
+		s.foldLeft(c as F2, initialValue)
 	}
 
 	public static <A> List<A> toJList(Stream<A> s) {

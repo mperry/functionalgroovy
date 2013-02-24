@@ -5,6 +5,7 @@ import fj.data.Stream
 
 import static org.junit.Assert.assertTrue
 import fj.F
+import fj.F2
 //import perry.groovy.lazy.StreamExtension
 
 /**
@@ -48,7 +49,8 @@ class StreamTest {
 	@Test
 	void mixedToJList() {
 		def a = Stream.stream(1, 2.to(3))
-		assertTrue(a.toJList() == [1, [2, 3]])
+		assertTrue(a.toJList() == [1, [2, 3
+		]])
 	}
 
 	@Test
@@ -56,5 +58,16 @@ class StreamTest {
 		def a = 1.to(3)
 		assertTrue(a.toJList() == [1, 2, 3])
 	}
+
+	@Test
+	void fold() {
+		def s = 1.to(5)
+		def f2 = {Integer x -> {Integer y -> x + y} as F } as F
+		def a = s.foldLeft(f2, 0)
+		def b = s.foldLeft({Integer x, Integer y -> x + y} as F2, 0)
+		assertTrue(a == 15)
+		assertTrue(b == 15)
+	}
+
 
 }

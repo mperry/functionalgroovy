@@ -2,6 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6bb47dd6-5601-475f-809d-4069759e5151" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/groovy-lazy/src/main/groovy/perry/lazy/Comprehension.groovy" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/groovy-lazy/src/main/groovy/perry/lazy/MonadComprehension.groovy" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/groovy-lazy/src/main/groovy/perry/lazy/PlaceHolder.groovy" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/groovy-lazy/src/main/groovy/perry/lazy/mcategories/FunctorCategory.groovy" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/groovy-lazy/src/main/groovy/perry/lazy/mcategories/MCollectionCategory.groovy" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/groovy-lazy/src/main/groovy/perry/lazy/mcategories/MListCategory.groovy" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/groovy-lazy/src/main/groovy/perry/lazy/mcategories/MMapCategory.groovy" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/groovy-lazy/src/main/groovy/perry/lazy/mcategories/MReaderCategory.groovy" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/groovy-lazy/src/main/groovy/perry/lazy/mcategories/StreamCategory.groovy" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/groovy-lazy/src/test/groovy/perry/lazy/ComprehensionTest.groovy" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/groovy-lazy-extension/src/main/groovy/perry/groovy/lazy/StreamExtension.groovy" afterPath="$PROJECT_DIR$/groovy-lazy-extension/src/main/groovy/perry/groovy/lazy/StreamExtension.groovy" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/groovy-lazy/src/test/groovy/perry/lazy/StreamTest.groovy" afterPath="$PROJECT_DIR$/groovy-lazy/src/test/groovy/perry/lazy/StreamTest.groovy" />
@@ -22,6 +32,151 @@
     <disable_hints />
   </component>
   <component name="DebuggerManager">
+    <line_breakpoints>
+      <breakpoint url="file://$PROJECT_DIR$/groovy-lazy/src/main/groovy/perry/lazy/MonadComprehension.groovy" line="86" class="perry.lazy.MonadComprehension" package="perry.lazy">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/groovy-lazy/src/main/groovy/perry/lazy/MonadComprehension.groovy" line="89" class="perry.lazy.MonadComprehension" package="perry.lazy">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/groovy-lazy/src/test/groovy/perry/lazy/ComprehensionTest.groovy" line="19" class="perry.lazy.ComprehensionTest" package="perry.lazy">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/groovy-lazy/src/test/groovy/perry/lazy/ComprehensionTest.groovy" line="22" class="perry.lazy.ComprehensionTest" package="perry.lazy">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/groovy-lazy/src/main/groovy/perry/lazy/Comprehension.groovy" line="40" class="perry.lazy.Comprehension" package="perry.lazy">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/groovy-lazy/src/test/groovy/perry/lazy/ComprehensionTest.groovy" line="37" class="perry.lazy.ComprehensionTest" package="perry.lazy">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/groovy-lazy/src/main/groovy/perry/lazy/Comprehension.groovy" line="72" class="perry.lazy.Comprehension" package="perry.lazy">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/groovy-lazy/src/main/groovy/perry/lazy/Comprehension.groovy" line="57" class="perry.lazy.Comprehension" package="perry.lazy">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/groovy-lazy/src/test/groovy/perry/lazy/ComprehensionTest.groovy" line="45" class="perry.lazy.ComprehensionTest" package="perry.lazy">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/groovy-lazy/src/main/groovy/perry/lazy/Comprehension.groovy" line="60" class="perry.lazy.Comprehension" package="perry.lazy">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/groovy-lazy/src/main/groovy/perry/lazy/Comprehension.groovy" line="59" class="perry.lazy.Comprehension" package="perry.lazy">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+    </line_breakpoints>
     <breakpoint_any>
       <breakpoint>
         <option name="NOTIFY_CAUGHT" value="true" />
@@ -61,71 +216,7 @@
     <favorites_list name="groovy-lazy" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="StreamTest.groovy" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/groovy-lazy/src/test/groovy/perry/lazy/StreamTest.groovy">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="50" column="43" selection-start="1329" selection-end="1329" vertical-scroll-proportion="2.1135135">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="EitherExtension.groovy" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/groovy-lazy-extension/src/main/groovy/perry/groovy/lazy/EitherExtension.groovy">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="24" column="51" selection-start="555" selection-end="555" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="IntegerExtension.groovy" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/groovy-lazy-extension/src/main/groovy/perry/groovy/lazy/IntegerExtension.groovy">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="6" selection-start="312" selection-end="312" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="OptionExtension.groovy" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/groovy-lazy-extension/src/main/groovy/perry/groovy/lazy/OptionExtension.groovy">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="6" selection-start="274" selection-end="274" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="OptionStaticExtension.groovy" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/groovy-lazy-extension/src/main/groovy/perry/groovy/lazy/OptionStaticExtension.groovy">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="14" selection-start="272" selection-end="272" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="StreamExtension.groovy" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/groovy-lazy-extension/src/main/groovy/perry/groovy/lazy/StreamExtension.groovy">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="73" selection-start="251" selection-end="251" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Option.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="jar://$USER_HOME$/.gradle/caches/artifacts-23/filestore/org.functionaljava/functionaljava/3.1/source/120c8d136bbc16e95f1ee381f091651efdcdc46a/functionaljava-3.1-sources.jar!/fj/data/Option.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="666" column="30" selection-start="23387" selection-end="23387" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -138,16 +229,16 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/groovy-lazy-extension/src/main/groovy/perry/groovy/lazy/EitherExtension.groovy" />
-        <option value="$PROJECT_DIR$/groovy-lazy/src/test/groovy/perry/lazy/LazyTest1.groovy" />
-        <option value="$PROJECT_DIR$/groovy-lazy/src/test/groovy/perry/lazy/LazyTest.groovy" />
-        <option value="$PROJECT_DIR$/groovy-lazy-extension/src/test/groovy/perry/lazy/Test1.groovy" />
-        <option value="$PROJECT_DIR$/groovy-lazy/build.gradle" />
         <option value="$PROJECT_DIR$/groovy-lazy-extension/build.gradle" />
         <option value="$PROJECT_DIR$/groovy-lazy/src/test/groovy/perry/lazy/LazyRangeElementTest.groovy" />
         <option value="$PROJECT_DIR$/groovy-lazy-extension/src/test/groovy/perry/lazy/StreamTest.groovy" />
-        <option value="$PROJECT_DIR$/groovy-lazy/src/test/groovy/perry/lazy/StreamTest.groovy" />
         <option value="$PROJECT_DIR$/groovy-lazy-extension/src/main/groovy/perry/groovy/lazy/OptionStaticExtension.groovy" />
+        <option value="$PROJECT_DIR$/groovy-lazy/src/main/groovy/perry/lazy/mcategories/MMapCategory.groovy" />
+        <option value="$PROJECT_DIR$/groovy-lazy/src/main/groovy/perry/lazy/MonadComprehension.groovy" />
+        <option value="$PROJECT_DIR$/groovy-lazy/src/test/groovy/perry/lazy/StreamTest.groovy" />
+        <option value="$PROJECT_DIR$/groovy-lazy/src/test/groovy/perry/lazy/Test2.groovy" />
+        <option value="$PROJECT_DIR$/groovy-lazy/src/test/groovy/perry/lazy/ComprehensionTest.groovy" />
+        <option value="$PROJECT_DIR$/groovy-lazy/src/main/groovy/perry/lazy/Comprehension.groovy" />
         <option value="$PROJECT_DIR$/groovy-lazy-extension/src/main/groovy/perry/groovy/lazy/StreamExtension.groovy" />
       </list>
     </option>
@@ -165,7 +256,7 @@
     <OptionsSetting value="true" id="Update" />
     <OptionsSetting value="true" id="Status" />
     <OptionsSetting value="true" id="Edit" />
-    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="1" id="Add" />
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
   <component name="ProjectReloadState">
@@ -359,6 +450,36 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="groovy-lazy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="groovy-lazy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="groovy-lazy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="groovy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lazy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
     </panes>
@@ -377,8 +498,16 @@
     <property name="dynamic.classpath" value="false" />
     <property name="MemberChooser.copyJavadoc" value="false" />
   </component>
-  <component name="RunManager" selected="JUnit.StreamTest">
-    <configuration default="false" name="StreamTest" type="JUnit" factoryName="JUnit" temporary="true">
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="perry.lazy" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\repositories\groovy-lazy\groovy-lazy\src\main\groovy\perry\lazy" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.ComprehensionTest.test2">
+    <configuration default="false" name="ComprehensionTest" type="JUnit" factoryName="JUnit" temporary="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
           <option name="PATTERN" value="perry.lazy.*" />
@@ -389,7 +518,7 @@
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="PACKAGE_NAME" value="perry.lazy" />
-      <option name="MAIN_CLASS_NAME" value="perry.lazy.StreamTest" />
+      <option name="MAIN_CLASS_NAME" value="perry.lazy.ComprehensionTest" />
       <option name="METHOD_NAME" />
       <option name="TEST_OBJECT" value="class" />
       <option name="VM_PARAMETERS" value="-ea" />
@@ -402,7 +531,143 @@
       </option>
       <envs />
       <patterns />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="true" />
+      </RunnerSettings>
       <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Debug" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
+    <configuration default="false" name="ComprehensionTest.test1" type="JUnit" factoryName="JUnit" temporary="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="perry.lazy.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <module name="groovy-lazy-groovy-lazy" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="perry.lazy" />
+      <option name="MAIN_CLASS_NAME" value="perry.lazy.ComprehensionTest" />
+      <option name="METHOD_NAME" value="test1" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <envs />
+      <patterns />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="true" />
+      </RunnerSettings>
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Debug" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
+    <configuration default="false" name="StreamTest.fold" type="JUnit" factoryName="JUnit" temporary="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="perry.lazy.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <module name="groovy-lazy-groovy-lazy" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="perry.lazy" />
+      <option name="MAIN_CLASS_NAME" value="perry.lazy.StreamTest" />
+      <option name="METHOD_NAME" value="fold" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <envs />
+      <patterns />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
+    <configuration default="false" name="ComprehensionTest.test2" type="JUnit" factoryName="JUnit" temporary="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="perry.lazy.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <module name="groovy-lazy-groovy-lazy" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="perry.lazy" />
+      <option name="MAIN_CLASS_NAME" value="perry.lazy.ComprehensionTest" />
+      <option name="METHOD_NAME" value="test2" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <envs />
+      <patterns />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="true" />
+      </RunnerSettings>
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Debug" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
+    <configuration default="false" name="ComprehensionTest.testBinding" type="JUnit" factoryName="JUnit" temporary="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="perry.lazy.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <module name="groovy-lazy-groovy-lazy" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="perry.lazy" />
+      <option name="MAIN_CLASS_NAME" value="perry.lazy.ComprehensionTest" />
+      <option name="METHOD_NAME" value="testBinding" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <envs />
+      <patterns />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="true" />
+      </RunnerSettings>
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Debug" />
       <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
@@ -540,8 +805,12 @@
         <option name="Maven.BeforeRunTask" enabled="false" />
       </method>
     </configuration>
-    <list size="1">
-      <item index="0" class="java.lang.String" itemvalue="JUnit.StreamTest" />
+    <list size="5">
+      <item index="0" class="java.lang.String" itemvalue="JUnit.ComprehensionTest" />
+      <item index="1" class="java.lang.String" itemvalue="JUnit.ComprehensionTest.test1" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.StreamTest.fold" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.ComprehensionTest.test2" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.ComprehensionTest.testBinding" />
     </list>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
       <Host>localhost</Host>
@@ -577,30 +846,30 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="115" y="-8" width="1259" height="784" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
-      <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32852563" sideWeight="0.49664992" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.39903846" sideWeight="0.8467337" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32852563" sideWeight="0.5008375" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.39903846" sideWeight="0.14740369" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32852563" sideWeight="0.4396985" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32852563" sideWeight="0.4036851" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2479062" sideWeight="0.67147434" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32852563" sideWeight="0.49329984" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17001675" sideWeight="0.60096157" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22948074" sideWeight="0.60096157" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32852563" sideWeight="0.779732" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32852563" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -663,72 +932,77 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/groovy-lazy/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="0" selection-start="815" selection-end="815" vertical-scroll-proportion="0.39030612" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/groovy-lazy-extension/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="39" selection-start="1204" selection-end="1204" vertical-scroll-proportion="1.9081633" />
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/artifacts-23/filestore/junit/junit/4.10/source/6c98d6766e72d5575f96c9479d1c1d3b865c6e25/junit-4.10-sources.jar!/org/junit/Assert.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="52" column="23" selection-start="1404" selection-end="1404" vertical-scroll-proportion="0.3137755" />
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/artifacts-23/filestore/org.functionaljava/functionaljava/3.1/source/120c8d136bbc16e95f1ee381f091651efdcdc46a/functionaljava-3.1-sources.jar!/fj/data/Stream.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="717" column="32" selection-start="25619" selection-end="25619" vertical-scroll-proportion="0.33243242" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/groovy-lazy-extension/src/main/groovy/perry/groovy/lazy/EitherExtension.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="51" selection-start="555" selection-end="555" vertical-scroll-proportion="0.0">
+        <state line="174" column="21" selection-start="5440" selection-end="5440" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/groovy-lazy-extension/src/main/groovy/perry/groovy/lazy/IntegerExtension.groovy">
+    <entry file="jar://$PROJECT_DIR$/build/lib/perry/groovy-lazy-extension/jars/groovy-lazy-extension-0.1-SNAPSHOT.jar!/perry/groovy/lazy/StreamExtension.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="6" selection-start="312" selection-end="312" vertical-scroll-proportion="0.0">
+        <state line="22" column="40" selection-start="1167" selection-end="1167" vertical-scroll-proportion="-9.36">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/artifacts-23/filestore/org.functionaljava/functionaljava/3.1/source/120c8d136bbc16e95f1ee381f091651efdcdc46a/functionaljava-3.1-sources.jar!/fj/data/Option.java">
+    <entry file="jar://$USER_HOME$/.gradle/caches/artifacts-23/filestore/junit/junit/4.10/source/6c98d6766e72d5575f96c9479d1c1d3b865c6e25/junit-4.10-sources.jar!/org/junit/runners/BlockJUnit4ClassRunner.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="666" column="30" selection-start="23387" selection-end="23387" vertical-scroll-proportion="0.0">
+        <state line="46" column="0" selection-start="1844" selection-end="1844" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/groovy-lazy-extension/src/main/groovy/perry/groovy/lazy/OptionExtension.groovy">
+    <entry file="jar://$USER_HOME$/.gradle/caches/artifacts-23/filestore/org.codehaus.groovy/groovy/2.0.5/source/b11cc85c33f048d05da4b0c268027190662b50eb/groovy-2.0.5-sources.jar!/groovy/lang/Closure.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="6" selection-start="274" selection-end="274" vertical-scroll-proportion="0.0">
+        <state line="406" column="13" selection-start="14380" selection-end="14380" vertical-scroll-proportion="0.33128834">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/groovy-lazy-extension/src/main/groovy/perry/groovy/lazy/OptionStaticExtension.groovy">
+    <entry file="jar://$USER_HOME$/.gradle/caches/artifacts-23/filestore/junit/junit/4.10/source/6c98d6766e72d5575f96c9479d1c1d3b865c6e25/junit-4.10-sources.jar!/org/junit/runners/ParentRunner.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="14" selection-start="272" selection-end="272" vertical-scroll-proportion="0.0">
+        <state line="265" column="0" selection-start="9235" selection-end="9235" vertical-scroll-proportion="0.31044775">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/groovy-lazy-extension/src/main/groovy/perry/groovy/lazy/StreamExtension.groovy">
+    <entry file="jar://$USER_HOME$/.gradle/caches/artifacts-23/filestore/junit/junit/4.10/source/6c98d6766e72d5575f96c9479d1c1d3b865c6e25/junit-4.10-sources.jar!/org/junit/internal/runners/model/ReflectiveCallable.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="73" selection-start="251" selection-end="251" vertical-scroll-proportion="0.0">
+        <state line="16" column="0" selection-start="405" selection-end="405" vertical-scroll-proportion="0.46264368">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/groovy-lazy/src/test/groovy/perry/lazy/StreamTest.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="50" column="43" selection-start="1329" selection-end="1329" vertical-scroll-proportion="2.1135135">
+        <state line="66" column="57" selection-start="1592" selection-end="1622" vertical-scroll-proportion="0.5460123">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/groovy-lazy-extension/src/main/groovy/perry/groovy/lazy/StreamExtension.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="45" selection-start="628" selection-end="628" vertical-scroll-proportion="0.44827586">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/groovy-lazy/src/test/groovy/perry/lazy/ComprehensionTest.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="48" column="36" selection-start="843" selection-end="843" vertical-scroll-proportion="2.1982758">
+          <folding>
+            <element signature="e#20#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/groovy-lazy/src/main/groovy/perry/lazy/Comprehension.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="157" column="18" selection-start="3675" selection-end="3675" vertical-scroll-proportion="-4.3461537">
+          <folding>
+            <element signature="e#20#41#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -785,7 +1059,7 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-          <last-edited>groovy-lazy</last-edited>
+          <last-edited>groovy-lazy-groovy-lazy</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

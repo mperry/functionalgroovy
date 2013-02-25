@@ -31,7 +31,7 @@ class ComprehensionTest {
 //	[ (x,y) for x in range(5) for y in range(3) if (y+x) % (x+2) == 0 ]  // python
 	// guards not implemented
 	@Test
-	void testPyhtonExample() {
+	void testPythonExample() {
 		def list = foreach {
 			x = 1.to(2)
 			y = 1.to(3)

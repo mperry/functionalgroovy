@@ -1,6 +1,7 @@
 package perry.lazy
 
 import groovy.transform.TypeChecked
+import groovy.transform.Canonical
 
 /**
  * Created with IntelliJ IDEA.
@@ -10,12 +11,16 @@ import groovy.transform.TypeChecked
  * To change this template use File | Settings | File Templates.
  */
 @TypeChecked
+@Canonical
 class Yield {
 
 	private Map<String, Object> values = [:]
+	Closure closure
 
 	Object propertyMissing(String name) {
-		values[name]
+		def v = this.values[name]
+		def b = values[name]
+		b
 	}
 
 }

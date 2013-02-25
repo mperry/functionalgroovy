@@ -4,6 +4,7 @@ import fj.data.Stream
 import fj.P
 import fj.P2
 import groovy.transform.TypeChecked
+import fj.data.Option
 
 /**
  * Created with IntelliJ IDEA.
@@ -15,12 +16,45 @@ import groovy.transform.TypeChecked
 class Comprehension {
 
 	private Map<String, Object> variables = [:]
+	private Option<Object> result = Option.none()
+	List<Object> generators = []
+
+
+//	A for comprehension for (p <-e;p0 <-e0 . . .) yield e00 ,
+//	where . . . is a (possibly empty) sequence of generators, definitions, or guards,
+//	is translated to
+//	e.flatMap { case p => for (p0 <-e0 . . .) yield e00 } .
+	void recursiveFor() {
+
+		def g = generators.head()
+		def tail = generators.tail()
+		def firstVal = g.func.call()
+		def method = tail.isEmpty() ? "values" : "bind"
+		firstVal."${method}"({ it ->
+//			call
+
+			def closure = {
+				foreach {
+
+				}
+			}
+			closure.setDelegate(["${g.name}": it])
+
+		})
+
+		if (tail.isEmpty()) {
+
+		}
+
+	}
 
 	@TypeChecked
 	List<?> yield(Closure yieldClosure) {
 		def combined = createStreams(variables)
 		createYieldResults(combined, variables.keySet().toList(), yieldClosure)
+
 	}
+
 
 //	@TypeChecked
 	Stream<Stream<?>> createStreams(Map<String, Object> vars) {
@@ -54,9 +88,26 @@ class Comprehension {
 		yieldResults
 	}
 
-	@TypeChecked
+//	@TypeChecked
 	void propertyMissing(String name, Object val) {
 		variables[name] = val
+//		if (result.isNone()) {
+//			result = Option.some(val)
+//		} else {
+//			result = result.bind({Stream it -> it.combos(val)})
+//		}
+	}
+
+
+	def methodMissing(String name, args) {
+//		freeFunctions << [ fn:name, args:args ]
+		def z = 0
+//		if (result.isNone()) {
+//			result = Option.some(val)
+//		} else {
+//			result = result.bind({Stream it -> it.combos(val)})
+//		}
+		generators << new Generator(name:  name, func: args)
 	}
 
 	@TypeChecked

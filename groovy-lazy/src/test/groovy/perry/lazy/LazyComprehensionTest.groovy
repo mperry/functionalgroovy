@@ -29,15 +29,16 @@ class LazyComprehensionTest {
 	}
 
 	@Test
-	void lazyComprehension() {
+	void test1() {
 		def res = foreach {
 			a { 1.to(2) }
-			b { 3.to(4) }
+			b { 1.to(1) }
 			yield {
 				[a, b]
 			}
 		}
-		def expected = [[1, 3], [1, 4], [2, 3], [2, 4]]
+//		def expected = [[1, 3], [1, 4], [2, 3], [2, 4]]
+		def expected = [[1, 1], [2, 1]]
 		assertTrue(expected == res.toJList())
 	}
 

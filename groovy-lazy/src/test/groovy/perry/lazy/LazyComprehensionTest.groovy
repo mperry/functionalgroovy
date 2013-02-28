@@ -24,7 +24,8 @@ class LazyComprehensionTest {
 			}
 		}
 		def expected = [2, 3]
-		assertTrue(expected == res.toJList())
+		def actual = res.toJList()
+		assertTrue(expected == actual)
 	}
 
 	@Test
@@ -60,15 +61,14 @@ class LazyComprehensionTest {
 	void test3() {
 		def res = foreach {
 			a { 1.to(2) }
-			b { a.to(2) }
 			guard {
-				b == 2
+				a == 2
 			}
 			yield {
-				[a, b]
+				a
 			}
 		}
-		def expected = [[1, 2], [2, 2]]
+		def expected = [2]
 		assertTrue(expected == res.toJList())
 	}
 }

@@ -18,11 +18,11 @@ class LazyComprehension {
 		process(c, generators, [:])
 	}
 
-	def execFunc(Closure c, Map context) {
+	def execFunc(Closure c, Object context) {
 		c.setDelegate(context)
 		c.resolveStrategy = Closure.DELEGATE_ONLY
 		def a = c.call()
-		def temp = a.toJList()
+//		def temp = a.toJList()
 		a
 	}
 
@@ -34,11 +34,7 @@ class LazyComprehension {
 			// v is Stream
 			def v = execFunc(head.func, context).map { it ->
 				context[head.name] = it
-				yieldAction.setDelegate(new Yield(values: context))
-				yieldAction.resolveStrategy = Closure.DELEGATE_ONLY
-				def d = yieldAction.call()
-//				def d = execFunc(yieldAction, new Yield(values: context))
-//				def temp = d.toJList()
+				def d = execFunc(yieldAction, new Yield(values: context))
 				d
 			}
 			v

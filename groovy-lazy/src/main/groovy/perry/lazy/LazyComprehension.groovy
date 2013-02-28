@@ -1,5 +1,8 @@
 package perry.lazy
 
+import fj.data.Stream
+import fj.data.Option
+
 /**
  * Created with IntelliJ IDEA.
  * User: MarkPerry
@@ -13,45 +16,42 @@ class LazyComprehension {
 
 	def yield(Closure c) {
 		process(c, generators, [:])
+	}
 
-
+	def execFunc(Closure c, Map context) {
+		c.setDelegate(context)
+		c.resolveStrategy = Closure.DELEGATE_ONLY
+		def a = c.call()
+		def temp = a.toJList()
+		a
 	}
 
 	def process(Closure yieldAction, List<Generator> gens, Map context) {
 
 		def head = gens.head()
 		def tail = gens.tail()
-		if (tail.size() == 0) {
-			def c = head.func
-			c.setDelegate(context)
-			c.resolveStrategy = Closure.DELEGATE_ONLY
-			c.call().map { it ->
+		if (gens.size() == 1) {
+			// v is Stream
+			def v = execFunc(head.func, context).map { it ->
 				context[head.name] = it
-//				yieldAction.setDelegate(context + ["${head.name}": it])
 				yieldAction.setDelegate(new Yield(values: context))
 				yieldAction.resolveStrategy = Closure.DELEGATE_ONLY
-				yieldAction.call()
+				def d = yieldAction.call()
+//				def d = execFunc(yieldAction, new Yield(values: context))
+//				def temp = d.toJList()
+				d
 			}
+			v
 		} else {
-//			A for comprehension for (p <-e;p0 <-e0 . . .) yield e00 ,
-//					where . . . is a (possibly empty) sequence of generators, definitions, or guards,
-//					is translated to
-//			e.flatMap { case p => for (p0 <-e0 . . .) yield e00 } .
-			def c = head.func
-			c.setDelegate(context)
-			c.resolveStrategy = Closure.DELEGATE_ONLY
-
-			c.call().bind { it ->
+			execFunc(head.func, context).bind { it ->
 				context[head.name] = it
 				def r = process(yieldAction, tail, context)
 				def temp = r.toJList()
+//				Stream.stream(r)
 				r
-
 			}
 		}
-
 	}
-
 
 	void methodMissing(String name, args) {
 		generators << new Generator(name:  name, func: args[0])

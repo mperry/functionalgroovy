@@ -34,23 +34,15 @@ class LazyComprehension {
 			// v is Stream
 			def z = execFunc(head.func, context)
 			def v = z.map { it ->
-				context[head.name] = it
-				def d = execFunc(yieldAction, new Yield(values: context))
-//				def d = execFunc(yieldAction, new Yield(values: context + ["${head.name}": it]))
-				d
+				execFunc(yieldAction, new Yield(values: context + [(head.name): it]))
 			}
 			v
 		} else {
 			def a = execFunc(head.func, context)
-			def b = a.bind { it ->
-				context[head.name] = it
-				def r = process(yieldAction, tail, context)
-//				def r = process(yieldAction, tail, context + ["${head.name}": it])
-				def temp = r.toJList()
-//				Stream.stream(r)
-				r
+			a.bind { it ->
+				process(yieldAction, tail, context + [(head.name): it])
 			}
-			b
+
 		}
 	}
 

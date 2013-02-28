@@ -10,14 +10,21 @@ import groovy.transform.Canonical
  * Time: 9:54 PM
  * To change this template use File | Settings | File Templates.
  */
-@TypeChecked
+//@TypeChecked
 @Canonical
 class Yield {
 
-	private Map<String, Object> values = [:]
+	private Map values = [:]
 	Closure closure
 
 	Object propertyMissing(String name) {
+		def found = values.containsKey(name)
+		Set k = values.keySet()
+		def f = k.first()
+		def c = name.toString()
+		def found2 = values.containsKey(c)
+		def b3 = f == name
+		def v2 = values[c]
 		def v = this.values[name]
 		def b = values[name]
 		b

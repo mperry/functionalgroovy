@@ -1,1 +1,1 @@
-include 'groovy-lazy-extension', 'groovy-lazy'
+include 'core', 'main'

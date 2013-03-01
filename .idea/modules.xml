@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/core.iml" filepath="$PROJECT_DIR$/core.iml" />
       <module fileurl="file://$PROJECT_DIR$/groovy-lazy.iml" filepath="$PROJECT_DIR$/groovy-lazy.iml" />
-      <module fileurl="file://$PROJECT_DIR$/groovy-lazy-extension.iml" filepath="$PROJECT_DIR$/groovy-lazy-extension.iml" />
-      <module fileurl="file://$PROJECT_DIR$/groovy-lazy-groovy-lazy.iml" filepath="$PROJECT_DIR$/groovy-lazy-groovy-lazy.iml" />
+      <module fileurl="file://$PROJECT_DIR$/main.iml" filepath="$PROJECT_DIR$/main.iml" />
     </modules>
   </component>
 </project>

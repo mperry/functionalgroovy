@@ -2,22 +2,9 @@
 apply plugin: 'java'
 apply plugin: 'groovy'
 
-sourceCompatibility = 1.7
-group = 'perry'
-version = '0.1-SNAPSHOT'
-
 defaultTasks 'build', 'uploadArchives'
 
-ext.repoBase = "${projectDir}/../lib"
-ext.repoGenBase = "${projectDir}/../build/lib"
-
 repositories {
-	ivy {
-		name = 'LocalRepo'
-		ivyPattern "${repoBase}/[organisation]/[module]/ivy-[revision].xml"
-		artifactPattern "${repoBase}/[organisation]/[module]/[type]s/[artifact]-[revision].[ext]"
-		artifactPattern "${repoBase}/[artifact]-[revision].[ext]"
-	}
 	ivy {
 		name = 'DynamicRepo'
 		ivyPattern "${repoGenBase}/[organisation]/[module]/ivy-[revision].xml"
@@ -27,15 +14,14 @@ repositories {
 }
 
 dependencies {
-	compile group: 'org.codehaus.groovy', name: 'groovy', version: '2.0.5'
-//	testCompile group: 'org.codehaus.groovy', name: 'groovy-test', version: '2.0.5'
+	compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.0.5'
 	compile group: 'org.functionaljava', name: 'functionaljava', version: '3.1'
-//	testCompile group: 'junit', name: 'junit', version: '4.10'
 }
 
 jar {
+	baseName "${projectName}-core"
 	manifest {
-		attributes 'Created-By': 'Mark Perry', 'Signature-Version': version
+		attributes 'Created-By': founder, 'Signature-Version': version
 	}
 }
 

@@ -19,48 +19,27 @@ class Comprehension {
 	private Option<Object> result = Option.none()
 	List<Object> generators = []
 
-	void recursiveFor() {
-		def g = generators.head()
-		def tail = generators.tail()
-		def firstVal = g.func.call()
-		def method = tail.isEmpty() ? "values" : "bind"
-		firstVal."${method}"({ it ->
-			def closure = {
-				foreach {
-				}
-			}
-			closure.setDelegate(["${g.name}": it])
-		})
-
-		if (tail.isEmpty()) {
-
-		}
-
-	}
-
 	@TypeChecked
 	List<?> yield(Closure yieldClosure) {
 		def combined = createStreams(variables)
 		createYieldResults(combined, variables.keySet().toList(), yieldClosure)
-
 	}
 
-
 //	@TypeChecked
-	Stream<Stream<?>> createStreams(Map<String, Object> vars) {
+	Stream<?> createStreams(Map<String, Object> vars) {
 		def list = (List<Stream<?>>) vars.keySet().inject([]) { List<Stream<?>> acc, String varName ->
 			def b = acc.add((Stream) vars[varName])
 			acc
 		}
 		def h = list.head()
 		def tail = list.tail()
-		(Stream<Stream<?>>) tail.inject(h, {Stream<?> acc, Stream<?> it ->
+		tail.inject(h, {Stream<?> acc, Stream<?> it ->
 			acc.combos(it)
 		})
 	}
 
 //	@TypeChecked
-	List<?> createYieldResults(Stream<Stream<?>> combined, Collection<String> names, Closure<?> yieldClosure) {
+	List<?> createYieldResults(Stream<?> combined, Collection<String> names, Closure<?> yieldClosure) {
 		def yieldResults = combined.fold([], {List yieldResultsAcc, Stream<?> s ->
 			def values = s.toJList()
 			def varMap = names.inject(P.p(0, [:])){ P2<Integer, Map> acc, String varName ->
@@ -83,22 +62,9 @@ class Comprehension {
 //	@TypeChecked
 	void propertyMissing(String name, Object val) {
 		variables[name] = val
-//		if (result.isNone()) {
-//			result = Option.some(val)
-//		} else {
-//			result = result.bind({Stream it -> it.combos(val)})
-//		}
 	}
 
-
 	def methodMissing(String name, args) {
-//		freeFunctions << [ fn:name, args:args ]
-		def z = 0
-//		if (result.isNone()) {
-//			result = Option.some(val)
-//		} else {
-//			result = result.bind({Stream it -> it.combos(val)})
-//		}
 		generators << new Generator(name:  name, func: args)
 	}
 

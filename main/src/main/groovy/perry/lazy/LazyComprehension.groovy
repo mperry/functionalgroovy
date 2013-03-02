@@ -28,6 +28,16 @@ class LazyComprehension {
 		c.call()
 	}
 
+	def execYield(Closure c, Object context) {
+		execFunc(c, context)
+	}
+
+//	@TypeChecked
+	Stream execGen(Closure c, Object context) {
+		(Stream) execFunc(c, context)
+	}
+
+//	@TypeChecked
 	def process(Closure yieldAction, List<Generator> gens, Map context) {
 		def head = gens.head()
 		def tail = gens.tail()
@@ -35,7 +45,7 @@ class LazyComprehension {
 			// v is Stream
 			def z = execFunc(head.func, context)
 			def v = z.map { it ->
-				execFunc(yieldAction, new Yield(values: context + [(head.name): it]))
+				execYield(yieldAction, new Yield(values: context + [(head.name): it]))
 			}
 			v
 		} else {
@@ -54,9 +64,6 @@ class LazyComprehension {
 						process(yieldAction, tail.tail(), context + [(head.name): it])
 					})
 				}
-
-
-
 			} else {
 				def a = execFunc(head.func, context)
 				a.bind { it ->

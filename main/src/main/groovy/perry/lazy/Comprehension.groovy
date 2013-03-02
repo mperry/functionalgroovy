@@ -19,7 +19,6 @@ class Comprehension {
 	private Option<Object> result = Option.none()
 	List<Object> generators = []
 
-
 //	A for comprehension for (p <-e;p0 <-e0 . . .) yield e00 ,
 //	where . . . is a (possibly empty) sequence of generators, definitions, or guards,
 //	is translated to

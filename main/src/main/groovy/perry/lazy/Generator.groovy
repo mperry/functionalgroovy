@@ -1,6 +1,7 @@
 package perry.lazy
 
 import groovy.transform.Canonical
+import groovy.transform.TypeChecked
 
 /**
  * Created with IntelliJ IDEA.
@@ -10,9 +11,12 @@ import groovy.transform.Canonical
  * To change this template use File | Settings | File Templates.
  */
 @Canonical
+@TypeChecked
 class Generator {
 
 	String name
 	Closure func
+	Boolean guard = false
+
 
 }

@@ -58,7 +58,7 @@ class LazyComprehensionTest {
 	}
 
 
-//	@Test
+	@Test
 	void test3() {
 		def res = foreach {
 			a { 1.to(2) }

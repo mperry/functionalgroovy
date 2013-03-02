@@ -2,6 +2,7 @@ package perry.lazy
 
 import fj.data.Stream
 import fj.data.Option
+import groovy.transform.TypeChecked
 
 /**
  * Created with IntelliJ IDEA.
@@ -12,22 +13,22 @@ import fj.data.Option
  */
 class LazyComprehension {
 
+	private static final String GUARD = "guard"
 	List<Generator> generators = []
 
+	@TypeChecked
 	def yield(Closure c) {
 		process(c, generators, [:])
 	}
 
+	@TypeChecked
 	def execFunc(Closure c, Object context) {
 		c.setDelegate(context)
 		c.resolveStrategy = Closure.DELEGATE_ONLY
-		def a = c.call()
-//		def temp = a.toJList()
-		a
+		c.call()
 	}
 
 	def process(Closure yieldAction, List<Generator> gens, Map context) {
-
 		def head = gens.head()
 		def tail = gens.tail()
 		if (gens.size() == 1) {
@@ -38,19 +39,26 @@ class LazyComprehension {
 			}
 			v
 		} else {
-			def a = execFunc(head.func, context)
-			a.bind { it ->
-				process(yieldAction, tail, context + [(head.name): it])
+			if (tail.head().guard) {
+				// TODO
+				execFunc(head.func, context).filter({ it ->
+					execFunc(tail.head().func, context + [(head.name): it])
+				})
+			} else {
+				def a = execFunc(head.func, context)
+				a.bind { it ->
+					process(yieldAction, tail, context + [(head.name): it])
+				}
 			}
-
 		}
 	}
 
+//	@TypeChecked
 	void methodMissing(String name, args) {
-		generators << new Generator(name:  name, func: args[0])
+		generators << new Generator(name:  name, func: args[0], guard: (name == GUARD))
 	}
 
-//	@TypeChecked
+	@TypeChecked
 	static def foreach(Closure comprehension) {
 		comprehension.delegate = new LazyComprehension()
 		comprehension.resolveStrategy = Closure.DELEGATE_ONLY

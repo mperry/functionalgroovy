@@ -12,6 +12,7 @@ import groovy.transform.Canonical
  */
 //@TypeChecked
 @Canonical
+@TypeChecked
 class Yield {
 
 	private Map values = [:]

@@ -14,37 +14,46 @@ import groovy.transform.TypeChecked
 class LazyComprehension {
 
 	private static final String GUARD = "guard"
-	List<Generator> generators = []
+	private List<Generator> generators = []
 
 	@TypeChecked
 	def yield(Closure c) {
-		processInContext(c, generators, [:])
-//	    startCurrent(c)
+//		processInContext(c, generators, [:])
+	    startStreamProcessing(c)
 	}
 
-	def startCurrent(Closure c) {
+	private def startStreamProcessing(Closure c) {
 		def head = generators.head()
-		processCurrent(c, generators.tail(), [:], executeGenerator(head.func, [:]), head.name)
+		processStream(c, generators.tail(), [:], executeGenerator(head.func, [:]), head.name)
 	}
 
 	@TypeChecked
-	Object executeFunction(Closure c, Object context) {
+	private Object executeFunction(Closure c, Object context) {
 		c.setDelegate(context)
 		c.resolveStrategy = Closure.DELEGATE_ONLY
 		c.call()
 	}
 
-	Object executeYield(Closure c, Yield context) {
+	private Object executeYield(Closure c, Yield context) {
 		executeFunction(c, context)
 	}
 
 //	@TypeChecked
-	Stream<?> executeGenerator(Closure c, Object context) {
+	private Stream<?> executeGenerator(Closure c, Object context) {
 		executeFunction(c, context)
 	}
 
 //	@TypeChecked
-	Stream<?> processInContext(Closure yieldAction, List<Generator> gens, Map context) {
+	/**
+	 * Process the generator list gen, looking ahead to create the context for the
+	 * next action.  Does not support consecutive guards.  Use processStream instead.
+	 * @deprecated
+	 * @param yieldAction
+	 * @param gens
+	 * @param context
+	 * @return
+	 */
+	private Stream<?> processInContext(Closure yieldAction, List<Generator> gens, Map context) {
 		def head = gens.head()
 		def tail = gens.tail()
 		if (gens.size() == 1) {
@@ -72,8 +81,18 @@ class LazyComprehension {
 		}
 	}
 
-//	@TypeChecked
-	Stream<?> processCurrent(Closure yieldAction, List<Generator> gens, Map context, Stream stream, String lastVar) {
+	/**
+	 * Process stream, when doing an action over stream, do so with
+	 * lastVar in the context
+	 * @param yieldAction
+	 * @param gens
+	 * @param context
+	 * @param stream
+	 * @param lastVar
+	 * @return
+	 */
+	//	@TypeChecked
+	private Stream<?> processStream(Closure yieldAction, List<Generator> gens, Map context, Stream stream, String lastVar) {
 
 		if (gens.size() == 0) {
 			stream.map {
@@ -86,24 +105,24 @@ class LazyComprehension {
 				def s = stream.filter {
 					executeFunction(head.func, context + [(lastVar): it])
 				}
-				processCurrent(yieldAction, tail, context, s, lastVar)
+				processStream(yieldAction, tail, context, s, lastVar)
 			} else {
 				stream.bind {
 					def c = context + [(lastVar): it]
 					def s = executeGenerator(head.func, c)
-					processCurrent(yieldAction, tail, c, s, head.name)
+					processStream(yieldAction, tail, c, s, head.name)
 				}
 			}
 		}
 	}
 
 //	@TypeChecked
-	void methodMissing(String name, args) {
+	private void methodMissing(String name, args) {
 		generators << new Generator(name:  name, func: args[0], guard: (name == GUARD))
 	}
 
-	@TypeChecked
-	static def foreach(Closure comprehension) {
+//	@TypeChecked
+	static Stream<?> foreach(Closure comprehension) {
 		comprehension.delegate = new LazyComprehension()
 		comprehension.resolveStrategy = Closure.DELEGATE_ONLY
 		comprehension.call()

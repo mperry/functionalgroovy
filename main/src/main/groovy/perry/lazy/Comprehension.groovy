@@ -7,6 +7,7 @@ import groovy.transform.TypeChecked
 import fj.data.Option
 
 /**
+ * @deprecated Use LazyComprehension.  Not supported.
  * Created with IntelliJ IDEA.
  * User: MarkPerry
  * Date: 24/02/13

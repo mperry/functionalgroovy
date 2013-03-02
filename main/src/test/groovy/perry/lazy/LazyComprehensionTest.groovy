@@ -14,7 +14,6 @@ import static junit.framework.Assert.assertTrue
  */
 class LazyComprehensionTest {
 
-
 	@Test
 	void simple() {
 		def res = foreach {
@@ -42,7 +41,6 @@ class LazyComprehensionTest {
 		assertTrue(expected == res.toJList())
 	}
 
-
 	@Test
 	void test2() {
 		def res = foreach {
@@ -56,7 +54,6 @@ class LazyComprehensionTest {
 		def actual = res.toJList()
 		assertTrue(expected == actual)
 	}
-
 
 	@Test
 	void test3() {
@@ -82,12 +79,14 @@ class LazyComprehensionTest {
 				a == 2 && b == 3
 			}
 			c { 5.to(6) }
+			guard { c == 5 }
 			yield {
 				[a, b, c]
 			}
 		}
-		def expected = [[2, 3, 5], [2, 3, 6]]
+		def expected = [[2, 3, 5]]
 		def actual = res.toJList()
 		assertTrue(actual == expected)
 	}
+
 }

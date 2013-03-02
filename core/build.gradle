@@ -2,7 +2,7 @@
 apply plugin: 'java'
 apply plugin: 'groovy'
 
-defaultTasks 'build', 'uploadArchives'
+defaultTasks 'build'
 
 repositories {
 	ivy {

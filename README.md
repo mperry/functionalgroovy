@@ -1,4 +1,4 @@
-groovy-lazy
+Functional Groovy
 ===========
 
-Lazy data structures
+Enhancing Functional Java for Groovy with added for comprehensions

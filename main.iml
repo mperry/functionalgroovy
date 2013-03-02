@@ -14,11 +14,19 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="core" exported="" />
     <orderEntry type="library" exported="" name="functionaljava-3.1" level="project" />
     <orderEntry type="library" exported="" name="groovy-all-2.0.5" level="project" />
     <orderEntry type="library" scope="TEST" name="hamcrest-core-1.1" level="project" />
     <orderEntry type="library" scope="TEST" name="junit-4.10" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/core/build/libs/functionalgroovy-core-0.1-SNAPSHOT.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
 

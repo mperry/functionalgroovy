@@ -45,7 +45,7 @@ class LazyComprehension {
 			// v is Stream
 			def z = execFunc(head.func, context)
 			def v = z.map { it ->
-				execYield(yieldAction, new Yield(values: context + [(head.name): it]))
+				execYield(yieldAction, new Yield(context + [(head.name): it]))
 			}
 			v
 		} else {

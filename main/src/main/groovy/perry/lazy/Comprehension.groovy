@@ -78,7 +78,9 @@ class Comprehension {
 				map[varName] = values[index]
 				P.p(index + 1, map)
 			}
-			yieldClosure.setDelegate(new Yield(values: varMap._2()))
+			def m = varMap._2()
+			def y = new Yield(m)
+			yieldClosure.setDelegate(y)
 			yieldClosure.resolveStrategy = Closure.DELEGATE_ONLY
 			def yieldValue = yieldClosure.call()
 			yieldResultsAcc.add(yieldValue)

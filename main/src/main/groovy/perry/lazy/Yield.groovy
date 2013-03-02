@@ -15,7 +15,7 @@ import groovy.transform.Canonical
 @TypeChecked
 class Yield {
 
-	private Map values = [:]
+	Map values = [:]
 	Closure closure
 
 	Object propertyMissing(String name) {

@@ -41,9 +41,22 @@ class LazyComprehension {
 		} else {
 			if (tail.head().guard) {
 				// TODO
-				execFunc(head.func, context).filter({ it ->
-					execFunc(tail.head().func, context + [(head.name): it])
+				def a = execFunc(head.func, context).filter({ it ->
+					def c = context + [(head.name): it]
+					def bool = execFunc(tail.head().func, c)
+					bool
+
 				})
+				if (tail.tail().size() == 0) {
+					a
+				} else {
+					a.bind({ it ->
+						process(yieldAction, tail.tail(), context + [(head.name): it])
+					})
+				}
+
+
+
 			} else {
 				def a = execFunc(head.func, context)
 				a.bind { it ->

@@ -19,26 +19,17 @@ class Comprehension {
 	private Option<Object> result = Option.none()
 	List<Object> generators = []
 
-//	A for comprehension for (p <-e;p0 <-e0 . . .) yield e00 ,
-//	where . . . is a (possibly empty) sequence of generators, definitions, or guards,
-//	is translated to
-//	e.flatMap { case p => for (p0 <-e0 . . .) yield e00 } .
 	void recursiveFor() {
-
 		def g = generators.head()
 		def tail = generators.tail()
 		def firstVal = g.func.call()
 		def method = tail.isEmpty() ? "values" : "bind"
 		firstVal."${method}"({ it ->
-//			call
-
 			def closure = {
 				foreach {
-
 				}
 			}
 			closure.setDelegate(["${g.name}": it])
-
 		})
 
 		if (tail.isEmpty()) {

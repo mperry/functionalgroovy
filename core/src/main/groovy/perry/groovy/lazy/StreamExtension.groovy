@@ -19,7 +19,7 @@ class StreamExtension {
 		s.filter(c as F)
 	}
 
-	public static <T> Stream<T> map(Stream<T> s, Closure<Boolean> c) {
+	public static <A, B> Stream<B> map(Stream<A> s, Closure<B> c) {
 		s.map(c as F)
 	}
 

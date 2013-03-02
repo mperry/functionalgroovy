@@ -1,7 +1,7 @@
 package perry.lazy
 
 import fj.data.Stream
-import fj.data.Option
+
 import groovy.transform.TypeChecked
 
 /**
@@ -22,52 +22,45 @@ class LazyComprehension {
 	}
 
 	@TypeChecked
-	def execFunc(Closure c, Object context) {
+	Object executeFunction(Closure c, Object context) {
 		c.setDelegate(context)
 		c.resolveStrategy = Closure.DELEGATE_ONLY
 		c.call()
 	}
 
-	def execYield(Closure c, Object context) {
-		execFunc(c, context)
+	Object executeYield(Closure c, Yield context) {
+		executeFunction(c, context)
 	}
 
 //	@TypeChecked
-	Stream execGen(Closure c, Object context) {
-		(Stream) execFunc(c, context)
+	Stream<?> executeGenerator(Closure c, Object context) {
+		executeFunction(c, context)
 	}
 
 //	@TypeChecked
-	def process(Closure yieldAction, List<Generator> gens, Map context) {
+	Stream<?> process(Closure yieldAction, List<Generator> gens, Map context) {
 		def head = gens.head()
 		def tail = gens.tail()
 		if (gens.size() == 1) {
-			// v is Stream
-			def z = execFunc(head.func, context)
-			def v = z.map { it ->
-				execYield(yieldAction, new Yield(context + [(head.name): it]))
+			executeGenerator(head.func, context).map {
+				executeYield(yieldAction, new Yield(context + [(head.name): it]))
 			}
-			v
 		} else {
-			if (tail.head().guard) {
-				// TODO
-				def a = execFunc(head.func, context).filter({ it ->
-					def c = context + [(head.name): it]
-					def bool = execFunc(tail.head().func, c)
-					bool
-
-				})
-				if (tail.tail().size() == 0) {
-					a
-				} else {
-					a.bind({ it ->
-						process(yieldAction, tail.tail(), context + [(head.name): it])
-					})
+			def s1 = executeGenerator(head.func, context)
+			if (!tail.head().guard) {
+				s1.bind {
+					process(yieldAction, tail, context + [(head.name): it])
 				}
 			} else {
-				def a = execFunc(head.func, context)
-				a.bind { it ->
-					process(yieldAction, tail, context + [(head.name): it])
+				def s2 = s1.filter {
+					executeFunction(tail.head().func, context + [(head.name): it])
+				}
+				if (tail.tail().size() == 0) {
+					s2
+				} else {
+					s2.bind {
+						process(yieldAction, tail.tail(), context + [(head.name): it])
+					}
 				}
 			}
 		}
@@ -84,4 +77,5 @@ class LazyComprehension {
 		comprehension.resolveStrategy = Closure.DELEGATE_ONLY
 		comprehension.call()
 	}
+
 }

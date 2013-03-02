@@ -18,5 +18,4 @@ class Generator {
 	Closure func
 	Boolean guard = false
 
-
 }

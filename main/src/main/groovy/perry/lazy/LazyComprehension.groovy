@@ -18,7 +18,13 @@ class LazyComprehension {
 
 	@TypeChecked
 	def yield(Closure c) {
-		process(c, generators, [:])
+		processInContext(c, generators, [:])
+//	    startCurrent(c)
+	}
+
+	def startCurrent(Closure c) {
+		def head = generators.head()
+		processCurrent(c, generators.tail(), [:], executeGenerator(head.func, [:]), head.name)
 	}
 
 	@TypeChecked
@@ -38,7 +44,7 @@ class LazyComprehension {
 	}
 
 //	@TypeChecked
-	Stream<?> process(Closure yieldAction, List<Generator> gens, Map context) {
+	Stream<?> processInContext(Closure yieldAction, List<Generator> gens, Map context) {
 		def head = gens.head()
 		def tail = gens.tail()
 		if (gens.size() == 1) {
@@ -49,7 +55,7 @@ class LazyComprehension {
 			def s1 = executeGenerator(head.func, context)
 			if (!tail.head().guard) {
 				s1.bind {
-					process(yieldAction, tail, context + [(head.name): it])
+					processInContext(yieldAction, tail, context + [(head.name): it])
 				}
 			} else {
 				def s2 = s1.filter {
@@ -59,8 +65,33 @@ class LazyComprehension {
 					s2
 				} else {
 					s2.bind {
-						process(yieldAction, tail.tail(), context + [(head.name): it])
+						processInContext(yieldAction, tail.tail(), context + [(head.name): it])
 					}
+				}
+			}
+		}
+	}
+
+//	@TypeChecked
+	Stream<?> processCurrent(Closure yieldAction, List<Generator> gens, Map context, Stream stream, String lastVar) {
+
+		if (gens.size() == 0) {
+			stream.map {
+				executeYield(yieldAction, new Yield(context + [(lastVar): it]))
+			}
+		} else {
+			def head = gens.head()
+			def tail = gens.tail()
+			if (head.guard) {
+				def s = stream.filter {
+					executeFunction(head.func, context + [(lastVar): it])
+				}
+				processCurrent(yieldAction, tail, context, s, lastVar)
+			} else {
+				stream.bind {
+					def c = context + [(lastVar): it]
+					def s = executeGenerator(head.func, c)
+					processCurrent(yieldAction, tail, c, s, head.name)
 				}
 			}
 		}

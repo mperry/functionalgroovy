@@ -3,3 +3,6 @@ build
 .gradle
 classes
 workspace.xml
+.idea
+*.iml
+out

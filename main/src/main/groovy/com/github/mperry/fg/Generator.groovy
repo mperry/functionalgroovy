@@ -1,4 +1,4 @@
-package perry.lazy
+package com.github.mperry.fg
 
 import groovy.transform.Canonical
 import groovy.transform.TypeChecked

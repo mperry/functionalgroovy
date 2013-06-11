@@ -1,4 +1,4 @@
-package perry.groovy.lazy
+package com.github.mperry.fg
 
 import fj.data.Option
 import fj.data.Either

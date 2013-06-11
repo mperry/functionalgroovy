@@ -1,8 +1,8 @@
-package perry.lazy
+package com.github.mperry.fg
 
 import org.junit.Test
 
-import static perry.lazy.LazyComprehension.foreach
+import static com.github.mperry.fg.LazyComprehension.foreach
 import static junit.framework.Assert.assertTrue
 
 /**

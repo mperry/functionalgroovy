@@ -1,4 +1,4 @@
-package perry.lazy
+package com.github.mperry.fg
 
 import org.junit.Test
 import fj.data.Stream
@@ -6,7 +6,7 @@ import fj.data.Stream
 import static org.junit.Assert.assertTrue
 import fj.F
 import fj.F2
-//import perry.groovy.lazy.StreamExtension
+//import com.github.mperry.fg.StreamExtension
 
 /**
  * Created with IntelliJ IDEA.

@@ -1,4 +1,4 @@
-package perry.groovy.lazy
+package com.github.mperry.fg
 
 import fj.data.Stream
 import fj.F

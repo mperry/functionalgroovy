@@ -1,4 +1,4 @@
-package perry.lazy
+package com.github.mperry.fg
 
 import fj.data.Stream
 

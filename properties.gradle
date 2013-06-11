@@ -1,0 +1,10 @@
+
+ext.proxyHost = "AUTBPIATABC001"
+ext.proxyPort = 8080
+ext.nexusIp = "10.36.1.34"
+ext.nexusPort = 8090
+ext.nexusUrl = "${nexusIp}:${nexusPort}"
+ext.proxyNonHosts = "127.0.0.1|localhost|${nexusIp}"
+ext.nexusContent = "http://${nexusUrl}/nexus/content"
+ext.nexusUrlGroups = "${nexusContent}/groups/public/"
+

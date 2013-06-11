@@ -1,8 +1,11 @@
 
 apply plugin: 'java'
 apply plugin: 'groovy'
+apply plugin: "maven"
 
 defaultTasks 'build', 'uploadArchives'
+
+ext.artifactId = "$projectName-core"
 
 repositories {
 	ivy {
@@ -11,6 +14,9 @@ repositories {
 		artifactPattern "${repoGenBase}/[organisation]/[module]/[type]s/[artifact]-[revision].[ext]"
 	}
 	mavenCentral()
+	maven {
+		url nexusUrlGroups
+	}
 }
 
 dependencies {
@@ -19,14 +25,27 @@ dependencies {
 }
 
 jar {
-	baseName "${projectName}-core"
+	baseName "$artifactId"
 	manifest {
 		attributes 'Created-By': founder, 'Signature-Version': version
 	}
 }
 
+task display << {
+	println "$organisation $groupId:$artifactId:$version"
+}
+
 uploadArchives {
 	repositories {
 		add project.repositories.DynamicRepo
+//		mavenDeployer {
+//			repository(url: "http://${nexusUrl}/nexus/content/repositories/snapshots") {
+//				authentication(userName: "admin", password: "admin123")
+//			}
+//			pom.version = version
+//			pom.artifactId = artifactId
+//			pom.groupId = groupId
+//		}
+
 	}
 }

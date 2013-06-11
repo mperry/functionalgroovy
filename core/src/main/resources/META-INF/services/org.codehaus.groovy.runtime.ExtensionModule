@@ -1,5 +1,4 @@
-
-moduleName=functional-java-extension
+moduleName=functionalgroovy-core
 moduleVersion=0.1
 extensionClasses=perry.groovy.lazy.OptionExtension,perry.groovy.lazy.EitherExtension,perry.groovy.lazy.IntegerExtension,perry.groovy.lazy.StreamExtension
 staticExtensionClasses=perry.groovy.lazy.OptionStaticExtension

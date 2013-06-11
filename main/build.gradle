@@ -1,8 +1,11 @@
 
 apply plugin: 'java'
 apply plugin: 'groovy'
+apply plugin: "maven"
 
 defaultTasks 'build', 'uploadArchives'
+
+ext.artifactId = "$projectName-main"
 
 repositories {
 	ivy {
@@ -11,6 +14,9 @@ repositories {
 		artifactPattern "${repoGenBase}/[organisation]/[module]/[type]s/[artifact]-[revision].[ext]"
 	}
 	mavenCentral()
+//	maven {
+//		url nexusUrlGroups
+//	}
 }
 
 dependencies {
@@ -18,19 +24,33 @@ dependencies {
 	compile group: 'org.functionaljava', name: 'functionaljava', version: '3.1'
 //	testCompile group: 'org.codehaus.groovy', name: 'groovy-test', version: '2.0.5'
 	testCompile group: 'junit', name: 'junit', version: '4.10'
-	compile project(":core")
+//	compile project(":core")
+	compile group: 'functionalgroovy', name: 'core', version: '0.1-SNAPSHOT', changing: true
 //	compile project(":${projectName}-core")
 }
 
 jar {
-	baseName projectName
+	baseName artifactId
 	manifest {
 		attributes 'Created-By': founder, 'Signature-Version': version
 	}
 }
 
+build.dependsOn ':core:uploadArchives'
+//build(dependsOn: ':core:uploadArchives') << {
+//}
+
 uploadArchives {
 	repositories {
 		add project.repositories.DynamicRepo
+//		mavenDeployer {
+//			repository(url: "http://${nexusUrl}/nexus/content/repositories/snapshots") {
+//				authentication(userName: "admin", password: "admin123")
+//			}
+//			pom.version = version
+//			pom.artifactId = artifactId
+//			pom.groupId = groupId
+//		}
+
 	}
 }

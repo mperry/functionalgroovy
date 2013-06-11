@@ -21,4 +21,9 @@ class OptionExtension {
 		option.bind(f as F)
 	}
 
+	public static <A, B> Option<B> map(Option<A> option, Closure<B> f) {
+		option.map(f as F)
+	}
+
+
 }

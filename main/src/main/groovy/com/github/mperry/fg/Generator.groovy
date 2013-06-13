@@ -1,5 +1,6 @@
 package com.github.mperry.fg
 
+import fj.data.Stream
 import groovy.transform.Canonical
 import groovy.transform.TypeChecked
 
@@ -17,5 +18,17 @@ class Generator {
 	String name
 	Closure func
 	Boolean guard = false
+
+	def leftShift(final Stream s) {
+		func = { s }
+	}
+
+	def leftShift(final List list) {
+		func = { list }
+	}
+
+	def leftShift(final Closure c) {
+		func = c
+	}
 
 }

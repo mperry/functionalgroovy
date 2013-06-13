@@ -11,17 +11,17 @@ import groovy.transform.TypeChecked
  * Time: 12:36 AM
  * To change this template use File | Settings | File Templates.
  */
-class LazyComprehension<A> {
+class LazyComprehension {
 
 	private static final String GUARD = "guard"
 	private List<Generator> generators = []
 
 	@TypeChecked
-	Stream<A> yield(Closure<?> c) {
+	def yield(Closure<?> c) {
 	    startStreamProcessing(c)
 	}
 
-	private Stream<A> startStreamProcessing(Closure<?> yieldClosure) {
+	private def startStreamProcessing(Closure<?> yieldClosure) {
 		def head = generators.head()
 		processStream(yieldClosure, generators.tail(), [:], executeGenerator(head.func, [:]), head.name)
 	}
@@ -38,7 +38,7 @@ class LazyComprehension<A> {
 	}
 
 //	@TypeChecked
-	private Stream<?> executeGenerator(Closure c, Object context) {
+	private def executeGenerator(Closure c, Object context) {
 		executeFunction(c, context)
 	}
 
@@ -47,21 +47,21 @@ class LazyComprehension<A> {
 	 * lastVar in the context
 	 */
 	//	@TypeChecked
-	private Stream<?> processStream(Closure<?> yield, List<Generator> gs, Map<String, ?> context, Stream<?> stream, String lastVar) {
+	private def processStream(Closure<?> yield, List<Generator> gs, Map<String, ?> context, def functorMonad, String lastVar) {
 		if (gs.size() == 0) {
-			stream.map {
+			functorMonad.map {
 				executeYield(yield, new Yield(context + [(lastVar): it]))
 			}
 		} else {
 			def head = gs.head()
 			def tail = gs.tail()
 			if (head.guard) {
-				def s = stream.filter {
+				def s = functorMonad.filter {
 					executeFunction(head.func, context + [(lastVar): it])
 				}
 				processStream(yield, tail, context, s, lastVar)
 			} else {
-				stream.bind {
+				functorMonad.bind {
 					def c = context + [(lastVar): it]
 					processStream(yield, tail, c, executeGenerator(head.func, c), head.name)
 				}
@@ -80,8 +80,8 @@ class LazyComprehension<A> {
 	}
 
 //	@TypeChecked
-	static <A> Stream<A> foreach(Closure<Stream<A>> comprehension) {
-		comprehension.delegate = new LazyComprehension<A>()
+	static def foreach(Closure comprehension) {
+		comprehension.delegate = new LazyComprehension()
 		comprehension.resolveStrategy = Closure.DELEGATE_ONLY
 		comprehension.call()
 	}

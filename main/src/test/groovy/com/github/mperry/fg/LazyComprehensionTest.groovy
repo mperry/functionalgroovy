@@ -28,6 +28,21 @@ class LazyComprehensionTest {
 	}
 
 	@Test
+	void simpleLists() {
+		def res = foreach {
+			a {
+				[1, 2]
+			}
+			yield {
+				a + 1
+			}
+		}
+		def expected = [2, 3]
+		def actual = res
+		assertTrue(expected == actual)
+	}
+
+	@Test
 	void test1() {
 		def res = foreach {
 			a { 1.to(2) }

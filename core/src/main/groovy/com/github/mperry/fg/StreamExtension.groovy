@@ -39,6 +39,10 @@ class StreamExtension {
 		s.bind(c as F)
 	}
 
+	public static <A, B> Stream<B> collectMany(Stream<A> s, Closure<Stream<B>> c) {
+		s.bind(c)
+	}
+
 	@TypeChecked
 	public static <A, B> B fold(Stream<A> s, B initialValue, Closure<B> c) {
 		s.foldLeft(c as F2, initialValue)

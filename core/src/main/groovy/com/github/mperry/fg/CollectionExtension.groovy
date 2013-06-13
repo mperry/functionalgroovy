@@ -16,8 +16,12 @@ class CollectionExtension {
 		collection.findAll(f)
 	}
 
-	public static <A, B> Collection<B> fold(Collection<A> collection, B initial, Closure<B> f) {
+	public static <A, B> B fold(Collection<A> collection, B initial, Closure<B> f) {
 		collection.inject(initial, f)
+	}
+
+	public static <A, B> List<B> bind(Collection<A> c, Closure<List<B>> f) {
+		c.collectMany(f)
 	}
 
 }

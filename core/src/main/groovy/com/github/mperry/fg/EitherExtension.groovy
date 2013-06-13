@@ -11,20 +11,13 @@ import groovy.transform.TypeChecked
  * Time: 1:45 PM
  * To change this template use File | Settings | File Templates.
  */
-@TypeChecked
 class EitherExtension {
 
-	/**
-	 * (M t) -> (t -> M u) -> (M u)
-	 * @param either
-	 * @param c
-	 * @return
-	 */
-	public static <A, B, C> Either<A, C> bind(Either<A, B> either, Closure<Either<B, C>> f) {
-		(Either<A, C>) either.isLeft() ?
-//			Either.left(either.left().value()) :
-			either :
-			f.call(either.right().value())
+	@TypeChecked
+	public static <A, B, C> Either<A, C> bind(Either<A, B> either, Closure<Either<A, C>> f) {
+		either.isLeft() ?
+			Either.<A, C>left(either.left().value()) :
+			(Either<A, C>) f.call(either.right().value())
 	}
 
 }

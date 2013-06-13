@@ -10,9 +10,9 @@ import groovy.transform.TypeChecked
  * Time: 12:40 PM
  * To change this template use File | Settings | File Templates.
  */
-//@TypeChecked
 class OptionStaticExtension {
 
+//	@TypeChecked
 	public static <A> Option<A> unit(Option option, A value) {
 		Option.<A>some(value)
 	}

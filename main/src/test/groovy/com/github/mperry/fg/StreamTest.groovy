@@ -20,7 +20,7 @@ class StreamTest {
 	@Test
 	void simple() {
 		def s = Stream.range(1)
-		def s2 = s.filter({it % 2 == 0}).take(4)
+		def s2 = s.filter {it % 2 == 0}.take(4)
 		assertTrue(s2.toJList() == [2, 4, 6, 8])
 	}
 
@@ -49,15 +49,14 @@ class StreamTest {
 
 	@Test
 	void mapWithSubstreams() {
-		def b = 1.to(2).map({it.to(4)})
+		def b = 1.to(2).map{it.to(4)}
 		assertTrue(b.toJList() == [[1, 2, 3, 4], [2, 3, 4]])
 	}
 
 	@Test
 	void mixedToJList() {
 		def a = Stream.stream(1, 2.to(3))
-		assertTrue(a.toJList() == [1, [2, 3
-		]])
+		assertTrue(a.toJList() == [1, [2, 3]])
 	}
 
 	@Test

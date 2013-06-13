@@ -12,7 +12,6 @@ import groovy.transform.TypeChecked
  * Time: 11:20 PM
  * To change this template use File | Settings | File Templates.
  */
-@TypeChecked
 class IntegerExtension {
 
 	/**
@@ -20,6 +19,7 @@ class IntegerExtension {
 	 * @param to End at (inclusive)
 	 * @return
 	 */
+	@TypeChecked
 	public static Stream<Integer> to(Integer from, Integer to) {
 		Stream.range(from, to + 1)
 	}

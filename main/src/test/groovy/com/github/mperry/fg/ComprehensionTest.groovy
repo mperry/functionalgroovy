@@ -6,6 +6,7 @@ import static junit.framework.Assert.assertTrue
 import static com.github.mperry.fg.Comprehension.foreach
 
 /**
+ * @deprecated
  * Created with IntelliJ IDEA.
  * User: MarkPerry
  * Date: 24/02/13

@@ -76,8 +76,6 @@ class LazyComprehension {
 
 //	@TypeChecked
 	private void methodMissing(String name, args) {
-		def z = 0
-//		generators << new Generator(name: name, func: args[0], guard: isGuard(name))
 		addGenerator(new Generator(name: name, func: args[0], guard: isGuard(name)))
 	}
 
@@ -85,17 +83,10 @@ class LazyComprehension {
 		generators << g
 	}
 
-	def propertyMissing(String name, value) {
-		def z = 0
-	}
-
-	def propertyMissing(String name) {
-		def z = 0
-//		generators << new Generator(name: name, guard: false)
+	Generator propertyMissing(String name) {
 		def g = new Generator(name: name, guard: false)
 		addGenerator(g)
 		g
-
 	}
 
 //	@TypeChecked

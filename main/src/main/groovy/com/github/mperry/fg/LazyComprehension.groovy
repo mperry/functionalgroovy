@@ -11,19 +11,19 @@ import groovy.transform.TypeChecked
  * Time: 12:36 AM
  * To change this template use File | Settings | File Templates.
  */
-class LazyComprehension {
+class LazyComprehension<A> {
 
 	private static final String GUARD = "guard"
 	private List<Generator> generators = []
 
 	@TypeChecked
-	def yield(Closure c) {
+	Stream<A> yield(Closure<?> c) {
 	    startStreamProcessing(c)
 	}
 
-	private def startStreamProcessing(Closure c) {
+	private Stream<A> startStreamProcessing(Closure<?> yieldClosure) {
 		def head = generators.head()
-		processStream(c, generators.tail(), [:], executeGenerator(head.func, [:]), head.name)
+		processStream(yieldClosure, generators.tail(), [:], executeGenerator(head.func, [:]), head.name)
 	}
 
 	@TypeChecked
@@ -47,38 +47,41 @@ class LazyComprehension {
 	 * lastVar in the context
 	 */
 	//	@TypeChecked
-	private Stream<?> processStream(Closure yieldAction, List<Generator> gens, Map context, Stream stream, String lastVar) {
-
-		if (gens.size() == 0) {
+	private Stream<?> processStream(Closure<?> yield, List<Generator> gs, Map<String, ?> context, Stream<?> stream, String lastVar) {
+		if (gs.size() == 0) {
 			stream.map {
-				executeYield(yieldAction, new Yield(context + [(lastVar): it]))
+				executeYield(yield, new Yield(context + [(lastVar): it]))
 			}
 		} else {
-			def head = gens.head()
-			def tail = gens.tail()
+			def head = gs.head()
+			def tail = gs.tail()
 			if (head.guard) {
 				def s = stream.filter {
 					executeFunction(head.func, context + [(lastVar): it])
 				}
-				processStream(yieldAction, tail, context, s, lastVar)
+				processStream(yield, tail, context, s, lastVar)
 			} else {
 				stream.bind {
 					def c = context + [(lastVar): it]
-					def s = executeGenerator(head.func, c)
-					processStream(yieldAction, tail, c, s, head.name)
+					processStream(yield, tail, c, executeGenerator(head.func, c), head.name)
 				}
 			}
 		}
 	}
 
-//	@TypeChecked
-	private void methodMissing(String name, args) {
-		generators << new Generator(name:  name, func: args[0], guard: (name == GUARD))
+	@TypeChecked
+	Boolean isGuard(String name) {
+		name == GUARD
 	}
 
 //	@TypeChecked
-	static Stream<?> foreach(Closure comprehension) {
-		comprehension.delegate = new LazyComprehension()
+	private void methodMissing(String name, args) {
+		generators << new Generator(name: name, func: args[0], guard: isGuard(name))
+	}
+
+//	@TypeChecked
+	static <A> Stream<A> foreach(Closure<Stream<A>> comprehension) {
+		comprehension.delegate = new LazyComprehension<A>()
 		comprehension.resolveStrategy = Closure.DELEGATE_ONLY
 		comprehension.call()
 	}

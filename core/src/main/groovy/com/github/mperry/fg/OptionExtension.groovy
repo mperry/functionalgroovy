@@ -21,10 +21,27 @@ class OptionExtension {
 		option.bind(f as F)
 	}
 
+//	@TypeChecked
+	static <A, B> Option<B> collectMany(Option<A> option, Closure<Option<B>> f) {
+		option.bind(f)
+	}
+
 	@TypeChecked
 	public static <A, B> Option<B> map(Option<A> option, Closure<B> f) {
 		option.map(f as F)
 	}
 
+	static <A, B> Option<B> collect(Option<A> option, Closure<B> f) {
+		option.map(f)
+	}
+
+	@TypeChecked
+	static <A> Option<A> filter(Option<A> option, Closure<Boolean> f) {
+		option.filter(f as F)
+	}
+
+	static <A> Option<A> findAll(Option<A> option, Closure<Boolean> f) {
+		option.filter(f)
+	}
 
 }

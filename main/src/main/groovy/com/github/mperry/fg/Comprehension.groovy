@@ -9,7 +9,7 @@ import groovy.transform.TypeChecked
  * Time: 12:36 AM
  * To change this template use File | Settings | File Templates.
  */
-class LazyComprehension {
+class Comprehension {
 
 	private static final String GUARD = "guard"
 	private List<Generator> generators = []
@@ -89,7 +89,7 @@ class LazyComprehension {
 
 //	@TypeChecked
 	static def foreach(Closure comprehension) {
-		comprehension.delegate = new LazyComprehension()
+		comprehension.delegate = new Comprehension()
 		comprehension.resolveStrategy = Closure.DELEGATE_ONLY
 		comprehension.call()
 	}

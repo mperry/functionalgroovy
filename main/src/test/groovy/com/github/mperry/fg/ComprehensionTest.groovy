@@ -2,7 +2,7 @@ package com.github.mperry.fg
 
 import org.junit.Test
 
-import static com.github.mperry.fg.LazyComprehension.foreach
+import static Comprehension.foreach
 import static junit.framework.Assert.assertTrue
 
 /**
@@ -12,7 +12,7 @@ import static junit.framework.Assert.assertTrue
  * Time: 12:39 AM
  * To change this template use File | Settings | File Templates.
  */
-class LazyComprehensionTest {
+class ComprehensionTest {
 
 	@Test
 	void simple() {

@@ -1,7 +1,5 @@
 package com.github.mperry.fg
 
-import fj.data.Stream
-
 import groovy.transform.TypeChecked
 
 /**
@@ -18,12 +16,12 @@ class LazyComprehension {
 
 	@TypeChecked
 	def yield(Closure<?> c) {
-	    startStreamProcessing(c)
+	    startProcessing(c)
 	}
 
-	private def startStreamProcessing(Closure<?> yieldClosure) {
+	private def startProcessing(Closure<?> yieldClosure) {
 		def head = generators.head()
-		processStream(yieldClosure, generators.tail(), [:], executeGenerator(head.func, [:]), head.name)
+		process(yieldClosure, generators.tail(), [:], executeGenerator(head.func, [:]), head.name)
 	}
 
 	@TypeChecked
@@ -47,7 +45,7 @@ class LazyComprehension {
 	 * lastVar in the context
 	 */
 	//	@TypeChecked
-	private def processStream(Closure<?> yield, List<Generator> gs, Map<String, ?> context, def functorMonad, String lastVar) {
+	private def process(Closure<?> yield, List<Generator> gs, Map<String, ?> context, def functorMonad, String lastVar) {
 		if (gs.size() == 0) {
 			functorMonad.map {
 				executeYield(yield, new Yield(context + [(lastVar): it]))
@@ -59,11 +57,11 @@ class LazyComprehension {
 				def s = functorMonad.filter {
 					executeFunction(head.func, context + [(lastVar): it])
 				}
-				processStream(yield, tail, context, s, lastVar)
+				process(yield, tail, context, s, lastVar)
 			} else {
 				functorMonad.bind {
 					def c = context + [(lastVar): it]
-					processStream(yield, tail, c, executeGenerator(head.func, c), head.name)
+					process(yield, tail, c, executeGenerator(head.func, c), head.name)
 				}
 			}
 		}
@@ -79,14 +77,14 @@ class LazyComprehension {
 		addGenerator(new Generator(name: name, func: args[0], guard: isGuard(name)))
 	}
 
-	void addGenerator(Generator g) {
-		generators << g
-	}
-
 	Generator propertyMissing(String name) {
 		def g = new Generator(name: name, guard: false)
 		addGenerator(g)
 		g
+	}
+
+	void addGenerator(Generator g) {
+		generators << g
 	}
 
 //	@TypeChecked

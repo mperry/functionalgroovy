@@ -1,8 +1,10 @@
 package com.github.mperry.fg
 
+import fj.data.Option
 import org.junit.Test
 
 import static Comprehension.foreach
+import static fj.data.Option.*
 import static junit.framework.Assert.assertTrue
 
 /**
@@ -117,4 +119,21 @@ class ComprehensionTest {
 		assertTrue(actual == expected)
 	}
 
+	@Test
+	void test5() {
+		def res = foreach {
+			a << [some(0), some(1), some(2), none(), some(10)]
+			guard {
+				a.filter {
+					it > 1
+				}.isSome()
+			}
+			yield {
+				a.map { it + 3 }
+			}
+		}
+		def expected = [ some(5), some(13)]
+		println res
+		assertTrue (res == expected)
+	}
 }

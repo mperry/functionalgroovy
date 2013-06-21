@@ -43,23 +43,25 @@ class Comprehension {
 	/**
 	 * Process stream, when doing an action over stream, do so with
 	 * lastVar in the context
+	 * strucutre must have map, filter and bind implemented
 	 */
 	//	@TypeChecked
-	private def process(Closure<?> yield, List<Generator> gs, Map<String, ?> context, def functorMonad, String lastVar) {
+	private def process(Closure<?> yield, List<Generator> gs, Map<String, ?> context, def structure, String lastVar) {
 		if (gs.size() == 0) {
-			functorMonad.map {
-				executeYield(yield, new Yield(context + [(lastVar): it]))
+			structure.map {
+				executeYield(yield, new Yield(values: context + [(lastVar): it]))
 			}
 		} else {
 			def head = gs.head()
 			def tail = gs.tail()
 			if (head.guard) {
-				def s = functorMonad.filter {
-					executeFunction(head.func, context + [(lastVar): it])
+				def s = structure.filter {
+					def z = executeFunction(head.func, context + [(lastVar): it])
+					z
 				}
 				process(yield, tail, context, s, lastVar)
 			} else {
-				functorMonad.bind {
+				structure.bind {
 					def c = context + [(lastVar): it]
 					process(yield, tail, c, executeGenerator(head.func, c), head.name)
 				}
@@ -90,7 +92,7 @@ class Comprehension {
 //	@TypeChecked
 	static def foreach(Closure comprehension) {
 		comprehension.delegate = new Comprehension()
-		comprehension.resolveStrategy = Closure.DELEGATE_ONLY
+		comprehension.resolveStrategy = Closure.OWNER_FIRST
 		comprehension.call()
 	}
 

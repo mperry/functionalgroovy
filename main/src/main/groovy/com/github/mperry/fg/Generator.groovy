@@ -19,6 +19,8 @@ class Generator {
 	Closure func
 	Boolean guard = false
 
+	// left shift should only accept a Functor or Monad
+
 	def leftShift(final Stream s) {
 		func = { s }
 	}
@@ -27,8 +29,16 @@ class Generator {
 		func = { list }
 	}
 
+	def leftShift(final Collection c) {
+		func = { c }
+	}
+
 	def leftShift(final Closure c) {
 		func = c
+	}
+
+	def leftShift(final Object o) {
+		throw new UnsupportedOperationException("Comprehension not supported for object $o with class ${o.class.canonicalName}")
 	}
 
 }

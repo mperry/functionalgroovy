@@ -20,7 +20,7 @@ repositories {
 }
 
 dependencies {
-	compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.0.5'
+	compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.1.4'
 	compile group: 'org.functionaljava', name: 'functionaljava', version: '3.1'
 }
 

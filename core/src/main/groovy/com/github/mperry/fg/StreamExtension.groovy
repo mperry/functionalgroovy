@@ -52,6 +52,14 @@ class StreamExtension {
 		s.fold(initialValue, c)
 	}
 
+	public static <A> Stream<A> dropWhile(Stream<A> s, Closure<Boolean> c) {
+		s.dropWhile(c as F)
+	}
+
+	public static <A> Stream<A> takeWhile(Stream<A> s, Closure<Boolean> c) {
+		s.takeWhile(c as F)
+	}
+
 //	@TypeChecked
 	public static <A> List<A> toJList(Stream<A> s) {
 		s.map { A it ->

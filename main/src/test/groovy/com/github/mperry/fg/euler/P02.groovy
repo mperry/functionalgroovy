@@ -45,7 +45,9 @@ class P02 extends GroovyTestCase {
 	@TypeChecked
 	void test1() {
 		def max = 4 * 10 ** 6
-		def r = fib().takeWhile{ int it -> it < max }.filter{ int it -> it % 2 == 0 }.sum()
+		def r = fib().takeWhile{ int it -> it < max }.filter { int it ->
+			it % 2 == 0
+		}.fold(0) { int acc, int v -> acc + v}
 		println r
 		assertTrue(r == 4613732)
 	}

@@ -67,14 +67,14 @@ class P05 extends GroovyTestCase {
 		assertTrue(val == 2520)
 	}
 
-	@Test
-	void test3() {
+//	@Test
+	void highTest() {
 		def v2 = lowest(1, 20)
 		assertTrue(v2 == 232792560)
 	}
 
-	@Test
-	void test4() {
+//	@Test
+	void midTest() {
 		def val = lowest(1, 18)
 		println val
 //		assertTrue(val == 2520)

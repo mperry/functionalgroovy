@@ -55,17 +55,21 @@ class P04 extends GroovyTestCase {
 		s.reverse().equals(s)
 	}
 
-	@Test
-	void test() {
+	void testEmpty() {
+
+	}
+
+//	@Test
+	void myTest() {
 		def a = p()
 		def l = a.first()
 		println l
 		def b = a.toJList()
-		println b
+//		println b
 		def d = b.map { it.orSome(0) }
 
 		def c = d.sort()
-		println c
+//		println c
 		def e = c.last()
 		println e
 

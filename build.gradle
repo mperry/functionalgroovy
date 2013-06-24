@@ -1,7 +1,4 @@
 
-//defaultTasks 'build', 'uploadArchives'
-//defaultTasks 'uploadArchives'
-
 apply from: "properties.gradle"
 
 defaultTasks 'build', 'uploadArchives'

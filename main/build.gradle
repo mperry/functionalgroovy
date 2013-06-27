@@ -3,7 +3,7 @@ apply plugin: 'java'
 apply plugin: 'groovy'
 apply plugin: "maven"
 
-defaultTasks 'build', 'uploadArchives'
+defaultTasks 'build', 'uploadArchives', 'uploadLocalMaven'
 
 ext.artifactId = "$projectName-main"
 
@@ -17,6 +17,9 @@ repositories {
 //	maven {
 //		url nexusUrlGroups
 //	}
+	maven {
+		url "file://$projectDir/../releases"
+	}
 }
 
 configurations {
@@ -45,7 +48,7 @@ jar {
 	}
 }
 
-build.dependsOn ':core:uploadLocalArchive'
+build.dependsOn ':core:uploadLocalArchive', ':core:uploadLocalMaven'
 
 uploadLocalArchive {
 	repositories {

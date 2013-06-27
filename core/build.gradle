@@ -3,7 +3,7 @@ apply plugin: 'java'
 apply plugin: 'groovy'
 apply plugin: "maven"
 
-defaultTasks 'build', 'uploadLocalArchive'
+defaultTasks 'build', 'uploadLocalArchive', 'uploadLocalMaven'
 
 ext.artifactId = "$projectName-core"
 
@@ -17,6 +17,7 @@ repositories {
 	maven {
 		url nexusUrlGroups
 	}
+
 }
 
 configurations {

@@ -3,7 +3,7 @@ apply plugin: 'java'
 apply plugin: 'groovy'
 apply plugin: "maven"
 
-defaultTasks 'build', 'uploadArchives'
+defaultTasks 'build', 'uploadLocalArchive'
 
 ext.artifactId = "$projectName-core"
 
@@ -17,6 +17,16 @@ repositories {
 	maven {
 		url nexusUrlGroups
 	}
+}
+
+configurations {
+	corporateNexus
+	localArchive
+}
+
+artifacts {
+	localArchive jar
+	corporateNexus jar
 }
 
 dependencies {
@@ -35,17 +45,21 @@ task display << {
 	println "$organisation $groupId:$artifactId:$version"
 }
 
-uploadArchives {
+uploadCorporateNexus {
+	repositories {
+		mavenDeployer {
+			repository(url: nexusCorporateReleaseRepo) {
+				authentication(userName: nexusCorporateUsername, password: nexusCorporatePassword)
+			}
+			pom.version = version
+			pom.artifactId = artifactId
+			pom.groupId = groupId
+		}
+	}
+}
+
+uploadLocalArchive {
 	repositories {
 		add project.repositories.DynamicRepo
-//		mavenDeployer {
-//			repository(url: "http://${nexusUrl}/nexus/content/repositories/snapshots") {
-//				authentication(userName: "admin", password: "admin123")
-//			}
-//			pom.version = version
-//			pom.artifactId = artifactId
-//			pom.groupId = groupId
-//		}
-
 	}
 }

@@ -19,6 +19,16 @@ repositories {
 //	}
 }
 
+configurations {
+	corporateNexus
+	localArchive
+}
+
+artifacts {
+	localArchive jar
+	corporateNexus jar
+}
+
 dependencies {
 	compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.1.4'
 	compile group: 'org.functionaljava', name: 'functionaljava', version: '3.1'
@@ -33,19 +43,23 @@ jar {
 	}
 }
 
-build.dependsOn ':core:uploadArchives'
+build.dependsOn ':core:uploadLocalArchive'
 
-uploadArchives {
+uploadLocalArchive {
 	repositories {
 		add project.repositories.DynamicRepo
-//		mavenDeployer {
-//			repository(url: "http://${nexusUrl}/nexus/content/repositories/snapshots") {
-//				authentication(userName: "admin", password: "admin123")
-//			}
-//			pom.version = version
-//			pom.artifactId = artifactId
-//			pom.groupId = groupId
-//		}
+	}
+}
 
+uploadCorporateNexus {
+	repositories {
+		mavenDeployer {
+			repository(url: nexusCorporateReleaseRepo) {
+				authentication(userName: nexusCorporateUsername, password: nexusCorporatePassword)
+			}
+			pom.version = version
+			pom.artifactId = artifactId
+			pom.groupId = groupId
+		}
 	}
 }

@@ -1,7 +1,7 @@
 
 apply from: "properties.gradle"
 
-defaultTasks 'build', 'uploadArchives'
+defaultTasks 'build', 'uploadArchives', 'uploadLocalMaven'
 
 task clean << {
 	file("$projectDir/build").deleteDir()

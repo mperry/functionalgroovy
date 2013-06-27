@@ -22,10 +22,12 @@ repositories {
 configurations {
 	corporateNexus
 	localArchive
+	localMaven
 }
 
 artifacts {
 	localArchive jar
+	localMaven jar
 	corporateNexus jar
 }
 
@@ -51,6 +53,17 @@ uploadCorporateNexus {
 			repository(url: nexusCorporateReleaseRepo) {
 				authentication(userName: nexusCorporateUsername, password: nexusCorporatePassword)
 			}
+			pom.version = version
+			pom.artifactId = artifactId
+			pom.groupId = groupId
+		}
+	}
+}
+
+uploadLocalMaven {
+	repositories {
+		mavenDeployer {
+			repository(url: "file://$projectDir/../releases")
 			pom.version = version
 			pom.artifactId = artifactId
 			pom.groupId = groupId

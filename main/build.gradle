@@ -22,11 +22,13 @@ repositories {
 configurations {
 	corporateNexus
 	localArchive
+	localMaven
 }
 
 artifacts {
 	localArchive jar
 	corporateNexus jar
+	localMaven jar
 }
 
 dependencies {
@@ -48,6 +50,18 @@ build.dependsOn ':core:uploadLocalArchive'
 uploadLocalArchive {
 	repositories {
 		add project.repositories.DynamicRepo
+	}
+}
+
+
+uploadLocalMaven {
+	repositories {
+		mavenDeployer {
+			repository(url: "file://$projectDir/../releases")
+			pom.version = version
+			pom.artifactId = artifactId
+			pom.groupId = groupId
+		}
 	}
 }
 

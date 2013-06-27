@@ -6,3 +6,7 @@ defaultTasks 'build', 'uploadArchives', 'uploadLocalMaven'
 task clean << {
 	file("$projectDir/build").deleteDir()
 }
+
+task wrapper(type: Wrapper) {
+  gradleVersion = '1.6'
+}

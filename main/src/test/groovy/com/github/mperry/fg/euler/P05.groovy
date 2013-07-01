@@ -27,10 +27,13 @@ import org.junit.Test
 
 class P05 extends GroovyTestCase {
 
+	boolean divisible(int num, int min, int max) {
+		divisible1(num, min, max)
+	}
 
 	@CompileStatic
 	@TypeChecked
-	boolean divisible(int num, int min, int max) {
+	boolean divisible1(int num, int min, int max) {
 		def s = (1..max).takeWhile { int it -> num % it == 0 }
 		def b = s.size() == max - min + 1
 		b
@@ -48,7 +51,7 @@ class P05 extends GroovyTestCase {
 		def s3 = Stream.forever(Enumerator.intEnumerator, max, max)
 //		def s = Stream.range(1)
 		def s2 = s3.dropWhile({ Integer it ->
-			def b = !divisible2(it, min, max)
+			def b = !divisible(it, min, max)
 			b
 		} as F)
 		def val = s2.head()
@@ -67,17 +70,24 @@ class P05 extends GroovyTestCase {
 		assertTrue(val == 2520)
 	}
 
-//	@Test
-	void highTest() {
+	@Test
+	void testHigh() {
 		def v2 = lowest(1, 20)
 		assertTrue(v2 == 232792560)
 	}
 
-//	@Test
-	void midTest() {
+	@Test
+	void testMid18() {
 		def val = lowest(1, 18)
 		println val
-//		assertTrue(val == 2520)
+		assertTrue(val == 12252240)
+	}
+
+	@Test
+	void testMid19() {
+		def val = lowest(1, 19)
+		println val
+		assertTrue(val == 232792560)
 	}
 
 

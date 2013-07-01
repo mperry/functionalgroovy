@@ -3,14 +3,6 @@ package com.github.mperry.fg.euler
 import fj.data.Stream
 import org.junit.Test
 
-/**
- * Created with IntelliJ IDEA.
- * User: MarkPerry
- * Date: 20/06/13
- * Time: 9:44 PM
- * To change this template use File | Settings | File Templates.
- */
-
 /*
  * The prime factors of 13195 are 5, 7, 13 and 29.
  *
@@ -40,14 +32,14 @@ class P03 extends GroovyTestCase {
 			def s = factorsC.trampoline().call((numerator / denominator).toBigInteger(), 2)
 			s.cons(denominator)
 		}
-
 	}.trampoline()
 
 	@Test
 	void test() {
 //		println factors(12).toList()
-//		println factors(13195).toList()
+		println factors(13195).toList()
 		def list = factors(600851475143).toList()
+		println list
 		assertTrue(6857 == list.last())
 	}
 

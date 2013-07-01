@@ -15,12 +15,11 @@ import org.junit.Test
 class P01 extends GroovyTestCase {
 
 	def f() {
-		def r = 1.to(999).filter { Integer it ->
+		1.to(10 ** 3 - 1).filter { Integer it ->
 			it % 3 == 0 || it % 5 == 0
 		}.fold(0) { Integer acc, Integer val ->
 			acc + val
 		}
-		r
 	}
 
 	@Test

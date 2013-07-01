@@ -5,15 +5,9 @@ import fj.P
 import fj.P2
 import fj.data.Option
 import fj.data.Stream
+import groovy.transform.TypeChecked
+import org.junit.Ignore
 import org.junit.Test
-
-/**
- * Created with IntelliJ IDEA.
- * User: MarkPerry
- * Date: 20/06/13
- * Time: 10:50 PM
- * To change this template use File | Settings | File Templates.
- */
 
 /*
  * A palindromic number reads the same both ways. The largest palindrome made from
@@ -25,54 +19,62 @@ import org.junit.Test
 
 class P04 extends GroovyTestCase {
 
+	@TypeChecked
+	P2<Integer, Integer> limits(int i) {
+		P.p((int) i / 10, i - 1)
+	}
 
-	final int limit = 1000
-	int min = limit / 10
-	int max = limit - 1
-	Stream<Integer> p() {
-//		def list = min.to(max).combos(min.to(max))
-		def list = Comprehension.foreach {
-			def mymax = limit
-			def s = (limit - max).to(limit - min)
-			a << (s)
-			b << (s)
+	@TypeChecked
+	Stream<Integer> p(int lim) {
+		intStream(lim).filter { Integer i -> isPalindrome(i.toString()) }
+	}
+
+	Stream<Integer> intStream(int limit) {
+		Comprehension.foreach {
+			def p = limits(limit)
+			def s = p._1().to(p._2())
+			a << s
+			b << {a.to(p._2())}
 			yield {
-				P.p(mymax - a, mymax - b)
+				a * b
 			}
 		}
-		def a = list.map { P2 p ->
-			pal(p._1(), p._2())
-		}.filter { it.isSome() }
-//		println list
-		a
 	}
 
-	Option<Integer> pal(int a, int b) {
-		Option.some(a * b).filter { isPalindrome(it.toString()) }
+	@TypeChecked
+	Option<Integer> palindrome(int a) {
+		Option.some(a).filter { isPalindrome(it.toString()) }
 	}
 
+	@TypeChecked
 	boolean isPalindrome(String s) {
 		s.reverse().equals(s)
 	}
 
-	void testEmpty() {
-
+	@TypeChecked
+	int highest(int limit) {
+		p(limit).fold(0) { Integer acc, Integer val ->
+			acc > val ? acc : val
+		}
 	}
 
-//	@Test
-	void myTest() {
-		def a = p()
-		def l = a.first()
-		println l
-		def b = a.toJList()
-//		println b
-		def d = b.map { it.orSome(0) }
-
-		def c = d.sort()
-//		println c
-		def e = c.last()
-		println e
-
-		assertTrue(e == 906609)
+	@Test
+	void testVeryLow() {
+		highest(10)
 	}
+
+	@TypeChecked
+	@Test
+	void testLow() {
+		assertTrue(highest(100) == 9009)
+	}
+
+	@TypeChecked
+	@Test
+	void testHigh() {
+		def v = highest(1000)
+		println v
+		assertTrue(v == 906609)
+	}
+
 }

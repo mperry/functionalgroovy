@@ -1,2 +1,5 @@
 
+rootProject.name = 'org.functionalgroovy'
+
 include 'core', 'main'
+rootProject.children.each { it.name = "functionalgroovy-" + it.name }

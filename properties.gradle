@@ -24,6 +24,6 @@ String nexusReleaseRepo(String ip, int port) {
 }
 
 String nexusSnaphotRepo(String ip, int port) {
-	"${nexusRepo(ip, port)}/snaphots"
+	"${nexusRepo(ip, port)}/snapshots"
 }
 

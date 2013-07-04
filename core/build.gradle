@@ -5,7 +5,14 @@ apply plugin: "maven"
 
 defaultTasks 'build', 'uploadLocalArchive', 'uploadLocalMaven'
 
+//ext.project.name = "functionalgroovy-core"
+//rootProject.name = "functionalgroovy-core"
+
 ext.artifactId = "$projectName-core"
+//ext.artifactId = "functionalgroovy-core"
+ext.applicationName = 'functionalgroovy-core'
+
+println "project name $name"
 
 repositories {
 	ivy {
@@ -14,14 +21,14 @@ repositories {
 		artifactPattern "${repoGenBase}/[organisation]/[module]/[type]s/[artifact]-[revision].[ext]"
 	}
 	mavenCentral()
-	maven {
-		url nexusUrlGroups
-	}
-
+//	maven {
+//		url nexusUrlGroups
+//	}
 }
 
 configurations {
 	corporateNexus
+	corporateNexusSnapshot
 	localArchive
 	localMaven
 }
@@ -30,6 +37,7 @@ artifacts {
 	localArchive jar
 	localMaven jar
 	corporateNexus jar
+	corporateNexusSnapshot jar
 }
 
 dependencies {
@@ -52,6 +60,19 @@ uploadCorporateNexus {
 	repositories {
 		mavenDeployer {
 			repository(url: nexusCorporateReleaseRepo) {
+				authentication(userName: nexusCorporateUsername, password: nexusCorporatePassword)
+			}
+			pom.version = version
+			pom.artifactId = artifactId
+			pom.groupId = groupId
+		}
+	}
+}
+
+uploadCorporateNexusSnapshot {
+	repositories {
+		mavenDeployer {
+			repository(url: nexusCorporateSnapshotRepo) {
 				authentication(userName: nexusCorporateUsername, password: nexusCorporatePassword)
 			}
 			pom.version = version

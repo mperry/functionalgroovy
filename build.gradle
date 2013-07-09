@@ -3,6 +3,71 @@ apply from: "properties.gradle"
 
 defaultTasks 'build', 'uploadLocalMaven'
 
+subprojects {
+	apply plugin: "signing"
+	apply plugin: "groovy"
+	apply plugin: "java"
+	apply plugin: "maven"
+
+	task groovydocJar(type: Jar, dependsOn: groovydoc) {
+		classifier = 'javadoc'
+		from 'build/docs/groovydoc'
+	}
+
+
+	task sourcesJar(type: Jar) {
+		from sourceSets.main.allSource
+		classifier = 'sources'
+	}
+
+	artifacts {
+		archives jar
+		archives groovydocJar
+		archives sourcesJar
+	}
+
+	uploadArchives {
+		repositories {
+
+
+			mavenDeployer {
+				repository(url: sonatypeSnapshotUrl) {
+					authentication(userName: sonatypeUsername, password: sonatypePassword)
+				}
+
+				pom.project {
+					name 'FunctionalGroovy'
+					packaging 'jar'
+					description 'FunctionalGroovy enhances FunctionalJava with Groovy idioms'
+					url 'https://github.com/mperry/functionalgroovy'
+
+					scm {
+						url 'https://github.com/mperry/functionalgroovy.git'
+						connection 'scm:git@github.com:mperry/functionalgroovy.git'
+						developerConnection 'scm:git@github.com:mperry/functionalgroovy.git'
+					}
+
+					licenses {
+						license {
+							name 'The Apache Software License, Version 2.0'
+							url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+							distribution 'repo'
+						}
+					}
+
+					developers {
+						developer {
+							id 'mperry'
+							name 'Mark Perry'
+						}
+					}
+				}
+			}
+		}
+	}
+
+}
+
 task clean << {
 	file("$projectDir/build").deleteDir()
 }

@@ -27,3 +27,5 @@ String nexusSnaphotRepo(String ip, int port) {
 	"${nexusRepo(ip, port)}/snapshots"
 }
 
+ext.sonatypeSnapshotUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
+ext.sonatypeReleaseUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"

@@ -1,4 +1,4 @@
-package com.github.mperry.fg.test
+package com.github.mperry.fg.demo
 
 import org.junit.Test
 import fj.data.Option

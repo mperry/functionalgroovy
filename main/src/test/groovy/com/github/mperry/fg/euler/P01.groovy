@@ -14,8 +14,8 @@ import org.junit.Test
 @TypeChecked
 class P01 extends GroovyTestCase {
 
-	def f() {
-		1.to(10 ** 3 - 1).filter { Integer it ->
+	def f(int min, int max) {
+		min.to(max).filter { Integer it ->
 			it % 3 == 0 || it % 5 == 0
 		}.fold(0) { Integer acc, Integer val ->
 			acc + val
@@ -24,7 +24,8 @@ class P01 extends GroovyTestCase {
 
 	@Test
 	void test1() {
-		assertTrue(f() == 233168)
+		assertTrue(f(1, 9) == 23)
+		assertTrue(f(1, 10 ** 3 - 1) == 233168)
 	}
 
 }

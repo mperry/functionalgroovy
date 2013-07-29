@@ -1,5 +1,6 @@
 package com.github.mperry.fg
 
+import fj.data.Option
 import fj.data.Stream
 import groovy.transform.Canonical
 import groovy.transform.TypeChecked
@@ -31,6 +32,10 @@ class Generator {
 
 	def leftShift(final Collection c) {
 		func = { c }
+	}
+
+	def leftShift(final Option o) {
+		func = { o }
 	}
 
 	def leftShift(final Closure c) {

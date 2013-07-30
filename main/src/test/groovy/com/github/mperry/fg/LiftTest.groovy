@@ -35,8 +35,8 @@ class LiftTest {
 	}
 
 	Integer calculateStandard(Properties p) {
-		def v1 = p.getProperty("lift1")
-		def v2 = p.getProperty("lift2Missing")
+		def v1 = p.getProperty("var1")
+		def v2 = p.getProperty("var2Missing")
 		try {
 			if (v1 == null || v2 == null) {
 				return null
@@ -50,22 +50,57 @@ class LiftTest {
 		}
 	}
 
+	Option<Integer> calculateWithComprehension(Properties p) {
+		def t = P.p("var3", "var4")
+		def t2 = t.map({ String s -> getIntProperty(p, s)} as F, t)
+		def f2 = {Integer a, Integer b -> a * b} as F2
+		Comprehension.foreach {
+			a << t2._1()
+			b << t2._2()
+			yield { f2.f(a, b) }
+		}
+	}
+
+	@Test
+	void testBind() {
+		println calculateWithBind(readFile())
+	}
+
+	@Test
+	void testComprehension() {
+		println calculateWithComprehension(readFile())
+	}
+
 	Option<Integer> calculateOptionLift(Properties p) {
-		def t = P.p("lift3", "lift4")
+		def t = P.p("var3", "var4")
 		def t2 = P2.map({ String s -> getIntProperty(p, s)} as F, t)
 		def f2 = {Integer a, Integer b -> a * b} as F2
 		Option.liftM2(f2).f(t2._1(), t2._2())
 	}
 
+	//	@TypeChecked
+	Option<Integer> calculateWithBind(Properties p) {
+		def t = P.p("var3", "var4")
+		def t2 = P2.map({ String s -> getIntProperty(p, s)} as F, t)
+		def f2 = {Integer a, Integer b -> a * b} as F2
+		t2._1().bind { Integer a ->
+			t2._2().map { Integer b ->
+				f2.f(a, b)
+			}
+		}
+	}
+
+
+
 	Option<Integer> calculateOptionLiftComprehension(Properties p) {
-		def t = P.p("lift3", "lift4")
+		def t = P.p("var3", "var4")
 		def t2 = P2.map({ String s -> getIntProperty(p, s)} as F, t)
 		def f2 = {Integer a, Integer b -> a * b} as F2
 		liftOption2(f2).f(t2._1(), t2._2())
 	}
 
 	def <A, B, C> Option<Integer> calculateWithLifter(Properties p, F<F2<A, B, C>, F2<Option<A>, Option<B>, Option<C>>> f) {
-		def t = P.p("lift3", "lift4")
+		def t = P.p("var3", "var4")
 		def t2 = P2.map({ String s -> getIntProperty(p, s)} as F, t)
 		def f2 = {Integer a, Integer b -> a * b} as F2
 		f.f(f2).f(t2._1(), t2._2())

@@ -15,8 +15,8 @@ repositories {
 
 dependencies {
 	compile project(":functionalgroovy-core")
-	compile "org.codehaus.groovy:groovy-all:2.1.5"
-	compile "org.functionaljava:functionaljava:3.1"
+//	compile "org.codehaus.groovy:groovy-all:$groovyVersion"
+//	compile "org.functionaljava:functionaljava:3.1"
 	testCompile "junit:junit:4.10"
 	testCompile "org.gcontracts:gcontracts-core:1+"
 }

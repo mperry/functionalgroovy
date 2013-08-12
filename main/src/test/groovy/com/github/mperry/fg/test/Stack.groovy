@@ -39,7 +39,7 @@ class Stack<T> {
 		return elements.size()
 	}
 
-	@Ensures({ result == true ? count() > 0 : count() >= 0  })
+	@Ensures({ result ? count() > 0 : count() >= 0  })
 	boolean has(T item)  {
 		return elements.contains(item)
 	}

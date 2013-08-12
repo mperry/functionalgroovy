@@ -24,9 +24,7 @@ class BooleanTest {
 		def p = Property.property(Arbitrary.arbInteger, {Integer a ->
 			Bool.bool(a > 0).implies(true)
 		} as F)
-		def cr = p.check()
-		cr.printlnSummary()
-		assertTrue(cr.isOk())
+		p.checkOkWithSummary()
 	}
 
 

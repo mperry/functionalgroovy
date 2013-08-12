@@ -3,100 +3,26 @@ apply plugin: 'java'
 apply plugin: 'groovy'
 apply plugin: "maven"
 
-defaultTasks 'build', 'uploadLocalArchive', 'uploadLocalMaven'
+defaultTasks 'build', "install"
 
-//ext.project.name = "functionalgroovy-core"
-//rootProject.name = "functionalgroovy-core"
-
-ext.artifactId = "$projectName-core"
-//ext.artifactId = "functionalgroovy-core"
-ext.applicationName = 'functionalgroovy-core'
-
-println "project name $name"
+ext {
+	artifactId = name
+	applicationName = projectName
+}
 
 repositories {
-	ivy {
-		name = 'DynamicRepo'
-		ivyPattern "${repoGenBase}/[organisation]/[module]/ivy-[revision].xml"
-		artifactPattern "${repoGenBase}/[organisation]/[module]/[type]s/[artifact]-[revision].[ext]"
-	}
 	mavenCentral()
-//	maven {
-//		url nexusUrlGroups
-//	}
-}
-
-configurations {
-	corporateNexus
-	corporateNexusSnapshot
-	localArchive
-	localMaven
-}
-
-artifacts {
-	localArchive jar
-	localMaven jar
-	corporateNexus jar
-	corporateNexusSnapshot jar
 }
 
 dependencies {
-	compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.1.5'
-	compile group: 'org.functionaljava', name: 'functionaljava', version: '3.1'
+	compile "org.codehaus.groovy:groovy-all:2.1.5"
+	compile "org.functionaljava:functionaljava:3.1"
 	compile "junit:junit:4.10"
-//	compile group: 'org.functionaljava', name: 'functionaljava', version: '3.1'
 }
 
 jar {
-	baseName "$artifactId"
+	baseName artifactId
 	manifest {
 		attributes 'Created-By': founder, 'Signature-Version': version
-	}
-}
-
-task display << {
-	println "$organisation $groupId:$artifactId:$version"
-}
-
-uploadCorporateNexus {
-	repositories {
-		mavenDeployer {
-			repository(url: nexusCorporateReleaseRepo) {
-				authentication(userName: nexusCorporateUsername, password: nexusCorporatePassword)
-			}
-			pom.version = version
-			pom.artifactId = artifactId
-			pom.groupId = groupId
-		}
-	}
-}
-
-uploadCorporateNexusSnapshot {
-	repositories {
-		mavenDeployer {
-			repository(url: nexusCorporateSnapshotRepo) {
-				authentication(userName: nexusCorporateUsername, password: nexusCorporatePassword)
-			}
-			pom.version = version
-			pom.artifactId = artifactId
-			pom.groupId = groupId
-		}
-	}
-}
-
-uploadLocalMaven {
-	repositories {
-		mavenDeployer {
-			repository(url: "file://$projectDir/../releases")
-			pom.version = version
-			pom.artifactId = artifactId
-			pom.groupId = groupId
-		}
-	}
-}
-
-uploadLocalArchive {
-	repositories {
-		add project.repositories.DynamicRepo
 	}
 }

@@ -1,31 +1,3 @@
 
-ext.nexusIp = "plnxinfn022"
-ext.nexusPort = 8081
-//ext.nexusIp = "10.36.1.34"
-//ext.nexusPort = 8090
-
-ext.nexusUrl = "${nexusIp}:${nexusPort}"
-ext.proxyNonHosts = "127.0.0.1|localhost|${nexusIp}"
-ext.nexusContent = "http://${nexusUrl}/nexus/content"
-ext.nexusUrlGroups = "${nexusContent}/groups/public/"
-
-ext.nexusCorporateSnapshotRepo = nexusSnaphotRepo(nexusIp, nexusPort)
-ext.nexusCorporateReleaseRepo = nexusReleaseRepo(nexusIp, nexusPort)
-
-ext.nexusCorporateUsername = "admin"
-ext.nexusCorporatePassword = "admin123"
-
-String nexusRepo(String ip, int port) {
-	"http://${ip}:${port}/nexus/content/repositories"
-}
-
-String nexusReleaseRepo(String ip, int port) {
-	"${nexusRepo(ip, port)}/releases"
-}
-
-String nexusSnaphotRepo(String ip, int port) {
-	"${nexusRepo(ip, port)}/snapshots"
-}
-
 ext.sonatypeSnapshotUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
 ext.sonatypeReleaseUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"

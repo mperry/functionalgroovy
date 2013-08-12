@@ -1,7 +1,7 @@
 
 apply from: "properties.gradle"
 
-defaultTasks 'build', 'uploadLocalMaven'
+defaultTasks 'build'
 
 subprojects {
 	apply plugin: "signing"
@@ -13,7 +13,6 @@ subprojects {
 		classifier = 'javadoc'
 		from 'build/docs/groovydoc'
 	}
-
 
 	task sourcesJar(type: Jar) {
 		from sourceSets.main.allSource
@@ -28,8 +27,6 @@ subprojects {
 
 	uploadArchives {
 		repositories {
-
-
 			mavenDeployer {
 				repository(url: sonatypeSnapshotUrl) {
 					authentication(userName: sonatypeUsername, password: sonatypePassword)

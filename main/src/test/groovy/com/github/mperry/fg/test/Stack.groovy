@@ -15,54 +15,54 @@ class Stack<T> {
 
 	List<T> elements
 
-	@Ensures({ is_empty() })
-	def Stack()  {
+	@Ensures({ isEmpty() })
+	Stack() {
 		elements = []
 	}
 
-	@Requires({ preElements?.size() > 0 })
-	@Ensures({ !is_empty() })
-	def Stack(List<T> preElements)  {
-		elements = preElements
+	@Requires({ list != null })
+//	@Ensures({ !isEmpty() })
+	Stack(List<T> list)  {
+		elements = new ArrayList<T>(list)
 	}
 
-	boolean is_empty()  {
-		return elements.isEmpty()
+	Stack(Stack<T> stack) {
+		elements = new ArrayList<T>(stack.elements)
 	}
 
-	@Requires({ !is_empty() })
-	T last_item()  {
-		return elements.get(count() - 1)
+	boolean isEmpty()  {
+		elements.isEmpty()
 	}
 
-	def count() {
-		return elements.size()
+	@Requires({ !isEmpty() })
+	T top()  {
+//		elements.get(count() - 1)
+		elements.last()
+	}
+
+	@Ensures({ result >= 0 })
+	int count() {
+		elements.size()
 	}
 
 	@Ensures({ result ? count() > 0 : count() >= 0  })
 	boolean has(T item)  {
-		return elements.contains(item)
+		elements.contains(item)
 	}
 
-	@Ensures({ last_item() == item })
-	def push(T item)  {
-		return elements.add(item)
+	@Ensures({ top() == item })
+	void push(T item)  {
+		elements.add(item)
 	}
 
-	@Requires({ !is_empty() })
-	@Ensures({ last_item() == item })
-	def replace(T item)  {
-		remove()
-		return elements.add(item)
+	@Requires({ !isEmpty() })
+	void pop()  {
+		elements.remove(count() - 1)
 	}
 
-	@Requires({ !is_empty() })
-	@Ensures({ result != null })
-	T remove()  {
-		return elements.remove(count() - 1)
+	String toString() {
+		elements.toString()
 	}
 
-	String toString() { elements.toString() }
+
 }
-
-//def stack = new Stack<Integer>()

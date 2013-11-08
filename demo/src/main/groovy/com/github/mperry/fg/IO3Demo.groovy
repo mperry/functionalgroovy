@@ -17,18 +17,22 @@ class IO3Demo {
 
 	String quit = "q"
 	String help = "Squaring REPL\nEnter $quit to quit"
+	String prompt = ">"
 
 	@TypeChecked
 	Option<Integer> toInt(String s) {
 		s.isInteger() ? Option.some(s.toInteger()) : Option.none()
 	}
 
-
+	@TypeChecked
+	String squareMessage(Integer n) {
+		"square $n = ${n * n}"
+	}
 
 	@TypeChecked
 	Option<IO3<Unit>> squareIO(String s) {
 		toInt(s).map { Integer n ->
-			IOConstants.consoleWriteLine("squareIO $n = ${n * n}")
+			IOConstants.consoleWriteLine(squareMessage(n))
 		}
 	}
 
@@ -41,38 +45,37 @@ class IO3Demo {
 		!isLoop(s)
 	}
 
+	Option<String> invalidMessage(String s) {
+		(s.isInteger() || isQuit(s)) ? Option.none() : Option.some("Not an integer: $s")
+	}
+
 	@TypeChecked
-	Option<IO3<Unit>> invalidMessage(String s) {
-		(s.isInteger() || isQuit(s)) ? Option.none() : Option.some(IOConstants.consoleWriteLine("Not an integer: $s"))
+	Option<IO3<Unit>> invalidMessageIO(String s) {
+		invalidMessage(s).map { String it -> IOConstants.consoleWriteLine(it)}
 	}
 
 	@TypeChecked
 	IO3<?> foldIO(List<Option<IO3<?>>> list) {
-		(IO3<?>) list.filter { Option<?> it ->
-			it.isSome()
-		}.inject(IO3.empty()) { IO3<?> acc, Option<IO3<?>> it ->
-			acc.append(it.some())
+		(IO3<?>) list.inject(IO3.empty()) { IO3<?> acc, Option<IO3<?>> it ->
+			it.isNone() ? acc : acc.append(it.some())
 		}
 	}
 
 	@TypeChecked
 	Stream<IO3<String>> stream() {
 		def s = Stream.range(1).map { Integer i ->
-			IOConstants.consoleWriteLine(">").append(IOConstants.consoleReadLine())
-		}.map { IO3<String> io1 ->
-			io1.flatMap({ String s ->
-				foldIO([invalidMessage(s), squareIO(s)]).append(IO3.unit(s))
+			def io = IOConstants.consoleWriteLine(prompt).append(IOConstants.consoleReadLine())
+			io.flatMap({ String s ->
+				foldIO([invalidMessageIO(s), squareIO(s)]).append(IO3.unit(s))
 			} as F)
 		}
 	}
 
 	@TypeChecked
 	void repl() {
-
-
 		IOConstants.consoleWriteLine(help).run()
-		def s = stream().takeWhile { IO3<String> io2 ->
-			def s = io2.run()
+		def s = stream().takeWhile { IO3<String> io ->
+			def s = io.run()
 			isLoop(s)
 		}
 		s.toList()

@@ -26,13 +26,13 @@ class IO3DemoImperative {
 	}
 
 	@TypeChecked
-	Boolean isLoop(String s) {
+	Boolean loop(String s) {
 		s != quit
 	}
 
 	@TypeChecked
 	Boolean isQuit(String s) {
-		!isLoop(s)
+		!loop(s)
 	}
 
 	@TypeChecked
@@ -40,21 +40,26 @@ class IO3DemoImperative {
 		s.isInteger() || isQuit(s)
 	}
 
-//	@TypeChecked
+	@TypeChecked
+	void process(String s) {
+		if (!validInput(s)) {
+			println(invalidMessage(s))
+		}
+		if (s.isInteger()) {
+			println(squareMessage(s.toInteger()))
+		}
+	}
+
+	@TypeChecked
 	void repl() {
 		println(help)
-		System.in.withReader {
+		System.in.withReader { Reader r ->
 			def isLoop = true
 			while (isLoop) {
 				println(prompt)
-				def s = it.readLine()
-				if (!validInput(s)) {
-					println(invalidMessage(s))
-				}
-				if (s.isInteger()) {
-					println(squareMessage(s.toInteger()))
-				}
-				isLoop = isLoop(s)
+				def s = r.readLine()
+				process(s)
+				isLoop = loop(s)
 			}
 		}
 	}

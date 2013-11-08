@@ -18,45 +18,49 @@ class IO3Demo {
 	String quit = "q"
 	String help = "Squaring REPL\nEnter $quit to quit"
 
-	void test1() {
-		def w = IOConstants.consoleWriteLine("Get input:")
-		w.run()
-		def a = IOConstants.consoleReadLine()
-		def b = a.run()
-		println "Got from console: $b"
+	@TypeChecked
+	Option<Integer> toInt(String s) {
+		s.isInteger() ? Option.some(s.toInteger()) : Option.none()
 	}
 
-
-	Option<IO3<Unit>> square(String s) {
-		def result = Option.none()
-		if (s.isInteger()) {
-			def n = s.toInteger()
-			def val = n * n
-			result = Option.some(IOConstants.consoleWriteLine("square $n = $val"))
+	@TypeChecked
+	Option<IO3<Unit>> squareMessage(String s) {
+		toInt(s).map { Integer n ->
+			IOConstants.consoleWriteLine("squareMessage $n = ${n * n}")
 		}
-		result
+	}
+
+	@TypeChecked
+	Boolean isLoop(String s) {
+		s != quit
 	}
 
 	Boolean isQuit(String s) {
-		s == quit
+		!isLoop(s)
 	}
 
-	Option<IO3<Unit>> notNumber(String s) {
-		(s.isInteger() || isQuit(s)) ? Option.none() : Option.some(IOConstants.consoleWriteLine("Not a number: $s"))
+	@TypeChecked
+	Option<IO3<Unit>> invalidMessage(String s) {
+		(s.isInteger() || isQuit(s)) ? Option.none() : Option.some(IOConstants.consoleWriteLine("Not an integer: $s"))
 	}
 
+	@TypeChecked
 	F<String, IO3<Boolean>> convert() {
 		{ String s ->
-//			println "got $s"
-			def opt = square(s)
-			def iod = Option.some(IO3.unit(isQuit(s)))
-			def notNum = notNumber(s)
-			[notNum, opt, iod].filter { it.isSome() }.inject(IO3.empty()) { acc, it ->
-				acc.append(it.some())
-			}
+			fold([invalidMessage(s), squareMessage(s)]).append(IO3.unit(isLoop(s)))
 		} as F
 	}
 
+	@TypeChecked
+	IO3<?> fold(List<Option<IO3<?>>> list) {
+		(IO3<?>) list.filter { Option<?> it ->
+			it.isSome()
+		}.inject(IO3.empty()) { IO3<?> acc, Option<IO3<?>> it ->
+			acc.append(it.some())
+		}
+	}
+
+	@TypeChecked
 	Stream<IO3<Boolean>> stream() {
 		def s = Stream.range(1).map { Integer i ->
 			IOConstants.consoleWriteLine(">").append(IOConstants.consoleReadLine())
@@ -67,26 +71,15 @@ class IO3Demo {
 
 	@TypeChecked
 	void repl() {
-
-		def w = IOConstants.consoleWriteLine(help)
-		w.run()
+		IOConstants.consoleWriteLine(help).run()
 		def s = stream().takeWhile { IO3<Boolean> io2 ->
-			def b = !io2.run()
-			b
+			io2.run()
 		}
 		s.toList()
 	}
 
-	void test2() {
-		println Stream.range(1).takeWhile {
-			it < 10
-		}.toList()
-	}
-
 	static void main(def args) {
 		def d = new IO3Demo()
-//		d.test1()
-//		d.test2()
 		d.repl()
 	}
 

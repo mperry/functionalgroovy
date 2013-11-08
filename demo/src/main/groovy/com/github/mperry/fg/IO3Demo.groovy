@@ -45,14 +45,7 @@ class IO3Demo {
 	}
 
 	@TypeChecked
-	F<String, IO3<Boolean>> convert() {
-		{ String s ->
-			fold([invalidMessage(s), squareMessage(s)]).append(IO3.unit(isLoop(s)))
-		} as F
-	}
-
-	@TypeChecked
-	IO3<?> fold(List<Option<IO3<?>>> list) {
+	IO3<?> foldIO(List<Option<IO3<?>>> list) {
 		(IO3<?>) list.filter { Option<?> it ->
 			it.isSome()
 		}.inject(IO3.empty()) { IO3<?> acc, Option<IO3<?>> it ->
@@ -61,19 +54,22 @@ class IO3Demo {
 	}
 
 	@TypeChecked
-	Stream<IO3<Boolean>> stream() {
+	Stream<IO3<String>> stream() {
 		def s = Stream.range(1).map { Integer i ->
 			IOConstants.consoleWriteLine(">").append(IOConstants.consoleReadLine())
 		}.map { IO3<String> io1 ->
-			io1.flatMap(convert())
+			io1.flatMap({ String s ->
+				foldIO([invalidMessage(s), squareMessage(s)]).append(IO3.unit(s))
+			} as F)
 		}
 	}
 
 	@TypeChecked
 	void repl() {
 		IOConstants.consoleWriteLine(help).run()
-		def s = stream().takeWhile { IO3<Boolean> io2 ->
-			io2.run()
+		def s = stream().takeWhile { IO3<String> io2 ->
+			def s = io2.run()
+			isLoop(s)
 		}
 		s.toList()
 	}

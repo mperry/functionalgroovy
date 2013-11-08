@@ -45,8 +45,12 @@ class IO3Demo {
 		!isLoop(s)
 	}
 
+	Boolean validMessage(String s) {
+		(s.isInteger() || isQuit(s))
+	}
+
 	Option<String> invalidMessage(String s) {
-		(s.isInteger() || isQuit(s)) ? Option.none() : Option.some("Not an integer: $s")
+		validMessage(s) ? Option.none() : Option.some("Not an integer: $s")
 	}
 
 	@TypeChecked

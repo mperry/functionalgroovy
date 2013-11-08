@@ -16,7 +16,17 @@ class IOConstants {
 		Option.fromNull(System.console())
 	}
 
-	public static IO3<Option<String>> consoleReadLine() {
+	public static IO3<String> consoleReadLine() {
+		return new IO3<String>() {
+			public String run() {
+				System.in.withReader {
+					it.readLine()
+				}
+			}
+		};
+	}
+
+	public static IO3<Option<String>> consoleReadLineOption() {
 		return new IO3<Option<String>>() {
 			public Option<String> run() {
 				Option.fromNull(System.in.withReader {

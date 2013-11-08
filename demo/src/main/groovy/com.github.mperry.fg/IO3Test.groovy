@@ -12,10 +12,10 @@ import org.junit.Test
  */
 class IO3Test {
 
-	@Test
+//	@Test
 	void test1() {
 
-		def a = IO3.consoleReadLine()
+		def a = IOConstants.consoleReadLine()
 		def b = a.run()
 		println "Got from console: $b"
 	}

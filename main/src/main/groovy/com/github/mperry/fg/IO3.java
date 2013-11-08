@@ -39,29 +39,6 @@ public abstract class IO3<A> {
 		};
 	}
 
-    public static <A> IO3<A> unit(final A a) {
-        return new IO3<A>() {
-            public A run() {
-                return a;
-            }
-        };
-    }
 
-    public static IO3<String> consoleReadLine() {
-        return new IO3<String>() {
-            public String run() {
-                return System.console().readLine();
-            }
-        };
-    }
-//
-    public static IO3<Unit> consolePrintLine(final String msg) {
-        return new IO3<Unit>() {
-            public Unit run() {
-                System.console().printf("%s", msg);
-                return Unit.unit();
-            }
-        };
-    }
 
 }

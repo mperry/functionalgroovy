@@ -1,5 +1,5 @@
 
 rootProject.name = 'com.github.mperry'
 
-include 'core', 'main'
+include 'core', 'main', 'demo'
 rootProject.children.each { it.name = "functionalgroovy-" + it.name }

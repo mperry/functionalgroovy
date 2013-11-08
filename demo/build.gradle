@@ -1,13 +1,20 @@
 
 apply plugin: 'java'
 apply plugin: 'groovy'
+apply plugin: 'application'
 //apply plugin: "maven"
 
 defaultTasks 'build'
 
+mainClassName = "com.github.mperry.fg.IO3Demo"
+
 ext {
 	artifactId = name
 	applicationName = projectName
+}
+
+run {
+	standardInput = System.in
 }
 
 repositories {

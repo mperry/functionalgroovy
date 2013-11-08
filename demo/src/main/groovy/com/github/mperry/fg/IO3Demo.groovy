@@ -23,10 +23,12 @@ class IO3Demo {
 		s.isInteger() ? Option.some(s.toInteger()) : Option.none()
 	}
 
+
+
 	@TypeChecked
-	Option<IO3<Unit>> squareMessage(String s) {
+	Option<IO3<Unit>> squareIO(String s) {
 		toInt(s).map { Integer n ->
-			IOConstants.consoleWriteLine("squareMessage $n = ${n * n}")
+			IOConstants.consoleWriteLine("squareIO $n = ${n * n}")
 		}
 	}
 
@@ -59,13 +61,15 @@ class IO3Demo {
 			IOConstants.consoleWriteLine(">").append(IOConstants.consoleReadLine())
 		}.map { IO3<String> io1 ->
 			io1.flatMap({ String s ->
-				foldIO([invalidMessage(s), squareMessage(s)]).append(IO3.unit(s))
+				foldIO([invalidMessage(s), squareIO(s)]).append(IO3.unit(s))
 			} as F)
 		}
 	}
 
 	@TypeChecked
 	void repl() {
+
+
 		IOConstants.consoleWriteLine(help).run()
 		def s = stream().takeWhile { IO3<String> io2 ->
 			def s = io2.run()

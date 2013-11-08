@@ -47,12 +47,7 @@ class IOConstants {
 	public static IO3<Unit> consoleWriteLine(final String msg) {
 		return new IO3<Unit>() {
 			public Unit run() {
-//				console().map {
-//					it.printf("%s", msg)
-//					it
-//				}
 				println(msg)
-//				System.console().printf("%s", msg);
 				return Unit.unit();
 			}
 		};

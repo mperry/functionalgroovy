@@ -31,10 +31,28 @@ public abstract class IO3<A> {
 		};
 	}
 
+
 	public <B> IO3<B> flatMap(final F<A, IO3<B>> f) {
 		return new IO3<B>() {
 			public B run() {
 				return f.f(IO3.this.run()).run();
+			}
+		};
+	}
+
+
+	static public <B> IO3<B> unit(final B b) {
+		return new IO3<B>() {
+			public B run() {
+				return b;
+			}
+		};
+	}
+
+	static public IO3<Unit> empty() {
+		return new IO3<Unit>() {
+			public Unit run() {
+				return Unit.unit();
 			}
 		};
 	}

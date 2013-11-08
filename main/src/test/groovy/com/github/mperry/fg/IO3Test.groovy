@@ -14,18 +14,9 @@ class IO3Test {
 
 	@Test
 	void test1() {
-
 		def a = IOConstants.consoleReadLine()
-		def b = a.run()
-		println "Got from console: $b"
-	}
-
-	void myTest2() {
-//		def a = IO3.consoleReadLine()
-	}
-
-	static void main(def args) {
-		new IO3Test().test1()
+//		def b = a.run()
+//		println "Got from console: $b"
 	}
 
 }

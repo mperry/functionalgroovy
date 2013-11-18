@@ -1,6 +1,7 @@
 package com.github.mperry.fg
 
 import fj.F
+import fj.P1
 import fj.Unit
 import fj.data.Option
 import fj.data.Stream
@@ -15,9 +16,9 @@ import groovy.transform.TypeChecked
  */
 class IO3Demo {
 
-	String quit = "q"
-	String help = "Squaring REPL\nEnter $quit to quit"
-	String prompt = ">"
+	final String quit = "q"
+	final String help = "Squaring REPL\nEnter $quit to quit"
+	final String prompt = ">"
 
 	@TypeChecked
 	Option<Integer> toInt(String s) {
@@ -66,7 +67,7 @@ class IO3Demo {
 	}
 
 	@TypeChecked
-	Stream<IO3<String>> stream() {
+	Stream<IO3<String>> inputStream() {
 		def s = Stream.range(1).map { Integer i ->
 			def io = IOConstants.consoleWriteLine(prompt).append(IOConstants.consoleReadLine())
 			io.flatMap({ String s ->
@@ -76,9 +77,30 @@ class IO3Demo {
 	}
 
 	@TypeChecked
+	Stream<IO3<?>> stream() {
+		def p = new P1<Stream<IO3<String>>>(){
+			@Override
+			Stream<IO3<String>> _1() {
+				inputStream().takeWhile { IO3<String> io ->
+					def s = io.run()
+					isLoop(s)
+				}
+			}
+		}
+		Stream.cons(IOConstants.consoleWriteLine(help), p)
+	}
+
+	@TypeChecked
+	void repl2() {
+		stream().map { IO3 io ->
+			io.run()
+		}.toList()
+	}
+
+	@TypeChecked
 	void repl() {
 		IOConstants.consoleWriteLine(help).run()
-		def s = stream().takeWhile { IO3<String> io ->
+		def s = inputStream().takeWhile { IO3<String> io ->
 			def s = io.run()
 			isLoop(s)
 		}
@@ -87,7 +109,8 @@ class IO3Demo {
 
 	static void main(def args) {
 		def d = new IO3Demo()
-		d.repl()
+//		println "hello world"
+		d.repl2()
 	}
 
 }

@@ -1,4 +1,4 @@
 moduleName=functionalgroovy-core
 moduleVersion=0.2-SNAPSHOT
-extensionClasses=com.github.mperry.fg.OptionExtension,com.github.mperry.fg.ShowExtension,com.github.mperry.fg.EitherExtension,com.github.mperry.fg.IntegerExtension,com.github.mperry.fg.StreamExtension,com.github.mperry.fg.CollectionExtension,com.github.mperry.fg.test.CheckResultExtension,com.github.mperry.fg.test.PropertyExtension,com.github.mperry.fg.test.ArgExtension
+extensionClasses=com.github.mperry.fg.OptionExtension,com.github.mperry.fg.ShowExtension,com.github.mperry.fg.EitherExtension,com.github.mperry.fg.IntegerExtension,com.github.mperry.fg.StreamExtension,com.github.mperry.fg.CollectionExtension,com.github.mperry.fg.test.CheckResultExtension,com.github.mperry.fg.test.PropertyExtension,com.github.mperry.fg.test.ArgExtension,com.github.mperry.fg.F5Extension
 staticExtensionClasses=com.github.mperry.fg.OptionStaticExtension,com.github.mperry.fg.test.CheckResultStaticExtension

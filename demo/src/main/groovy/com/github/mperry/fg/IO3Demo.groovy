@@ -42,14 +42,17 @@ class IO3Demo {
 		s != quit
 	}
 
+	@TypeChecked
 	Boolean isQuit(String s) {
 		!isLoop(s)
 	}
 
+	@TypeChecked
 	Boolean validMessage(String s) {
 		(s.isInteger() || isQuit(s))
 	}
 
+	@TypeChecked
 	Option<String> invalidMessage(String s) {
 		validMessage(s) ? Option.none() : Option.some("Not an integer: $s")
 	}

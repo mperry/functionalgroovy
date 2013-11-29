@@ -30,10 +30,9 @@ subprojects {
 
 		gradleGroovy = "org.codehaus.groovy:groovy-all:$groovyVersion"
 		gradleFj = "org.functionaljava:functionaljava:3.1"
+		gradleJunit = "junit:junit:4.10"
 
 	}
-
-//	println "${gradle.groovy}"
 
 	repositories {
 		mavenCentral()
@@ -105,12 +104,4 @@ subprojects {
 		}
 	}
 
-}
-
-task clean << {
-	file("$projectDir/build").deleteDir()
-}
-
-task wrapper(type: Wrapper) {
-  gradleVersion = '1.6'
 }

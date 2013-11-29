@@ -1,11 +1,10 @@
 
-defaultTasks "install"
-
 ext {
+
 }
 
 dependencies {
 	compile project(":core")
-	testCompile "junit:junit:4.10"
+	testCompile gradleJunit
 	testCompile "org.gcontracts:gcontracts-core:1+"
 }

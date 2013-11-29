@@ -1,8 +1,6 @@
 
 apply plugin: 'application'
 
-defaultTasks 'build'
-
 mainClassName = "com.github.mperry.fg.IO3Demo"
 
 ext {
@@ -14,8 +12,7 @@ run {
 
 dependencies {
 	compile project(":main")
-//	compile "org.codehaus.groovy:groovy-all:$groovyVersion"
 	compile gradleGroovy
 	compile gradleFj
-	compile "junit:junit:4.10"
+	testCompile gradleJunit
 }

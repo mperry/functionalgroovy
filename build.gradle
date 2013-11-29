@@ -19,13 +19,13 @@ subprojects {
 		projectName = "functionalgroovy"
 		pomProjectName = "FunctionalGroovy"
 		baseJarName = "$projectName-$name"
-		groupId = "com.github.mperry"
+		group = "com.github.mperry"
 		scmGitFile = "scm:git@github.com:mperry/functionalgroovy.git"
 		projectDescription = "FunctionalGroovy enhances FunctionalJava for Groovy"
 		sourceCompatibility = "1.7"
 		founder = "Mark Perry"
 		founderUsername = "mperry"
-		organisation = groupId
+		organisation = group
 		groovyVersion = "2.1.6"
 
 		gradleGroovy = "org.codehaus.groovy:groovy-all:$groovyVersion"
@@ -69,33 +69,38 @@ subprojects {
 					authentication(userName: sonatypeUsername, password: sonatypePassword)
 				}
 
-				pom.project {
-					name pomProjectName
-					packaging 'jar'
-					description projectDescription
-					url projectUrl
+				pom {
+					groupId = "com.github.mperry"
+					project {
+						name pomProjectName
+						packaging 'jar'
+						description projectDescription
+						url projectUrl
 
-					scm {
-						url "${projectUrl}.git"
-						connection scmGitFile
-						developerConnection scmGitFile
-					}
+						scm {
+							url "${projectUrl}.git"
+							connection scmGitFile
+							developerConnection scmGitFile
+						}
 
-					licenses {
-						license {
-							name 'The Apache Software License, Version 2.0'
-							url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-							distribution 'repo'
+						licenses {
+							license {
+								name 'The Apache Software License, Version 2.0'
+								url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+								distribution 'repo'
+							}
+						}
+
+						developers {
+							developer {
+								id project.founderUsername
+								name project.founder
+							}
 						}
 					}
 
-					developers {
-						developer {
-							id project.founderUsername
-							name project.founder
-						}
-					}
 				}
+
 			}
 		}
 	}

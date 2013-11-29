@@ -15,14 +15,25 @@ subprojects {
 		sonatypeBaseUrl = "https://oss.sonatype.org"
 		sonatypeSnapshotUrl = "$sonatypeBaseUrl/content/repositories/snapshots/"
 		sonatypeReleaseUrl = "$sonatypeBaseUrl/service/local/staging/deploy/maven2/"
+		projectUrl = "https://github.com/mperry/functionalgroovy"
 		projectName = "functionalgroovy"
+		pomProjectName = "FunctionalGroovy"
 		baseJarName = "$projectName-$name"
 		groupId = "com.github.mperry"
+		scmGitFile = "scm:git@github.com:mperry/functionalgroovy.git"
+		projectDescription = "FunctionalGroovy enhances FunctionalJava for Groovy"
 		sourceCompatibility = "1.7"
 		founder = "Mark Perry"
+		founderUsername = "mperry"
 		organisation = groupId
 		groovyVersion = "2.1.6"
+
+		gradleGroovy = "org.codehaus.groovy:groovy-all:$groovyVersion"
+		gradleFj = "org.functionaljava:functionaljava:3.1"
+
 	}
+
+//	println "${gradle.groovy}"
 
 	repositories {
 		mavenCentral()
@@ -59,15 +70,15 @@ subprojects {
 				}
 
 				pom.project {
-					name 'FunctionalGroovy'
+					name pomProjectName
 					packaging 'jar'
-					description 'FunctionalGroovy enhances FunctionalJava for Groovy'
-					url 'https://github.com/mperry/functionalgroovy'
+					description projectDescription
+					url projectUrl
 
 					scm {
-						url 'https://github.com/mperry/functionalgroovy.git'
-						connection 'scm:git@github.com:mperry/functionalgroovy.git'
-						developerConnection 'scm:git@github.com:mperry/functionalgroovy.git'
+						url "${projectUrl}.git"
+						connection scmGitFile
+						developerConnection scmGitFile
 					}
 
 					licenses {
@@ -80,8 +91,8 @@ subprojects {
 
 					developers {
 						developer {
-							id 'mperry'
-							name 'Mark Perry'
+							id project.founderUsername
+							name project.founder
 						}
 					}
 				}

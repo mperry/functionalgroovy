@@ -14,7 +14,8 @@ run {
 
 dependencies {
 	compile project(":main")
-	compile "org.codehaus.groovy:groovy-all:$groovyVersion"
-	compile "org.functionaljava:functionaljava:3.1"
+//	compile "org.codehaus.groovy:groovy-all:$groovyVersion"
+	compile gradleGroovy
+	compile gradleFj
 	compile "junit:junit:4.10"
 }

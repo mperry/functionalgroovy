@@ -1,25 +1,11 @@
 
-//apply plugin: 'java'
-//apply plugin: 'groovy'
-//apply plugin: "maven"
-
 defaultTasks "install"
 
 ext {
-//	artifactId = name
 }
 
 dependencies {
 	compile project(":core")
-//	compile "org.codehaus.groovy:groovy-all:$groovyVersion"
-//	compile "org.functionaljava:functionaljava:3.1"
 	testCompile "junit:junit:4.10"
 	testCompile "org.gcontracts:gcontracts-core:1+"
 }
-
-//jar {
-//	baseName artifactId
-//	manifest {
-//		attributes 'Created-By': project.founder, 'Signature-Version': project.version
-//	}
-//}

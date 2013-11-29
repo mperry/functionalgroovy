@@ -1,8 +1,5 @@
 
-apply from: "properties.gradle"
-
 allprojects {
-
 	defaultTasks 'build'
 }
 
@@ -12,37 +9,24 @@ subprojects {
 	apply plugin: "java"
 	apply plugin: "maven"
 
-
-
 	version = "0.3-SNAPSHOT"
 
 	ext {
-		sonatypeSnapshotUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
-		sonatypeReleaseUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
-
-
-//		name = "functionalgroovy-$name"
+		sonatypeBaseUrl = "https://oss.sonatype.org"
+		sonatypeSnapshotUrl = "$sonatypeBaseUrl/content/repositories/snapshots/"
+		sonatypeReleaseUrl = "$sonatypeBaseUrl/service/local/staging/deploy/maven2/"
 		projectName = "functionalgroovy"
 		baseJarName = "$projectName-$name"
-
-
 		groupId = "com.github.mperry"
 		sourceCompatibility = "1.7"
 		founder = "Mark Perry"
-		organisation = "com.github.mperry"
-//		#groovyVersion = 2.1.5
+		organisation = groupId
 		groovyVersion = "2.1.6"
-//		#groovyVersion = 2.1+
-//		#groovyVersion = 2.2.0-rc-2
-//		#groovyVersion = 2.2+
-
 	}
-
 
 	repositories {
 		mavenCentral()
 	}
-
 
 	jar {
 		baseName baseJarName
@@ -77,7 +61,7 @@ subprojects {
 				pom.project {
 					name 'FunctionalGroovy'
 					packaging 'jar'
-					description 'FunctionalGroovy enhances FunctionalJava with Groovy idioms'
+					description 'FunctionalGroovy enhances FunctionalJava for Groovy'
 					url 'https://github.com/mperry/functionalgroovy'
 
 					scm {

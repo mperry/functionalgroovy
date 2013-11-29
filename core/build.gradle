@@ -1,30 +1,11 @@
 
-//apply plugin: 'java'
-//apply plugin: 'groovy'
-//apply plugin: "maven"
-
 defaultTasks 'build', "install"
 
-//println project.name
-
 ext {
-//	artifactId = name
-//	applicationName = name
 }
-
-//repositories {
-//	mavenCentral()
-//}
 
 dependencies {
 	compile "org.codehaus.groovy:groovy-all:$groovyVersion"
 	compile "org.functionaljava:functionaljava:3.1"
 	compile "junit:junit:4.10"
 }
-
-//jar {
-//	baseName baseJarName
-//	manifest {
-//		attributes 'Created-By': project.founder, 'Signature-Version': project.version
-//	}
-//}

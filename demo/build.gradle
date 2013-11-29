@@ -1,25 +1,16 @@
 
-//apply plugin: 'java'
-//apply plugin: 'groovy'
 apply plugin: 'application'
-//apply plugin: "maven"
 
 defaultTasks 'build'
 
 mainClassName = "com.github.mperry.fg.IO3Demo"
 
 ext {
-//	artifactId = name
-//	applicationName = projectName
 }
 
 run {
 	standardInput = System.in
 }
-
-//repositories {
-//	mavenCentral()
-//}
 
 dependencies {
 	compile project(":main")
@@ -27,10 +18,3 @@ dependencies {
 	compile "org.functionaljava:functionaljava:3.1"
 	compile "junit:junit:4.10"
 }
-
-//jar {
-//	baseName artifactId
-//	manifest {
-//		attributes 'Created-By': founder, 'Signature-Version': version
-//	}
-//}

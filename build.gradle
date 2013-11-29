@@ -1,13 +1,55 @@
 
 apply from: "properties.gradle"
 
-defaultTasks 'build'
+allprojects {
+
+	defaultTasks 'build'
+}
 
 subprojects {
 	apply plugin: "signing"
 	apply plugin: "groovy"
 	apply plugin: "java"
 	apply plugin: "maven"
+
+
+
+	version = "0.3-SNAPSHOT"
+
+	ext {
+		sonatypeSnapshotUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
+		sonatypeReleaseUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+
+
+//		name = "functionalgroovy-$name"
+		projectName = "functionalgroovy"
+		baseJarName = "$projectName-$name"
+
+
+		groupId = "com.github.mperry"
+		sourceCompatibility = "1.7"
+		founder = "Mark Perry"
+		organisation = "com.github.mperry"
+//		#groovyVersion = 2.1.5
+		groovyVersion = "2.1.6"
+//		#groovyVersion = 2.1+
+//		#groovyVersion = 2.2.0-rc-2
+//		#groovyVersion = 2.2+
+
+	}
+
+
+	repositories {
+		mavenCentral()
+	}
+
+
+	jar {
+		baseName baseJarName
+		manifest {
+			attributes 'Created-By': project.founder, 'Signature-Version': project.version
+		}
+	}
 
 	task groovydocJar(type: Jar, dependsOn: groovydoc) {
 		classifier = 'javadoc'

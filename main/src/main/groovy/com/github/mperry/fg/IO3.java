@@ -2,6 +2,7 @@ package com.github.mperry.fg;
 
 import fj.F;
 import fj.Unit;
+import groovy.lang.Closure;
 
 /**
  * Created with IntelliJ IDEA.
@@ -39,7 +40,6 @@ public abstract class IO3<A> {
 			}
 		};
 	}
-
 
 	static public <B> IO3<B> unit(final B b) {
 		return new IO3<B>() {

@@ -1,6 +1,7 @@
 package com.github.mperry.fg
 
 import fj.F
+import fj.F2
 import fj.P1
 import fj.Unit
 import fj.data.Option
@@ -79,6 +80,18 @@ class IO3Demo {
 		}
 	}
 
+	void test1(Stream<IO3<String>> stream) {
+//		def i = inputStream()
+		if (!stream.isEmpty()) {
+			def io = stream.head()
+			io.flatMap({ String s ->
+				if (s != quit) {
+					test1(stream.tail())
+				}
+			} as F)
+		}
+	}
+
 	@TypeChecked
 	Stream<IO3<?>> stream() {
 		def p = new P1<Stream<IO3<String>>>(){
@@ -94,10 +107,40 @@ class IO3Demo {
 	}
 
 	@TypeChecked
+	IO3<?> recursiveInput(IO3<?> myIo) {
+		def quit = "q"
+		def io = IOConstants.consoleWriteLine(prompt)
+		myIo.append(io).append(IOConstants.consoleReadLine().flatMap({ String s ->
+				def f = foldIO([invalidMessageIO(s), squareIO(s)]).append(IO3.unit(s))
+
+				def stop = s == quit
+				if (!stop) {
+					recursiveInput(f)
+				} else {
+					f
+				}
+			} as F)
+		)
+	}
+
+	@TypeChecked
 	void repl2() {
-		stream().map { IO3 io ->
-			io.run()
-		}.toList()
+		def action = stream().foldLeft({ IO3<?> acc, IO3<?> io ->
+			acc.append(io)
+		} as F2<IO3, IO3, IO3>, IO3.empty())
+		action.run()
+//		stream().map { IO3 io ->
+//			io.run()
+//		}.toList()
+	}
+
+	IO3<?> repl3() {
+		IOConstants.consoleWriteLine(help).append(recursiveInput(IO3.empty()))
+	}
+
+	void repl4() {
+		def io = repl3()
+		io.run()
 	}
 
 	@TypeChecked

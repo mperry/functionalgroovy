@@ -19,13 +19,13 @@ subprojects {
 		projectName = "functionalgroovy"
 		pomProjectName = "FunctionalGroovy"
 		baseJarName = "$projectName-$name"
-		group = "com.github.mperry"
+		groupName = "com.github.mperry"
 		scmGitFile = "scm:git@github.com:mperry/functionalgroovy.git"
 		projectDescription = "FunctionalGroovy enhances FunctionalJava for Groovy"
 		sourceCompatibility = "1.7"
 		founder = "Mark Perry"
 		founderUsername = "mperry"
-		organisation = group
+		organisation = groupName
 		groovyVersion = "2.1.6"
 
 		gradleGroovy = "org.codehaus.groovy:groovy-all:$groovyVersion"
@@ -70,7 +70,7 @@ subprojects {
 				}
 
 				pom {
-					groupId = "com.github.mperry"
+					groupId = project.groupName
 					project {
 						name pomProjectName
 						packaging 'jar'

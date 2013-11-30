@@ -21,15 +21,6 @@ class DbcTest extends GroovyTestCase {
 	}
 
 	@Test
-	void test1() {
-		def p = DbcProperties.test1Prop()
-		def cr = p.check()
-		CheckResult.summary.println(cr)
-		assertTrue(cr.isPassed() || cr.isProven())
-	}
-
-
-	@Test
 	void test2() {
 		def p = Property.property(Arbitrary.arbInteger, Arbitrary.arbInteger, {Integer a, Integer b ->
 			Bool.bool(a > 0).implies(true)

@@ -5,6 +5,7 @@ import fj.F2
 import fj.Show
 import fj.data.Stream
 import fj.test.*
+import groovy.transform.Canonical
 import org.gcontracts.ClassInvariantViolation
 import org.gcontracts.PostconditionViolation
 import org.gcontracts.PreconditionViolation
@@ -12,6 +13,7 @@ import org.gcontracts.annotations.Ensures
 import org.gcontracts.annotations.Requires
 import org.junit.Test
 
+@Canonical
 class DbcTest extends GroovyTestCase {
 
 	Integer sum(Integer a, Integer b) {
@@ -20,14 +22,12 @@ class DbcTest extends GroovyTestCase {
 
 	@Test
 	void test1() {
-		def p = Property.property(Arbitrary.arbInteger, Arbitrary.arbInteger, {Integer a, Integer b ->
-//			println "$a $b"
-			Property.prop(sum(a, b) == sum(b, a))
-		} as F2)
+		def p = DbcProperties.test1Prop()
 		def cr = p.check()
 		CheckResult.summary.println(cr)
 		assertTrue(cr.isPassed() || cr.isProven())
 	}
+
 
 	@Test
 	void test2() {

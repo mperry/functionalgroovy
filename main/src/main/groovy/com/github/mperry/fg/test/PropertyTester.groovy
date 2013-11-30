@@ -56,7 +56,7 @@ class PropertyTester {
 		createProp(arbOpts.collect { it.some() }, c)
 	}
 
-	static CheckResult showAllActual(Map<Class<?>, Arbitrary> map, Closure c) {
+	static CheckResult showAllWithMap(Map<Class<?>, Arbitrary> map, Closure c) {
 		def cr = createProp(map, c).check()
 		CheckResult.summary.println(cr)
 		Assert.assertTrue(cr.isPassed() || cr.isProven())
@@ -69,11 +69,11 @@ class PropertyTester {
 	 * @param c
 	 */
 	static CheckResult showAll(Map<Class<?>, Arbitrary> map, Closure c) {
-		showAllActual(defaultMap + map, c)
+		showAllWithMap(defaultMap + map, c)
 	}
 
 	static CheckResult showAll(Closure c) {
-		showAllActual(defaultMap, c)
+		showAllWithMap(defaultMap, c)
 	}
 
 

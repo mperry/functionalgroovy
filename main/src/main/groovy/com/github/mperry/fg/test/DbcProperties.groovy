@@ -15,11 +15,11 @@ import groovy.transform.TypeChecked
 @TypeChecked
 class DbcProperties {
 
-	Integer sum(Integer a, Integer b) {
+	static Integer sum(Integer a, Integer b) {
 		a + b
 	}
 
-	Property test1Prop() {
+	static Property test1Prop() {
 		def p = Property.property(Arbitrary.arbInteger, Arbitrary.arbInteger, {Integer a, Integer b ->
 //			println "$a $b"
 			Property.prop(sum(a, b) == sum(b, a))

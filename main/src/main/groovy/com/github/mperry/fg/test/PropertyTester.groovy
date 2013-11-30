@@ -34,12 +34,12 @@ class PropertyTester {
 			(Boolean.class): arbBoolean,
 			(Byte.class): arbByte,
 			(Calendar.class): arbCalendar,
-			(Character.class): arbCharacter,
+			(Character.class): arbCharacterBoundaries,
 			(Date.class): arbDate,
-			(Double.class): arbDouble,
-			(Float.class): arbFloat,
-			(Integer.class): arbInteger,
-			(Long.class): arbLong,
+			(Double.class): arbDoubleBoundaries,
+			(Float.class): arbFloatBoundaries,
+			(Integer.class): arbIntegerBoundaries,
+			(Long.class): arbLongBoundaries,
 			(String.class): arbString
 	]
 
@@ -62,22 +62,22 @@ class PropertyTester {
 		def arbOpts = list.collect { Class it -> map.containsKey(it) ? Option.some(map[it]) : Option.none() }
 		def allMapped = arbOpts.forAll { it.isSome() }
 		if (!allMapped) {
-			throw new Exception("Not all types of closure parameters were mapped")
+			throw new Exception("Not all function parameter types were found: ${list.findAll { !map.containsKey(it)}}")
 		}
 		createProp(arbOpts.collect { it.some() }, pre, c)
 	}
 
-	static CheckResult showAllWithMap(Map<Class<?>, Arbitrary> map, Closure c) {
+	static CheckResult showAllWithMap(Boolean ok, Map<Class<?>, Arbitrary> map, Closure c) {
 		def cr = createProp(map, c).check()
 		CheckResult.summary.println(cr)
-		Assert.assertTrue(cr.isPassed() || cr.isProven())
+		Assert.assertTrue(cr.isOk() == ok)
 		cr
 	}
 
-	static CheckResult showAllWithMap(Map<Class<?>, Arbitrary> map, Closure pre, Closure c) {
+	static CheckResult showAllWithMap(Boolean ok, Map<Class<?>, Arbitrary> map, Closure pre, Closure c) {
 		def cr = createProp(map, pre, c).check()
 		CheckResult.summary.println(cr)
-		Assert.assertTrue(cr.isPassed() || cr.isProven())
+		Assert.assertTrue(cr.isOk() == ok)
 		cr
 	}
 
@@ -87,19 +87,28 @@ class PropertyTester {
 	 * @param c
 	 */
 	static CheckResult showAll(Map<Class<?>, Arbitrary> map, Closure c) {
-		showAllWithMap(defaultMap + map, c)
+		showAllWithMap(true, defaultMap + map, c)
 	}
 
-	static CheckResult showAll(Map<Class<?>, Arbitrary> map, Closure pre, Closure c) {
-		showAllWithMap(defaultMap + map, pre, c)
+	static CheckResult showAll(Boolean ok, Map<Class<?>, Arbitrary> map, Closure pre, Closure c) {
+		showAllWithMap(ok, defaultMap + map, pre, c)
 	}
 
 	static CheckResult showAll(Closure c) {
-		showAllWithMap(defaultMap, c)
+		showAllWithMap(true, defaultMap, c)
 	}
 
 	static CheckResult showAll(Closure pre, Closure c) {
-		showAllWithMap(defaultMap, pre, c)
+		showAllWithMap(true, defaultMap, pre, c)
+	}
+
+	static CheckResult showAll(Map<Class<?>, Arbitrary> map, Closure pre, Closure c) {
+		showAllWithMap(true, defaultMap + map, pre, c)
+	}
+
+
+	static CheckResult showAll(Boolean ok, Closure pre, Closure c) {
+		showAllWithMap(ok, defaultMap, pre, c)
 	}
 
 

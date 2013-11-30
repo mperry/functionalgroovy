@@ -1,5 +1,6 @@
 package com.github.mperry.fg.test
 
+import groovy.transform.TypeChecked
 import org.gcontracts.annotations.Ensures
 import org.gcontracts.annotations.Invariant
 import org.gcontracts.annotations.Requires
@@ -11,33 +12,34 @@ import org.gcontracts.annotations.Requires
  * Time: 9:37 AM
  * To change this template use File | Settings | File Templates.
  */
+@TypeChecked
 @Invariant({ elements != null })
 class Stack<T> {
 
 	List<T> elements
 
-	@Ensures({ is_empty() })
-	def Stack()  {
+	@Ensures({ isEmpty() })
+	Stack()  {
 		elements = []
 	}
 
 	@Requires({ preElements?.size() > 0 })
-	@Ensures({ !is_empty() })
-	def Stack(List<T> preElements)  {
+	@Ensures({ !isEmpty() })
+	Stack(List<T> preElements)  {
 		elements = preElements
 	}
 
-	boolean is_empty()  {
-		return elements.isEmpty()
+	boolean isEmpty()  {
+		elements.isEmpty()
 	}
 
-	@Requires({ !is_empty() })
+	@Requires({ !isEmpty() })
 	T last_item()  {
-		return elements.get(count() - 1)
+		elements.get(count() - 1)
 	}
 
-	def count() {
-		return elements.size()
+	int count() {
+		elements.size()
 	}
 
 	@Ensures({ result == true ? count() > 0 : count() >= 0  })
@@ -46,24 +48,27 @@ class Stack<T> {
 	}
 
 	@Ensures({ last_item() == item })
-	def push(T item)  {
-		return elements.add(item)
+	void push(T item)  {
+		elements.add(item)
 	}
 
-	@Requires({ !is_empty() })
+	@Requires({ !isEmpty() })
 	@Ensures({ last_item() == item })
-	def replace(T item)  {
-		remove()
-		return elements.add(item)
+	void replace(T item)  {
+		pop()
+		push(item)
 	}
 
-	@Requires({ !is_empty() })
+	@Requires({ !isEmpty() })
 	@Ensures({ result != null })
-	T remove()  {
+	T pop()  {
 		return elements.remove(count() - 1)
 	}
 
-	String toString() { elements.toString() }
+	String toString() {
+		elements.toString()
+	}
+
 }
 
 //def stack = new Stack<Integer>()

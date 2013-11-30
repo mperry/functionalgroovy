@@ -11,6 +11,7 @@ import fj.test.Bool
 import fj.test.CheckResult
 import fj.test.Property
 import groovy.transform.TypeChecked
+import groovy.transform.TypeCheckingMode
 import org.junit.Assert
 
 import static fj.test.Arbitrary.*
@@ -22,6 +23,7 @@ import static fj.test.Arbitrary.*
  * Time: 3:58 PM
  * To change this template use File | Settings | File Templates.
  */
+@TypeChecked
 class PropertyTester {
 
 	static int maxArgs = 5
@@ -43,38 +45,38 @@ class PropertyTester {
 			(String.class): arbString
 	]
 
-	static Property createProp(Closure c) {
+	static Property createProp(Closure<Boolean> c) {
 		createProp(defaultMap, c)
 	}
 
-	static Property createProp(Map<Class<?>, Arbitrary> map, Closure c) {
+	static Property createProp(Map<Class<?>, Arbitrary> map, Closure<Boolean> c) {
 		def list = c.getParameterTypes()
 		def arbOpts = list.collect { Class it -> map.containsKey(it) ? Option.some(map[it]) : Option.none() }
-		def allMapped = arbOpts.forAll { it.isSome() }
+		def allMapped = arbOpts.forAll { Option it -> it.isSome() }
 		if (!allMapped) {
 			throw new Exception("Not all types of closure parameters were mapped")
 		}
-		createProp(arbOpts.collect { it.some() }, c)
+		createProp(arbOpts.collect { Option<Arbitrary> it -> it.some() }, c)
 	}
 
-	static Property createProp(Map<Class<?>, Arbitrary> map, Closure pre, Closure c) {
+	static Property createProp(Map<Class<?>, Arbitrary> map, Closure<Boolean> pre, Closure<Boolean> c) {
 		def list = c.getParameterTypes()
 		def arbOpts = list.collect { Class it -> map.containsKey(it) ? Option.some(map[it]) : Option.none() }
-		def allMapped = arbOpts.forAll { it.isSome() }
+		def allMapped = arbOpts.forAll { Option it -> it.isSome() }
 		if (!allMapped) {
 			throw new Exception("Not all function parameter types were found: ${list.findAll { !map.containsKey(it)}}")
 		}
-		createProp(arbOpts.collect { it.some() }, pre, c)
+		createProp(arbOpts.collect { Option<Arbitrary> it -> it.some() }, pre, c)
 	}
 
-	static CheckResult showAllWithMap(Boolean ok, Map<Class<?>, Arbitrary> map, Closure c) {
+	static CheckResult showAllWithMap(Boolean ok, Map<Class<?>, Arbitrary> map, Closure<Boolean> c) {
 		def cr = createProp(map, c).check()
 		CheckResult.summary.println(cr)
 		Assert.assertTrue(cr.isOk() == ok)
 		cr
 	}
 
-	static CheckResult showAllWithMap(Boolean ok, Map<Class<?>, Arbitrary> map, Closure pre, Closure c) {
+	static CheckResult showAllWithMap(Boolean ok, Map<Class<?>, Arbitrary> map, Closure<Boolean> pre, Closure<Boolean> c) {
 		def cr = createProp(map, pre, c).check()
 		CheckResult.summary.println(cr)
 		Assert.assertTrue(cr.isOk() == ok)
@@ -86,23 +88,23 @@ class PropertyTester {
 	 * @param map Override the default map
 	 * @param c
 	 */
-	static CheckResult showAll(Map<Class<?>, Arbitrary> map, Closure c) {
+	static CheckResult showAll(Map<Class<?>, Arbitrary> map, Closure<Boolean> c) {
 		showAllWithMap(true, defaultMap + map, c)
 	}
 
-	static CheckResult showAll(Boolean ok, Map<Class<?>, Arbitrary> map, Closure pre, Closure c) {
+	static CheckResult showAll(Boolean ok, Map<Class<?>, Arbitrary> map, Closure<Boolean> pre, Closure<Boolean> c) {
 		showAllWithMap(ok, defaultMap + map, pre, c)
 	}
 
-	static CheckResult showAll(Closure c) {
+	static CheckResult showAll(Closure<Boolean> c) {
 		showAllWithMap(true, defaultMap, c)
 	}
 
-	static CheckResult showAll(Closure pre, Closure c) {
+	static CheckResult showAll(Closure<Boolean> pre, Closure<Boolean> c) {
 		showAllWithMap(true, defaultMap, pre, c)
 	}
 
-	static CheckResult showAll(Map<Class<?>, Arbitrary> map, Closure pre, Closure c) {
+	static CheckResult showAll(Map<Class<?>, Arbitrary> map, Closure<Boolean> pre, Closure<Boolean> c) {
 		showAllWithMap(true, defaultMap + map, pre, c)
 	}
 
@@ -112,6 +114,7 @@ class PropertyTester {
 	}
 
 
+	@TypeChecked(TypeCheckingMode.SKIP)
 	static Property createProp(List<Arbitrary> list, Closure<Boolean> c) {
 		if (c.getMaximumNumberOfParameters() > maxArgs) {
 			throw new Exception("Testing does not support ${c.getMaximumNumberOfParameters()}, maximum supported is $maxArgs")
@@ -119,6 +122,7 @@ class PropertyTester {
 		this."createProp${list.size()}"(list, c)
 	}
 
+	@TypeChecked(TypeCheckingMode.SKIP)
 	static Property createProp(List<Arbitrary> list, Closure<Boolean> pre, Closure<Boolean> c) {
 		if (c.getMaximumNumberOfParameters() > maxArgs) {
 			throw new Exception("Testing does not support ${c.getMaximumNumberOfParameters()}, maximum supported is $maxArgs")

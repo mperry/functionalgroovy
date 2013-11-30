@@ -8,6 +8,7 @@ import fj.test.Gen
 import fj.test.Property
 import org.junit.Test
 
+import static com.github.mperry.fg.test.PropertyTester.showAll
 import static org.junit.Assert.assertTrue
 
 /**
@@ -21,18 +22,16 @@ class AdditionTest {
 
 	@Test
 	void commutes() {
-		def p = Property.property(Arbitrary.arbInteger, Arbitrary.arbInteger, {Integer a, Integer b ->
-			Property.prop(a + b == b + a)
-		} as F2)
-		p.checkOkWithSummary()
+		showAll { Integer a, Integer b ->
+			a + b == b + a
+		}
 	}
 
 	@Test
 	void naturalsCommute() {
-		def p = Property.property(Arbitrary.arbInteger, Arbitrary.arbInteger, {Integer a, Integer b ->
-			Bool.bool(a >= 0 && b >= 0).implies(a + b == b + a)
-		} as F2)
-		p.checkOkWithSummary()
+		showAll { Integer a, Integer b ->
+			(a >= 0 && b >= 0).implies(a + b == b + a)
+		}
 	}
 
 	/**
@@ -41,30 +40,8 @@ class AdditionTest {
 	 */
 	@Test
 	void naturalsCommute2() {
-		def p = Property.property(Arbitrary.arbInteger, Arbitrary.arbInteger, {Integer a, Integer b ->
-			def preOk = (a >= 0 && b >= 0)
-			// executing sum2 seems to make it lose discarded results, so do this lazily
-			def t = !preOk ? true : (a + b == b + a)
-			Bool.bool(preOk).implies(t)
-		} as F2)
-		p.checkOkWithSummary()
-	}
-
-	@Test
-	void naturalsCommute3() {
-		def p = Property.property(Arbitrary.arbInteger, Arbitrary.arbInteger, {Integer a, Integer b ->
-			propWithPre2({c, d -> c >= 0 && d >= 0} as F2, {c, d -> c + d == d + c} as F2, a, b)
-		} as F2)
-		p.checkOkWithSummary()
-	}
-
-	static <A, B> Property propWithPre2(F2<A, B, Boolean> pre, F2<A, B, Boolean> post, A arg1, B arg2) {
-		try {
-			def preOk = pre.f(arg1, arg2)
-			def b = !preOk ? true : post.f(arg1, arg2)
-			Bool.bool(preOk).implies(b)
-		} catch (Exception e) {
-			Property.prop(false)
+		showAll { a, b -> a >= 0 && b >= 0} { Integer a, Integer b ->
+			a + b == b + a
 		}
 	}
 
@@ -81,6 +58,23 @@ class AdditionTest {
 			}
 		} as F2)
 		p.checkOkWithSummary()
+	}
+
+//	static final Arbitrary<Integer> arbNullableInteger = Arbitrary.arbitrary(Gen.oneOf(fj.data.List.list([Gen.value(null), Arbitrary.arbInteger.gen].toArray())))
+//	static final Arbitrary<Integer> arbNullableInteger = Arbitrary.arbNullableInteger()
+
+	@Test
+	void impliesHandlingNulls2() {
+		showAll([(Integer.class): Arbitrary.arbNullableInteger()]) { a, b -> a != null && b != null } { Integer a, Integer b ->
+			a + b == b + a
+		}
+	}
+
+	@Test
+	void impliesHandlingNulls3() {
+		showAll([(Integer.class): Arbitrary.arbNullableInteger()]) { Integer a, Integer b ->
+			a + b == b + a
+		}
 	}
 
 }

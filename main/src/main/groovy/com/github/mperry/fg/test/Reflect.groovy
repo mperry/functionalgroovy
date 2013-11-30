@@ -17,10 +17,6 @@ import groovy.transform.TypeChecked
 @TypeChecked
 class Reflect extends GroovyTestCase {
 
-	Property test1Prop() {
-		new DbcProperties().test1Prop()
-	}
-
 	void test1() {
 
 		Check.check(List.list(DbcProperties.class)).each { P2<String, CheckResult> p2 ->

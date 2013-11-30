@@ -46,32 +46,14 @@ class AdditionTest {
 	}
 
 	@Test
-	void impliesHandlingNulls() {
-		def arb = Arbitrary.arbitrary(Gen.oneOf(fj.data.List.list([Gen.value(null), Arbitrary.arbInteger.gen].toArray())))
-		def p = Property.property(arb, Arbitrary.arbInteger, { Integer a, Integer b ->
-			try {
-				def preOk = (a != null && b != null)
-				def t = !preOk ? true : (a + b == b + a)
-				Bool.bool(preOk).implies(t)
-			} catch (Exception e) {
-				Property.prop(false)
-			}
-		} as F2)
-		p.checkOkWithSummary()
-	}
-
-//	static final Arbitrary<Integer> arbNullableInteger = Arbitrary.arbitrary(Gen.oneOf(fj.data.List.list([Gen.value(null), Arbitrary.arbInteger.gen].toArray())))
-//	static final Arbitrary<Integer> arbNullableInteger = Arbitrary.arbNullableInteger()
-
-	@Test
-	void impliesHandlingNulls2() {
+	void impliesHandlingNulls1() {
 		showAll([(Integer.class): Arbitrary.arbNullableInteger()]) { a, b -> a != null && b != null } { Integer a, Integer b ->
 			a + b == b + a
 		}
 	}
 
 	@Test
-	void impliesHandlingNulls3() {
+	void impliesHandlingNulls2() {
 		showAll([(Integer.class): Arbitrary.arbNullableInteger()]) { Integer a, Integer b ->
 			a + b == b + a
 		}

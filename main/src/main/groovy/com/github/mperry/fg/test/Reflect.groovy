@@ -2,6 +2,7 @@ package com.github.mperry.fg.test
 
 import fj.P2
 import fj.test.CheckResult
+import fj.test.Property
 import fj.test.reflect.Check
 import fj.data.List
 import groovy.transform.TypeChecked
@@ -15,6 +16,10 @@ import groovy.transform.TypeChecked
  */
 @TypeChecked
 class Reflect extends GroovyTestCase {
+
+	Property test1Prop() {
+		new DbcProperties().test1Prop()
+	}
 
 	void test1() {
 

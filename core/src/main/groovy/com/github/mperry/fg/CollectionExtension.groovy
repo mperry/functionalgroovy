@@ -24,4 +24,14 @@ class CollectionExtension {
 		c.collectMany(f)
 	}
 
+	public static <A> Boolean exists(Collection<A> c, Closure<Boolean> f) {
+		c.find(f) != null
+	}
+
+	public static <A> Boolean forAll(Collection<A> c, Closure<Boolean> f) {
+		!c.exists {
+			f(it) == false
+		}
+	}
+
 }

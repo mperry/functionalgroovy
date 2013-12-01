@@ -51,21 +51,22 @@ class PropertyTester {
 			(java.util.List.class): arbArrayList(arbIntegerBoundaries)
 	]
 
+	@TypeChecked(TypeCheckingMode.SKIP)
 	static Property createProp(Closure<Boolean> c) {
-		createProp(defaultMap, c)
+		createProp(defaultMap, Option.none(), c)
 	}
 
-	static Property createProp(Map<Class<?>, Arbitrary> map, Closure<Boolean> c) {
-		def list = c.getParameterTypes()
-		def arbOpts = list.collect { Class it -> map.containsKey(it) ? Option.some(map[it]) : Option.none() }
-		def allMapped = arbOpts.forAll { Option it -> it.isSome() }
-		if (!allMapped) {
-			throw new Exception("Not all types of closure parameters were mapped")
-		}
-		createProp(arbOpts.collect { Option<Arbitrary> it -> it.some() }, c)
-	}
+//	static Property createProp(Map<Class<?>, Arbitrary> map, Closure<Boolean> c) {
+//		def list = c.getParameterTypes()
+//		def arbOpts = list.collect { Class it -> map.containsKey(it) ? Option.some(map[it]) : Option.none() }
+//		def allMapped = arbOpts.forAll { Option it -> it.isSome() }
+//		if (!allMapped) {
+//			throw new Exception("Not all types of closure parameters were mapped")
+//		}
+//		createProp(arbOpts.collect { Option<Arbitrary> it -> it.some() }, c)
+//	}
 
-	static Property createProp(Map<Class<?>, Arbitrary> map, Closure<Boolean> pre, Closure<Boolean> c) {
+	static Property createProp(Map<Class<?>, Arbitrary> map, Option<Closure<Boolean>> pre, Closure<Boolean> c) {
 		def list = c.getParameterTypes()
 		def arbOpts = list.collect { Class it -> map.containsKey(it) ? Option.some(map[it]) : Option.none() }
 		def allMapped = arbOpts.forAll { Option it -> it.isSome() }
@@ -75,122 +76,116 @@ class PropertyTester {
 		createProp(arbOpts.collect { Option<Arbitrary> it -> it.some() }, pre, c)
 	}
 
-	static CheckResult showAllWithMap(Boolean ok, Map<Class<?>, Arbitrary> map, Closure<Boolean> c) {
-		def p = createProp(map, c)
-		p.checkBooleanWithNullableSummary(ok)
-//		def cr = p.check()
-//		CheckResult.summary.println(cr)
-//		Assert.assertTrue(cr.isOk() == ok)
-//		cr
-	}
+//	static CheckResult showAllWithMap(Boolean ok, Map<Class<?>, Arbitrary> map, Closure<Boolean> c) {
+//		def p = createProp(map, c)
+//		p.checkBooleanWithNullableSummary(ok)
+//	}
 
-	static CheckResult showAllWithMap(Boolean ok, Map<Class<?>, Arbitrary> map, Closure<Boolean> pre, Closure<Boolean> c) {
+	static CheckResult showAllWithMap(Boolean ok, Map<Class<?>, Arbitrary> map, Option<Closure<Boolean>> pre, Closure<Boolean> c) {
 		def p = createProp(map, pre, c)
 		def cr = p.check()
 		p.checkBooleanWithNullableSummary(ok)
 	}
-
-	static CheckResult showAllWithMap(Boolean ok, Map<Class<?>, Arbitrary> map, Option<Closure<Boolean>> pre, Closure<Boolean> c) {
-		def p = pre.isSome() ? createProp(map, pre.some(), c) : createProp(map, c)
-//		def p = createProp(map, pre, c)
-		def cr = p.check()
-		p.checkBooleanWithNullableSummary(ok)
-	}
-
 
 	/**
 	 *
 	 * @param map Override the default map
 	 * @param c
 	 */
+	@TypeChecked(TypeCheckingMode.SKIP)
 	static CheckResult showAll(Map<Class<?>, Arbitrary<?>> map, Closure<Boolean> c) {
-		showAllWithMap(true, defaultMap + map, c)
+		showAllWithMap(true, defaultMap + map, Option.none(), c)
 	}
 
-	static CheckResult showAll(Boolean ok, Map<Class<?>, Arbitrary> map, Closure<Boolean> pre, Closure<Boolean> c) {
-		showAllWithMap(ok, defaultMap + map, pre, c)
-	}
+//	static CheckResult showAll(Boolean ok, Map<Class<?>, Arbitrary> map, Closure<Boolean> pre, Closure<Boolean> c) {
+//		showAllWithMap(ok, defaultMap + map, pre, c)
+//	}
 
-	static CheckResult showAll(Boolean ok, Map<Class<?>, Arbitrary> map, Closure<Boolean> c) {
-		showAllWithMap(ok, defaultMap + map, c)
-	}
+//	static CheckResult showAll(Boolean ok, Map<Class<?>, Arbitrary> map, Closure<Boolean> c) {
+//		showAllWithMap(ok, defaultMap + map, c)
+//	}
 
 	static CheckResult showAll(TestConfig config) {
-		if (config.pre.isSome()) {
-			showAllWithMap(config.truth, config.map, config.pre.some(), config.function)
-		} else {
-			showAllWithMap(config.truth, config.map, config.function)
-		}
+		showAllWithMap(config.truth, config.map, config.pre, config.function)
+//		if (config.pre.isSome()) {
+//			s
+//		} else {
+//			showAllWithMap(config.truth, config.map, config.function)
+//		}
 
 	}
 
+	@TypeChecked(TypeCheckingMode.SKIP)
 	static CheckResult showAll(Closure<Boolean> c) {
-
-		showAllWithMap(true, defaultMap, c)
+		showAllWithMap(true, defaultMap, Option.none(), c)
 	}
 
-	static CheckResult showAll(Closure<Boolean> pre, Closure<Boolean> c) {
-		showAllWithMap(true, defaultMap, pre, c)
-	}
+//	static CheckResult showAll(Closure<Boolean> pre, Closure<Boolean> c) {
+//		showAllWithMap(true, defaultMap, pre, c)
+//	}
 
-	static CheckResult showAll(Map<Class<?>, Arbitrary> map, Closure<Boolean> pre, Closure<Boolean> c) {
-		showAllWithMap(true, defaultMap + map, pre, c)
-	}
+//	static CheckResult showAll(Map<Class<?>, Arbitrary> map, Closure<Boolean> pre, Closure<Boolean> c) {
+//		showAllWithMap(true, defaultMap + map, pre, c)
+//	}
 
 
-	static CheckResult showAll(Boolean ok, Closure pre, Closure c) {
-		showAllWithMap(ok, defaultMap, pre, c)
-	}
+//	static CheckResult showAll(Boolean ok, Closure pre, Closure c) {
+//		showAllWithMap(ok, defaultMap, pre, c)
+//	}
+//
+//	@TypeChecked(TypeCheckingMode.SKIP)
+//	static Property createProp(List<Arbitrary> list, Closure<Boolean> c) {
+//		if (c.getMaximumNumberOfParameters() > maxArgs) {
+//			throw new Exception("Testing does not support ${c.getMaximumNumberOfParameters()}, maximum supported is $maxArgs")
+//		}
+//		this."createProp${list.size()}"(list, Option.none(), c)
+//	}
 
 	@TypeChecked(TypeCheckingMode.SKIP)
-	static Property createProp(List<Arbitrary> list, Closure<Boolean> c) {
+	static Property createProp(List<Arbitrary> list, Option<Closure<Boolean>> pre, Closure<Boolean> c) {
 		if (c.getMaximumNumberOfParameters() > maxArgs) {
 			throw new Exception("Testing does not support ${c.getMaximumNumberOfParameters()}, maximum supported is $maxArgs")
 		}
-		this."createProp${list.size()}"(list, c)
-	}
-
-	@TypeChecked(TypeCheckingMode.SKIP)
-	static Property createProp(List<Arbitrary> list, Closure<Boolean> pre, Closure<Boolean> c) {
-		if (c.getMaximumNumberOfParameters() > maxArgs) {
-			throw new Exception("Testing does not support ${c.getMaximumNumberOfParameters()}, maximum supported is $maxArgs")
-		}
-		this."createProp${list.size()}"(list, Option.some(pre), c)
+		this."createProp${list.size()}"(list, pre, c)
 	}
 
 	static Property implies(Boolean pre, Boolean result) {
 		Bool.bool(pre).implies(result)
 	}
 
-	static Property createProp0(List<Arbitrary> list, Closure<Boolean> c) {
-		createProp0(list, { -> true }, c)
-	}
 
-	static Property createProp0(List<Arbitrary> list, Closure<Boolean> pre, Closure<Boolean> c) {
-		def preOk = pre.call()
+//	@TypeChecked(TypeCheckingMode.SKIP)
+//	static Property createProp0(List<Arbitrary> list, Closure<Boolean> c) {
+//		createProp0(list, Option.<Closure<Boolean>>none(), c)
+//	}
+
+	static Property createProp0(List<Arbitrary> list, Option<Closure<Boolean>> pre, Closure<Boolean> c) {
+		def preOk = pre.map { Closure<Boolean> it -> it.call() }.orSome(true)
+//		def preOk = pre.call()
 		def result = !preOk ? true: c.call()
 		implies(preOk, result)
 	}
 
-	@TypeChecked
-	static Property createProp1(List<Arbitrary<?>> list, Closure<Boolean> closure) {
-		createProp1(list, { a -> true }, closure)
-	}
+//	@TypeChecked
+//	static Property createProp1(List<Arbitrary<?>> list, Closure<Boolean> closure) {
+//		createProp1(list, { a -> true }, closure)
+//	}
 
 	@TypeChecked
-	static Property createProp1(List<Arbitrary<?>> list, Closure<Boolean> pre, Closure<Boolean> closure) {
+	static Property createProp1(List<Arbitrary<?>> list, Option<Closure<Boolean>> pre, Closure<Boolean> closure) {
 		Property.property(list[0], { a ->
-			def preOk = pre.call(a)
+			def preOk = pre.map { Closure<Boolean> it -> it.call(a) }.orSome(true)
+//			def preOk = pre.call(a)
 			def result = !preOk ? true : closure.call(a)
 			implies(preOk, result)
 		} as F)
 	}
 
-//	@TypeChecked
-	@TypeChecked(TypeCheckingMode.SKIP)
-	static Property createProp2(List<Arbitrary<?>> list, Closure<Boolean> closure) {
-			createProp2(list, Option.<Closure<Boolean>>none(), closure)
-	}
+////	@TypeChecked
+//	@TypeChecked(TypeCheckingMode.SKIP)
+//	static Property createProp2(List<Arbitrary<?>> list, Closure<Boolean> closure) {
+//			createProp2(list, Option.<Closure<Boolean>>none(), closure)
+//	}
 
 	@TypeChecked
 	static Property createProp2(List<Arbitrary<?>> list, Option<Closure<Boolean>> pre, Closure<Boolean> closure) {

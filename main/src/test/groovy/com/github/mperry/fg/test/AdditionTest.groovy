@@ -2,6 +2,7 @@ package com.github.mperry.fg.test
 
 import fj.F2
 import fj.Show
+import fj.data.Option
 import fj.test.Arbitrary
 import fj.test.Bool
 import fj.test.Gen
@@ -43,9 +44,12 @@ class AdditionTest {
 	 */
 	@Test
 	void naturalsCommute2() {
-		showAll { a, b -> a >= 0 && b >= 0} { Integer a, Integer b ->
-			a + b == b + a
-		}
+		showAll new TestConfig(
+			pre: Option.some { a, b -> a >= 0 && b >= 0 },
+			function: { Integer a, Integer b ->
+				a + b == b + a
+			}
+		)
 	}
 
 	@Test
@@ -65,9 +69,13 @@ class AdditionTest {
 
 	@Test
 	void impliesHandlingNulls2() {
-		showAll(false, [(Integer.class): Arbitrary.arbNullableInteger()]) { Integer a, Integer b ->
-			a + b == b + a
-		}
+		showAll new TestConfig(
+			truth: false,
+			map: [(Integer.class): Arbitrary.arbNullableInteger()],
+			function: { Integer a, Integer b ->
+				a + b == b + a
+			}
+		)
 	}
 
 }

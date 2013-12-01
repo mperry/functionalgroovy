@@ -5,6 +5,7 @@ import fj.F2
 import fj.F3
 import fj.F4
 import fj.F5
+import fj.P2
 import fj.data.Option
 import fj.test.Arbitrary
 import fj.test.Bool
@@ -12,6 +13,7 @@ import fj.test.CheckResult
 import fj.test.Property
 import groovy.transform.TypeChecked
 import groovy.transform.TypeCheckingMode
+import org.codehaus.groovy.runtime.NullObject
 import org.junit.Assert
 
 import static fj.test.Arbitrary.*
@@ -42,7 +44,10 @@ class PropertyTester {
 			(Float.class): arbFloatBoundaries,
 			(Integer.class): arbIntegerBoundaries,
 			(Long.class): arbLongBoundaries,
-			(String.class): arbString
+			(String.class): arbString,
+
+			(ArrayList.class): arbArrayList(arbIntegerBoundaries),
+			(java.util.List.class): arbArrayList(arbIntegerBoundaries)
 	]
 
 	static Property createProp(Closure<Boolean> c) {
@@ -70,17 +75,21 @@ class PropertyTester {
 	}
 
 	static CheckResult showAllWithMap(Boolean ok, Map<Class<?>, Arbitrary> map, Closure<Boolean> c) {
-		def cr = createProp(map, c).check()
-		CheckResult.summary.println(cr)
-		Assert.assertTrue(cr.isOk() == ok)
-		cr
+		def p = createProp(map, c)
+		p.checkBooleanWithNullableSummary(ok)
+//		def cr = p.check()
+//		CheckResult.summary.println(cr)
+//		Assert.assertTrue(cr.isOk() == ok)
+//		cr
 	}
 
 	static CheckResult showAllWithMap(Boolean ok, Map<Class<?>, Arbitrary> map, Closure<Boolean> pre, Closure<Boolean> c) {
-		def cr = createProp(map, pre, c).check()
-		CheckResult.summary.println(cr)
-		Assert.assertTrue(cr.isOk() == ok)
-		cr
+		def p = createProp(map, pre, c)
+		def cr = p.check()
+		p.checkBooleanWithNullableSummary(ok)
+//		CheckResult.summary.println(cr)
+//		Assert.assertTrue(cr.isOk() == ok)
+//		cr
 	}
 
 	/**
@@ -88,12 +97,16 @@ class PropertyTester {
 	 * @param map Override the default map
 	 * @param c
 	 */
-	static CheckResult showAll(Map<Class<?>, Arbitrary> map, Closure<Boolean> c) {
+	static CheckResult showAll(Map<Class<?>, Arbitrary<?>> map, Closure<Boolean> c) {
 		showAllWithMap(true, defaultMap + map, c)
 	}
 
 	static CheckResult showAll(Boolean ok, Map<Class<?>, Arbitrary> map, Closure<Boolean> pre, Closure<Boolean> c) {
 		showAllWithMap(ok, defaultMap + map, pre, c)
+	}
+
+	static CheckResult showAll(Boolean ok, Map<Class<?>, Arbitrary> map, Closure<Boolean> c) {
+		showAllWithMap(ok, defaultMap + map, c)
 	}
 
 	static CheckResult showAll(Closure<Boolean> c) {
@@ -112,7 +125,6 @@ class PropertyTester {
 	static CheckResult showAll(Boolean ok, Closure pre, Closure c) {
 		showAllWithMap(ok, defaultMap, pre, c)
 	}
-
 
 	@TypeChecked(TypeCheckingMode.SKIP)
 	static Property createProp(List<Arbitrary> list, Closure<Boolean> c) {
@@ -175,10 +187,34 @@ class PropertyTester {
 
 	@TypeChecked
 	static Property createProp2(List<Arbitrary<?>> list, Closure<Boolean> pre, Closure<Boolean> closure) {
-		Property.property(list[0], list[1], { a, b ->
+		Property.property(list[0], list[1], { Object a, Object b ->
+
 			def preOk = pre.call(a, b)
-			def result = !preOk ? true : closure.call(a, b)
-			implies(preOk, result)
+			// is a and b of type closure param 1 and 2?
+			def objectTypes = [a.getClass(), b.getClass()]
+			def closureTypes = closure.getParameterTypes().toList()
+			def typesOk = objectTypes.zip(closureTypes).inject(true) { Boolean result, P2<Class, Class> p ->
+				result && ((p._1() == NullObject.class) ? true : p._2().isAssignableFrom(p._1()))
+			}
+			if (!typesOk || objectTypes.size() != closureTypes.size()) {
+				println("Cannot call closure with value types $objectTypes.  Closure requires types $closureTypes")
+				return Property.prop(false)
+			}
+
+			try {
+				def result = !preOk ? true : closure.call(a, b)
+				implies(preOk, result)
+			} catch (Exception e) {
+				println e.getMessage()
+				Property.prop(false)
+			} catch (Throwable e) {
+				println e.getMessage()
+				Property.prop(false)
+			} catch (RuntimeException e) {
+				println e.getMessage()
+				Property.prop(false)
+			}
+
 //			Bool.bool(preOk).implies(ok)
 //			Property.prop(closure.call(a, b))
 		} as F2)

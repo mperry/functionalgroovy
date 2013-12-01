@@ -54,7 +54,7 @@ class AdditionTest {
 
 	@Test
 	void impliesHandlingNulls2() {
-		showAll([(Integer.class): Arbitrary.arbNullableInteger()]) { Integer a, Integer b ->
+		showAll(false, [(Integer.class): Arbitrary.arbNullableInteger()]) { Integer a, Integer b ->
 			a + b == b + a
 		}
 	}

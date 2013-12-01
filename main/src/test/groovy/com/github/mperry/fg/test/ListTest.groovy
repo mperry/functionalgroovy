@@ -1,5 +1,6 @@
 package com.github.mperry.fg.test
 
+import groovy.transform.TypeChecked
 import org.junit.Test
 
 import static fj.test.Arbitrary.*
@@ -15,10 +16,14 @@ import static fj.test.Arbitrary.*
 class ListTest {
 
 	@Test
+	@TypeChecked
 	void test1() {
-		PropertyTester.showAll([(fj.data.List.class): arbList(arbIntegerBoundaries)]) { fj.data.List<Integer> list1, fj.data.List<Integer> list2 ->
-			(list1.append(list2)).length() == list1.length() + list2.length()
+		def f = { java.util.List<Integer> list1, java.util.List<Integer> list2 ->
+//			(list1.append(list2)).length() == list1.length() + list2.length()
+			(list1 + list2).size() == list1.size() + list2.size()
 		}
+		PropertyTester.showAll([(java.util.List.class): arbArrayList(arbIntegerBoundaries)], f)
+//		PropertyTester.showAll([(java.util.List.class): arbList(arbIntegerBoundaries)], f)
 	}
 
 	@Test

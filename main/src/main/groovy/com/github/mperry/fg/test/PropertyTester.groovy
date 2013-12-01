@@ -123,21 +123,21 @@ class PropertyTester {
 		} as F)
 	}
 
-	@TypeChecked(TypeCheckingMode.SKIP)
-	Validation<Throwable, Boolean> perform(Closure<Boolean> c, List args) {
+//	@TypeChecked(TypeCheckingMode.SKIP)
+	static Validation<Throwable, Boolean> perform(Closure<Boolean> c, List args) {
 		try {
-			Validation.success(c.call(args.toArray()))
+			Validation.success(c.call(args))
 		} catch (Throwable t) {
 			Validation.fail(t)
 		}
 	}
 
-	void noop(Closure c) {
+	static void noop(Closure c) {
 		int z = 0
 	}
 
 	@TypeChecked
-	static Property createProp2(List<Arbitrary<?>> list, Option<Closure<Boolean>> pre, final Closure<Boolean> func, F<Validation<Throwable, Boolean>, Boolean> validate) {
+	static Property createProp2(List<Arbitrary<?>> list, Option<Closure<Boolean>> pre, Closure<Boolean> func, F<Validation<Throwable, Boolean>, Boolean> validate) {
 		Property.property(list[0], list[1], { Object a, Object b ->
 			def preOk = pre.map { Closure<Boolean> it -> it.call(a, b) }.orSome(true)
 			def objectTypes = [a.getClass(), b.getClass()]
@@ -150,14 +150,8 @@ class PropertyTester {
 				return Property.prop(false)
 			}
 
-			def args = [a, b]
 			try {
-				def v
-				try {
-					v = Validation.success(func.call(args))
-				} catch (Throwable t) {
-					v = Validation.fail(t)
-				}
+				def v = perform(func, [a, b])
 				def result = !preOk ? true : validate.f(v)
 //				def result = !preOk ? true : validate.f(perform(func, [a, b]))
 				implies(preOk, result)

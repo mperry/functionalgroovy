@@ -59,18 +59,18 @@ class PropertyTester {
 		createProp(defaultMap, Option.none(), c)
 	}
 
-	static Property createProp(Map<Class<?>, Arbitrary> map, Option<Closure<Boolean>> pre, Closure<Boolean> c) {
+	static Property createProp(Map<Class<?>, Arbitrary> map, Option<Closure<Boolean>> pre, Closure<Boolean> c, F<Validation<Throwable, Boolean>, Boolean> validation) {
 		def list = c.getParameterTypes()
 		def arbOpts = list.collect { Class it -> map.containsKey(it) ? Option.some(map[it]) : Option.none() }
 		def allMapped = arbOpts.forAll { Option it -> it.isSome() }
 		if (!allMapped) {
 			throw new Exception("Not all function parameter types were found: ${list.findAll { !map.containsKey(it)}}")
 		}
-		createProp(arbOpts.collect { Option<Arbitrary> it -> it.some() }, pre, c)
+		createProp(arbOpts.collect { Option<Arbitrary> it -> it.some() }, pre, c, validation)
 	}
 
-	static CheckResult showAllWithMap(Boolean ok, Map<Class<?>, Arbitrary> map, Option<Closure<Boolean>> pre, Closure<Boolean> c) {
-		def p = createProp(map, pre, c)
+	static CheckResult showAllWithMap(Boolean ok, Map<Class<?>, Arbitrary> map, Option<Closure<Boolean>> pre, Closure<Boolean> c, F<Validation<Throwable, Boolean>, Boolean> validate) {
+		def p = createProp(map, pre, c, validate)
 		def cr = p.check()
 		p.checkBooleanWithNullableSummary(ok)
 	}
@@ -82,24 +82,24 @@ class PropertyTester {
 	 */
 	@TypeChecked(TypeCheckingMode.SKIP)
 	static CheckResult showAll(Map<Class<?>, Arbitrary<?>> map, Closure<Boolean> c) {
-		showAllWithMap(true, defaultMap + map, Option.none(), c)
+		showAllWithMap(true, defaultMap + map, Option.none(), c, TestConfig.DEFAULT_VALIDATOR)
 	}
 
 	static CheckResult showAll(TestConfig config) {
-		showAllWithMap(config.truth, config.map, config.pre, config.function)
+		showAllWithMap(config.truth, config.map, config.pre, config.function, config.validator)
 	}
 
 	@TypeChecked(TypeCheckingMode.SKIP)
 	static CheckResult showAll(Closure<Boolean> c) {
-		showAllWithMap(true, defaultMap, Option.none(), c)
+		showAllWithMap(true, defaultMap, Option.none(), c, TestConfig.DEFAULT_VALIDATOR)
 	}
 
 	@TypeChecked(TypeCheckingMode.SKIP)
-	static Property createProp(List<Arbitrary> list, Option<Closure<Boolean>> pre, Closure<Boolean> c) {
+	static Property createProp(List<Arbitrary> list, Option<Closure<Boolean>> pre, Closure<Boolean> c, F<Validation<Throwable, Boolean>, Boolean> validate) {
 		if (c.getMaximumNumberOfParameters() > MAX_ARGS) {
 			throw new Exception("Testing does not support ${c.getMaximumNumberOfParameters()}, maximum supported is $MAX_ARGS")
 		}
-		this."createProp${list.size()}"(list, pre, c)
+		this."createProp${list.size()}"(list, pre, c, validate)
 	}
 
 	static Property implies(Boolean pre, Boolean result) {
@@ -123,31 +123,43 @@ class PropertyTester {
 		} as F)
 	}
 
-	Validation<Throwable, Boolean> run(Closure<Boolean> c, List<Object> list) {
+	@TypeChecked(TypeCheckingMode.SKIP)
+	Validation<Throwable, Boolean> perform(Closure<Boolean> c, List args) {
 		try {
-			Validation.success(c.call(list))
+			Validation.success(c.call(args.toArray()))
 		} catch (Throwable t) {
 			Validation.fail(t)
 		}
 	}
 
+	void noop(Closure c) {
+		int z = 0
+	}
+
 	@TypeChecked
-	static Property createProp2(List<Arbitrary<?>> list, Option<Closure<Boolean>> pre, Closure<Boolean> closure) {
+	static Property createProp2(List<Arbitrary<?>> list, Option<Closure<Boolean>> pre, final Closure<Boolean> func, F<Validation<Throwable, Boolean>, Boolean> validate) {
 		Property.property(list[0], list[1], { Object a, Object b ->
 			def preOk = pre.map { Closure<Boolean> it -> it.call(a, b) }.orSome(true)
 			def objectTypes = [a.getClass(), b.getClass()]
-			def closureTypes = closure.getParameterTypes().toList()
+			def closureTypes = func.getParameterTypes().toList()
 			def typesOk = objectTypes.zip(closureTypes).inject(true) { Boolean result, P2<Class, Class> p ->
 				result && ((p._1() == NullObject.class) ? true : p._2().isAssignableFrom(p._1()))
 			}
 			if (!typesOk || objectTypes.size() != closureTypes.size()) {
-				println("Cannot call closure with value types $objectTypes.  Closure requires types $closureTypes")
+				println("Cannot call func with value types $objectTypes.  Closure requires types $closureTypes")
 				return Property.prop(false)
 			}
 
+			def args = [a, b]
 			try {
-//				def result = !preOk ? true : closure.call(a, b)
-				def result = !preOk ? true : closure.call(a, b)
+				def v
+				try {
+					v = Validation.success(func.call(args))
+				} catch (Throwable t) {
+					v = Validation.fail(t)
+				}
+				def result = !preOk ? true : validate.f(v)
+//				def result = !preOk ? true : validate.f(perform(func, [a, b]))
 				implies(preOk, result)
 			} catch (Exception e) {
 				println e.getMessage()

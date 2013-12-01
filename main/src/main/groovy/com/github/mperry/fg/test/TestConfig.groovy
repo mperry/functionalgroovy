@@ -18,11 +18,13 @@ import groovy.transform.Immutable
 //@Immutable
 class TestConfig {
 
+	static final F<Validation<Throwable, Boolean>, Boolean> DEFAULT_VALIDATOR = { Validation<Throwable, Boolean> v -> v.isSuccess() && v.success() == true } as F
+
 	Map<Class<?>, Arbitrary> map = PropertyTester.defaultMap
 	Closure<Boolean> function
 	Option<Closure<Boolean>> pre = Option.none()
 	Boolean truth = true
-	F<Validation<Throwable, Boolean>, Boolean> valid = { Validation<Throwable, Boolean> v -> v.isSuccess() && v.success() == true } as F
+	F<Validation<Throwable, Boolean>, Boolean> validator = DEFAULT_VALIDATOR
 
 	TestConfig addArbs(Map<Class<?>, Arbitrary> m) {
 		new TestConfig(map + m, function, pre, truth)

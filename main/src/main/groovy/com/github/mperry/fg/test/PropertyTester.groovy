@@ -142,10 +142,7 @@ class PropertyTester {
 			} catch (Exception e) {
 				println e.getMessage()
 				Property.prop(false)
-			} catch (Throwable e) {
-				println e.getMessage()
-				Property.prop(false)
-			} catch (RuntimeException e) {
+			} catch (Error e) {
 				println e.getMessage()
 				Property.prop(false)
 			}

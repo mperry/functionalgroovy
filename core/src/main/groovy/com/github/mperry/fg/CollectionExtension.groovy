@@ -1,4 +1,7 @@
 package com.github.mperry.fg
+
+import fj.data.Option
+
 /**
  * Created with IntelliJ IDEA.
  * User: MarkPerry
@@ -32,6 +35,10 @@ class CollectionExtension {
 		!c.exists {
 			f(it) == false
 		}
+	}
+
+	public static <A> Option<A> findFirst(Collection<A> c, Closure<Boolean> f) {
+		Option.fromNull(c.find(f))
 	}
 
 }

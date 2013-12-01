@@ -30,8 +30,9 @@ class PropertyTester {
 
 	static int maxArgs = 5
 
+	final static Map NULLABLE_INTEGER = [(Integer.class): Arbitrary.arbNullableInteger()]
 
-	static Map<Class<?>, Arbitrary> defaultMap = [
+	final static Map<Class<?>, Arbitrary> defaultMap = [
 			(BigDecimal.class): arbBigDecimal,
 			(BigInteger.class): arbBigInteger,
 			(BitSet.class): arbBitSet,
@@ -87,10 +88,15 @@ class PropertyTester {
 		def p = createProp(map, pre, c)
 		def cr = p.check()
 		p.checkBooleanWithNullableSummary(ok)
-//		CheckResult.summary.println(cr)
-//		Assert.assertTrue(cr.isOk() == ok)
-//		cr
 	}
+
+	static CheckResult showAllWithMap(Boolean ok, Map<Class<?>, Arbitrary> map, Option<Closure<Boolean>> pre, Closure<Boolean> c) {
+		def p = pre.isSome() ? createProp(map, pre.some(), c) : createProp(map, c)
+//		def p = createProp(map, pre, c)
+		def cr = p.check()
+		p.checkBooleanWithNullableSummary(ok)
+	}
+
 
 	/**
 	 *
@@ -109,7 +115,17 @@ class PropertyTester {
 		showAllWithMap(ok, defaultMap + map, c)
 	}
 
+	static CheckResult showAll(TestConfig config) {
+		if (config.pre.isSome()) {
+			showAllWithMap(config.truth, config.map, config.pre.some(), config.function)
+		} else {
+			showAllWithMap(config.truth, config.map, config.function)
+		}
+
+	}
+
 	static CheckResult showAll(Closure<Boolean> c) {
+
 		showAllWithMap(true, defaultMap, c)
 	}
 
@@ -139,9 +155,8 @@ class PropertyTester {
 		if (c.getMaximumNumberOfParameters() > maxArgs) {
 			throw new Exception("Testing does not support ${c.getMaximumNumberOfParameters()}, maximum supported is $maxArgs")
 		}
-		this."createProp${list.size()}"(list, pre, c)
+		this."createProp${list.size()}"(list, Option.some(pre), c)
 	}
-
 
 	static Property implies(Boolean pre, Boolean result) {
 		Bool.bool(pre).implies(result)
@@ -149,22 +164,17 @@ class PropertyTester {
 
 	static Property createProp0(List<Arbitrary> list, Closure<Boolean> c) {
 		createProp0(list, { -> true }, c)
-//		Property.prop(c.call())
 	}
 
 	static Property createProp0(List<Arbitrary> list, Closure<Boolean> pre, Closure<Boolean> c) {
 		def preOk = pre.call()
 		def result = !preOk ? true: c.call()
 		implies(preOk, result)
-//		Property.prop(c.call())
 	}
 
 	@TypeChecked
 	static Property createProp1(List<Arbitrary<?>> list, Closure<Boolean> closure) {
 		createProp1(list, { a -> true }, closure)
-//		Property.property(list[0], { a ->
-//			Property.prop(closure.call(a))
-//		} as F)
 	}
 
 	@TypeChecked
@@ -173,23 +183,20 @@ class PropertyTester {
 			def preOk = pre.call(a)
 			def result = !preOk ? true : closure.call(a)
 			implies(preOk, result)
-//			Property.prop(closure.call(a))
 		} as F)
 	}
 
-	@TypeChecked
+//	@TypeChecked
+	@TypeChecked(TypeCheckingMode.SKIP)
 	static Property createProp2(List<Arbitrary<?>> list, Closure<Boolean> closure) {
-		createProp2(list, { a, b -> true }, closure)
-//		Property.property(list[0], list[1], { a, b ->
-//			Property.prop(closure.call(a, b))
-//		} as F2)
+			createProp2(list, Option.<Closure<Boolean>>none(), closure)
 	}
 
 	@TypeChecked
-	static Property createProp2(List<Arbitrary<?>> list, Closure<Boolean> pre, Closure<Boolean> closure) {
+	static Property createProp2(List<Arbitrary<?>> list, Option<Closure<Boolean>> pre, Closure<Boolean> closure) {
 		Property.property(list[0], list[1], { Object a, Object b ->
-
-			def preOk = pre.call(a, b)
+			def preOk = pre.map { Closure<Boolean> it -> it.call(a, b) }.orSome(true)
+//			def preOk = pre.call(a, b)
 			// is a and b of type closure param 1 and 2?
 			def objectTypes = [a.getClass(), b.getClass()]
 			def closureTypes = closure.getParameterTypes().toList()
@@ -214,18 +221,12 @@ class PropertyTester {
 				println e.getMessage()
 				Property.prop(false)
 			}
-
-//			Bool.bool(preOk).implies(ok)
-//			Property.prop(closure.call(a, b))
 		} as F2)
 	}
 
 	@TypeChecked
 	static Property createProp3(List<Arbitrary<?>> list, Closure<Boolean> closure) {
 		createProp3(list, { a, b, c -> true }, closure)
-//		Property.property(list[0], list[1], list[2], { a, b, c ->
-//			Property.prop(closure.call(a, b, c))
-//		} as F3)
 	}
 
 
@@ -235,7 +236,6 @@ class PropertyTester {
 			def preOk = pre.call(a, b, c)
 			def result = !preOk ? true : closure.call(a, b, c)
 			implies(preOk, result)
-//			Property.prop(closure.call(a, b, c))
 		} as F3)
 	}
 

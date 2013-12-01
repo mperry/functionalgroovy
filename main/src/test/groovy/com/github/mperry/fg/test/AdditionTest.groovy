@@ -8,7 +8,10 @@ import fj.test.Gen
 import fj.test.Property
 import org.junit.Test
 
+import static com.github.mperry.fg.test.PropertyTester.NULLABLE_INTEGER
+import static com.github.mperry.fg.test.PropertyTester.defaultMap
 import static com.github.mperry.fg.test.PropertyTester.showAll
+import static fj.data.Option.some
 import static org.junit.Assert.assertTrue
 
 /**
@@ -47,9 +50,17 @@ class AdditionTest {
 
 	@Test
 	void impliesHandlingNulls1() {
-		showAll([(Integer.class): Arbitrary.arbNullableInteger()]) { a, b -> a != null && b != null } { Integer a, Integer b ->
-			a + b == b + a
-		}
+		showAll(new TestConfig(
+			map: defaultMap + NULLABLE_INTEGER,
+			pre: some({ a, b -> a != null && b != null }),
+			function: { Integer a, Integer b ->
+				a + b == b + a
+			}
+		))
+//		showAll
+//		showAll([(Integer.class): Arbitrary.arbNullableInteger()]) { a, b -> a != null && b != null } { Integer a, Integer b ->
+//			a + b == b + a
+//		}
 	}
 
 	@Test

@@ -7,6 +7,7 @@ import fj.F4
 import fj.F5
 import fj.P2
 import fj.data.Option
+import fj.data.Validation
 import fj.test.Arbitrary
 import fj.test.Bool
 import fj.test.CheckResult
@@ -122,6 +123,14 @@ class PropertyTester {
 		} as F)
 	}
 
+	Validation<Throwable, Boolean> run(Closure<Boolean> c, List<Object> list) {
+		try {
+			Validation.success(c.call(list))
+		} catch (Throwable t) {
+			Validation.fail(t)
+		}
+	}
+
 	@TypeChecked
 	static Property createProp2(List<Arbitrary<?>> list, Option<Closure<Boolean>> pre, Closure<Boolean> closure) {
 		Property.property(list[0], list[1], { Object a, Object b ->
@@ -137,6 +146,7 @@ class PropertyTester {
 			}
 
 			try {
+//				def result = !preOk ? true : closure.call(a, b)
 				def result = !preOk ? true : closure.call(a, b)
 				implies(preOk, result)
 			} catch (Exception e) {

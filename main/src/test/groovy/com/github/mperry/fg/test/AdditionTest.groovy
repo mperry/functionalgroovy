@@ -73,6 +73,7 @@ class AdditionTest {
 				function: { Integer a, Integer b ->
 					a + b == b + a
 				}
+
 		)
 	}
 
@@ -87,7 +88,7 @@ class AdditionTest {
 		)
 	}
 
-	@Test
+//	@Test
 	void impliesHandlingNulls4() {
 		showAll new TestConfig(
 			map: [(Integer.class): Arbitrary.arbNullableInteger()],

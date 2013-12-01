@@ -1,6 +1,8 @@
 package com.github.mperry.fg.test
 
+import fj.F
 import fj.data.Option
+import fj.data.Validation
 import fj.test.Arbitrary
 import groovy.transform.Canonical
 import groovy.transform.Immutable
@@ -20,6 +22,7 @@ class TestConfig {
 	Closure<Boolean> function
 	Option<Closure<Boolean>> pre = Option.none()
 	Boolean truth = true
+	F<Validation<Throwable, Boolean>, Boolean> valid = { Validation<Throwable, Boolean> v -> v.isSuccess() && v.success() == true } as F
 
 	TestConfig addArbs(Map<Class<?>, Arbitrary> m) {
 		new TestConfig(map + m, function, pre, truth)

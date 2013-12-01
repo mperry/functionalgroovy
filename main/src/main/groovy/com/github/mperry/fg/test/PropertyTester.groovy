@@ -32,6 +32,7 @@ class PropertyTester {
 	static final Map NULLABLE_INTEGER = [(Integer.class): Arbitrary.arbNullableInteger()]
 
 	final static Map<Class<?>, Arbitrary> defaultMap = [
+			// basic generators
 			(BigDecimal.class): arbBigDecimal,
 			(BigInteger.class): arbBigInteger,
 			(BitSet.class): arbBitSet,
@@ -46,7 +47,7 @@ class PropertyTester {
 			(Long.class): arbLongBoundaries,
 			(String.class): arbString,
 
-			// non basic generators
+			// more complex generators
 			(ArrayList.class): arbArrayList(arbIntegerBoundaries),
 			(java.util.List.class): arbArrayList(arbIntegerBoundaries),
 			(fj.data.List.class): arbList(arbIntegerBoundaries)
@@ -125,8 +126,6 @@ class PropertyTester {
 	static Property createProp2(List<Arbitrary<?>> list, Option<Closure<Boolean>> pre, Closure<Boolean> closure) {
 		Property.property(list[0], list[1], { Object a, Object b ->
 			def preOk = pre.map { Closure<Boolean> it -> it.call(a, b) }.orSome(true)
-//			def preOk = pre.call(a, b)
-			// is a and b of type closure param 1 and 2?
 			def objectTypes = [a.getClass(), b.getClass()]
 			def closureTypes = closure.getParameterTypes().toList()
 			def typesOk = objectTypes.zip(closureTypes).inject(true) { Boolean result, P2<Class, Class> p ->
@@ -154,31 +153,29 @@ class PropertyTester {
 	}
 
 	@TypeChecked
-	static Property createProp3(List<Arbitrary<?>> list, Closure<Boolean> closure) {
-		createProp3(list, { a, b, c -> true }, closure)
-	}
-
-
-	@TypeChecked
-	static Property createProp3(List<Arbitrary<?>> list, Closure<Boolean> pre, Closure<Boolean> closure) {
+	static Property createProp3(List<Arbitrary<?>> list, Option<Closure<Boolean>> pre, Closure<Boolean> closure) {
 		Property.property(list[0], list[1], list[2], { a, b, c ->
-			def preOk = pre.call(a, b, c)
+			def preOk = pre.map { Closure<Boolean> it -> it.call(a, b, c) }.orSome(true)
 			def result = !preOk ? true : closure.call(a, b, c)
 			implies(preOk, result)
 		} as F3)
 	}
 
 	@TypeChecked
-	static Property createProp4(List<Arbitrary<?>> list, Closure<Boolean> closure) {
+	static Property createProp4(List<Arbitrary<?>> list, Option<Closure<Boolean>> pre, Closure<Boolean> closure) {
 		Property.property(list[0], list[1], list[2], list[3], { a, b, c, d ->
-			Property.prop(closure.call(a, b, c, d))
+			def preOk = pre.map { Closure<Boolean> it -> it.call(a, b, c, d) }.orSome(true)
+			def result = !preOk ? true : closure.call(a, b, c, d)
+			implies(preOk, result)
 		} as F4)
 	}
 
 	@TypeChecked
-	static Property createProp5(List<Arbitrary<?>> list, Closure<Boolean> closure) {
+	static Property createProp5(List<Arbitrary<?>> list, Option<Closure<Boolean>> pre, Closure<Boolean> closure) {
 		Property.property(list[0], list[1], list[2], list[3], list[4], { a, b, c, d, e ->
-			Property.prop(closure.call(a, b, c, d, e))
+			def preOk = pre.map { Closure<Boolean> it -> it.call(a, b, c, d, e) }.orSome(true)
+			def result = !preOk ? true : closure.call(a, b, c, d, e)
+			implies(preOk, result)
 		} as F5)
 	}
 

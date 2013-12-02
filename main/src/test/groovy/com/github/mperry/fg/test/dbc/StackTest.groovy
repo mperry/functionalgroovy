@@ -1,9 +1,8 @@
-package com.github.mperry.fg.test
+package com.github.mperry.fg.test.dbc
 
 import fj.F
 import fj.F2
 import fj.test.Arbitrary
-import fj.test.Bool
 import fj.test.Gen
 import fj.test.Property
 import org.junit.Test
@@ -52,8 +51,8 @@ class StackTest {
 
 			try {
 				def uList = list.toList()
-				def s = new Stack<Integer>(uList)
-				def s2 = new Stack<Integer>(s)
+				def s = new com.github.mperry.fg.test.dbc.Stack<Integer>(uList)
+				def s2 = new com.github.mperry.fg.test.dbc.Stack<Integer>(s)
 				s.push(i)
 				s.pop()
 				def b = s.elements == s2.elements

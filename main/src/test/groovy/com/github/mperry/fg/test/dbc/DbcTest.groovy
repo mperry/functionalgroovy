@@ -1,4 +1,4 @@
-package com.github.mperry.fg.test
+package com.github.mperry.fg.test.dbc
 
 import fj.F
 import fj.F2
@@ -6,9 +6,6 @@ import fj.Show
 import fj.data.Stream
 import fj.test.*
 import groovy.transform.Canonical
-import org.gcontracts.ClassInvariantViolation
-import org.gcontracts.PostconditionViolation
-import org.gcontracts.PreconditionViolation
 import org.gcontracts.annotations.Ensures
 import org.gcontracts.annotations.Requires
 import org.junit.Test

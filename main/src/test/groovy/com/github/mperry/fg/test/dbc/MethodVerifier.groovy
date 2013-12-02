@@ -1,4 +1,4 @@
-package com.github.mperry.fg.test
+package com.github.mperry.fg.test.dbc
 
 import fj.*
 import fj.data.Validation

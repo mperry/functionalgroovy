@@ -25,6 +25,9 @@ class AdditionTest {
 		}
 	}
 
+	/**
+	 * Naturals commute, do not discard generated values that are not naturals
+	 */
 	@Test
 	void naturalsCommute() {
 		showAll { Integer a, Integer b ->
@@ -33,21 +36,23 @@ class AdditionTest {
 	}
 
 	/**
-	 * Sometimes the number of tests discarded does not get printed.  This test shows how
-	 * to work around that
+	 * Naturals commute, discard values that are not naturals
 	 */
 	@Test
-	void naturalsCommute2() {
+	void naturalsCommuteDiscardInvalid() {
 		showAll new PropertyConfig(
-			pre: Option.some { a, b -> a >= 0 && b >= 0 },
+			pre: some { a, b -> a >= 0 && b >= 0 },
 			function: { Integer a, Integer b ->
 				a + b == b + a
 			}
 		)
 	}
 
+	/**
+	 * Naturals commute, enhance pre-condition to check for null values
+	 */
 	@Test
-	void impliesHandlingNulls1() {
+	void discardNulls() {
 		showAll(new PropertyConfig(
 			map: PropertyConfig.defaultMap + PropertyConfig.NULLABLE_INTEGER,
 			pre: some({ a, b -> a != null && b != null }),
@@ -57,20 +62,25 @@ class AdditionTest {
 		))
 	}
 
+	/**
+	 * Show property does not hold that naturals commute in the presence of null values
+	 */
 	@Test
-	void impliesHandlingNulls2() {
+	void naturalsWithNullsDoNotCommute() {
 		showAll new PropertyConfig(
-				truth: false,
-				map: [(Integer.class): Arbitrary.arbNullableInteger()],
-				function: { Integer a, Integer b ->
-					a + b == b + a
-				}
-
+			truth: false,
+			map: [(Integer.class): Arbitrary.arbNullableInteger()],
+			function: { Integer a, Integer b ->
+				a + b == b + a
+			}
 		)
 	}
 
+	/**
+	 * Naturals commute if throwing a NullPointerException is ok
+	 */
 	@Test
-	void impliesHandlingNulls5() {
+	void naturalsCommuteIfNullPointerOk() {
 		showAll new PropertyConfig(
 			map: [(Integer.class): Arbitrary.arbNullableInteger()],
 			function: { Integer a, Integer b ->

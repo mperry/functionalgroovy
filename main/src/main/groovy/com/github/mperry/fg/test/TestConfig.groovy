@@ -6,6 +6,7 @@ import fj.data.Validation
 import fj.test.Arbitrary
 import groovy.transform.Canonical
 import groovy.transform.Immutable
+import groovy.transform.TypeChecked
 
 /**
  * Created with IntelliJ IDEA.
@@ -30,6 +31,13 @@ class TestConfig {
 
 	TestConfig addArbs(Map<Class<?>, Arbitrary> m) {
 		new TestConfig(map + m, function, pre, truth)
+	}
+
+	@TypeChecked
+	static F<Validation<Throwable, Boolean>, Boolean> validator(F<Throwable, Boolean> f) {
+		{ Validation<Throwable, Boolean> v ->
+			v.isFail() ? f.f(v.fail()) : v.success()
+		} as F
 	}
 
 }

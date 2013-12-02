@@ -16,7 +16,7 @@ import static fj.data.Option.some
  * Time: 1:07 AM
  * To change this template use File | Settings | File Templates.
  */
-class AdditionTest {
+class AdditionCommutesTest {
 
 	@Test
 	void commutes() {

@@ -5,6 +5,9 @@ import fj.F2
 import fj.F3
 import fj.F4
 import fj.F5
+import fj.F6
+import fj.F7
+import fj.F8
 import fj.P2
 import fj.data.Option
 import fj.data.Validation
@@ -27,6 +30,7 @@ import org.codehaus.groovy.runtime.NullObject
 class PropertyTester {
 
 	static final int MAX_ARGS = 5
+	static final Map<Integer, Class<?>> FUNC_TYPES = [1: F, 2: F2, 3: F3, 4: F4, 5: F5, 6: F6, 7: F7, 8: F8]
 
 	static Property createProp(Map<Class<?>, Arbitrary> map, Option<Closure<Boolean>> pre, Closure<Boolean> c, F<Validation<Throwable, Boolean>, Boolean> validation) {
 		def list = c.getParameterTypes()
@@ -75,7 +79,6 @@ class PropertyTester {
 		Bool.bool(pre).implies(result)
 	}
 
-
 	static Validation<Throwable, Boolean> perform(Closure<Boolean> c, List args) {
 		try {
 			Validation.success(c.call(args))
@@ -102,39 +105,39 @@ class PropertyTester {
 		implies(preOk, result)
 	}
 
+	static Class funcType(List list) {
+		FUNC_TYPES[list.size()]
+	}
+
 	static Property createProp0(List<Arbitrary<?>> list, Option<Closure<Boolean>> pre, Closure<Boolean> func, F<Validation<Throwable, Boolean>, Boolean> validate) {
 		callCommon([], pre, func, validate)
 	}
 
-	@TypeChecked
 	static Property createProp1(List<Arbitrary<?>> list, Option<Closure<Boolean>> pre, Closure<Boolean> func, F<Validation<Throwable, Boolean>, Boolean> validate) {
 		Property.property(list[0], { a ->
 			callCommon([a], pre, func, validate)
+//		}.asType(funcType(list)))
 		} as F)
 	}
 
-	@TypeChecked
 	static Property createProp2(List<Arbitrary<?>> list, Option<Closure<Boolean>> pre, Closure<Boolean> func, F<Validation<Throwable, Boolean>, Boolean> validate) {
 		Property.property(list[0], list[1], { Object a, Object b ->
 			callCommon([a, b], pre, func, validate)
 		} as F2)
 	}
 
-	@TypeChecked
 	static Property createProp3(List<Arbitrary<?>> list, Option<Closure<Boolean>> pre, Closure<Boolean> func, F<Validation<Throwable, Boolean>, Boolean> validate) {
 		Property.property(list[0], list[1], list[2], { a, b, c ->
 			callCommon([a, b, c], pre, func, validate)
 		} as F3)
 	}
 
-	@TypeChecked
 	static Property createProp4(List<Arbitrary<?>> list, Option<Closure<Boolean>> pre, Closure<Boolean> func, F<Validation<Throwable, Boolean>, Boolean> validate) {
 		Property.property(list[0], list[1], list[2], list[3], { a, b, c, d ->
 			callCommon([a, b, c, d], pre, func, validate)
 		} as F4)
 	}
 
-	@TypeChecked
 	static Property createProp5(List<Arbitrary<?>> list, Option<Closure<Boolean>> pre, Closure<Boolean> func, F<Validation<Throwable, Boolean>, Boolean> validate) {
 		Property.property(list[0], list[1], list[2], list[3], list[4], { a, b, c, d, e ->
 			callCommon([a, b, c, d, e], pre, func, validate)

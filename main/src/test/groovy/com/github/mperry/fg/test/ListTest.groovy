@@ -3,6 +3,7 @@ package com.github.mperry.fg.test
 import groovy.transform.TypeChecked
 import org.junit.Test
 
+import static com.github.mperry.fg.test.PropertyTester.showAll
 import static fj.test.Arbitrary.*
 //import fj.data.List
 
@@ -17,20 +18,20 @@ class ListTest {
 
 	@Test
 	@TypeChecked
-	void test1() {
-		def f = { java.util.List<Integer> list1, java.util.List<Integer> list2 ->
-//			(list1.append(list2)).length() == list1.length() + list2.length()
+	void testConcatenationSize() {
+		showAll { List<Integer> list1, List<Integer> list2 ->
 			(list1 + list2).size() == list1.size() + list2.size()
 		}
-		PropertyTester.showAll([(java.util.List.class): arbArrayList(arbIntegerBoundaries)], f)
-//		PropertyTester.showAll([(java.util.List.class): arbList(arbIntegerBoundaries)], f)
 	}
 
+	/**
+	 * Test ArrayList concatenation, uses same arbitrary generator as testConcatenationSize,
+	 * but with concrete subclass
+	 */
 	@Test
-	void test2() {
-		PropertyTester.showAll([(ArrayList.class): arbArrayList(arbIntegerBoundaries)]) { ArrayList list1, ArrayList list2 ->
+	void testArrayListConcatenationSize() {
+		showAll { ArrayList list1, ArrayList list2 ->
 			(list1 + list2).size() == list1.size() + list2.size()
-
 		}
 	}
 

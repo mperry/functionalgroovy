@@ -3,6 +3,9 @@ package com.github.mperry.fg.test
 import fj.data.Option
 import org.junit.Test
 
+import static com.github.mperry.fg.test.PropertyTester.showAll
+import static fj.data.Option.some
+
 /**
  * Created with IntelliJ IDEA.
  * User: MarkPerry
@@ -12,11 +15,14 @@ import org.junit.Test
  */
 class IntegerOverflow {
 
+	/**
+	 * It is false, that given a and b is a natural, that a + b is a natural, due to overflow
+	 */
 	@Test
 	void overflow() {
-		PropertyTester.showAll new PropertyConfig(
+		showAll new PropertyConfig(
 			truth: false,
-			pre: Option.some { a, b -> a >= 0 && b >= 0 },
+			pre: some { a, b -> a >= 0 && b >= 0 },
 			function: { Integer a, Integer b ->
 				a + b >= 0
 			}

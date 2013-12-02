@@ -102,54 +102,42 @@ class PropertyTester {
 		implies(preOk, result)
 	}
 
-	static Property createProp0(List<Arbitrary> list, Option<Closure<Boolean>> pre, Closure<Boolean> c) {
-		def preOk = pre.map { Closure<Boolean> it -> it.call() }.orSome(true)
-		def result = !preOk ? true: c.call()
-		implies(preOk, result)
+	static Property createProp0(List<Arbitrary<?>> list, Option<Closure<Boolean>> pre, Closure<Boolean> func, F<Validation<Throwable, Boolean>, Boolean> validate) {
+		callCommon([], pre, func, validate)
 	}
 
 	@TypeChecked
-	static Property createProp1(List<Arbitrary<?>> list, Option<Closure<Boolean>> pre, Closure<Boolean> closure) {
+	static Property createProp1(List<Arbitrary<?>> list, Option<Closure<Boolean>> pre, Closure<Boolean> func, F<Validation<Throwable, Boolean>, Boolean> validate) {
 		Property.property(list[0], { a ->
-			def preOk = pre.map { Closure<Boolean> it -> it.call(a) }.orSome(true)
-//			def preOk = pre.call(a)
-			def result = !preOk ? true : closure.call(a)
-			implies(preOk, result)
+			callCommon([a], pre, func, validate)
 		} as F)
 	}
 
 	@TypeChecked
 	static Property createProp2(List<Arbitrary<?>> list, Option<Closure<Boolean>> pre, Closure<Boolean> func, F<Validation<Throwable, Boolean>, Boolean> validate) {
 		Property.property(list[0], list[1], { Object a, Object b ->
-			def argList = [a, b]
-			callCommon(argList, pre, func, validate)
+			callCommon([a, b], pre, func, validate)
 		} as F2)
 	}
 
 	@TypeChecked
-	static Property createProp3(List<Arbitrary<?>> list, Option<Closure<Boolean>> pre, Closure<Boolean> closure) {
+	static Property createProp3(List<Arbitrary<?>> list, Option<Closure<Boolean>> pre, Closure<Boolean> func, F<Validation<Throwable, Boolean>, Boolean> validate) {
 		Property.property(list[0], list[1], list[2], { a, b, c ->
-			def preOk = pre.map { Closure<Boolean> it -> it.call(a, b, c) }.orSome(true)
-			def result = !preOk ? true : closure.call(a, b, c)
-			implies(preOk, result)
+			callCommon([a, b, c], pre, func, validate)
 		} as F3)
 	}
 
 	@TypeChecked
-	static Property createProp4(List<Arbitrary<?>> list, Option<Closure<Boolean>> pre, Closure<Boolean> closure) {
+	static Property createProp4(List<Arbitrary<?>> list, Option<Closure<Boolean>> pre, Closure<Boolean> func, F<Validation<Throwable, Boolean>, Boolean> validate) {
 		Property.property(list[0], list[1], list[2], list[3], { a, b, c, d ->
-			def preOk = pre.map { Closure<Boolean> it -> it.call(a, b, c, d) }.orSome(true)
-			def result = !preOk ? true : closure.call(a, b, c, d)
-			implies(preOk, result)
+			callCommon([a, b, c, d], pre, func, validate)
 		} as F4)
 	}
 
 	@TypeChecked
-	static Property createProp5(List<Arbitrary<?>> list, Option<Closure<Boolean>> pre, Closure<Boolean> closure) {
+	static Property createProp5(List<Arbitrary<?>> list, Option<Closure<Boolean>> pre, Closure<Boolean> func, F<Validation<Throwable, Boolean>, Boolean> validate) {
 		Property.property(list[0], list[1], list[2], list[3], list[4], { a, b, c, d, e ->
-			def preOk = pre.map { Closure<Boolean> it -> it.call(a, b, c, d, e) }.orSome(true)
-			def result = !preOk ? true : closure.call(a, b, c, d, e)
-			implies(preOk, result)
+			callCommon([a, b, c, d, e], pre, func, validate)
 		} as F5)
 	}
 

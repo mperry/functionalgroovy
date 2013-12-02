@@ -63,7 +63,7 @@ class PropertyTester {
 	 */
 	@TypeChecked(TypeCheckingMode.SKIP)
 	static CheckResult showAll(Map<Class<?>, Arbitrary<?>> map, Closure<Boolean> c) {
-		showAllWithMap(true, PropertyConfig.defaultMap + map, Option.none(), c, PropertyConfig.DEFAULT_VALIDATOR)
+		showAllWithMap(true, PropertyConfig.DEFAULT_MAP + map, Option.none(), c, PropertyConfig.DEFAULT_VALIDATOR)
 	}
 
 	static CheckResult showAll(PropertyConfig config) {
@@ -72,7 +72,7 @@ class PropertyTester {
 
 	@TypeChecked(TypeCheckingMode.SKIP)
 	static CheckResult showAll(Closure<Boolean> c) {
-		showAllWithMap(true, PropertyConfig.defaultMap, Option.none(), c, PropertyConfig.DEFAULT_VALIDATOR)
+		showAllWithMap(true, PropertyConfig.DEFAULT_MAP, Option.none(), c, PropertyConfig.DEFAULT_VALIDATOR)
 	}
 
 	static Property implies(Boolean pre, Boolean result) {

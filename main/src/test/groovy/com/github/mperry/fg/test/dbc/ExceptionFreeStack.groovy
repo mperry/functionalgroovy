@@ -11,22 +11,24 @@ package com.github.mperry.fg.test.dbc
 import org.gcontracts.annotations.*
 
 @Invariant({ elements != null })
-class Stack<T> {
+class ExceptionFreeStack<T> {
 
 	List<T> elements
 
 	@Ensures({ isEmpty() })
-	Stack() {
+	ExceptionFreeStack() {
 		elements = []
 	}
 
 	@Requires({ list != null })
-//	@Ensures({ !isEmpty() })
-	Stack(List<T> list)  {
+	@Ensures({ size() == list.size() })
+	ExceptionFreeStack(List<T> list)  {
 		elements = new ArrayList<T>(list)
 	}
 
-	Stack(Stack<T> stack) {
+	@Requires({ stack != null })
+	@Ensures({ size() == stack.size() })
+	ExceptionFreeStack(ExceptionFreeStack<T> stack) {
 		elements = new ArrayList<T>(stack.elements)
 	}
 
@@ -36,16 +38,15 @@ class Stack<T> {
 
 	@Requires({ !isEmpty() })
 	T top()  {
-//		elements.get(count() - 1)
 		elements.last()
 	}
 
 	@Ensures({ result >= 0 })
-	int count() {
+	int size() {
 		elements.size()
 	}
 
-	@Ensures({ result ? count() > 0 : count() >= 0  })
+	@Ensures({ result.implies(size() > 0) })
 	boolean has(T item)  {
 		elements.contains(item)
 	}
@@ -56,8 +57,8 @@ class Stack<T> {
 	}
 
 	@Requires({ !isEmpty() })
-	void pop()  {
-		elements.remove(count() - 1)
+	T pop()  {
+		elements.pop()
 	}
 
 	String toString() {

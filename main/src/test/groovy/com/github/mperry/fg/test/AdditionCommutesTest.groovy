@@ -1,7 +1,6 @@
 package com.github.mperry.fg.test
 
 import fj.F
-import fj.data.Option
 import fj.test.Arbitrary
 import org.junit.Test
 
@@ -54,7 +53,7 @@ class AdditionCommutesTest {
 	@Test
 	void discardNulls() {
 		showAll(new PropertyConfig(
-			map: PropertyConfig.defaultMap + PropertyConfig.NULLABLE_INTEGER,
+			map: PropertyConfig.DEFAULT_MAP + PropertyConfig.NULLABLE_INTEGER,
 			pre: some({ a, b -> a != null && b != null }),
 			function: { Integer a, Integer b ->
 				a + b == b + a

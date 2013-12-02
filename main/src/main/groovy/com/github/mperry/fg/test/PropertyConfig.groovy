@@ -22,7 +22,7 @@ class PropertyConfig {
 
 	static final Map NULLABLE_INTEGER = [(Integer.class): Arbitrary.arbNullableInteger()]
 
-	static final Map<Class<?>, Arbitrary> defaultMap = [
+	static final Map<Class<?>, Arbitrary> DEFAULT_MAP = [
 			// basic generators
 			(BigDecimal.class): arbBigDecimal,
 			(BigInteger.class): arbBigInteger,
@@ -48,7 +48,7 @@ class PropertyConfig {
 		v.isFail() ? false : v.success()
 	} as F
 
-	Map<Class<?>, Arbitrary> map = defaultMap
+	Map<Class<?>, Arbitrary> map = DEFAULT_MAP
 	Closure<Boolean> function
 	Option<Closure<Boolean>> pre = Option.none()
 	Boolean truth = true

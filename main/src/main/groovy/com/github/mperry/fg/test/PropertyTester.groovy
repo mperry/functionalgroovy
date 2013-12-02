@@ -75,9 +75,35 @@ class PropertyTester {
 		Bool.bool(pre).implies(result)
 	}
 
+
+	static Validation<Throwable, Boolean> perform(Closure<Boolean> c, List args) {
+		try {
+			Validation.success(c.call(args))
+		} catch (Throwable t) {
+			Validation.fail(t)
+		}
+	}
+
+	static void checkTypes(List<Object> argList, Closure<Boolean> func) {
+		def objectTypes = argList.collect { it.getClass() }
+		def closureTypes = func.getParameterTypes().toList()
+		def typesOk = objectTypes.zip(closureTypes).inject(true) { Boolean result, P2<Class, Class> p ->
+			result && ((p._1() == NullObject.class) ? true : p._2().isAssignableFrom(p._1()))
+		}
+		if (!typesOk || objectTypes.size() != closureTypes.size()) {
+			throw new Exception("Cannot call func with value types $objectTypes.  Closure requires types $closureTypes")
+		}
+	}
+
+	static Property callCommon(List<Object> argList, Option<Closure<Boolean>> pre, Closure<Boolean> func, F<Validation<Throwable, Boolean>, Boolean> validate) {
+		checkTypes(argList, func)
+		def preOk = pre.map { Closure<Boolean> it -> it.call(argList) }.orSome(true)
+		def result = !preOk ? true : validate.f(perform(func, argList))
+		implies(preOk, result)
+	}
+
 	static Property createProp0(List<Arbitrary> list, Option<Closure<Boolean>> pre, Closure<Boolean> c) {
 		def preOk = pre.map { Closure<Boolean> it -> it.call() }.orSome(true)
-//		def preOk = pre.call()
 		def result = !preOk ? true: c.call()
 		implies(preOk, result)
 	}
@@ -92,29 +118,11 @@ class PropertyTester {
 		} as F)
 	}
 
-	static Validation<Throwable, Boolean> perform(Closure<Boolean> c, List args) {
-		try {
-			Validation.success(c.call(args))
-		} catch (Throwable t) {
-			Validation.fail(t)
-		}
-	}
-
 	@TypeChecked
 	static Property createProp2(List<Arbitrary<?>> list, Option<Closure<Boolean>> pre, Closure<Boolean> func, F<Validation<Throwable, Boolean>, Boolean> validate) {
 		Property.property(list[0], list[1], { Object a, Object b ->
-			def preOk = pre.map { Closure<Boolean> it -> it.call(a, b) }.orSome(true)
-			def objectTypes = [a.getClass(), b.getClass()]
-			def closureTypes = func.getParameterTypes().toList()
-			def typesOk = objectTypes.zip(closureTypes).inject(true) { Boolean result, P2<Class, Class> p ->
-				result && ((p._1() == NullObject.class) ? true : p._2().isAssignableFrom(p._1()))
-			}
-			if (!typesOk || objectTypes.size() != closureTypes.size()) {
-				throw new Exception("Cannot call func with value types $objectTypes.  Closure requires types $closureTypes")
-			}
-			def v = perform(func, [a, b])
-			def result = !preOk ? true : validate.f(v)
-			implies(preOk, result)
+			def argList = [a, b]
+			callCommon(argList, pre, func, validate)
 		} as F2)
 	}
 

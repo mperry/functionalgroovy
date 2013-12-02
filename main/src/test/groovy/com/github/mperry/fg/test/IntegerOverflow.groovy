@@ -1,7 +1,6 @@
 package com.github.mperry.fg.test
 
 import fj.data.Option
-import fj.test.Arbitrary
 import org.junit.Test
 
 /**
@@ -15,7 +14,7 @@ class IntegerOverflow {
 
 	@Test
 	void overflow() {
-		PropertyTester.showAll new TestConfig(
+		PropertyTester.showAll new PropertyConfig(
 			truth: false,
 			pre: Option.some { a, b -> a >= 0 && b >= 0 },
 			function: { Integer a, Integer b ->

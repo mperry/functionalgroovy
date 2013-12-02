@@ -5,7 +5,6 @@ import fj.data.Option
 import fj.data.Validation
 import fj.test.Arbitrary
 import groovy.transform.Canonical
-import groovy.transform.Immutable
 import groovy.transform.TypeChecked
 
 import static fj.test.Arbitrary.*
@@ -19,11 +18,11 @@ import static fj.test.Arbitrary.*
  */
 @Canonical
 //@Immutable
-class TestConfig {
+class PropertyConfig {
 
 	static final Map NULLABLE_INTEGER = [(Integer.class): Arbitrary.arbNullableInteger()]
 
-	final static Map<Class<?>, Arbitrary> defaultMap = [
+	static final Map<Class<?>, Arbitrary> defaultMap = [
 			// basic generators
 			(BigDecimal.class): arbBigDecimal,
 			(BigInteger.class): arbBigInteger,
@@ -55,8 +54,8 @@ class TestConfig {
 	Boolean truth = true
 	F<Validation<Throwable, Boolean>, Boolean> validator = DEFAULT_VALIDATOR
 
-	TestConfig addArbs(Map<Class<?>, Arbitrary> m) {
-		new TestConfig(map + m, function, pre, truth)
+	PropertyConfig addArbs(Map<Class<?>, Arbitrary> m) {
+		new PropertyConfig(map + m, function, pre, truth)
 	}
 
 	@TypeChecked

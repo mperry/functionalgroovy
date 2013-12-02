@@ -16,8 +16,6 @@ import groovy.transform.TypeChecked
 import groovy.transform.TypeCheckingMode
 import org.codehaus.groovy.runtime.NullObject
 
-import static fj.test.Arbitrary.*
-
 /**
  * Created with IntelliJ IDEA.
  * User: MarkPerry
@@ -32,7 +30,7 @@ class PropertyTester {
 
 	@TypeChecked(TypeCheckingMode.SKIP)
 	static Property createProp(Closure<Boolean> c) {
-		createProp(TestConfig.defaultMap, Option.none(), c)
+		createProp(PropertyConfig.defaultMap, Option.none(), c)
 	}
 
 	static Property createProp(Map<Class<?>, Arbitrary> map, Option<Closure<Boolean>> pre, Closure<Boolean> c, F<Validation<Throwable, Boolean>, Boolean> validation) {
@@ -58,16 +56,16 @@ class PropertyTester {
 	 */
 	@TypeChecked(TypeCheckingMode.SKIP)
 	static CheckResult showAll(Map<Class<?>, Arbitrary<?>> map, Closure<Boolean> c) {
-		showAllWithMap(true, TestConfig.defaultMap + map, Option.none(), c, TestConfig.DEFAULT_VALIDATOR)
+		showAllWithMap(true, PropertyConfig.defaultMap + map, Option.none(), c, PropertyConfig.DEFAULT_VALIDATOR)
 	}
 
-	static CheckResult showAll(TestConfig config) {
+	static CheckResult showAll(PropertyConfig config) {
 		showAllWithMap(config.truth, config.map, config.pre, config.function, config.validator)
 	}
 
 	@TypeChecked(TypeCheckingMode.SKIP)
 	static CheckResult showAll(Closure<Boolean> c) {
-		showAllWithMap(true, TestConfig.defaultMap, Option.none(), c, TestConfig.DEFAULT_VALIDATOR)
+		showAllWithMap(true, PropertyConfig.defaultMap, Option.none(), c, PropertyConfig.DEFAULT_VALIDATOR)
 	}
 
 	@TypeChecked(TypeCheckingMode.SKIP)

@@ -8,6 +8,8 @@ import groovy.transform.Canonical
 import groovy.transform.Immutable
 import groovy.transform.TypeChecked
 
+import static fj.test.Arbitrary.*
+
 /**
  * Created with IntelliJ IDEA.
  * User: MarkPerry
@@ -19,11 +21,35 @@ import groovy.transform.TypeChecked
 //@Immutable
 class TestConfig {
 
+	static final Map NULLABLE_INTEGER = [(Integer.class): Arbitrary.arbNullableInteger()]
+
+	final static Map<Class<?>, Arbitrary> defaultMap = [
+			// basic generators
+			(BigDecimal.class): arbBigDecimal,
+			(BigInteger.class): arbBigInteger,
+			(BitSet.class): arbBitSet,
+			(Boolean.class): arbBoolean,
+			(Byte.class): arbByte,
+			(Calendar.class): arbCalendar,
+			(Character.class): arbCharacterBoundaries,
+			(Date.class): arbDate,
+			(Double.class): arbDoubleBoundaries,
+			(Float.class): arbFloatBoundaries,
+			(Integer.class): arbIntegerBoundaries,
+			(Long.class): arbLongBoundaries,
+			(String.class): arbString,
+
+			// more complex generators
+			(ArrayList.class): arbArrayList(arbIntegerBoundaries),
+			(java.util.List.class): arbArrayList(arbIntegerBoundaries),
+			(fj.data.List.class): arbList(arbIntegerBoundaries)
+	]
+
 	static final F<Validation<Throwable, Boolean>, Boolean> DEFAULT_VALIDATOR = { Validation<Throwable, Boolean> v ->
 		v.isFail() ? false : v.success()
 	} as F
 
-	Map<Class<?>, Arbitrary> map = PropertyTester.defaultMap
+	Map<Class<?>, Arbitrary> map = defaultMap
 	Closure<Boolean> function
 	Option<Closure<Boolean>> pre = Option.none()
 	Boolean truth = true

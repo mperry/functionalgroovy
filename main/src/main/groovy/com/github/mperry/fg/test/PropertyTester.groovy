@@ -30,33 +30,9 @@ class PropertyTester {
 
 	static final int MAX_ARGS = 5
 
-	static final Map NULLABLE_INTEGER = [(Integer.class): Arbitrary.arbNullableInteger()]
-
-	final static Map<Class<?>, Arbitrary> defaultMap = [
-			// basic generators
-			(BigDecimal.class): arbBigDecimal,
-			(BigInteger.class): arbBigInteger,
-			(BitSet.class): arbBitSet,
-			(Boolean.class): arbBoolean,
-			(Byte.class): arbByte,
-			(Calendar.class): arbCalendar,
-			(Character.class): arbCharacterBoundaries,
-			(Date.class): arbDate,
-			(Double.class): arbDoubleBoundaries,
-			(Float.class): arbFloatBoundaries,
-			(Integer.class): arbIntegerBoundaries,
-			(Long.class): arbLongBoundaries,
-			(String.class): arbString,
-
-			// more complex generators
-			(ArrayList.class): arbArrayList(arbIntegerBoundaries),
-			(java.util.List.class): arbArrayList(arbIntegerBoundaries),
-			(fj.data.List.class): arbList(arbIntegerBoundaries)
-	]
-
 	@TypeChecked(TypeCheckingMode.SKIP)
 	static Property createProp(Closure<Boolean> c) {
-		createProp(defaultMap, Option.none(), c)
+		createProp(TestConfig.defaultMap, Option.none(), c)
 	}
 
 	static Property createProp(Map<Class<?>, Arbitrary> map, Option<Closure<Boolean>> pre, Closure<Boolean> c, F<Validation<Throwable, Boolean>, Boolean> validation) {
@@ -82,7 +58,7 @@ class PropertyTester {
 	 */
 	@TypeChecked(TypeCheckingMode.SKIP)
 	static CheckResult showAll(Map<Class<?>, Arbitrary<?>> map, Closure<Boolean> c) {
-		showAllWithMap(true, defaultMap + map, Option.none(), c, TestConfig.DEFAULT_VALIDATOR)
+		showAllWithMap(true, TestConfig.defaultMap + map, Option.none(), c, TestConfig.DEFAULT_VALIDATOR)
 	}
 
 	static CheckResult showAll(TestConfig config) {
@@ -91,7 +67,7 @@ class PropertyTester {
 
 	@TypeChecked(TypeCheckingMode.SKIP)
 	static CheckResult showAll(Closure<Boolean> c) {
-		showAllWithMap(true, defaultMap, Option.none(), c, TestConfig.DEFAULT_VALIDATOR)
+		showAllWithMap(true, TestConfig.defaultMap, Option.none(), c, TestConfig.DEFAULT_VALIDATOR)
 	}
 
 	@TypeChecked(TypeCheckingMode.SKIP)

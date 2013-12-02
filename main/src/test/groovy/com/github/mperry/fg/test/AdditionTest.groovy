@@ -55,7 +55,7 @@ class AdditionTest {
 	@Test
 	void impliesHandlingNulls1() {
 		showAll(new TestConfig(
-			map: defaultMap + NULLABLE_INTEGER,
+			map: TestConfig.defaultMap + TestConfig.NULLABLE_INTEGER,
 			pre: some({ a, b -> a != null && b != null }),
 			function: { Integer a, Integer b ->
 				a + b == b + a
@@ -84,26 +84,6 @@ class AdditionTest {
 			},
 			validator: validator({ Throwable t -> t.getClass() == NullPointerException.class } as F)
 		)
-	}
-
-	@Test
-	void test5() {
-		def f = { Integer a -> a }
-		def f2 = { Integer a -> a } as F
-		def f3 = f as F
-		def f4 = new F<Integer, Integer>(){
-			@Override
-			Integer f(Integer a) {
-				a
-			}
-		}
-		def f5 = f4.toClosure()
-
-
-		def a1 = [f, f5].collect { it.getParameterTypes() }
-		def a2 = [f2, f3, f4].collect {it.f(3)}
-
-		int z = 0
 	}
 
 }

@@ -18,7 +18,9 @@ import groovy.transform.Immutable
 //@Immutable
 class TestConfig {
 
-	static final F<Validation<Throwable, Boolean>, Boolean> DEFAULT_VALIDATOR = { Validation<Throwable, Boolean> v -> v.isSuccess() && v.success() == true } as F
+	static final F<Validation<Throwable, Boolean>, Boolean> DEFAULT_VALIDATOR = { Validation<Throwable, Boolean> v ->
+		v.isFail() ? false : v.success()
+	} as F
 
 	Map<Class<?>, Arbitrary> map = PropertyTester.defaultMap
 	Closure<Boolean> function

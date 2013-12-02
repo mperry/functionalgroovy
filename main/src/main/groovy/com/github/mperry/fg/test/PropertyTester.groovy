@@ -126,9 +126,13 @@ class PropertyTester {
 //	@TypeChecked(TypeCheckingMode.SKIP)
 	static Validation<Throwable, Boolean> perform(Closure<Boolean> c, List args) {
 		try {
-			Validation.success(c.call(args))
+			def r = c.call(args)
+			int z = 0
+			def v = Validation.success(r)
+			int a = 3 + 2
+			return v
 		} catch (Throwable t) {
-			Validation.fail(t)
+			return Validation.fail(t)
 		}
 	}
 
@@ -153,6 +157,7 @@ class PropertyTester {
 			try {
 				def v = perform(func, [a, b])
 				def result = !preOk ? true : validate.f(v)
+
 //				def result = !preOk ? true : validate.f(perform(func, [a, b]))
 				implies(preOk, result)
 			} catch (Exception e) {

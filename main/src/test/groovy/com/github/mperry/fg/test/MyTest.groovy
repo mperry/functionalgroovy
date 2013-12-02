@@ -1,7 +1,10 @@
 package com.github.mperry.fg.test
 
+import fj.P1
 import fj.data.Validation
 import org.junit.Test
+
+import static junit.framework.Assert.assertTrue
 
 /**
  * Created with IntelliJ IDEA.
@@ -12,11 +15,19 @@ import org.junit.Test
  */
 class MyTest {
 
+
 	@Test
 	void test1() {
 		def f = { a, b -> a + b == b + a }
 		def v  = perform(f, [2, 3])
 		int z = 0
+	}
+
+	@Test
+	void test2() {
+		def p = { -> true } as P1
+		def b = p._1()
+		assertTrue(b)
 	}
 
 	Validation<Throwable, Boolean> perform(Closure<Boolean> c, List args) {

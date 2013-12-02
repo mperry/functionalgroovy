@@ -3,19 +3,16 @@ package com.github.mperry.fg.test
 import fj.F
 import fj.F2
 import fj.P1
-import fj.Show
 import fj.data.Option
+import fj.data.Validation
 import fj.test.Arbitrary
-import fj.test.Bool
-import fj.test.Gen
-import fj.test.Property
+import groovy.transform.TypeChecked
 import org.junit.Test
 
 import static com.github.mperry.fg.test.PropertyTester.NULLABLE_INTEGER
 import static com.github.mperry.fg.test.PropertyTester.defaultMap
 import static com.github.mperry.fg.test.PropertyTester.showAll
 import static fj.data.Option.some
-import static org.junit.Assert.assertTrue
 
 /**
  * Created with IntelliJ IDEA.
@@ -82,7 +79,8 @@ class AdditionTest {
 		showAll new TestConfig(
 				map: [(Integer.class): Arbitrary.arbNullableInteger()],
 				function: { Integer a, Integer b ->
-					make2([NullPointerException.class], { a + b == b + a } as P1)._1()
+					call2( { a + b == b + a } as P1, { Throwable t -> t.getClass() == NullPointerException.class } as F)
+//					make2([NullPointerException.class], { a + b == b + a } as P1)._1()
 
 				}
 		)
@@ -98,6 +96,22 @@ class AdditionTest {
 		)
 	}
 
+
+	@Test
+	void impliesHandlingNulls5() {
+		def c = new TestConfig(
+			map: [(Integer.class): Arbitrary.arbNullableInteger()],
+			function: { Integer a, Integer b ->
+				a + b == b + a
+			},
+			validator: { Validation<Throwable, Boolean> v ->
+				v.isFail() ? v.fail().getClass() == NullPointerException.class : v.success()
+			} as F
+		)
+		showAll c
+	}
+
+
 	def <A, B> F2<A, B, Boolean> make2(List<Class<?>> exceptions, F2<A, B, Boolean> c) {
 		{ A a, B b ->
 			try {
@@ -110,15 +124,31 @@ class AdditionTest {
 		} as F2<A, B, Boolean>
 	}
 
+	@TypeChecked
+	Boolean call2(P1<Boolean> p, F<Throwable, Boolean> f) {
+		def v = call2(p)._1()
+		v.isFail() ? f.f(v.fail()) : v.success()
+	}
+
+	@TypeChecked
+	def P1<Validation<Throwable, Boolean>> call2(P1<Boolean> p) {
+		new P1<Validation<Throwable, Boolean>>() {
+			@Override
+			Validation<Throwable, Boolean> _1() {
+				try {
+					def b = p._1()
+					return Validation.success(b)
+				} catch (Throwable e) {
+					return Validation.fail(e)
+				}
+			}
+		}
+	}
+
 	def <A, B> P1<Boolean> make2(List<Class<?>> exceptions, P1<Boolean> c) {
 		{ ->
-			try {
-				c._1()
-			} catch (Exception e) {
-				exceptions.findFirst { it == e.getClass() }.isSome()
-			} catch (Error e) {
-				exceptions.findFirst { it == e.getClass() }.isSome()
-			}
+			def v = call2(c)._1()
+			v.isFail() ? exceptions.findFirst { v.fail() == it.getClass() }.isSome() : v.success()
 		} as P1
 	}
 

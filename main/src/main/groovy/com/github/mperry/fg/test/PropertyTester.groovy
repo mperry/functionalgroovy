@@ -28,11 +28,6 @@ class PropertyTester {
 
 	static final int MAX_ARGS = 5
 
-	@TypeChecked(TypeCheckingMode.SKIP)
-	static Property createProp(Closure<Boolean> c) {
-		createProp(PropertyConfig.defaultMap, Option.none(), c)
-	}
-
 	static Property createProp(Map<Class<?>, Arbitrary> map, Option<Closure<Boolean>> pre, Closure<Boolean> c, F<Validation<Throwable, Boolean>, Boolean> validation) {
 		def list = c.getParameterTypes()
 		def arbOpts = list.collect { Class it -> map.containsKey(it) ? Option.some(map[it]) : Option.none() }
@@ -40,13 +35,21 @@ class PropertyTester {
 		if (!allMapped) {
 			throw new Exception("Not all function parameter types were found: ${list.findAll { !map.containsKey(it)}}")
 		}
-		createProp(arbOpts.collect { Option<Arbitrary> it -> it.some() }, pre, c, validation)
+		dynamicCreateProp(arbOpts.collect { Option<Arbitrary> it -> it.some() }, pre, c, validation)
 	}
 
-	static CheckResult showAllWithMap(Boolean ok, Map<Class<?>, Arbitrary> map, Option<Closure<Boolean>> pre, Closure<Boolean> c, F<Validation<Throwable, Boolean>, Boolean> validate) {
+	@TypeChecked(TypeCheckingMode.SKIP)
+	static Property dynamicCreateProp(List<Arbitrary> list, Option<Closure<Boolean>> pre, Closure<Boolean> c, F<Validation<Throwable, Boolean>, Boolean> validate) {
+		this."createProp${list.size()}"(list, pre, c, validate)
+	}
+
+	static CheckResult showAllWithMap(Boolean truth, Map<Class<?>, Arbitrary> map, Option<Closure<Boolean>> pre, Closure<Boolean> c, F<Validation<Throwable, Boolean>, Boolean> validate) {
+		if (c.getMaximumNumberOfParameters() > MAX_ARGS) {
+			throw new Exception("Testing does not support ${c.getMaximumNumberOfParameters()}, maximum supported is $MAX_ARGS")
+		}
 		def p = createProp(map, pre, c, validate)
 		def cr = p.check()
-		p.checkBooleanWithNullableSummary(ok)
+		p.checkBooleanWithNullableSummary(truth)
 	}
 
 	/**
@@ -66,14 +69,6 @@ class PropertyTester {
 	@TypeChecked(TypeCheckingMode.SKIP)
 	static CheckResult showAll(Closure<Boolean> c) {
 		showAllWithMap(true, PropertyConfig.defaultMap, Option.none(), c, PropertyConfig.DEFAULT_VALIDATOR)
-	}
-
-	@TypeChecked(TypeCheckingMode.SKIP)
-	static Property createProp(List<Arbitrary> list, Option<Closure<Boolean>> pre, Closure<Boolean> c, F<Validation<Throwable, Boolean>, Boolean> validate) {
-		if (c.getMaximumNumberOfParameters() > MAX_ARGS) {
-			throw new Exception("Testing does not support ${c.getMaximumNumberOfParameters()}, maximum supported is $MAX_ARGS")
-		}
-		this."createProp${list.size()}"(list, pre, c, validate)
 	}
 
 	static Property implies(Boolean pre, Boolean result) {
@@ -97,21 +92,12 @@ class PropertyTester {
 		} as F)
 	}
 
-//	@TypeChecked(TypeCheckingMode.SKIP)
 	static Validation<Throwable, Boolean> perform(Closure<Boolean> c, List args) {
 		try {
-			def r = c.call(args)
-			int z = 0
-			def v = Validation.success(r)
-			int a = 3 + 2
-			return v
+			Validation.success(c.call(args))
 		} catch (Throwable t) {
-			return Validation.fail(t)
+			Validation.fail(t)
 		}
-	}
-
-	static void noop(Closure c) {
-		int z = 0
 	}
 
 	@TypeChecked
@@ -124,23 +110,11 @@ class PropertyTester {
 				result && ((p._1() == NullObject.class) ? true : p._2().isAssignableFrom(p._1()))
 			}
 			if (!typesOk || objectTypes.size() != closureTypes.size()) {
-				println("Cannot call func with value types $objectTypes.  Closure requires types $closureTypes")
-				return Property.prop(false)
+				throw new Exception("Cannot call func with value types $objectTypes.  Closure requires types $closureTypes")
 			}
-
-			try {
-				def v = perform(func, [a, b])
-				def result = !preOk ? true : validate.f(v)
-
-//				def result = !preOk ? true : validate.f(perform(func, [a, b]))
-				implies(preOk, result)
-			} catch (Exception e) {
-				println e.getMessage()
-				Property.prop(false)
-			} catch (Error e) {
-				println e.getMessage()
-				Property.prop(false)
-			}
+			def v = perform(func, [a, b])
+			def result = !preOk ? true : validate.f(v)
+			implies(preOk, result)
 		} as F2)
 	}
 

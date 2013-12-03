@@ -1,6 +1,7 @@
 
 allprojects {
 	defaultTasks 'build'
+	
 }
 
 subprojects {
@@ -12,6 +13,9 @@ subprojects {
 	version = "0.3-SNAPSHOT"
 
 	ext {
+		sonatypeUsername = ""
+		sonatypePassword = ""
+
 		sonatypeBaseUrl = "https://oss.sonatype.org"
 		sonatypeSnapshotUrl = "$sonatypeBaseUrl/content/repositories/snapshots/"
 		sonatypeReleaseUrl = "$sonatypeBaseUrl/service/local/staging/deploy/maven2/"

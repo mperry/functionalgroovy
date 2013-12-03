@@ -1,9 +1,12 @@
-package com.github.mperry.fg
+package com.github.mperry.fg;
 
-import fj.P
-import fj.P2
+import fj.P;
+import fj.P2;
 import fj.data.Stream
-import groovy.transform.TypeChecked
+import groovy.transform.TypeChecked;
+//import groovy.transform.TypeChecked
+
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -12,9 +15,9 @@ import groovy.transform.TypeChecked
  * Time: 10:45 AM
  * To change this template use File | Settings | File Templates.
  */
-class ListExtension {
+@TypeChecked
+class ListJavaExtension {
 
-	@TypeChecked
 	public static <A, B> List<P2<A, B>> zip(List<A> list1, List<B> list2) {
 		def result = []
 		def min = Math.min(list1.size(), list2.size())
@@ -23,5 +26,9 @@ class ListExtension {
 		}
 		result
 	}
+
+    static <A> fj.data.List<A> toFJList(List<A> list) {
+        return fj.data.List.list((A[]) list.toArray());
+    }
 
 }

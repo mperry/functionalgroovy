@@ -35,6 +35,8 @@ subprojects {
 
 	}
 
+	group = project.groupName
+
 	repositories {
 		mavenCentral()
 	}

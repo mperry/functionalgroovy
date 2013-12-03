@@ -26,7 +26,7 @@ import static fj.test.Arbitrary.arbitrary
  * To change this template use File | Settings | File Templates.
  */
 @TypeChecked
-class StackTest2 {
+class StackTest {
 
     ExceptionFreeStack<Integer> empty() {
         new ExceptionFreeStack<Integer>()

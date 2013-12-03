@@ -73,7 +73,7 @@ class StackTest2 {
     @Test
     @TypeChecked(TypeCheckingMode.SKIP)
     void testPush() {
-        [genStackRecursive(), genStackImperative()].collect { g ->
+        [genStackRecursive(), genStackImperative()].each { g ->
             showAll new PropertyConfig(
                 map: DEFAULT_MAP + [(ExceptionFreeStack.class): arbitrary(g)],
                 function: { ExceptionFreeStack<Integer> s, Integer i ->
@@ -83,7 +83,7 @@ class StackTest2 {
                     def b = newStack.top() == i
                     b
                 },
-                validator: validator(contractsOkFunc())
+                validator: DbcContractValidator.validateValidation()
             )
         }
     }
@@ -99,41 +99,8 @@ class StackTest2 {
                 def val = s.pop()
                 true
             },
-            validator: validator(contractsOkFunc())
+            validator: DbcContractValidator.validateValidation()
         )
-    }
-
-    F<Throwable, Boolean> contractsOkFunc() {
-        { Throwable t ->
-            contractsOk(t)
-        } as F
-    }
-
-    Boolean contractViolation(Throwable t) {
-        hasType(t, AssertionViolation.class)
-    }
-
-    Boolean contractsOk(Throwable t) {
-        def i = invariantOk(t)
-        def pre = preOk(t)
-        def post = postOk(t)
-        i && (pre.implies(post))
-    }
-
-    Boolean preOk(Throwable t) {
-        !hasType(t, PreconditionViolation.class)
-    }
-
-    Boolean postOk(Throwable t) {
-        !hasType(t, PostconditionViolation.class)
-    }
-
-    Boolean invariantOk(Throwable t) {
-        !hasType(t, ClassInvariantViolation.class)
-    }
-
-    Boolean hasType(Object o, Class c) {
-        c.isAssignableFrom(o.getClass())
     }
 
 }

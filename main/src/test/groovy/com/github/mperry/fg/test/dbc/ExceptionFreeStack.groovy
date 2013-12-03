@@ -10,7 +10,7 @@ package com.github.mperry.fg.test.dbc
 
 import org.gcontracts.annotations.*
 
-@Invariant({ elements != null })
+@Invariant({ elements != null && size() >= 0 })
 class ExceptionFreeStack<T> {
 
 	List<T> elements
@@ -41,17 +41,22 @@ class ExceptionFreeStack<T> {
 		elements.last()
 	}
 
-	@Ensures({ result >= 0 })
+	@Ensures({ result -> result >= 0 })
 	int size() {
 		elements.size()
 	}
 
-	@Ensures({ result.implies(size() > 0) })
+	@Ensures({ result -> result.implies(size() > 0) })
 	boolean has(T item)  {
 		elements.contains(item)
 	}
 
-	@Ensures({ top() == item })
+	@Ensures({
+//        TODO: appears to be a bug in GContracts where old is a LinkedHashMap which is always empty
+//        old -> top() == item && old.elements.size() + 1 == size()
+//        old -> compare(old)
+        top() == item
+    })
 	void push(T item)  {
 		elements.add(item)
 	}
@@ -64,6 +69,5 @@ class ExceptionFreeStack<T> {
 	String toString() {
 		elements.toString()
 	}
-
 
 }

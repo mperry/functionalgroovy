@@ -92,7 +92,6 @@ class StackTest2 {
     @TypeChecked(TypeCheckingMode.SKIP)
     void testPop() {
         showAll new PropertyConfig(
-            truth: true,
             map: DEFAULT_MAP + [(ExceptionFreeStack.class): arbStack()],
             function: { ExceptionFreeStack<Integer> s ->
 //                    println "pushing $i onto ${s.toString()}"

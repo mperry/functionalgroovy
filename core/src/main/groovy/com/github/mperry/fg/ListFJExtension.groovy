@@ -9,8 +9,9 @@ package com.github.mperry.fg
  */
 class ListFJExtension {
 
-    static <A> fj.data.List<A> toJavaList(fj.data.List<A> list) {
-        list.toCollection().toList()
+    static <A> java.util.List<A> toJavaList(fj.data.List<A> list) {
+        def c = list.toCollection()
+		c.toList()
     }
 
 }

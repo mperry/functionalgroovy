@@ -1,6 +1,7 @@
 package com.github.mperry.fg
 
 import fj.F
+import fj.F2
 import fj.F3
 import fj.F4
 
@@ -12,6 +13,13 @@ import fj.F4
  * To change this template use File | Settings | File Templates.
  */
 class F3Extension {
+
+
+	static <A, B, C, D> Closure<D> toClosure(F3<A, B, C, D> f) {
+		{ A a, B b, C c ->
+			f.f(a, b, c)
+		}
+	}
 
 	static <A, B, C, D> F<A, F<B, F<C, D>>> curry(F3<A, B, C, D> f3) {
 		{ a ->

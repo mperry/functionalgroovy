@@ -10,12 +10,10 @@ import fj.F3
  * Time: 3:23 PM
  * To change this template use File | Settings | File Templates.
  */
-class FExtension<A, B> {
+class FExtension {
 
-	static Closure<B> toClosure(F<A, B> f) {
-		{ A a ->
-			f.f(a)
-		}
+	static <A, B> Closure<B> toClosure(F<A, B> f) {
+		{ A a -> f.f(a) }
 	}
 
 }

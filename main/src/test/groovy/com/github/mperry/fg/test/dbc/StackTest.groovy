@@ -1,20 +1,15 @@
 package com.github.mperry.fg.test.dbc
 
+import com.github.mperry.fg.test.DbcContractValidator
 import com.github.mperry.fg.test.PropertyConfig
 import fj.F
 import fj.test.Arbitrary
 import fj.test.Gen
 import groovy.transform.TypeChecked
 import groovy.transform.TypeCheckingMode
-import org.gcontracts.AssertionViolation
-import org.gcontracts.ClassInvariantViolation
-import org.gcontracts.PostconditionViolation
-import org.gcontracts.PreconditionViolation
-import org.gcontracts.annotations.meta.Precondition
 import org.junit.Test
 
 import static com.github.mperry.fg.test.PropertyConfig.getDEFAULT_MAP
-import static com.github.mperry.fg.test.PropertyConfig.validator
 import static com.github.mperry.fg.test.PropertyTester.showAll
 import static fj.test.Arbitrary.arbitrary
 

@@ -51,12 +51,11 @@ class ExceptionFreeStack<T> {
 		elements.contains(item)
 	}
 
-	@Ensures({
-//        TODO: appears to be a bug in GContracts where old is a LinkedHashMap which is always empty
+// TODO: appears to be a bug in GContracts where old is a LinkedHashMap which is always empty, so the
+// following does not work
 //        old -> top() == item && old.elements.size() + 1 == size()
 //        old -> compare(old)
-        top() == item
-    })
+	@Ensures({ top() == item })
 	void push(T item)  {
 		elements.add(item)
 	}

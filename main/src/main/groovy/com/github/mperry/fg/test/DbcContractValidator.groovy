@@ -1,4 +1,4 @@
-package com.github.mperry.fg.test.dbc
+package com.github.mperry.fg.test
 
 import com.github.mperry.fg.test.PropertyConfig
 import fj.F

@@ -1,9 +1,11 @@
-package com.github.mperry.fg;
+package com.github.mperry.fg
 
+import fj.F;
 import fj.P;
 import fj.P2;
 import fj.data.Stream
-import groovy.transform.TypeChecked;
+import groovy.transform.TypeChecked
+import groovy.transform.TypeCheckingMode;
 //import groovy.transform.TypeChecked
 
 import java.util.List;
@@ -27,7 +29,17 @@ class ListJavaExtension {
 		result
 	}
 
-    static <A> fj.data.List<A> toFJList(List<A> list) {
+	@TypeChecked(TypeCheckingMode.SKIP)
+	public static <A, B> java.util.List<B> map(java.util.List<A> list1, F<A, B> f) {
+		list1.collect(FExtension.toClosure(f))
+	}
+
+	static <A, B> java.util.List<B> collect(java.util.List<A> list1, F<A, B> f) {
+		map(list1, f)
+	}
+
+
+	static <A> fj.data.List<A> toFJList(List<A> list) {
         return fj.data.List.list((A[]) list.toArray());
     }
 

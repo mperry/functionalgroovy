@@ -94,21 +94,23 @@ class ListFunctorLawsTest {
 				int z = 0
 				def y = x.toJavaList()
 				def c = compose(f, g).toClosure()
-				def s1 = y.collect(compose(f, g).toClosure())
+				def s1 = y.map(compose(f, g))
 				def s2 = y.collect{Long it -> g.f(it)}.collect{Integer it -> f.f(it)}
 				def s3 = y.collect(g.toClosure()).collect(f.toClosure())
 				def r1 = y.collect(g.toClosure())
 				def r2 = r1.collect{f.toClosure()}
+				def r3 = y.map(g).map(f)
 //					prop(s1 == s2)
-				def b = s1 == s3
+//				def b = s1 == s3
+				def b = s1 == r3
 				prop(b)
 //					prop(true)
 			} as F3
 		)
 
 		def cr = p2.check()
-		summary.println(cr);
-//		p2.checkBooleanWithNullableSummary(true)
+//		summary.println(cr);
+		p2.checkBooleanWithNullableSummary(true)
 
 	}
 

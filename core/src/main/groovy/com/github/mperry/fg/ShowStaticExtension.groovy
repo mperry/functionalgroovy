@@ -1,15 +1,4 @@
 package com.github.mperry.fg
-
-import com.gihub.mperry.ShowTester
-import fj.F
-import fj.Show
-import fj.data.Option
-import fj.data.Stream
-import groovy.transform.TypeChecked
-
-import static fj.Show.anyShow
-import static fj.Show.showS
-
 /**
  * Created with IntelliJ IDEA.
  * User: MarkPerry
@@ -19,5 +8,17 @@ import static fj.Show.showS
  */
 //@TypeChecked
 class ShowStaticExtension {
+
+
+	// Show.anyShow
+//	public static <A> Show<A> anyShowNullable(Show x) {
+//		F<A, Stream<Character>> f = new F<A, Stream<Character>>() {
+//			public Stream<Character> f(final A a) {
+//				return Stream.fromString((a == null) ? "null" : a.toString());
+//			}
+//		};
+//		return Show.show(f);
+//	}
+
 
 }

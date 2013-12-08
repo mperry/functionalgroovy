@@ -1,14 +1,11 @@
 package com.github.mperry.fg.test
 
-import com.gihub.mperry.ShowTester
-import fj.F
+import com.gihub.mperry.ShowWorkaroundJava
+import com.github.mperry.fg.ShowWorkaroundGroovy
 import fj.Show
-import fj.test.Arg
 import fj.test.CheckResult
-import groovy.transform.TypeChecked
 
 import static com.github.mperry.fg.test.ArgStaticExtension.argShowNullable
-import static fj.Show.showS
 
 /**
  * Created with IntelliJ IDEA.
@@ -21,8 +18,7 @@ import static fj.Show.showS
 class CheckResultStaticExtension {
 
 	static Show<CheckResult> summaryNullable(CheckResult cr) {
-		CheckResult.summary(ShowTester.argShowNullable())
-//		CheckResult.summary(Arg.argShowNullable())
+		CheckResult.summary(ShowWorkaroundJava.argShowNullable())
 	}
 
 }

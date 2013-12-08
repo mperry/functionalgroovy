@@ -1,5 +1,6 @@
 package com.gihub.mperry;
 
+//import com.github.mperry.fg.ShowStaticExtension;
 import fj.F;
 import fj.Show;
 import fj.data.Stream;
@@ -16,7 +17,7 @@ import static fj.Show.showS;
  * Time: 2:43 AM
  * To change this template use File | Settings | File Templates.
  */
-public class ShowTester<T> {
+public class ShowWorkaroundJava {
 
 	// Arg.argShow
 	public static final Show<Arg<?>> argShowNullable() {

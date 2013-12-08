@@ -1,15 +1,4 @@
 package com.github.mperry.fg.test
-
-import com.gihub.mperry.ShowTester
-import com.github.mperry.fg.ShowStaticExtension
-import fj.F
-import fj.Show
-import fj.data.Stream
-import fj.test.Arg
-import groovy.transform.TypeChecked
-
-import static fj.Show.showS
-
 /**
  * Created with IntelliJ IDEA.
  * User: MarkPerry

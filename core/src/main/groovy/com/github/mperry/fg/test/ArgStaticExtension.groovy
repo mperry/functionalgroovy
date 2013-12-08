@@ -18,38 +18,24 @@ import static fj.Show.showS
  */
 class ArgStaticExtension {
 
-	@TypeChecked
-	static Show<Arg<?>> argShowNullable(Arg a) {
-		showS(new F<Arg<?>, String>() {
-			public String f(final Arg<?> arg) {
-				def sh1 = ShowStaticExtension.anyShowNullable4()
-				def sh2 = ShowTester.anyShowNullable()
-				// TODO: mperry
-				// TODO: this seems to call showS(F<A, B>) not showS(A)
-				def s = sh2.showS(arg.value)
-				def shrinkInfo = (arg.shrinks > 0 ? " (" + arg.shrinks + " shrink" + (arg.shrinks == 1 ? "" : 's') + ')' : "");
-				def result = s + shrinkInfo
-				result
-			}
-		});
-	}
-
-	static <A> Show<A> anyShowNullable(Arg arg) {
-//		def c = { def a ->
-//			Stream.fromString(a == null ? "null" : a.toString())
-//		}
-		Show.showS({ A a -> (a == null) ? "null" : a.toString()} as F<A, String>);
-	}
-
-
-//	static <A> Show<A> anyShowNullable2() {
-//
-//		return new Show<A>(new F<A, Stream<Character>>() {
-//			public Stream<Character> f(final A a) {
-//				return Stream.fromString((a == null) ? "null" : a.toString());
+//	@TypeChecked
+//	static Show<Arg<?>> argShowNullable(Arg a) {
+//		showS(new F<Arg<?>, String>() {
+//			public String f(final Arg<?> arg) {
+//				def sh1 = ShowStaticExtension.anyShowNullable4()
+//				def sh2 = ShowTester.anyShowNullable()
+//				// TODO: mperry
+//				// TODO: this seems to call showS(F<A, B>) not showS(A)
+//				def s = sh2.showS(arg.value)
+//				def shrinkInfo = (arg.shrinks > 0 ? " (" + arg.shrinks + " shrink" + (arg.shrinks == 1 ? "" : 's') + ')' : "");
+//				def result = s + shrinkInfo
+//				result
 //			}
 //		});
 //	}
 
+//	static <A> Show<A> anyShowNullable(Arg arg) {
+//		Show.showS({ A a -> (a == null) ? "null" : a.toString()} as F<A, String>);
+//	}
 
 }

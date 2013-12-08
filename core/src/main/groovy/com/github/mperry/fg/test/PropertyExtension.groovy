@@ -4,6 +4,7 @@ import fj.Show
 import fj.Unit
 import fj.test.CheckResult
 import fj.test.Property
+import groovy.transform.TypeChecked
 
 import static org.junit.Assert.assertTrue
 
@@ -14,18 +15,15 @@ import static org.junit.Assert.assertTrue
  * Time: 1:46 AM
  * To change this template use File | Settings | File Templates.
  */
+//@TypeChecked
 class PropertyExtension {
 
 	static CheckResult checkOkWithSummary(Property p) {
-		def cr = p.check()
-		cr.printlnSummary()
-		assertTrue(cr.isOk())
-		Unit.unit()
-		cr
+		p.checkBooleanWithNullableSummary(true)
 	}
 
 	static CheckResult checkOkWithNullableSummary(Property p) {
-		checkBooleanWithNullableSummary(p, true)
+		p.checkBooleanWithNullableSummary(true)
 	}
 
 	static CheckResult checkBooleanWithNullableSummary(Property p, boolean b) {

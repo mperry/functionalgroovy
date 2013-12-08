@@ -45,13 +45,9 @@ class ListFunctorLawsTest {
 				def list1 = y.map(compose(f, g))
 				def list2 = y.map(g).map(f)
 				prop(list1 == list2)
-//				prop(false)
 			} as F3<F<Integer, String>, F<Long, Integer>, fj.data.List<Long>, Property>
 		)
-//		def cr = p2.check()
-//		summary.println(cr);
 		p2.checkBooleanWithNullableSummary(true)
-
 	}
 
 }

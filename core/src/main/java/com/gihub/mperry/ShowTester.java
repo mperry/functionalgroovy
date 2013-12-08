@@ -28,34 +28,9 @@ public class ShowTester<T> {
 		});
 	}
 
-	public static <A> Show<A> anyShowNullable(F <A, String> f) {
-		return Show.showS(f);
-	}
-
-
-	public static <A> Show<A> anyShowNullable() {
-		return anyShowNullable(new F<A, String>(){
-			@Override
-			public String f(A a) {
-				return (a == null) ? "null" : a.toString();
-			}
-		});
-
-	}
-
-//	public static <A> Show<A> anyShowNullable2() {
-//		return new Show<A>(new F<A, Stream<Character>>() {
-//			public Stream<Character> f(final A a) {
-//				return Stream.fromString(a.toString());
-//			}
-//		});
-//	}
-
 	public static <A> Show<A> anyShowNullable3() {
-//		return null;
 		F<A, Stream<Character>> f = new F<A, Stream<Character>>() {
 			public Stream<Character> f(final A a) {
-//				return Stream.fromString("A");
 				return Stream.fromString((a == null) ? "null" : a.toString());
 			}
 		};

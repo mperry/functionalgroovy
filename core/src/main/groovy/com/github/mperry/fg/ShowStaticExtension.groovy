@@ -20,50 +20,17 @@ import static fj.Show.showS
 //@TypeChecked
 class ShowStaticExtension {
 
-//	public static <A> Option<A> unit(Option option, A value) {
-//		Option.<A>some(value)
-//	}
-	public static <A> Show<A> anyShowNullable4() {
-		Show.showS({A a ->
-//			return Stream.fromString((a == null) ? "null" : a.toString());
-			(a == null) ? "null" : a.toString()
-		} as F<A, String>)
-	}
-
-//	public static <A> Show<A> anyShowNullable5() {
-//		return new Show<A>(new F<A, Stream<Character>>() {
-//			public Stream<Character> f(final A a) {
-//				return Stream.fromString(a.toString());
-//			}
-//		});
+//	public static <A> Show<A> anyShowNullable4() {
+//		Show.showS({A a ->
+//			(a == null) ? "null" : a.toString()
+//		} as F<A, String>)
 //	}
 
-	@TypeChecked
-	public static <A> Show<A> anyShowNullable6() {
-		return new Show<A>({A a ->
-			Stream.fromString((a == null) ? "null" : a.toString())
-		} as F<A, Stream<Character>>)
-
-	}
-
-	@TypeChecked
-	public static <A> Show<A> anyShowNullable7() {
-		ShowTester.anyShowNullable({A a ->
-			Stream.fromString((a == null) ? "null" : a.toString())
-		} as F<A, String>)
-
-	}
-
-
-
-
-//	public static <A> Show<A> anyShowNullable3() {
-//		return new Show<A>(new F<A, Stream<Character>>() {
-//			public Stream<Character> f(final A a) {
-//				return Stream.fromString((a == null) ? "null" : a.toString());
-//			}
-//		});
+//	@TypeChecked
+//	public static <A> Show<A> anyShowNullable6() {
+//		return new Show<A>({A a ->
+//			Stream.fromString((a == null) ? "null" : a.toString())
+//		} as F<A, Stream<Character>>)
 //	}
-
 
 }

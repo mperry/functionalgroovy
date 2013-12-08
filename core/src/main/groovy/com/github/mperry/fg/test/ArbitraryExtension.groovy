@@ -12,6 +12,4 @@ import fj.test.Gen
  */
 class ArbitraryExtension {
 
-
-
 }

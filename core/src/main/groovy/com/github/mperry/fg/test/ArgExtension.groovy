@@ -11,9 +11,4 @@ import fj.test.Arg
  */
 class ArgExtension {
 
-	static void m1(Arg arg) {
-
-	}
-
-
 }

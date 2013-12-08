@@ -1,5 +1,6 @@
 package com.github.mperry.fg.test
 
+import fj.Show
 import fj.Unit
 import fj.test.CheckResult
 import fj.test.Property
@@ -25,17 +26,14 @@ class PropertyExtension {
 
 	static CheckResult checkOkWithNullableSummary(Property p) {
 		checkBooleanWithNullableSummary(p, true)
-//		def cr = p.check()
-//		cr.printlnSummaryNullable()
-//		assertTrue(cr.isOk())
-//		Unit.unit()
 	}
 
 	static CheckResult checkBooleanWithNullableSummary(Property p, boolean b) {
 		def cr = p.check()
-		cr.printlnSummaryNullable()
+//		cr.printlnSummaryNullable()
+		CheckResult.summaryNullable().println(cr)
+//		CheckResult.summary.println(cr)
 		assertTrue(cr.isOk() == b)
-		Unit.unit()
 		cr
 	}
 

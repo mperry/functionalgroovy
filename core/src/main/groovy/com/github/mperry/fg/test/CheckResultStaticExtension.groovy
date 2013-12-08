@@ -1,11 +1,13 @@
 package com.github.mperry.fg.test
 
+import com.gihub.mperry.ShowTester
 import fj.F
 import fj.Show
-import fj.data.Stream
 import fj.test.Arg
 import fj.test.CheckResult
+import groovy.transform.TypeChecked
 
+import static com.github.mperry.fg.test.ArgStaticExtension.argShowNullable
 import static fj.Show.showS
 
 /**
@@ -15,25 +17,12 @@ import static fj.Show.showS
  * Time: 1:19 AM
  * To change this template use File | Settings | File Templates.
  */
+//@TypeChecked
 class CheckResultStaticExtension {
 
-	static Show<CheckResult> summaryNullable() {
-		CheckResult.summary(argShowNullable())
+	static Show<CheckResult> summaryNullable(CheckResult cr) {
+//		CheckResult.summary(Arg.argShowNullable())
+		CheckResult.summary(ShowTester.argShow())
 	}
 
-	static Show<Arg<?>> argShowNullable() {
-		showS(new F<Arg<?>, String>() {
-			public String f(final Arg<?> arg) {
-				return anyShowNullable().showS(arg.value) +
-						(arg.shrinks > 0 ? " (" + arg.shrinks + " shrink" + (arg.shrinks == 1 ? "" : 's') + ')' : "");
-			}
-		});
-	}
-
-	static <A> Show<A> anyShowNullable() {
-		def c = { def a ->
-			Stream.fromString(a == null ? "null" : a.toString())
-		}
-		new Show<A>(c as F<A, Stream<Character>>);
-	}
 }

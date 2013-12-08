@@ -28,9 +28,7 @@ class PropertyExtension {
 
 	static CheckResult checkBooleanWithNullableSummary(Property p, boolean b) {
 		def cr = p.check()
-//		cr.printlnSummaryNullable()
 		CheckResult.summaryNullable().println(cr)
-//		CheckResult.summary.println(cr)
 		assertTrue(cr.isOk() == b)
 		cr
 	}

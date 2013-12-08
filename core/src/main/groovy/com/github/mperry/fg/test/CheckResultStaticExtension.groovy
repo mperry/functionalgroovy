@@ -21,7 +21,8 @@ import static fj.Show.showS
 class CheckResultStaticExtension {
 
 	static Show<CheckResult> summaryNullable(CheckResult cr) {
-		CheckResult.summary(ShowTester.argShow())
+		CheckResult.summary(ShowTester.argShowNullable())
+//		CheckResult.summary(Arg.argShowNullable())
 	}
 
 }

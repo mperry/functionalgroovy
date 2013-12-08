@@ -44,7 +44,8 @@ class ListFunctorLawsTest {
 				def y = x.toJavaList()
 				def list1 = y.map(compose(f, g))
 				def list2 = y.map(g).map(f)
-				prop(list1 == list2)
+//				prop(list1 == list2)
+				prop(false)
 			} as F3<F<Integer, String>, F<Long, Integer>, fj.data.List<Long>, Property>
 		)
 		p2.checkBooleanWithNullableSummary(true)

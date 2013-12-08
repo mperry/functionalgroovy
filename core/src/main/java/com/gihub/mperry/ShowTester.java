@@ -19,16 +19,17 @@ import static fj.Show.showS;
 public class ShowTester<T> {
 
 	// Arg.argShow
-	public static final Show<Arg<?>> argShow() {
+	public static final Show<Arg<?>> argShowNullable() {
 		return showS(new F<Arg<?>, String>() {
 			public String f(final Arg<?> arg) {
-				return anyShowNullable3().showS(arg.value()) +
+				return anyShowNullable().showS(arg.value()) +
 						(arg.shrinks() > 0 ? " (" + arg.shrinks() + " shrink" + (arg.shrinks() == 1 ? "" : 's') + ')' : "");
 			}
 		});
 	}
 
-	public static <A> Show<A> anyShowNullable3() {
+	// Show.anyShow
+	public static <A> Show<A> anyShowNullable() {
 		F<A, Stream<Character>> f = new F<A, Stream<Character>>() {
 			public Stream<Character> f(final A a) {
 				return Stream.fromString((a == null) ? "null" : a.toString());

@@ -20,17 +20,4 @@ import static fj.Show.showS
 //@TypeChecked
 class ShowStaticExtension {
 
-//	public static <A> Show<A> anyShowNullable4() {
-//		Show.showS({A a ->
-//			(a == null) ? "null" : a.toString()
-//		} as F<A, String>)
-//	}
-
-//	@TypeChecked
-//	public static <A> Show<A> anyShowNullable6() {
-//		return new Show<A>({A a ->
-//			Stream.fromString((a == null) ? "null" : a.toString())
-//		} as F<A, Stream<Character>>)
-//	}
-
 }

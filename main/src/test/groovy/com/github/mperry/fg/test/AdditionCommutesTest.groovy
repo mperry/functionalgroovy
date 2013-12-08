@@ -89,4 +89,22 @@ class AdditionCommutesTest {
 		)
 	}
 
+	/**
+	 * Naturals commute where a null argument produces a NullPointerException
+	 */
+	@Test
+	void naturalsCommuteWithNullPointer() {
+		showAll new PropertyConfig(
+				map: [(Integer.class): Arbitrary.arbNullableInteger()],
+				function: { Integer a, Integer b ->
+					try {
+						a + b == b + a
+					} catch (NullPointerException e) {
+						(a == null || b == null)
+					}
+				}
+		)
+	}
+
+
 }

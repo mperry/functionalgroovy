@@ -136,6 +136,9 @@ class Specification {
 
 	static Property callCommon(List<Object> argList, Option<Closure<Boolean>> pre, Closure<Boolean> func, F<Validation<Throwable, Boolean>, Boolean> validate) {
 		checkTypes(argList, func)
+		pre.map { Closure<Boolean> c ->
+	 		checkTypes(argList, c)
+		}
 		def preOk = pre.map { Closure<Boolean> it -> it.call(argList) }.orSome(true)
 		def result = !preOk ? true : validate.f(perform(func, argList))
 		implies(preOk, result)

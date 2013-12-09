@@ -1,7 +1,9 @@
+
 package com.github.mperry.fg.test
 
 import fj.F
 import fj.test.Arbitrary
+import groovy.transform.TypeChecked
 import org.junit.Test
 
 import static Model.validator
@@ -15,6 +17,7 @@ import static fj.data.Option.some
  * Time: 1:07 AM
  * To change this template use File | Settings | File Templates.
  */
+@TypeChecked
 class AdditionCommutesTest {
 
 	@Test
@@ -57,7 +60,7 @@ class AdditionCommutesTest {
 	@Test
 	void naturalsCommuteDiscardInvalid() {
 		specAssert new Model(
-			pre: some { a, b -> a >= 0 && b >= 0 },
+			pre: some { Integer a, Integer b -> a >= 0 && b >= 0 },
 			function: { Integer a, Integer b ->
 				a + b == b + a
 			}
@@ -71,7 +74,7 @@ class AdditionCommutesTest {
 	void discardNulls() {
 		specAssert(new Model(
 			map: Model.DEFAULT_MAP + Model.NULLABLE_INTEGER,
-			pre: some({ a, b -> a != null && b != null }),
+			pre: some { Integer a, Integer b -> a != null && b != null },
 			function: { Integer a, Integer b ->
 				a + b == b + a
 			}

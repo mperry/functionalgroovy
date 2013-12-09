@@ -98,6 +98,14 @@ class Specification {
 		check(spec(c), true)
 	}
 
+	static CheckResult specAssert(Property p, boolean truth) {
+		check(p, truth)
+	}
+
+	static CheckResult specAssert(Property p) {
+		check(p, true)
+	}
+
 	static CheckResult check(Property p, Boolean truth) {
 //		def cr = p.check()
 		p.checkBooleanWithNullableSummary(truth)

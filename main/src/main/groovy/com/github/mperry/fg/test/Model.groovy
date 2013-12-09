@@ -50,7 +50,8 @@ class Model {
 
 	Map<Class<?>, Arbitrary> map = DEFAULT_MAP
 	Closure<Boolean> function
-	Option<Closure<Boolean>> pre = Option.none()
+//	Option<Closure<Boolean>> pre = Option.none()
+	Option<Closure<Boolean>> pre = Option.some({true})
 	Boolean truth = true
 	F<Validation<Throwable, Boolean>, Boolean> validator = DEFAULT_VALIDATOR
 

@@ -4,7 +4,6 @@ import fj.F
 import fj.test.Arbitrary
 import org.junit.Test
 
-import static Specification.spec
 import static Model.validator
 import static com.github.mperry.fg.test.Specification.specAssert
 import static fj.data.Option.some
@@ -23,6 +22,23 @@ class AdditionCommutesTest {
 		specAssert { Integer a, Integer b ->
 			a + b == b + a
 		}
+	}
+
+//	@Test
+	void subtractionDoesNotCommute1() {
+		specAssert { Integer a, Integer b ->
+				a - b == b - a
+		}
+	}
+
+	@Test
+	void subtractionDoesNotCommute2() {
+		specAssert new Model(
+				function: { Integer a, Integer b ->
+					a - b == b - a
+				},
+				truth: false
+		)
 	}
 
 	/**

@@ -1,9 +1,9 @@
 package com.github.mperry.fg.test
 
-import fj.data.Option
 import org.junit.Test
 
-import static com.github.mperry.fg.test.PropertyTester.showAll
+import static Specification.spec
+import static com.github.mperry.fg.test.Specification.specAssert
 import static fj.data.Option.some
 
 /**
@@ -20,7 +20,7 @@ class IntegerOverflow {
 	 */
 	@Test
 	void overflow() {
-		showAll new PropertyConfig(
+		specAssert new Model(
 			truth: false,
 			pre: some { a, b -> a >= 0 && b >= 0 },
 			function: { Integer a, Integer b ->

@@ -1,7 +1,7 @@
 package com.github.mperry.fg.test.dbc
 
 import com.github.mperry.fg.test.DbcContractValidator
-import com.github.mperry.fg.test.PropertyConfig
+import com.github.mperry.fg.test.Model
 import fj.F
 import fj.test.Arbitrary
 import fj.test.Gen
@@ -9,8 +9,8 @@ import groovy.transform.TypeChecked
 import groovy.transform.TypeCheckingMode
 import org.junit.Test
 
-import static com.github.mperry.fg.test.PropertyConfig.getDEFAULT_MAP
-import static com.github.mperry.fg.test.PropertyTester.showAll
+import static Model.getDEFAULT_MAP
+import static com.github.mperry.fg.test.Specification.spec
 import static fj.test.Arbitrary.arbitrary
 
 /**
@@ -69,7 +69,7 @@ class StackTest {
     @TypeChecked(TypeCheckingMode.SKIP)
     void testPush() {
         [genStackRecursive(), genStackImperative()].each { g ->
-            showAll new PropertyConfig(
+            spec new Model(
                 map: DEFAULT_MAP + [(ExceptionFreeStack.class): arbitrary(g)],
                 function: { ExceptionFreeStack<Integer> s, Integer i ->
 //                    println "pushing $i onto ${s.toString()}"
@@ -86,7 +86,7 @@ class StackTest {
     @Test
     @TypeChecked(TypeCheckingMode.SKIP)
     void testPop() {
-        showAll new PropertyConfig(
+        spec new Model(
             map: DEFAULT_MAP + [(ExceptionFreeStack.class): arbStack()],
             function: { ExceptionFreeStack<Integer> s ->
 //                    println "pushing $i onto ${s.toString()}"

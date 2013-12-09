@@ -1,6 +1,5 @@
 package com.github.mperry.fg.test
 
-import com.github.mperry.fg.test.PropertyConfig
 import fj.F
 import fj.data.Validation
 import org.gcontracts.AssertionViolation
@@ -18,7 +17,7 @@ import org.gcontracts.PreconditionViolation
 class DbcContractValidator {
 
     static F<Validation<Throwable, Boolean>, Boolean> validateValidation() {
-        PropertyConfig.validator(validateThrowable())
+        Model.validator(validateThrowable())
     }
 
     static F<Throwable, Boolean> validateThrowable() {

@@ -3,8 +3,9 @@ package com.github.mperry.fg.test
 import groovy.transform.TypeChecked
 import org.junit.Test
 
-import static com.github.mperry.fg.test.PropertyTester.showAll
-import static fj.test.Arbitrary.*
+import static Specification.spec
+import static com.github.mperry.fg.test.Specification.specAssert
+
 //import fj.data.List
 
 /**
@@ -19,7 +20,7 @@ class ListTest {
 	@Test
 	@TypeChecked
 	void testConcatenationSize() {
-		showAll { List<Integer> list1, List<Integer> list2 ->
+		specAssert { List<Integer> list1, List<Integer> list2 ->
 			(list1 + list2).size() == list1.size() + list2.size()
 		}
 	}
@@ -30,7 +31,7 @@ class ListTest {
 	 */
 	@Test
 	void testArrayListConcatenationSize() {
-		showAll { ArrayList list1, ArrayList list2 ->
+		specAssert { ArrayList list1, ArrayList list2 ->
 			(list1 + list2).size() == list1.size() + list2.size()
 		}
 	}

@@ -27,7 +27,7 @@ import org.codehaus.groovy.runtime.NullObject
  * To change this template use File | Settings | File Templates.
  */
 @TypeChecked
-class PropertyTester {
+class Specification {
 
 	static final int MAX_ARGS = 5
 	static final Map<Integer, Class<?>> FUNC_TYPES = [1: F, 2: F2, 3: F3, 4: F4, 5: F5, 6: F6, 7: F7, 8: F8]
@@ -47,13 +47,14 @@ class PropertyTester {
 		this."createProp${list.size()}"(list, pre, c, validate)
 	}
 
-	static CheckResult showAllWithMap(Boolean truth, Map<Class<?>, Arbitrary> map, Option<Closure<Boolean>> pre, Closure<Boolean> c, F<Validation<Throwable, Boolean>, Boolean> validate) {
+	static Property showAllWithMap(Boolean truth, Map<Class<?>, Arbitrary> map, Option<Closure<Boolean>> pre, Closure<Boolean> c, F<Validation<Throwable, Boolean>, Boolean> validate) {
 		if (c.getMaximumNumberOfParameters() > MAX_ARGS) {
 			throw new Exception("Testing does not support ${c.getMaximumNumberOfParameters()}, maximum supported is $MAX_ARGS")
 		}
 		def p = createProp(map, pre, c, validate)
-		def cr = p.check()
-		p.checkBooleanWithNullableSummary(truth)
+		p
+//		def cr = p.check()
+//		p.checkBooleanWithNullableSummary(truth)
 	}
 
 	/**
@@ -62,17 +63,44 @@ class PropertyTester {
 	 * @param c
 	 */
 	@TypeChecked(TypeCheckingMode.SKIP)
-	static CheckResult showAll(Map<Class<?>, Arbitrary<?>> map, Closure<Boolean> c) {
-		showAllWithMap(true, PropertyConfig.DEFAULT_MAP + map, Option.none(), c, PropertyConfig.DEFAULT_VALIDATOR)
+	static Property spec(Map<Class<?>, Arbitrary<?>> map, Closure<Boolean> c) {
+		def p = showAllWithMap(true, Model.DEFAULT_MAP + map, Option.none(), c, Model.DEFAULT_VALIDATOR)
+		p
+//		check(p, true)
+
 	}
 
-	static CheckResult showAll(PropertyConfig config) {
-		showAllWithMap(config.truth, config.map, config.pre, config.function, config.validator)
+	static Property spec(Model config) {
+		def p = showAllWithMap(config.truth, config.map, config.pre, config.function, config.validator)
+		p
+//		check(p, config.truth)
 	}
 
 	@TypeChecked(TypeCheckingMode.SKIP)
-	static CheckResult showAll(Closure<Boolean> c) {
-		showAllWithMap(true, PropertyConfig.DEFAULT_MAP, Option.none(), c, PropertyConfig.DEFAULT_VALIDATOR)
+	static Property spec(Closure<Boolean> c) {
+		def p = showAllWithMap(true, Model.DEFAULT_MAP, Option.none(), c, Model.DEFAULT_VALIDATOR)
+		p
+//		check(p, true)
+	}
+
+	@TypeChecked(TypeCheckingMode.SKIP)
+	static CheckResult specAssert(Map<Class<?>, Arbitrary<?>> map, Closure<Boolean> c) {
+		check(spec(map, c), true)
+	}
+
+	static CheckResult specAssert(Model config) {
+		check(spec(config), config.truth)
+	}
+
+	@TypeChecked(TypeCheckingMode.SKIP)
+	static CheckResult specAssert(Closure<Boolean> c) {
+//		def p = showAllWithMap(true, Model.DEFAULT_MAP, Option.none(), c, Model.DEFAULT_VALIDATOR)
+		check(spec(c), true)
+	}
+
+	static CheckResult check(Property p, Boolean truth) {
+//		def cr = p.check()
+		p.checkBooleanWithNullableSummary(truth)
 	}
 
 	static Property implies(Boolean pre, Boolean result) {

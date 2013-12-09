@@ -4,8 +4,9 @@ import fj.F
 import fj.test.Arbitrary
 import org.junit.Test
 
-import static com.github.mperry.fg.test.PropertyTester.showAll
-import static PropertyConfig.validator
+import static Specification.spec
+import static Model.validator
+import static com.github.mperry.fg.test.Specification.specAssert
 import static fj.data.Option.some
 
 /**
@@ -19,7 +20,7 @@ class AdditionCommutesTest {
 
 	@Test
 	void commutes() {
-		showAll { Integer a, Integer b ->
+		specAssert { Integer a, Integer b ->
 			a + b == b + a
 		}
 	}
@@ -29,7 +30,7 @@ class AdditionCommutesTest {
 	 */
 	@Test
 	void naturalsCommute() {
-		showAll { Integer a, Integer b ->
+		specAssert { Integer a, Integer b ->
 			(a >= 0 && b >= 0).implies(a + b == b + a)
 		}
 	}
@@ -39,7 +40,7 @@ class AdditionCommutesTest {
 	 */
 	@Test
 	void naturalsCommuteDiscardInvalid() {
-		showAll new PropertyConfig(
+		specAssert new Model(
 			pre: some { a, b -> a >= 0 && b >= 0 },
 			function: { Integer a, Integer b ->
 				a + b == b + a
@@ -52,8 +53,8 @@ class AdditionCommutesTest {
 	 */
 	@Test
 	void discardNulls() {
-		showAll(new PropertyConfig(
-			map: PropertyConfig.DEFAULT_MAP + PropertyConfig.NULLABLE_INTEGER,
+		specAssert(new Model(
+			map: Model.DEFAULT_MAP + Model.NULLABLE_INTEGER,
 			pre: some({ a, b -> a != null && b != null }),
 			function: { Integer a, Integer b ->
 				a + b == b + a
@@ -66,7 +67,7 @@ class AdditionCommutesTest {
 	 */
 	@Test
 	void naturalsWithNullsDoNotCommute() {
-		showAll new PropertyConfig(
+		specAssert new Model(
 			truth: false,
 			map: [(Integer.class): Arbitrary.arbNullableInteger()],
 			function: { Integer a, Integer b ->
@@ -80,7 +81,7 @@ class AdditionCommutesTest {
 	 */
 	@Test
 	void naturalsCommuteIfNullPointerOk() {
-		showAll new PropertyConfig(
+		specAssert new Model(
 			map: [(Integer.class): Arbitrary.arbNullableInteger()],
 			function: { Integer a, Integer b ->
 				a + b == b + a
@@ -94,7 +95,7 @@ class AdditionCommutesTest {
 	 */
 	@Test
 	void naturalsCommuteWithNullPointer() {
-		showAll new PropertyConfig(
+		specAssert new Model(
 				map: [(Integer.class): Arbitrary.arbNullableInteger()],
 				function: { Integer a, Integer b ->
 					try {

@@ -18,7 +18,7 @@ import static fj.test.Arbitrary.*
  */
 @Canonical
 //@Immutable
-class PropertyConfig {
+class Model {
 
 	static final Map NULLABLE_INTEGER = [(Integer.class): Arbitrary.arbNullableInteger()]
 
@@ -54,8 +54,8 @@ class PropertyConfig {
 	Boolean truth = true
 	F<Validation<Throwable, Boolean>, Boolean> validator = DEFAULT_VALIDATOR
 
-	PropertyConfig addArbs(Map<Class<?>, Arbitrary> m) {
-		new PropertyConfig(map + m, function, pre, truth)
+	Model addArbs(Map<Class<?>, Arbitrary> m) {
+		new Model(map + m, function, pre, truth)
 	}
 
 	@TypeChecked

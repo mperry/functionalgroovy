@@ -85,7 +85,7 @@ class AdditionCommutesTest {
 	 * Show property does not hold that naturals commute in the presence of null values
 	 */
 	@Test
-	void naturalsWithNullsDoNotCommute() {
+	void integersWithNullsDoNotCommute() {
 		specAssert new Model(
 			truth: false,
 			map: [(Integer.class): Arbitrary.arbNullableInteger()],
@@ -99,7 +99,7 @@ class AdditionCommutesTest {
 	 * Naturals commute if throwing a NullPointerException is ok
 	 */
 	@Test
-	void naturalsCommuteIfNullPointerOk() {
+	void integersCommuteIfNullPointerOk() {
 		specAssert new Model(
 			map: [(Integer.class): Arbitrary.arbNullableInteger()],
 			function: { Integer a, Integer b ->
@@ -113,7 +113,7 @@ class AdditionCommutesTest {
 	 * Naturals commute where a null argument produces a NullPointerException
 	 */
 	@Test
-	void naturalsCommuteWithNullPointer() {
+	void integersCommuteWithNullPointer() {
 		specAssert new Model(
 				map: [(Integer.class): Arbitrary.arbNullableInteger()],
 				function: { Integer a, Integer b ->

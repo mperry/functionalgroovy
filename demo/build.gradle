@@ -1,7 +1,7 @@
 
 apply plugin: 'application'
 
-mainClassName = "com.github.mperry.fg.IO3Demo"
+mainClassName = "com.github.mperry.fg.SimpleIODemoFunctional"
 
 ext {
 }

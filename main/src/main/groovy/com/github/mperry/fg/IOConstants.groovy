@@ -18,8 +18,8 @@ class IOConstants {
 		Option.fromNull(System.console())
 	}
 
-	public static IO3<String> consoleReadLine() {
-		return new IO3<String>() {
+	public static SimpleIO<String> consoleReadLine() {
+		return new SimpleIO<String>() {
 			public String run() {
 				def i = System.in
 				def r = i.newReader()
@@ -32,8 +32,8 @@ class IOConstants {
 	}
 
 	@TypeChecked
-	public static IO3<Option<String>> consoleReadLineOption() {
-		return new IO3<Option<String>>() {
+	public static SimpleIO<Option<String>> consoleReadLineOption() {
+		return new SimpleIO<Option<String>>() {
 			public Option<String> run() {
 				Option.fromNull(System.in.withReader {
 					it.readLine()
@@ -44,8 +44,8 @@ class IOConstants {
 	}
 
 	@TypeChecked
-	public static IO3<Unit> consoleWriteLine(final String msg) {
-		return new IO3<Unit>() {
+	public static SimpleIO<Unit> consoleWriteLine(final String msg) {
+		return new SimpleIO<Unit>() {
 			public Unit run() {
 				println(msg)
 				return Unit.unit();

@@ -32,7 +32,7 @@ class IO3Demo {
 	}
 
 	@TypeChecked
-	Option<IO3<Unit>> squareIO(String s) {
+	Option<SimpleIO<Unit>> squareIO(String s) {
 		toInt(s).map { Integer n ->
 			IOConstants.consoleWriteLine(squareMessage(n))
 		}
@@ -59,28 +59,28 @@ class IO3Demo {
 	}
 
 	@TypeChecked
-	Option<IO3<Unit>> invalidMessageIO(String s) {
+	Option<SimpleIO<Unit>> invalidMessageIO(String s) {
 		invalidMessage(s).map { String it -> IOConstants.consoleWriteLine(it)}
 	}
 
 	@TypeChecked
-	IO3<?> foldIO(List<Option<IO3<?>>> list) {
-		(IO3<?>) list.inject(IO3.empty()) { IO3<?> acc, Option<IO3<?>> it ->
+	SimpleIO<?> foldIO(List<Option<SimpleIO<?>>> list) {
+		(SimpleIO<?>) list.inject(SimpleIO.empty()) { SimpleIO<?> acc, Option<SimpleIO<?>> it ->
 			it.isNone() ? acc : acc.append(it.some())
 		}
 	}
 
 	@TypeChecked
-	Stream<IO3<String>> inputStream() {
+	Stream<SimpleIO<String>> inputStream() {
 		def s = Stream.range(1).map { Integer i ->
 			def io = IOConstants.consoleWriteLine(prompt).append(IOConstants.consoleReadLine())
 			io.flatMap({ String s ->
-				foldIO([invalidMessageIO(s), squareIO(s)]).append(IO3.unit(s))
+				foldIO([invalidMessageIO(s), squareIO(s)]).append(SimpleIO.unit(s))
 			} as F)
 		}
 	}
 
-	void test1(Stream<IO3<String>> stream) {
+	void test1(Stream<SimpleIO<String>> stream) {
 //		def i = inputStream()
 		if (!stream.isEmpty()) {
 			def io = stream.head()
@@ -93,11 +93,11 @@ class IO3Demo {
 	}
 
 	@TypeChecked
-	Stream<IO3<?>> stream() {
-		def p = new P1<Stream<IO3<String>>>(){
+	Stream<SimpleIO<?>> stream() {
+		def p = new P1<Stream<SimpleIO<String>>>(){
 			@Override
-			Stream<IO3<String>> _1() {
-				inputStream().takeWhile { IO3<String> io ->
+			Stream<SimpleIO<String>> _1() {
+				inputStream().takeWhile { SimpleIO<String> io ->
 					def s = io.run()
 					isLoop(s)
 				}
@@ -107,11 +107,11 @@ class IO3Demo {
 	}
 
 	@TypeChecked
-	IO3<?> recursiveInput(IO3<?> myIo) {
+	SimpleIO<?> recursiveInput(SimpleIO<?> myIo) {
 		def quit = "q"
 		def io = IOConstants.consoleWriteLine(prompt)
 		myIo.append(io).append(IOConstants.consoleReadLine().flatMap({ String s ->
-				def f = foldIO([invalidMessageIO(s), squareIO(s)]).append(IO3.unit(s))
+				def f = foldIO([invalidMessageIO(s), squareIO(s)]).append(SimpleIO.unit(s))
 
 				def stop = s == quit
 				if (!stop) {
@@ -125,17 +125,17 @@ class IO3Demo {
 
 	@TypeChecked
 	void repl2() {
-		def action = stream().foldLeft({ IO3<?> acc, IO3<?> io ->
+		def action = stream().foldLeft({ SimpleIO<?> acc, SimpleIO<?> io ->
 			acc.append(io)
-		} as F2<IO3, IO3, IO3>, IO3.empty())
+		} as F2<SimpleIO, SimpleIO, SimpleIO>, SimpleIO.empty())
 		action.run()
-//		stream().map { IO3 io ->
+//		stream().map { SimpleIO io ->
 //			io.run()
 //		}.toList()
 	}
 
-	IO3<?> repl3() {
-		IOConstants.consoleWriteLine(help).append(recursiveInput(IO3.empty()))
+	SimpleIO<?> repl3() {
+		IOConstants.consoleWriteLine(help).append(recursiveInput(SimpleIO.empty()))
 	}
 
 	void repl4() {
@@ -146,7 +146,7 @@ class IO3Demo {
 	@TypeChecked
 	void repl() {
 		IOConstants.consoleWriteLine(help).run()
-		def s = inputStream().takeWhile { IO3<String> io ->
+		def s = inputStream().takeWhile { SimpleIO<String> io ->
 			def s = io.run()
 			isLoop(s)
 		}

@@ -1,7 +1,4 @@
 package com.github.mperry.fg
-
-import fj.data.Option
-
 /**
  * Created with IntelliJ IDEA.
  * User: MarkPerry
@@ -12,14 +9,14 @@ import fj.data.Option
 class Demo4 {
 
 
-	IO3<?> recursiveInput() {
+	SimpleIO<?> recursiveInput() {
 		def quit = "q"
 		IOConstants.consoleReadLine().flatMap { String s ->
 			def stop = s == quit
 			if (!stop) {
 				recursiveInput()
 			} else {
-				IO3.empty()
+				SimpleIO.empty()
 			}
 		}
 	}

@@ -24,14 +24,14 @@ class IO3Demo2 {
 		"square $n = ${n * n}"
 	}
 
-	Option<IO3<Unit>> squareOptionIO(String s) {
+	Option<SimpleIO<Unit>> squareOptionIO(String s) {
 		toInt(s).map { Integer n ->
 			consoleWriteLine(squareMessage(n))
 		}
 	}
 
-    IO3<Unit> squareIO(String s) {
-        squareOptionIO(s).orSome(IO3.empty())
+    SimpleIO<Unit> squareIO(String s) {
+        squareOptionIO(s).orSome(SimpleIO.empty())
     }
 
     Boolean isLoop(String s) {
@@ -50,26 +50,26 @@ class IO3Demo2 {
 		validMessage(s) ? Option.none() : Option.<String>some("Not an integer: $s")
 	}
 
-	Option<IO3<Unit>> invalidMessageOptionIO(String s) {
+	Option<SimpleIO<Unit>> invalidMessageOptionIO(String s) {
 		invalidMessage(s).map { String it -> consoleWriteLine(it)}
 	}
 
-    IO3<Unit> invalidMessageIO(String s) {
-        invalidMessageOptionIO(s).orSome(IO3.empty())
+    SimpleIO<Unit> invalidMessageIO(String s) {
+        invalidMessageOptionIO(s).orSome(SimpleIO.empty())
     }
 
-    IO3<String> interaction() {
+    SimpleIO<String> interaction() {
         consoleWriteLine(prompt).append(consoleReadLine()).flatMap1({ String s ->
             invalidMessageIO(s).append(squareIO(s))
         } as F)
     }
 
-    IO3<Stream<String>> interactionStream() {
+    SimpleIO<Stream<String>> interactionStream() {
         def w = interaction()
-        IO3.sequenceWhile(Stream.repeat(w), { String s -> s != quit } as F)
+        SimpleIO.sequenceWhile(Stream.repeat(w), { String s -> s != quit } as F)
     }
 
-    IO3<Stream<String>> repl() {
+    SimpleIO<Stream<String>> repl() {
         consoleWriteLine(help).append(interactionStream())
     }
 

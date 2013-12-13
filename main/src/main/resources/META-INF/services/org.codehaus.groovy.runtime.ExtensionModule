@@ -1,5 +1,5 @@
 moduleName=functionalgroovy-main
 moduleVersion=0.3-SNAPSHOT
 extensionClasses=
-staticExtensionClasses=com.github.mperry.fg.IO3StaticExtension
+staticExtensionClasses=com.github.mperry.fg.SimpleIOStaticExtension
 

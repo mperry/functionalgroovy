@@ -11,19 +11,19 @@ import fj.F;
  */
 public class IOMonad<A> {
 
-	public IO3<A> unit(final A a) {
-		return new IO3<A>() {
+	public SimpleIO<A> unit(final A a) {
+		return new SimpleIO<A>() {
 			public A run() {
 				return a;
 			}
 		};
 	}
 
-	public <B> IO3<B> map(IO3<A> io, F<A, B> f) {
+	public <B> SimpleIO<B> map(SimpleIO<A> io, F<A, B> f) {
 		return io.map(f);
 	}
 
-	public <B> IO3<B> flatMap(IO3<A> io, F<A, IO3<B>> f) {
+	public <B> SimpleIO<B> flatMap(SimpleIO<A> io, F<A, SimpleIO<B>> f) {
 		return io.flatMap(f);
 	}
 

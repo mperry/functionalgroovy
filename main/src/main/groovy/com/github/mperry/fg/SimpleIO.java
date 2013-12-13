@@ -62,7 +62,7 @@ public abstract class SimpleIO<A> {
         };
     }
 
-	static public <B> SimpleIO<B> unit(final B b) {
+	static public <B> SimpleIO<B> lift(final B b) {
 		return new SimpleIO<B>() {
 			public B run() {
 				return b;

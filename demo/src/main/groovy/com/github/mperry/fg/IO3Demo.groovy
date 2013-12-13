@@ -75,7 +75,7 @@ class IO3Demo {
 		def s = Stream.range(1).map { Integer i ->
 			def io = IOConstants.consoleWriteLine(prompt).append(IOConstants.consoleReadLine())
 			io.flatMap({ String s ->
-				foldIO([invalidMessageIO(s), squareIO(s)]).append(SimpleIO.unit(s))
+				foldIO([invalidMessageIO(s), squareIO(s)]).append(SimpleIO.lift(s))
 			} as F)
 		}
 	}
@@ -111,7 +111,7 @@ class IO3Demo {
 		def quit = "q"
 		def io = IOConstants.consoleWriteLine(prompt)
 		myIo.append(io).append(IOConstants.consoleReadLine().flatMap({ String s ->
-				def f = foldIO([invalidMessageIO(s), squareIO(s)]).append(SimpleIO.unit(s))
+				def f = foldIO([invalidMessageIO(s), squareIO(s)]).append(SimpleIO.lift(s))
 
 				def stop = s == quit
 				if (!stop) {

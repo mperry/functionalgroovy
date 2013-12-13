@@ -65,8 +65,7 @@ class IO3Demo2 {
     }
 
     SimpleIO<Stream<String>> interactionStream() {
-        def w = interaction()
-        SimpleIO.sequenceWhile(Stream.repeat(w), { String s -> s != quit } as F)
+        SimpleIO.sequenceWhile(Stream.repeat(interaction()), { String s -> s != quit } as F)
     }
 
     SimpleIO<Stream<String>> repl() {

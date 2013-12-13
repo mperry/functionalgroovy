@@ -16,16 +16,14 @@ class SimpleIOStaticExtension {
 
     static <B> SimpleIO<Stream<B>> sequenceWhile(SimpleIO clazz, Stream<SimpleIO<B>> stream, F<B, Boolean> f) {
         if (stream.empty) {
-            SimpleIO.unit(Stream.nil())
+            SimpleIO.lift(Stream.nil())
         } else {
-            def h = stream.head()
-            def t = stream.tail()._1()
-            h.flatMap({ B b ->
+            stream.head().flatMap({ B b ->
                 if (!f.f(b)) {
-                    SimpleIO.unit(Stream.nil())
+                    SimpleIO.lift(Stream.nil())
                 } else {
-                    def rest = sequenceWhile(clazz, t, f)
-                    SimpleIO.unit([b]).append(rest)
+                    def t = stream.tail()._1()
+                    sequenceWhile(clazz, t, f)
                 }
             } as F)
         }

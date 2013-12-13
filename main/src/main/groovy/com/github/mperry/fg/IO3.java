@@ -80,22 +80,4 @@ public abstract class IO3<A> {
 		};
 	}
 
-    static <B> IO3<Stream<B>> sequenceWhile(final Stream<IO3<B>> list, final F<B, Boolean> pred) {
-        if (list.isEmpty()) {
-            return IO3.unit(Stream.<B>nil());
-        } else {
-            IO3<B> h = list.head();
-            final Stream<IO3<B>> t = list.tail()._1();
-            return h.flatMap( new F<B, IO3<Stream<B>>>() {
-                @Override
-                public IO3<Stream<B>> f(B b) {
-                    if (!pred.f(b)) {
-                        return IO3.unit(Stream.<B>nil());
-                    } else {
-                        return IO3.unit(Stream.single(b)).append(sequenceWhile(t, pred));
-                    }
-                }
-            });
-        }
-    }
 }

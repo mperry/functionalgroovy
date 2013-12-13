@@ -90,7 +90,6 @@ public abstract class SimpleIO<A> {
             @Override
             public groovyx.gpars.dataflow.Promise<A> run() {
                 return SimpleIOExtension.asyncGpars(self);
-//                return SimpleIO.this.runFuture();
             }
         };
     }
@@ -101,12 +100,12 @@ public abstract class SimpleIO<A> {
             @Override
             public fj.control.parallel.Promise<A> run() {
                 return SimpleIOExtension.asyncFj(self);
-//                return SimpleIO.this.runFuture();
             }
         };
     }
 
     public SimpleIO<Future<A>> future() {
+        // the service needs to be shutdown or the program will not terminate
         return future(defaultService());
     }
 
@@ -116,17 +115,16 @@ public abstract class SimpleIO<A> {
             @Override
             public Future<A> run() {
                 return SimpleIOExtension.asyncJava(self, service);
-//                return SimpleIO.this.runFuture();
             }
         };
     }
-
 
     public static Strategy<Unit> defaultStrategy() {
         return Strategy.<Unit>simpleThreadStrategy();
     }
 
     public static ExecutorService defaultService() {
+        // the service needs to be shutdown or the program will not terminate
         return Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() + 1);
     }
 

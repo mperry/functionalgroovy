@@ -9,57 +9,38 @@ package com.github.mperry.fg
 class Test1 {
 
     void fjAsync() {
-
         def console = IOConstants.consoleReadLine()
-//        def io = console.promise()
-//        def io = console.future()
         def io = console.fjPromise()
-        println "Run future async"
-        def f = io.run()
-        println "Getting future"
-//        def v = f.get()
-        def v = f.claim()
-        int z = 0
+        println "Enter FunctionalJava promise value"
+        def p = io.run()
+        def v = p.claim()
         println "Future value was $v"
-
     }
 
     void gparsAsync() {
-
         def console = IOConstants.consoleReadLine()
         def io = console.gparsPromise()
-        println "Run future async"
-        def f = io.run()
-        println "Getting future"
-        def v = f.get()
-//        def v = f.claim()
-        int z = 0
+        println "Enter GPars promise value"
+        def p = io.run()
+        def v = p.get()
         println "Future value was $v"
-
     }
 
     void javaAsync() {
-
         def s = SimpleIO.defaultService()
         def console = IOConstants.consoleReadLine()
         def io = console.future(s)
-        println "Run future async"
+        println "Enter Java future value"
         def f = io.run()
-        println "Getting future"
         def v = f.get()
-//        def v = f.claim()
-        int z = 0
         println "Future value was $v"
         s.shutdown()
-
     }
-
-
 
     static void main(def args) {
         def t = new Test1()
-//        t.fjAsync()
-//        t.gparsAsync()
+        t.fjAsync()
+        t.gparsAsync()
         t.javaAsync()
     }
 }

@@ -35,11 +35,11 @@ class SimpleIODemoFunctional {
     }
 
     Boolean isLoop(String s) {
-		s != quit
+        !isQuit(s)
 	}
 
 	Boolean isQuit(String s) {
-		!isLoop(s)
+        s == quit
 	}
 
 	Boolean validMessage(String s) {
@@ -65,7 +65,7 @@ class SimpleIODemoFunctional {
     }
 
     SimpleIO<Stream<String>> interactionStream() {
-        SimpleIO.sequenceWhile(Stream.repeat(interaction()), { String s -> s != quit } as F)
+        SimpleIO.sequenceWhile(Stream.repeat(interaction()), { String s -> isLoop(s) } as F)
     }
 
     SimpleIO<Stream<String>> repl() {

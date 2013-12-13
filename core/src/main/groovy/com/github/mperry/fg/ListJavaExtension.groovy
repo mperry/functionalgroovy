@@ -38,9 +38,16 @@ class ListJavaExtension {
 		map(list1, f)
 	}
 
-
 	static <A> fj.data.List<A> toFJList(List<A> list) {
         return fj.data.List.list((A[]) list.toArray());
+    }
+
+    static <A, B> java.util.List<B> flatMap(java.util.List<A> list, F<A, List<B>> f) {
+        def result = new ArrayList<B>()
+        for (A a: list) {
+            result.addAll(f.f(a))
+        }
+        result
     }
 
 }

@@ -14,12 +14,12 @@ import groovy.transform.TypeChecked
 @TypeChecked
 class IO3StaticExtension {
 
-    static <B> IO3<Stream<B>> sequenceWhile(IO3 clazz, Stream<IO3<B>> list, F<B, Boolean> f) {
-        if (list.empty) {
-            IO3.unit(Stream.<B>nil())
+    static <B> IO3<Stream<B>> sequenceWhile(IO3 clazz, Stream<IO3<B>> stream, F<B, Boolean> f) {
+        if (stream.empty) {
+            IO3.unit(Stream.nil())
         } else {
-            def h = list.head()
-            def t = list.tail()._1()
+            def h = stream.head()
+            def t = stream.tail()._1()
             h.flatMap({ B b ->
                 if (!f.f(b)) {
                     IO3.unit(Stream.nil())

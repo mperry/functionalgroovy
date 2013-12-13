@@ -65,7 +65,7 @@ class IO3DemoImperative {
 	}
 
 	static void main(def args) {
-		def d = new IO3Demo()
+		def d = new IO3DemoImperative()
 		d.repl()
 	}
 

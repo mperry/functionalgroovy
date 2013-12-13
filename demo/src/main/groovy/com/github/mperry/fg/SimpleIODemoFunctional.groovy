@@ -10,7 +10,7 @@ import static com.github.mperry.fg.IOConstants.consoleReadLine
 import static com.github.mperry.fg.IOConstants.consoleWriteLine
 
 @TypeChecked
-class IO3Demo2 {
+class SimpleIODemoFunctional {
 
 	final String quit = "q"
 	final String help = "Squaring REPL\nEnter $quit to quit"
@@ -73,7 +73,7 @@ class IO3Demo2 {
     }
 
 	static void main(def args) {
-		def d = new IO3Demo2()
+		def d = new SimpleIODemoFunctional()
 		d.repl().run()
 	}
 

@@ -9,7 +9,7 @@ import groovy.transform.TypeChecked
  * Time: 10:03 PM
  * To change this template use File | Settings | File Templates.
  */
-class IO3DemoImperative {
+class SimpleIODemoImperative {
 
 	String quit = "q"
 	String help = "Squaring REPL\nEnter $quit to quit"
@@ -65,7 +65,7 @@ class IO3DemoImperative {
 	}
 
 	static void main(def args) {
-		def d = new IO3DemoImperative()
+		def d = new SimpleIODemoImperative()
 		d.repl()
 	}
 

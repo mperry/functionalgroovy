@@ -1,2 +1,2 @@
 
-include 'core', 'main', 'demo'
+include 'core', 'main', 'demo', 'consume'

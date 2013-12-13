@@ -2,6 +2,11 @@ package com.github.mperry.fg;
 
 import fj.F;
 import fj.Unit;
+import fj.control.parallel.Strategy;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 /**
  * Created with IntelliJ IDEA.
@@ -77,5 +82,53 @@ public abstract class SimpleIO<A> {
 			}
 		};
 	}
+
+
+    public SimpleIO<groovyx.gpars.dataflow.Promise<A>> gparsPromise() {
+        final SimpleIO<A> self = this;
+        return new SimpleIO<groovyx.gpars.dataflow.Promise<A>>() {
+            @Override
+            public groovyx.gpars.dataflow.Promise<A> run() {
+                return SimpleIOExtension.asyncGpars(self);
+//                return SimpleIO.this.runFuture();
+            }
+        };
+    }
+
+    public SimpleIO<fj.control.parallel.Promise<A>> fjPromise() {
+        final SimpleIO<A> self = this;
+        return new SimpleIO<fj.control.parallel.Promise<A>>() {
+            @Override
+            public fj.control.parallel.Promise<A> run() {
+                return SimpleIOExtension.asyncFj(self);
+//                return SimpleIO.this.runFuture();
+            }
+        };
+    }
+
+    public SimpleIO<Future<A>> future() {
+        return future(defaultService());
+    }
+
+    public SimpleIO<Future<A>> future(final ExecutorService service) {
+        final SimpleIO<A> self = this;
+        return new SimpleIO<Future<A>>() {
+            @Override
+            public Future<A> run() {
+                return SimpleIOExtension.asyncJava(self, service);
+//                return SimpleIO.this.runFuture();
+            }
+        };
+    }
+
+
+    public static Strategy<Unit> defaultStrategy() {
+        return Strategy.<Unit>simpleThreadStrategy();
+    }
+
+    public static ExecutorService defaultService() {
+        return Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() + 1);
+    }
+
 
 }

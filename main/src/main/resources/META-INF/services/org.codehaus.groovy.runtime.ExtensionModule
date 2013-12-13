@@ -1,5 +1,5 @@
 moduleName=functionalgroovy-main
 moduleVersion=0.3-SNAPSHOT
-extensionClasses=
+extensionClasses=com.github.mperry.fg.SimpleIOExtension
 staticExtensionClasses=com.github.mperry.fg.SimpleIOStaticExtension
 

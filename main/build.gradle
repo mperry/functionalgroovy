@@ -5,7 +5,9 @@ ext {
 
 dependencies {
 	compile project(":core")
-	testCompile gradleJunit
-	compile 'org.gcontracts:gcontracts-core:1+'
-	testCompile "org.gcontracts:gcontracts-core:1+"
+	compile "org.gcontracts:gcontracts-core:1+"
+    compile "org.codehaus.gpars:gpars:1.1.0"
+
+    testCompile gradleJunit
+    testCompile "org.gcontracts:gcontracts-core:1+"
 }

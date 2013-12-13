@@ -19,6 +19,7 @@ public abstract class IO3<A> {
 
     public <B> IO3<B> append(final IO3<B> io) {
         return new IO3<B>() {
+            @Override
             public B run() {
                 IO3.this.run();
                 return io.run();

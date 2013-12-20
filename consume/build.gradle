@@ -12,6 +12,8 @@ repositories {
 
 dependencies {
     compile "org.codehaus.groovy:groovy:$groovyVersion"
-    compile "com.github.mperry:functionalgroovy-core:0.3-SNAPSHOT"
+    compile("com.github.mperry:functionalgroovy-core:0.3-SNAPSHOT") {
+        changing = true
+    }
     testCompile 'junit:junit:4.11'
 }

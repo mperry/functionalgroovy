@@ -3,6 +3,7 @@ package com.github.mperry.fg;
 import fj.F;
 import fj.Unit;
 import fj.control.parallel.Strategy;
+import groovy.transform.TypeChecked;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -127,6 +128,5 @@ public abstract class SimpleIO<A> {
         // the service needs to be shutdown or the program will not terminate
         return Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() + 1);
     }
-
 
 }

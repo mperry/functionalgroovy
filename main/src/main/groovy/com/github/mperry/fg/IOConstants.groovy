@@ -11,6 +11,7 @@ import groovy.transform.TypeChecked;
  * Time: 10:21 AM
  * To change this template use File | Settings | File Templates.
  */
+//@TypeChecked
 class IOConstants {
 
 	@TypeChecked

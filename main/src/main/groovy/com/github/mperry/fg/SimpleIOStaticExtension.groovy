@@ -23,7 +23,7 @@ class SimpleIOStaticExtension {
                     SimpleIO.lift(Stream.nil())
                 } else {
                     def t = stream.tail()._1()
-                    sequenceWhile(clazz, t, f)
+                    sequenceWhile(clazz, t, f).map({ Stream<B> s -> s.cons(b)} as F<Stream<B>, Stream<B>>)
                 }
             } as F)
         }

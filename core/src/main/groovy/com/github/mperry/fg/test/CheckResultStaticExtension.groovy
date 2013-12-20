@@ -1,7 +1,6 @@
 package com.github.mperry.fg.test
 
-import com.gihub.mperry.ShowWorkaroundJava
-import com.github.mperry.fg.ShowWorkaroundGroovy
+import com.github.mperry.ShowWorkaroundJava
 import fj.Show
 import fj.test.CheckResult
 

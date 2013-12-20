@@ -1,5 +1,7 @@
 package com.github.mperry.fg
 
+import fj.F
+import groovy.transform.TypeChecked
 import org.junit.Test
 
 /**
@@ -9,6 +11,7 @@ import org.junit.Test
  * Time: 4:12 PM
  * To change this template use File | Settings | File Templates.
  */
+@TypeChecked
 class Example {
 
     @Test
@@ -19,4 +22,7 @@ class Example {
         }
     }
 
+    void test2() {
+//        def e = F.<Integer>unit{ Integer a -> 2 * a }.o{ Integer a -> a + 1 }
+    }
 }

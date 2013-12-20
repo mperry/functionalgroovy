@@ -1,9 +1,8 @@
 package com.github.mperry.fg
 
-import com.gihub.mperry.ShowWorkaroundJava
+import com.github.mperry.ShowWorkaroundJava
 import fj.F
 import fj.Show
-import fj.data.Stream
 import fj.test.Arg
 
 import static fj.Show.showS

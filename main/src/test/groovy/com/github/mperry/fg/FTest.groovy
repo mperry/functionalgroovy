@@ -19,7 +19,9 @@ class FTest {
 
     @Test
     void test1() {
-        //def f = F.unit { i -> i.toString()}
-//        assertTrue(4.toString() == f.f(4))
+        def f = F.<Integer>unit{Integer i -> i + 1}.o({Integer i -> i * 3} as F<Integer, Integer>)
+        def g = F.<Integer>unit{Integer i -> i + 1}
+        def h = g.o({Integer i -> i * 3} as F)
+        assertTrue(4  == f.f(1))
     }
 }

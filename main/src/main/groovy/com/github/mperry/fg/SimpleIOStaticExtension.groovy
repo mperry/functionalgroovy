@@ -1,6 +1,7 @@
 package com.github.mperry.fg
 
 import fj.F
+import fj.P1
 import fj.control.Trampoline
 import fj.data.Stream
 import groovy.transform.TypeChecked
@@ -34,22 +35,23 @@ class SimpleIOStaticExtension {
         if (stream.empty) {
             Trampoline.pure(SimpleIO.lift(Stream.<A>nil()))
         } else {
-            Trampoline.pure(stream.head()).bind({ SimpleIO<A> io ->
-                // return type of method, Trampoline<SimpleIO<Stream<A>>>
-                Trampoline.pure(
-                    // SimpleIO<Stream<A>>
+            Trampoline.suspend({ ->
+                Trampoline.pure(stream.head()).map({ SimpleIO<A> io ->
+                    // return SimpleIO<Stream<A>>
                     io.flatMap({ A a ->
-                        // return SimpleIO<Stream<A>>
-                        if (!f.f(a)) {
-                            SimpleIO.lift(Stream.nil())
+                        def b = f.f(a)
+                        if (!b) {
+                            SimpleIO.lift(Stream.<A>nil())
                         } else {
-                            def t = stream.tail()._1()
-                            sequenceWhileC(clazz, t, f).run().map({ Stream<A> s -> s.cons(a) } as F<Stream<A>, Stream<A>>)
-
+                            def tail = stream.tail()._1()
+                            def tramp = sequenceWhileC(clazz, tail, f)
+                            def io2 = tramp.run()
+                            def f2 = ({ Stream<A> s -> s.cons(a)} as F<Stream<A>, Stream<A>>)
+                            io2.map(f2)
                         }
                     } as F)
-                )
-            } as F)
+                } as F)
+            } as P1)
         }
     }
 

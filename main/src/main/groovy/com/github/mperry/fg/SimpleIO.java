@@ -44,7 +44,9 @@ public abstract class SimpleIO<A> {
 	public <B> SimpleIO<B> map(final F<A, B> f) {
 		return new SimpleIO<B>() {
 			public B run() {
-				return f.f(SimpleIO.this.run());
+                A a = SimpleIO.this.run();
+				B b = f.f(a);
+                return b;
 			}
 		};
 	}
@@ -53,7 +55,10 @@ public abstract class SimpleIO<A> {
 	public <B> SimpleIO<B> flatMap(final F<A, SimpleIO<B>> f) {
 		return new SimpleIO<B>() {
 			public B run() {
-				return f.f(SimpleIO.this.run()).run();
+                A a = SimpleIO.this.run();
+                SimpleIO<B> sb = f.f(a);
+                B b = sb.run();
+                return b;
 			}
 		};
 	}

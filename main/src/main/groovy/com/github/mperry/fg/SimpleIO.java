@@ -2,7 +2,9 @@ package com.github.mperry.fg;
 
 import fj.F;
 import fj.Unit;
+import fj.control.Trampoline;
 import fj.control.parallel.Strategy;
+import fj.data.Stream;
 import groovy.transform.TypeChecked;
 
 import java.util.concurrent.ExecutorService;
@@ -132,6 +134,41 @@ public abstract class SimpleIO<A> {
     public static ExecutorService defaultService() {
         // the service needs to be shutdown or the program will not terminate
         return Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() + 1);
+    }
+
+    public static <A> Trampoline<SimpleIO<Stream<A>>> transform(final SimpleIO<Trampoline<SimpleIO<Stream<A>>>> io) {
+        SimpleIO<Stream<A>> io2 = new SimpleIO<Stream<A>>() {
+              @Override
+              public Stream<A> run() {
+                  return io.run().run().run();
+              }
+        };
+        return Trampoline.pure(io2);
+    }
+
+    static <A> SimpleIO<Stream<A>> sequenceWhile(final Stream<SimpleIO<A>> stream, final F<A, Boolean> f) {
+        return new SimpleIO<Stream<A>>() {
+            @Override
+            public Stream<A> run() {
+                boolean loop = true;
+                Stream<SimpleIO<A>> input = stream;
+                Stream<A> result = Stream.<A>nil();
+                while (loop) {
+                    if (input.isEmpty()) {
+                        loop = false;
+                    } else {
+                        A a = input.head().run();
+                        if (!f.f(a)) {
+                            loop = false;
+                        } else {
+                            input = input.tail()._1();
+                            result = result.cons(a);
+                        }
+                    }
+                }
+                return result.reverse();
+            }
+        };
     }
 
 }

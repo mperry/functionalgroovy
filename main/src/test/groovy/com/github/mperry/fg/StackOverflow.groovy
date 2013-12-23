@@ -19,8 +19,8 @@ class StackOverflow {
         def stream = 1.to(1000).map({SimpleIO.lift("mark$it")} as F)
         def singleIo = SimpleIO.sequenceWhileR(stream, {String s -> true} as F)
         def result = singleIo.run().toList().toJavaList()
-        def show = result.toString()
-        println "result: $show"
+//        def show = result.toString()
+//        println "result: $show"
     }
 
     @Test
@@ -31,7 +31,7 @@ class StackOverflow {
         def tramp = SimpleIO.sequenceWhileC(smallStream, {String s -> true} as F)
         def io2 = tramp.run()
         def result = io2.run()
-        println "result: ${result.toList()}"
+//        println "result: ${result.toList()}"
     }
 
     @Test
@@ -40,8 +40,8 @@ class StackOverflow {
         def stream = 1.to(10000).map({SimpleIO.lift("mark$it")} as F)
         def singleIo = SimpleIO.sequenceWhile(stream, {String s -> true} as F)
         def result = singleIo.run().toList().toJavaList()
-        def show = result.toString()
-        println "result: $show"
+//        def show = result.toString()
+//        println "result: $show"
     }
 
 }

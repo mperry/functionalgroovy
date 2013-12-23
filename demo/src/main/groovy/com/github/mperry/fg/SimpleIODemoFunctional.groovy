@@ -65,11 +65,11 @@ class SimpleIODemoFunctional {
     }
 
     SimpleIO<Stream<String>> interactionStream() {
-        SimpleIO.sequenceWhileR(Stream.repeat(interaction()), { String s -> isLoop(s) } as F)
+        SimpleIO.sequenceWhile(Stream.repeat(interaction()), { String s -> isLoop(s) } as F)
     }
 
     SimpleIO<Stream<String>> interactionStreamAsync() {
-        SimpleIO.sequenceWhileR(Stream.repeat(interaction()), { String s -> isLoop(s) } as F)
+        SimpleIO.sequenceWhile(Stream.repeat(interaction()), { String s -> isLoop(s) } as F)
     }
 
     SimpleIO<Stream<String>> repl() {

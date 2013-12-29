@@ -11,20 +11,21 @@ import static org.junit.Assert.assertTrue
  */
 class OptionMonadTest {
 
-    OptionMonad<Integer> monad() {
-        new OptionMonad<Integer>()
+    OptionMonad monad() {
+//        new OptionMonad<Integer>()
+        new OptionMonad()
     }
 
     @Test
     void testUnit() {
-        def m = new OptionMonad<Integer>()
+        def m = monad()
         def o1 = m.unit(3)
         assertTrue(o1.some() == 3)
     }
 
     @Test
     void testFlatMap() {
-        def m = new OptionMonad<Integer>()
+        def m = monad()
         def o1 = m.unit(3)
         def o2 = m.flatMap(o1, {Integer i -> Option.some(2 * i)} as F)
         assertTrue(o2.some() == 6)

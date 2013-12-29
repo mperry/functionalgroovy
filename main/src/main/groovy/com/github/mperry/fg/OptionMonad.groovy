@@ -8,10 +8,10 @@ import groovy.transform.TypeChecked
  * Created by MarkPerry on 30/12/13.
  */
 //@TypeChecked
-class OptionMonad<A> extends Monad<Option, A> {
+class OptionMonad extends Monad<Option> {
 
     @Override
-    def <B> Option<B> flatMap(Option<A> ma, F<A, Option<B>> f) {
+    def <A, B> Option<B> flatMap(Option<A> ma, F<A, Option<B>> f) {
         ma.bind(f)
     }
 

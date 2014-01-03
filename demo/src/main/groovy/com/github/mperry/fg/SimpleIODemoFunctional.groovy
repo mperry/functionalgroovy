@@ -14,23 +14,23 @@ import static fj.data.Option.some
 @TypeChecked
 class SimpleIODemoFunctional {
 
-	final String quit = "q"
-	final String help = "The Spectacular Squaring REPL!\nEnter an integer to square or enter $quit to quit"
-	final String prompt = ">"
+    final String quit = "q"
+    final String help = "The Spectacular Squaring REPL!\nEnter an integer to square or enter $quit to quit"
+    final String prompt = ">"
 
-	Option<Integer> toInt(String s) {
-		s.isInteger() ? some(s.toInteger()) : none()
-	}
+    Option<Integer> toInt(String s) {
+        s.isInteger() ? some(s.toInteger()) : none()
+    }
 
-	String squareMessage(Integer n) {
-		"square $n = ${n * n}"
-	}
+    String squareMessage(Integer n) {
+        "square $n = ${n * n}"
+    }
 
-	Option<SimpleIO<Unit>> squareOptionIO(String s) {
-		toInt(s).map { Integer n ->
-			stdoutWriteLine(squareMessage(n))
-		}
-	}
+    Option<SimpleIO<Unit>> squareOptionIO(String s) {
+        toInt(s).map { Integer n ->
+            stdoutWriteLine(squareMessage(n))
+        }
+    }
 
     SimpleIO<Unit> squareIO(String s) {
         squareOptionIO(s).orSome(IOConstants.empty())
@@ -38,23 +38,23 @@ class SimpleIODemoFunctional {
 
     Boolean isLoop(String s) {
         !isQuit(s)
-	}
+    }
 
-	Boolean isQuit(String s) {
+    Boolean isQuit(String s) {
         s == quit
-	}
+    }
 
-	Boolean validMessage(String s) {
-		(s.isInteger() || isQuit(s))
-	}
+    Boolean validMessage(String s) {
+        (s.isInteger() || isQuit(s))
+    }
 
-	Option<String> invalidMessage(String s) {
-		validMessage(s) ? none() : Option.<String>some("Not an integer: $s")
-	}
+    Option<String> invalidMessage(String s) {
+        validMessage(s) ? none() : Option.<String> some("Not an integer: $s")
+    }
 
-	Option<SimpleIO<Unit>> invalidMessageOptionIO(String s) {
-		invalidMessage(s).map { String it -> stdoutWriteLine(it)}
-	}
+    Option<SimpleIO<Unit>> invalidMessageOptionIO(String s) {
+        invalidMessage(s).map { String it -> stdoutWriteLine(it) }
+    }
 
     SimpleIO<Unit> invalidMessageIO(String s) {
         invalidMessageOptionIO(s).orSome(IOConstants.empty())
@@ -78,9 +78,9 @@ class SimpleIODemoFunctional {
         stdoutWriteLine(help).append(interactionStream())
     }
 
-	static void main(def args) {
-		def d = new SimpleIODemoFunctional()
-		d.repl().run()
-	}
+    static void main(def args) {
+        def d = new SimpleIODemoFunctional()
+        d.repl().run()
+    }
 
 }

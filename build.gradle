@@ -13,9 +13,16 @@ subprojects {
 	version = "0.3-SNAPSHOT"
 
 	ext {
-		sonatypeUsername = ""
-		sonatypePassword = ""
-		
+        // sonatypeUsername and sonatypePassword stored in %USERPROFILE%/.gradle/gradle.properties,
+        // otherwise override with -PsonatypeUsername=user -PsonatypePassword=pwd
+        if (!project.hasProperty("sonatypeUsername")) {
+            sonatypeUsername = ""
+        }
+        if (!project.hasProperty("sonatypePassword")) {
+            sonatypePassword = ""
+        }
+        println "Sonatype credentials: sonatypeUsername $sonatypeUsername sonatypePassword $sonatypePassword"
+
 		sonatypeBaseUrl = "https://oss.sonatype.org"
 		sonatypeSnapshotUrl = "$sonatypeBaseUrl/content/repositories/snapshots/"
 		sonatypeReleaseUrl = "$sonatypeBaseUrl/service/local/staging/deploy/maven2/"
@@ -73,7 +80,6 @@ subprojects {
 				repository(url: sonatypeSnapshotUrl) {
 					authentication(userName: sonatypeUsername, password: sonatypePassword)
 				}
-
 				pom {
 					groupId = project.groupName
 					project {

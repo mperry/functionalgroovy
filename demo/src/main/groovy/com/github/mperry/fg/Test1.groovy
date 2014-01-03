@@ -9,7 +9,7 @@ package com.github.mperry.fg
 class Test1 {
 
     void fjAsync() {
-        def console = IOConstants.consoleReadLine()
+        def console = IOConstants.stdinReadLine()
         def io = console.fjPromise()
         println "Enter FunctionalJava promise value"
         def p = io.run()
@@ -18,7 +18,7 @@ class Test1 {
     }
 
     void gparsAsync() {
-        def console = IOConstants.consoleReadLine()
+        def console = IOConstants.stdinReadLine()
         def io = console.gparsPromise()
         println "Enter GPars promise value"
         def p = io.run()
@@ -28,7 +28,7 @@ class Test1 {
 
     void javaAsync() {
         def s = SimpleIO.defaultService()
-        def console = IOConstants.consoleReadLine()
+        def console = IOConstants.stdinReadLine()
         def io = console.future(s)
         println "Enter Java future value"
         def f = io.run()

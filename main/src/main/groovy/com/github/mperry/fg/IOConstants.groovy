@@ -11,48 +11,47 @@ import groovy.transform.TypeChecked;
  * Time: 10:21 AM
  * To change this template use File | Settings | File Templates.
  */
-//@TypeChecked
+@TypeChecked
 class IOConstants {
 
-	@TypeChecked
 	static Option<Console> console() {
 		Option.fromNull(System.console())
 	}
 
-	public static SimpleIO<String> consoleReadLine() {
-		return new SimpleIO<String>() {
-			public String run() {
-				def i = System.in
-				def r = i.newReader()
-				r.readLine()
-//				i.withReader {
-//					it.readLine()
-//				}
+	static SimpleIO<String> stdinReadLine() {
+		new SimpleIO<String>() {
+			String run() {
+				System.in.newReader().readLine()
 			}
-		};
+		}
 	}
 
-	@TypeChecked
-	public static SimpleIO<Option<String>> consoleReadLineOption() {
-		return new SimpleIO<Option<String>>() {
-			public Option<String> run() {
-				Option.fromNull(System.in.withReader {
+	static SimpleIO<Option<String>> consoleReadLineOption() {
+		new SimpleIO<Option<String>>() {
+			Option<String> run() {
+				Option.fromNull(System.in.withReader { Reader it ->
 					it.readLine()
 				})
-//				console().map { it.readLine() }
 			}
-		};
+		}
 	}
 
-	@TypeChecked
-	public static SimpleIO<Unit> consoleWriteLine(final String msg) {
-		return new SimpleIO<Unit>() {
-			public Unit run() {
+	static SimpleIO<Unit> stdoutWriteLine(final String msg) {
+		new SimpleIO<Unit>() {
+			Unit run() {
 				println(msg)
-				return Unit.unit();
+				Unit.unit()
 			}
-		};
+		}
 	}
+
+    static SimpleIO<Unit> empty() {
+        new SimpleIO<Unit>() {
+            Unit run() {
+                Unit.unit()
+            }
+        }
+    }
 
 
 }

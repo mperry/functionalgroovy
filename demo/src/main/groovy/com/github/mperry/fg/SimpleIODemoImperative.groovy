@@ -9,7 +9,25 @@ class SimpleIODemoImperative {
 	String help = "Squaring REPL\nEnter $quit to quit"
 	String prompt = ">"
 
-	String squareMessage(Integer n) {
+    static void main(def args) {
+        def d = new SimpleIODemoImperative()
+        d.repl()
+    }
+
+    void repl() {
+        println(help)
+        System.in.withReader { Reader r ->
+            def doLoop = true
+            while (doLoop) {
+                println(prompt)
+                def s = r.readLine()
+                process(s)
+                doLoop = continueLoop(s)
+            }
+        }
+    }
+
+    String squareMessage(Integer n) {
 		"square $n = ${n * n}"
 	}
 
@@ -17,12 +35,12 @@ class SimpleIODemoImperative {
 		"Not an integer: $s"
 	}
 
-	Boolean loop(String s) {
+	Boolean continueLoop(String s) {
 		s != quit
 	}
 
 	Boolean isQuit(String s) {
-		!loop(s)
+		!continueLoop(s)
 	}
 
 	Boolean validInput(String s) {
@@ -36,24 +54,6 @@ class SimpleIODemoImperative {
 		if (s.isInteger()) {
 			println(squareMessage(s.toInteger()))
 		}
-	}
-
-	void repl() {
-		println(help)
-		System.in.withReader { Reader r ->
-			def isLoop = true
-			while (isLoop) {
-				println(prompt)
-				def s = r.readLine()
-				process(s)
-				isLoop = loop(s)
-			}
-		}
-	}
-
-	static void main(def args) {
-		def d = new SimpleIODemoImperative()
-		d.repl()
 	}
 
 }

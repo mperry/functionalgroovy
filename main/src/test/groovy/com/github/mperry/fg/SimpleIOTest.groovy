@@ -13,7 +13,7 @@ class SimpleIOTest {
 
 	@Test
 	void test1() {
-		def a = IOConstants.consoleReadLine()
+		def a = IOConstants.stdinReadLine()
 //		def b = a.run()
 //		println "Got from console: $b"
 	}

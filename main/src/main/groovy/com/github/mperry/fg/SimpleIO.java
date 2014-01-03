@@ -83,15 +83,6 @@ public abstract class SimpleIO<A> {
 		};
 	}
 
-	static public SimpleIO<Unit> empty() {
-		return new SimpleIO<Unit>() {
-			public Unit run() {
-				return Unit.unit();
-			}
-		};
-	}
-
-
     public SimpleIO<groovyx.gpars.dataflow.Promise<A>> gparsPromise() {
         final SimpleIO<A> self = this;
         return new SimpleIO<groovyx.gpars.dataflow.Promise<A>>() {

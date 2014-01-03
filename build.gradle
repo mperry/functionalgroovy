@@ -21,7 +21,7 @@ subprojects {
         if (!project.hasProperty("sonatypePassword")) {
             sonatypePassword = ""
         }
-        println "Sonatype credentials: sonatypeUsername $sonatypeUsername sonatypePassword $sonatypePassword"
+//        println "Sonatype credentials: sonatypeUsername $sonatypeUsername sonatypePassword $sonatypePassword"
 
 		sonatypeBaseUrl = "https://oss.sonatype.org"
 		sonatypeSnapshotUrl = "$sonatypeBaseUrl/content/repositories/snapshots/"

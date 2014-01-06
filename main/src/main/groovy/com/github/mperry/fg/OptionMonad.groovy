@@ -3,11 +3,12 @@ package com.github.mperry.fg
 import fj.F
 import fj.data.Option
 import groovy.transform.TypeChecked
+import groovy.transform.TypeCheckingMode
 
 /**
  * Created by MarkPerry on 30/12/13.
  */
-//@TypeChecked
+@TypeChecked
 class OptionMonad extends Monad<Option> {
 
     @Override
@@ -15,8 +16,15 @@ class OptionMonad extends Monad<Option> {
         ma.bind(f)
     }
 
+    @TypeChecked(TypeCheckingMode.SKIP)
     @Override
     def <B> Option<B> unit(B b) {
        Option.<B>some(b)
     }
+
+    @Override
+    def <A, B> Option<B> map(Option<A> ma, F<A, B> f) {
+        (Option<B>) super.map(ma, f)
+    }
+
 }

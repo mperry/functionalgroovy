@@ -20,6 +20,22 @@ import static fj.test.Property.property
  * Time: 3:31 PM
  * To change this template use File | Settings | File Templates.
  */
+
+/*
+Checks the two functor laws on List.map. These laws are:
+1) The Law of Identity
+forall x. map identity x == x
+
+For any list, mapping the identity function (\x -> x) produces the same list.
+
+2) The Law of Composition
+forall f. forall g. forall x. map (f . g) x == map f (map g x)
+
+...where (f . g) denotes composition of f with g. That is, \c -> f(g(c)).
+
+Note that to test this second law requires the generation of arbitrary functions.
+*/
+
 @TypeChecked
 class ListFunctorLawsTest {
 

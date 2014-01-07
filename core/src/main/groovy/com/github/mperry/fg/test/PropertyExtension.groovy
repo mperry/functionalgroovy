@@ -5,6 +5,7 @@ import fj.Unit
 import fj.test.CheckResult
 import fj.test.Property
 import groovy.transform.TypeChecked
+import groovy.transform.TypeCheckingMode
 
 import static org.junit.Assert.assertTrue
 
@@ -15,17 +16,18 @@ import static org.junit.Assert.assertTrue
  * Time: 1:46 AM
  * To change this template use File | Settings | File Templates.
  */
-//@TypeChecked
+@TypeChecked
 class PropertyExtension {
 
 	static CheckResult checkOkWithSummary(Property p) {
-		p.checkBooleanWithNullableSummary(true)
+		checkBooleanWithNullableSummary(p, true)
 	}
 
 	static CheckResult checkOkWithNullableSummary(Property p) {
-		p.checkBooleanWithNullableSummary(true)
+		checkBooleanWithNullableSummary(p, true)
 	}
 
+    @TypeChecked(TypeCheckingMode.SKIP)
 	static CheckResult checkBooleanWithNullableSummary(Property p, boolean b) {
 		def cr = p.check()
 		CheckResult.summaryNullable().println(cr)

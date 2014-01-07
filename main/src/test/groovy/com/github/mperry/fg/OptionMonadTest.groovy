@@ -59,26 +59,36 @@ class OptionMonadTest {
     // Left identity: return a >>= f == f a
     @Test
     void leftIdentity() {
-        def p2 = property(arbF(coarbInteger, arbOption(arbString)), arbInteger, {
+        def p = property(arbF(coarbInteger, arbOption(arbString)), arbInteger, {
             F<Integer, Option<String>> f, Integer a ->
                 def m = monad()
-                def b = m.unit(a).bind(f).equals(f.f(a))
+                def b = m.flatMap(m.unit(a), f).equals(f.f(a))
                 prop(b)
         } as F2)
-        p2.checkBooleanWithNullableSummary(true)
-        assertTrue(true)
+        p.checkOkWithSummary()
     }
 
     // Right identity: m >>= return == m
     @Test
     void rightIdentity() {
-        assertTrue(true)
+        def p = property(arbOption(arbInteger), {
+            Option<Integer> o ->
+                def m = monad()
+                prop(m.flatMap(o, m.unit()).equals(o))
+        } as F)
+        p.checkOkWithSummary()
     }
 
     // Associativity: (m >>= f) >>= g == m >>= (\x -> f x >>= g)
     @Test
     void associativity() {
-        assertTrue(true)
+        def p = property(arbOption(arbInteger), arbF(coarbInteger, arbOption(arbLong)), arbF(coarbLong,
+                arbOption(arbString)), {
+            Option<Integer> o, F<Integer, Option<Long>> f, F<Long, Option<String>> g ->
+                def m = monad()
+                prop(m.flatMap(m.flatMap(o, f), g).equals(m.flatMap(o, { Integer i -> m.flatMap(f.f(i), g)} as F)))
+        } as F3)
+        p.checkOkWithSummary()
     }
 
 }

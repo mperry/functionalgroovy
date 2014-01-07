@@ -17,6 +17,12 @@ abstract class Monad<M> {
 
     abstract <B> M<B> unit(B b)
 
+    def <B> F<B, M<B>> unit() {
+        { B b ->
+            unit(b)
+        } as F
+    }
+
     def <A> M<A> join(M<M<A>> mma) {
         flatMap(mma, {M<A> ma -> ma} as F)
     }

@@ -6,6 +6,7 @@ import fj.Unit
 import fj.data.Stream
 import fj.test.Arg
 import fj.test.CheckResult
+import groovy.transform.TypeChecked
 
 import static fj.Show.showS
 
@@ -16,6 +17,7 @@ import static fj.Show.showS
  * Time: 12:49 AM
  * To change this template use File | Settings | File Templates.
  */
+//@TypeChecked
 class CheckResultExtension {
 
 	static Unit printlnSummary(CheckResult cr) {

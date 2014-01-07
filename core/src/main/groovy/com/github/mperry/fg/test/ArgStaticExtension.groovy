@@ -1,4 +1,7 @@
 package com.github.mperry.fg.test
+
+import groovy.transform.TypeChecked
+
 /**
  * Created with IntelliJ IDEA.
  * User: MarkPerry
@@ -6,6 +9,7 @@ package com.github.mperry.fg.test
  * Time: 1:48 AM
  * To change this template use File | Settings | File Templates.
  */
+@TypeChecked
 class ArgStaticExtension {
 
 }

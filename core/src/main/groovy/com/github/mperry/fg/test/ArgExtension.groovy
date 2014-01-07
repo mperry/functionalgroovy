@@ -1,6 +1,7 @@
 package com.github.mperry.fg.test
 
 import fj.test.Arg
+import groovy.transform.TypeChecked
 
 /**
  * Created with IntelliJ IDEA.
@@ -9,6 +10,7 @@ import fj.test.Arg
  * Time: 2:02 AM
  * To change this template use File | Settings | File Templates.
  */
+@TypeChecked
 class ArgExtension {
 
 }

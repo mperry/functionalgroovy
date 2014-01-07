@@ -1,5 +1,7 @@
 package com.github.mperry.fg.test
 
+import groovy.transform.TypeChecked
+
 /**
  * Created with IntelliJ IDEA.
  * User: MarkPerry
@@ -7,5 +9,6 @@ package com.github.mperry.fg.test
  * Time: 5:00 PM
  * To change this template use File | Settings | File Templates.
  */
+@TypeChecked
 class GenStaticExtension {
 }

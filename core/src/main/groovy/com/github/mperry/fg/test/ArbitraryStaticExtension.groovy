@@ -11,11 +11,12 @@ import groovy.transform.TypeChecked
  * Time: 9:33 PM
  * To change this template use File | Settings | File Templates.
  */
-//@TypeChecked
+@TypeChecked
 class ArbitraryStaticExtension {
 
 	static Arbitrary<Integer> arbNullableInteger(Arbitrary a) {
-		Arbitrary.arbitrary(Gen.oneOf([Gen.value(null), Arbitrary.arbInteger.gen].toFJList()))
+        def list = fj.data.List.list(Gen.value(null), Arbitrary.arbInteger.gen)
+        Arbitrary.arbitrary(Gen.oneOf(list))
 	}
 
 }

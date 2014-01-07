@@ -21,6 +21,11 @@ class CollectionExtension {
 	}
 
     @TypeChecked(TypeCheckingMode.SKIP)
+    static <A, B> List<B> map(Collection<A> collection, F<A, B> f) {
+        map(collection, f.toClosure())
+    }
+
+    @TypeChecked(TypeCheckingMode.SKIP)
 	static <A> Collection<A> filter(Collection<A> collection, Closure<Boolean> f) {
 		collection.findAll(f)
 	}

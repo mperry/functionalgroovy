@@ -30,12 +30,12 @@ class ListJavaExtension {
 	}
 
 	@TypeChecked(TypeCheckingMode.SKIP)
-	public static <A, B> java.util.List<B> map(java.util.List<A> list1, F<A, B> f) {
-		list1.collect(FExtension.toClosure(f))
+	public static <A, B> java.util.List<B> map(java.util.List<A> list, F<A, B> f) {
+        list.map(f.toClosure())
 	}
 
-	static <A, B> java.util.List<B> collect(java.util.List<A> list1, F<A, B> f) {
-		map(list1, f)
+	static <A, B> java.util.List<B> collect(java.util.List<A> list, F<A, B> f) {
+		map(list, f)
 	}
 
 	static <A> fj.data.List<A> toFJList(List<A> list) {

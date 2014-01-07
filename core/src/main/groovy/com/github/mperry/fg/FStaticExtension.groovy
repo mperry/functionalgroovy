@@ -1,6 +1,7 @@
 package com.github.mperry.fg
 
 import fj.F
+import groovy.transform.TypeChecked
 
 /**
  * Created with IntelliJ IDEA.
@@ -9,6 +10,7 @@ import fj.F
  * Time: 8:45 AM
  * To change this template use File | Settings | File Templates.
  */
+@TypeChecked
 class FStaticExtension {
 
     public static <A, B> F<A, B> unit(F f, Closure<B> closure) {

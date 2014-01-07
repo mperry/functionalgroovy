@@ -4,6 +4,7 @@ import com.github.mperry.ShowWorkaroundJava
 import fj.F
 import fj.Show
 import fj.test.Arg
+import groovy.transform.TypeChecked
 
 import static fj.Show.showS
 
@@ -14,6 +15,7 @@ import static fj.Show.showS
  * Time: 10:24 PM
  * To change this template use File | Settings | File Templates.
  */
+@TypeChecked
 class ShowWorkaroundGroovy {
 
 	// Arg.argShow

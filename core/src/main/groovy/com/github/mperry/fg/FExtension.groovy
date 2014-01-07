@@ -2,6 +2,7 @@ package com.github.mperry.fg
 
 import fj.F
 import fj.F3
+import groovy.transform.TypeChecked
 
 /**
  * Created with IntelliJ IDEA.
@@ -10,6 +11,7 @@ import fj.F3
  * Time: 3:23 PM
  * To change this template use File | Settings | File Templates.
  */
+@TypeChecked
 class FExtension {
 
 	static <A, B> Closure<B> toClosure(F<A, B> f) {

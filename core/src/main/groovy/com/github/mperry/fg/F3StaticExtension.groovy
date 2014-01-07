@@ -1,5 +1,7 @@
 package com.github.mperry.fg
 
+import groovy.transform.TypeChecked
+
 /**
  * Created with IntelliJ IDEA.
  * User: MarkPerry
@@ -7,5 +9,6 @@ package com.github.mperry.fg
  * Time: 8:46 AM
  * To change this template use File | Settings | File Templates.
  */
+@TypeChecked
 class F3StaticExtension {
 }

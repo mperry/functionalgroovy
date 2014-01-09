@@ -13,11 +13,11 @@ import groovy.transform.TypeCheckingMode
 @Canonical
 class State<S, A> {
 
-    static F<S, P2<A, S>> run
+    F<S, P2<A, S>> run
 
-    State(F<S, P2<A, S>> f) {
-        run = f
-    }
+//    State(F<S, P2<A, S>> f) {
+//        run = f
+//    }
 
     @TypeChecked(TypeCheckingMode.SKIP)
     static <S1, A1> State<S1, A1> lift(F<S1, P2<A1, S1>> f) {

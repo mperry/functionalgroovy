@@ -20,10 +20,8 @@ class StateIntMonad extends Monad<StateInt>  {
     def <B, C> StateInt<C> flatMap(StateInt<B> mb, F<B, StateInt<C>> f) {
         new StateInt<C>({ Integer s ->
             def p = mb.run.f(s)
-            def b = p._1()
-            def s1 = p._2()
-            def smc = f.f(b)
-            smc.run.f(s1)
+            def smc = f.f(p._1())
+            smc.run.f(p._2())
         } as F)
     }
 

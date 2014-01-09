@@ -39,6 +39,10 @@ class MonadLaws {
         def p = property(arb, {
             M<A> m ->
                 prop(monad.flatMap(m, monad.unit()).equals(m))
+//                def u = monad.unit()
+//                def m1 = monad.flatMap(m, u)
+//                def b = m1.equals(m)
+//                prop(b)
         } as F)
         p.checkOkWithSummary()
     }

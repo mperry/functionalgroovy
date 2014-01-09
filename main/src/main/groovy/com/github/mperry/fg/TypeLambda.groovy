@@ -5,26 +5,78 @@ package com.github.mperry.fg
  */
 class TypeLambda {
 
-    static GroovyClassLoader newLoader() {
-        new GroovyClassLoader(this.class.classLoader)
+    def GroovyClassLoader newLoader() {
+//        new GroovyClassLoader(this.class.classLoader)
+        new GroovyClassLoader()
     }
 
-    static <A> Class<?> lambda(Class<?> c) {
-       def clazz = newLoader().parseClass("class MyClass { }")
+    def <A> Class<?> lambda(GroovyClassLoader loader, Class<?> c) {
+       def clazz = loader.parseClass("class MyClass { }")
         clazz
     }
 
+    def <S> Class<State<S, ?>> partialState(GroovyClassLoader loader, Class<S> c) {
+        def argName = c.simpleName
+        def name = "State${argName}Dynamic"
 
-    static <S> Class<State<S, ?>> stateMonad(Class<S> c) {
-        def clazz = newLoader().parseClass("""
-            class State${c.simpleName}MonadMP<A> extends Monad<State<${c.name}, A>> {
+        def s = """
+            package com.github.mperry.fg
+
+            import fj.F
+            import fj.P2
+            import groovy.transform.Canonical
+
+            @Canonical
+            class $name<A> extends State<$argName, A> {
+                $name(F<$argName, P2<A, $argName>> f) {
+                    run = f
+                }
+            }
+        """
+        def clazz = loader.parseClass(s)
+//        println("parital type application: $s")
+        clazz
+    }
+
+    def <A> Class<Monad<?>> stateMonad(GroovyClassLoader loader, Class<State> c, Class<?> ca) {
+        def argName = c.simpleName
+        def firstType = ca.simpleName
+        def name = "${argName}Monad"
+
+        def s =  """
+            package com.github.mperry.fg
+
+            import fj.F
+            import fj.P2
+            import groovy.transform.Canonical
+
+            @Canonical
+            class $name extends Monad<$argName> {
+                def <B, C> $argName<C> flatMap($argName<B> mb, F<B, $argName<C>> f) {
+                    new $argName<C>({ $firstType s ->
+                        def p = mb.run.f(s)
+                        def smc = f.f(p._1())
+                        smc.run.f(p._2())
+                    } as F)
+                }
+
+                def <B> $argName<B> unit(B b) {
+                    new $argName<B>({ $firstType s -> P.p(b, s) } as F)
+                }
+
+                //String toString() {
+                    //"P2<>"
+                //}
 
             }
-            """)
+        """
+        def clazz = loader.parseClass(s)
+//        println "monad: $s"
         clazz
+
     }
 
-    static <A> State stateInstance(Class<?> c) {
+    def <A> State stateInstance(Class<?> c) {
         c.newInstance()
 
     }

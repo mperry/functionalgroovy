@@ -13,17 +13,30 @@ import groovy.transform.TypeCheckingMode
  */
 @TypeChecked
 @Canonical
-class StateIntMonad<A> extends Monad<StateMonad<Integer, A>>  {
+class StateIntMonad<A> extends Monad<State<Integer, A>>  {
 
     static F<Integer, P2<A, Integer>> run
 
-    static StateMonad<Integer, Unit> empty() {
-        StateMonad.lift({ Integer i -> P.p(Unit.unit(), i)} as F)
+
+    StateIntMonad(F<Integer, P2<A, Integer>> f) {
+        run = f
     }
 
+
+    static StateIntMonad<Unit> empty() {
+        StateIntMonad.lift({ Integer i -> P.p(Unit.unit(), i)} as F)
+    }
+
+
+    @TypeChecked(TypeCheckingMode.SKIP)
+    static <A1> StateIntMonad<A1> lift(F<Integer, P2<A1, Integer>> f) {
+        new StateIntMonad<A1>(f)
+    }
+
+
     @Override
-    def <B> StateMonad<Integer, B> flatMap(StateMonad<Integer, A> ma, F<A, StateMonad<Integer, B>> f) {
-        StateMonad.lift({ Integer s ->
+    def <B> State<Integer, B> flatMap(State<Integer, A> ma, F<A, State<Integer, B>> f) {
+        State.lift({ Integer s ->
             def p = run.f(s)
             def a = p._1()
             def s1 = p._2()
@@ -34,8 +47,8 @@ class StateIntMonad<A> extends Monad<StateMonad<Integer, A>>  {
 
     @Override
     @TypeChecked(TypeCheckingMode.SKIP)
-    def <B> StateMonad<Integer, B> unit(B b) {
-        StateMonad.lift({ Integer s -> P.p(b, s) } as F)
+    def <B> State<Integer, B> unit(B b) {
+        State.lift({ Integer s -> P.p(b, s) } as F)
     }
 
 }

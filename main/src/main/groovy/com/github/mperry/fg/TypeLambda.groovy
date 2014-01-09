@@ -6,16 +6,11 @@ package com.github.mperry.fg
 class TypeLambda {
 
     def GroovyClassLoader newLoader() {
-//        new GroovyClassLoader(this.class.classLoader)
-        new GroovyClassLoader()
+        new GroovyClassLoader(this.class.classLoader)
+//        new GroovyClassLoader()
     }
 
-    def <A> Class<?> lambda(GroovyClassLoader loader, Class<?> c) {
-       def clazz = loader.parseClass("class MyClass { }")
-        clazz
-    }
-
-    def <S> Class<State<S, ?>> partialState(GroovyClassLoader loader, Class<S> c) {
+    def <S> Class<? extends State<S, ?>> partialState(GroovyClassLoader loader, Class<S> c) {
         def argName = c.simpleName
         def name = "State${argName}Dynamic"
 
@@ -38,7 +33,7 @@ class TypeLambda {
         clazz
     }
 
-    def <A> Class<Monad<?>> stateMonad(GroovyClassLoader loader, Class<State> c, Class<?> ca) {
+    def <A, DS> Class<? extends Monad> stateMonad(GroovyClassLoader loader, Class<? extends State> c, Class<?> ca) {
         def argName = c.simpleName
         def firstType = ca.simpleName
         def name = "${argName}Monad"
@@ -64,23 +59,11 @@ class TypeLambda {
                     new $argName<B>({ $firstType s -> P.p(b, s) } as F)
                 }
 
-                //String toString() {
-                    //"P2<>"
-                //}
-
             }
         """
         def clazz = loader.parseClass(s)
 //        println "monad: $s"
         clazz
-
     }
-
-    def <A> State stateInstance(Class<?> c) {
-        c.newInstance()
-
-    }
-
-
 
 }

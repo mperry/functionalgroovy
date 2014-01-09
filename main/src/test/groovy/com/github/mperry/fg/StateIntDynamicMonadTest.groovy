@@ -26,27 +26,22 @@ import static junit.framework.Assert.assertTrue
 //@TypeChecked
 class StateIntDynamicMonadTest {
 
-    def loader = new TypeLambda().newLoader()
-    def partial = partialClass()
-
-    @Test
-    void noop() {
-//        partialClass()
-        monadClass()
-        assertTrue(true)
-    }
+    def loader = lambda().newLoader()
+    def simpleClass = Integer.class
+    def partial = partialClass(simpleClass)
 
     TypeLambda lambda() {
         new TypeLambda()
     }
 
-    Class<? extends State<Integer, ?>> partialClass() {
-        lambda().partialState(loader, Integer.class)
+    Class<? extends State<Integer, ?>> partialClass(Class clazz) {
+        lambda().partialState(loader, clazz)
     }
 
     Class<? extends Monad<?>> monadClass() {
+        def base = Integer.class
         def c = partial
-        def c2 = lambda().stateMonad(loader, c, Integer.class)
+        def c2 = lambda().stateMonad(loader, c, simpleClass)
         c2
     }
 
@@ -78,6 +73,5 @@ class StateIntDynamicMonadTest {
         new MonadLaws().associativity(monad(), arbStateInt(), arbF(coarbInteger, arbState(arbString)),
                 arbF(coarbString, arbState(arbLong)))
     }
-
 
 }

@@ -4,11 +4,13 @@ import fj.F
 import fj.F2
 import fj.F3
 import fj.data.Option
+import fj.test.Arbitrary
 import groovy.transform.TypeChecked
 import groovy.transform.TypeCheckingMode
 import org.junit.Test
 
 import static fj.Function.compose
+import static fj.test.Arbitrary.arbF
 import static fj.test.Arbitrary.arbF
 import static fj.test.Arbitrary.arbF
 import static fj.test.Arbitrary.arbInteger
@@ -19,6 +21,7 @@ import static fj.test.Arbitrary.arbString
 import static fj.test.Coarbitrary.coarbInteger
 import static fj.test.Coarbitrary.coarbLong
 import static fj.test.Property.prop
+import static fj.test.Property.property
 import static fj.test.Property.property
 import static org.junit.Assert.assertTrue
 
@@ -43,14 +46,14 @@ class OptionMonadTest {
     void testFlatMap() {
         def m = monad()
         def o1 = m.unit(3)
-        def o2 = m.flatMap(o1, {Integer i -> Option.some(2 * i)} as F)
+        def o2 = m.flatMap(o1, { Integer i -> Option.some(2 * i) } as F)
         assertTrue(o2.some() == 6)
     }
 
     @Test
     void testMap() {
         def m = monad()
-        def o2 = m.map(m.unit(3), { Integer i -> (2 * i).toString()} as F)
+        def o2 = m.map(m.unit(3), { Integer i -> (2 * i).toString() } as F)
         assertTrue(o2.some() == 6.toString())
     }
 
@@ -68,6 +71,11 @@ class OptionMonadTest {
         p.checkOkWithSummary()
     }
 
+    @Test
+    void abstractLeftIdentity() {
+        new MonadLaws().leftIdentity(monad(), arbF(coarbInteger, arbOption(arbString)), arbInteger)
+    }
+
     // Right identity: m >>= return == m
     @Test
     void rightIdentity() {
@@ -79,6 +87,11 @@ class OptionMonadTest {
         p.checkOkWithSummary()
     }
 
+    @Test
+    void abstractRightIdentity() {
+        new MonadLaws().rightIdentity(monad(), arbOption(arbInteger))
+    }
+
     // Associativity: (m >>= f) >>= g == m >>= (\x -> f x >>= g)
     @Test
     void associativity() {
@@ -86,9 +99,15 @@ class OptionMonadTest {
                 arbOption(arbString)), {
             Option<Integer> o, F<Integer, Option<Long>> f, F<Long, Option<String>> g ->
                 def m = monad()
-                prop(m.flatMap(m.flatMap(o, f), g).equals(m.flatMap(o, { Integer i -> m.flatMap(f.f(i), g)} as F)))
+                prop(m.flatMap(m.flatMap(o, f), g).equals(m.flatMap(o, { Integer i -> m.flatMap(f.f(i), g) } as F)))
         } as F3)
         p.checkOkWithSummary()
+    }
+
+    @Test
+    void abstractAssociativity() {
+        new MonadLaws().associativity(monad(), arbOption(arbInteger), arbF(coarbInteger, arbOption(arbLong)),
+                arbF(coarbLong, arbOption(arbString)))
     }
 
 }

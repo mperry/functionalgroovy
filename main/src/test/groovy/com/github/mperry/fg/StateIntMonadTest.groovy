@@ -19,7 +19,7 @@ import static fj.test.Arbitrary.arbLong
 import static fj.test.Arbitrary.arbString
 import static fj.test.Arbitrary.arbitrary
 import static fj.test.Coarbitrary.coarbInteger
-import static fj.test.Coarbitrary.coarbInteger
+import static fj.test.Coarbitrary.*
 
 /**
  * Created by MarkPerry on 9/01/14.
@@ -43,6 +43,17 @@ class StateIntMonadTest {
     @Test
     void leftIdentity() {
         new MonadLaws().leftIdentity(monad(), arbF(coarbInteger, arbStateInt()), arbInteger)
+    }
+
+    @Test
+    void rightIdentity() {
+        new MonadLaws().rightIdentity(monad(), arbStateInt())
+    }
+
+    @Test
+    void associativity() {
+        new MonadLaws().associativity(monad(), arbStateInt(), arbF(coarbInteger, arbState(arbString)),
+            arbF(coarbString, arbState(arbLong)))
     }
 
 }

@@ -38,7 +38,7 @@ class StateIntDynamicMonadTest {
         lambda().partialState(loader, clazz)
     }
 
-    Class<? extends Monad<?>> monadClass() {
+    Class<? extends Monad<? extends State>> monadClass() {
         def base = Integer.class
         def c = partial
         def c2 = lambda().stateMonad(loader, c, simpleClass)

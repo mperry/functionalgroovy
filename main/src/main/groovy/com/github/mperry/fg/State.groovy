@@ -21,13 +21,26 @@ class State<S, A> {
     }
 
     @Override
-    def <A, B> State<S, B> flatMap(State<S, A> ma, F<A, State<S, B>> f) {
+    @TypeChecked(TypeCheckingMode.SKIP)
+    def <B, C, D> State<S, C> flatMap(State<S, B> mb, F<B, State<S, C>> f) {
+        mb.flatMap(f)
+//        new State<S, C>({ S s ->
+//            def p = mb.run.f(s)
+//            def b = p._1()
+//            def s1 = p._2()
+//            def smc = f.f(b)
+//            smc.run.f(s1)
+//        } as F)
+    }
+
+    @Override
+    def <B> State<S, B> flatMap(F<A, State<S, B>> f) {
         new State<S, B>({ S s ->
             def p = run.f(s)
             def a = p._1()
-            def s1 = p._2()
+            def s2 = p._2()
             def smb = f.f(a)
-            smb.run.f(s1)
+            smb.run.f(s2)
         } as F)
     }
 
@@ -35,7 +48,5 @@ class State<S, A> {
     def <S1, A1> State<S1, A1> unit(F<S1, P2<A1, S1>> f) {
         lift(f)
     }
-
-
 
 }

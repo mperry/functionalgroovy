@@ -27,6 +27,20 @@ class TypeLambda {
                 $name(F<$stateType, P2<A, $stateType>> f) {
                     run = f
                 }
+
+
+                def <B> $name<B> flatMap(F<A, $name<B>> f) {
+                    //flatMap(this, f)
+                    new $name<B>({ $stateType s ->
+                        def p = run.f(s)
+                        def a = p._1()
+                        def s2 = p._2()
+
+                        def sib = f.f(a)
+                        sib.run.f(s2)
+                    } as F)
+                }
+
             }
         """
         def clazz = loader.parseClass(s)
@@ -44,16 +58,18 @@ class TypeLambda {
 
             import fj.F
             import fj.P2
+            import fj.P
             import groovy.transform.Canonical
 
             @Canonical
             class $name extends Monad<$partialStateType> {
                 def <B, C> $partialStateType<C> flatMap($partialStateType<B> mb, F<B, $partialStateType<C>> f) {
-                    new $partialStateType<C>({ $stateType s ->
-                        def p = mb.run.f(s)
-                        def smc = f.f(p._1())
-                        smc.run.f(p._2())
-                    } as F)
+                    mb.flatMap(f)
+                    //new $partialStateType<C>({ $stateType s ->
+                    //    def p = mb.run.f(s)
+                    //    def smc = f.f(p._1())
+                    //    smc.run.f(p._2())
+                    //} as F)
                 }
 
                 def <B> $partialStateType<B> unit(B b) {

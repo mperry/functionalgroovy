@@ -18,11 +18,12 @@ class StateIntMonad extends Monad<StateInt>  {
     @Override
     @TypeChecked(TypeCheckingMode.SKIP)
     def <B, C> StateInt<C> flatMap(StateInt<B> mb, F<B, StateInt<C>> f) {
-        new StateInt<C>({ Integer s ->
-            def p = mb.run.f(s)
-            def smc = f.f(p._1())
-            smc.run.f(p._2())
-        } as F)
+        mb.flatMap(f)
+//        new StateInt<C>({ Integer s ->
+//            def p = mb.run.f(s)
+//            def smc = f.f(p._1())
+//            smc.run.f(p._2())
+//        } as F)
     }
 
     @Override

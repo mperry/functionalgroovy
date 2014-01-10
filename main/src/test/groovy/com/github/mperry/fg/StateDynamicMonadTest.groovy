@@ -5,6 +5,7 @@ import fj.test.Arbitrary
 import fj.test.Coarbitrary
 import groovy.transform.TypeChecked
 import groovy.transform.TypeCheckingMode
+import org.junit.Test
 
 import static fj.test.Arbitrary.arbF
 import static fj.test.Arbitrary.arbInteger
@@ -18,6 +19,15 @@ import static fj.test.Coarbitrary.coarbString
  * Created by MarkPerry on 10/01/14.
  */
 class StateDynamicMonadTest {
+
+    @Test
+    void allLaws() {
+        test(newLoader(), Integer.class, arbInteger, coarbInteger, arbString, coarbString, arbLong)
+    }
+
+    GroovyClassLoader newLoader() {
+        new GroovyClassLoader(this.class.classLoader)
+    }
 
     def <A, B, C> void test(GroovyClassLoader loader, Class<?> stateClass, Arbitrary<A> arbAction,
                       Coarbitrary<A> coarbAction, Arbitrary<B> arbAction2, Coarbitrary<B> coarbAction2,

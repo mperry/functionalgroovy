@@ -51,7 +51,18 @@ class StateIntDynamicMonadTest {
 
     @TypeChecked(TypeCheckingMode.SKIP)
     def <A> Arbitrary<? extends State> arbState(Arbitrary<A> aa) {
-        arbitrary(aa.gen.map({ A a -> partial.newInstance({ Integer i -> P.p(a, i) } as F)} as F))
+        arbState(aa, simpleClass)
+    }
+
+    @TypeChecked(TypeCheckingMode.SKIP)
+    def <A> Arbitrary<? extends State> arbState(Arbitrary<A> aa, Class c) {
+        def s = "{${c.canonicalName} i -> P.p(a, i)}"
+        def sh = new GroovyShell(loader)
+//        def f = Eval.me(s)
+        def f = sh.evaluate(s)
+        arbitrary(aa.gen.map({ A a -> partial.newInstance(f as F)} as F))
+//        arbitrary(aa.gen.map({ A a -> partial.newInstance({ Integer i -> P.p(a, i) } as F)} as F))
+
     }
 
     Arbitrary<? extends State> arbStateInt() {

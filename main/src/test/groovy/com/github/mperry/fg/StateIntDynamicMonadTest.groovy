@@ -57,11 +57,6 @@ class StateIntDynamicMonadTest {
         arbState(arbInteger)
     }
 
-//    @Test
-//    void allLaws() {
-//        new StateDynamicMonadTest().test(loader, stateClass, arbInteger, coarbInteger, arbString, coarbString, arbLong)
-//    }
-
     @Test
     void leftIdentity() {
         new MonadLaws().leftIdentity(monad(), arbF(coarbInteger, arbStateInt()), arbInteger)

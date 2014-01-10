@@ -28,14 +28,11 @@ class TypeLambda {
                     run = f
                 }
 
-
                 def <B> $name<B> flatMap(F<A, $name<B>> f) {
-                    //flatMap(this, f)
                     new $name<B>({ $stateType s ->
                         def p = run.f(s)
                         def a = p._1()
                         def s2 = p._2()
-
                         def sib = f.f(a)
                         sib.run.f(s2)
                     } as F)
@@ -65,11 +62,6 @@ class TypeLambda {
             class $name extends Monad<$partialStateType> {
                 def <B, C> $partialStateType<C> flatMap($partialStateType<B> mb, F<B, $partialStateType<C>> f) {
                     mb.flatMap(f)
-                    //new $partialStateType<C>({ $stateType s ->
-                    //    def p = mb.run.f(s)
-                    //    def smc = f.f(p._1())
-                    //    smc.run.f(p._2())
-                    //} as F)
                 }
 
                 def <B> $partialStateType<B> unit(B b) {

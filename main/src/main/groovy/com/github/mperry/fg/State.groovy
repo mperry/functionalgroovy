@@ -24,13 +24,6 @@ class State<S, A> {
     @TypeChecked(TypeCheckingMode.SKIP)
     def <B, C, D> State<S, C> flatMap(State<S, B> mb, F<B, State<S, C>> f) {
         mb.flatMap(f)
-//        new State<S, C>({ S s ->
-//            def p = mb.run.f(s)
-//            def b = p._1()
-//            def s1 = p._2()
-//            def smc = f.f(b)
-//            smc.run.f(s1)
-//        } as F)
     }
 
     @Override

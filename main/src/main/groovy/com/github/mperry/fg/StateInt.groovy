@@ -17,7 +17,6 @@ class StateInt<A> extends State<Integer, A> {
     }
 
     def <B, C> StateInt<B> flatMap(F<A, StateInt<B>> f) {
-//        flatMap(this, f)
         new StateInt<B>({ Integer s ->
             def p = run.f(s)
             def a = p._1()

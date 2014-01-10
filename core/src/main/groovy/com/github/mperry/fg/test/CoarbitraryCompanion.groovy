@@ -8,11 +8,8 @@ import fj.test.Coarbitrary
  */
 class CoarbitraryCompanion {
 
-
     static <A> Coarbitrary<List<A>> coarbJavaList(Coarbitrary<A> ca) {
-//        Coarbitrary.coarbitrary(gen(ca.gen))
         Coarbitrary.coarbList(ca).compose({ List list -> list.toFJList() } as F)
-
     }
 
 }

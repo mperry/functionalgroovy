@@ -10,9 +10,9 @@ class TypeLambda {
 //        new GroovyClassLoader()
     }
 
-    def <S> Class<? extends State<S, ?>> partialState(GroovyClassLoader loader, Class<S> stateClass) {
-        def argName = stateClass.simpleName
-        def name = "State${argName}Dynamic"
+    def <S> Class<? extends State<S, ?>> partialStateApplication(GroovyClassLoader loader, Class<S> stateClass) {
+        def stateType = stateClass.simpleName
+        def name = "State${stateType}Dynamic"
 
         def s = """
             package com.github.mperry.fg
@@ -22,8 +22,9 @@ class TypeLambda {
             import groovy.transform.Canonical
 
             @Canonical
-            class $name<A> extends State<$argName, A> {
-                $name(F<$argName, P2<A, $argName>> f) {
+            class $name<A> extends State<$stateType, A> {
+
+                $name(F<$stateType, P2<A, $stateType>> f) {
                     run = f
                 }
             }
@@ -33,10 +34,10 @@ class TypeLambda {
         clazz
     }
 
-    def <S> Class<? extends Monad> stateMonad(GroovyClassLoader loader, Class<? extends State> partialState, Class<S> stateClass) {
-        def argName = partialState.simpleName
-        def firstType = stateClass.simpleName
-        def name = "${argName}Monad"
+    def <S> Class<? extends Monad> stateMonad(GroovyClassLoader loader, Class<? extends State<S, ?>> partialStateClass, Class<S> stateClass) {
+        def partialStateType = partialStateClass.simpleName
+        def stateType = stateClass.simpleName
+        def name = "${partialStateType}Monad"
 
         def s =  """
             package com.github.mperry.fg
@@ -46,17 +47,17 @@ class TypeLambda {
             import groovy.transform.Canonical
 
             @Canonical
-            class $name extends Monad<$argName> {
-                def <B, C> $argName<C> flatMap($argName<B> mb, F<B, $argName<C>> f) {
-                    new $argName<C>({ $firstType s ->
+            class $name extends Monad<$partialStateType> {
+                def <B, C> $partialStateType<C> flatMap($partialStateType<B> mb, F<B, $partialStateType<C>> f) {
+                    new $partialStateType<C>({ $stateType s ->
                         def p = mb.run.f(s)
                         def smc = f.f(p._1())
                         smc.run.f(p._2())
                     } as F)
                 }
 
-                def <B> $argName<B> unit(B b) {
-                    new $argName<B>({ $firstType s -> P.p(b, s) } as F)
+                def <B> $partialStateType<B> unit(B b) {
+                    new $partialStateType<B>({ $stateType s -> P.p(b, s) } as F)
                 }
 
             }

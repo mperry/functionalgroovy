@@ -1,5 +1,8 @@
 package com.github.mperry.fg.test
 
+import fj.F
+import fj.test.Arbitrary
+import fj.test.Gen
 import groovy.transform.TypeChecked
 
 /**

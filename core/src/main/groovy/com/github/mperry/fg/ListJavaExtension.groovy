@@ -43,7 +43,7 @@ class ListJavaExtension {
     }
 
     static <A, B> java.util.List<B> flatMap(java.util.List<A> list, F<A, List<B>> f) {
-        def result = new ArrayList<B>()
+        def result = new LinkedList<B>()
         for (A a: list) {
             result.addAll(f.f(a))
         }

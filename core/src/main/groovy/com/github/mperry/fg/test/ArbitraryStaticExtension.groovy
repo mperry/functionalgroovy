@@ -19,4 +19,8 @@ class ArbitraryStaticExtension {
         Arbitrary.arbitrary(Gen.oneOf(list))
 	}
 
+    static <A> Arbitrary<java.util.List<A>> arbJavaList(Arbitrary a, Arbitrary<A> aa) {
+        ArbitraryCompanion.arbJavaList(aa)
+    }
+
 }

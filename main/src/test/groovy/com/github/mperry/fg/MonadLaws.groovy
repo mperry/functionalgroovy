@@ -52,7 +52,14 @@ class MonadLaws {
     def <M, A, B, C> void associativity(Monad m, Arbitrary<M<A>> ama, Arbitrary<F<A, M<B>>> af1, Arbitrary<F<B, M<C>>> af2) {
         def p = property(ama, af1, af2, {
             M<A> o, F<A, M<B>> f, F<B, M<C>> g ->
-                prop(m.flatMap(m.flatMap(o, f), g).equals(m.flatMap(o, { A i -> m.flatMap(f.f(i), g) } as F)))
+//                prop(m.flatMap(m.flatMap(o, f), g).equals(m.flatMap(o, { A i -> m.flatMap(f.f(i), g) } as F)))
+
+                def m1 = m.flatMap(o, f)
+                def m2 = m.flatMap(m1, g)
+                def func = { A i -> m.flatMap(f.f(i), g) } as F
+                def m3 = m.flatMap(o, func)
+                def b = m2.equals(m3)
+                prop(b)
         } as F3)
         p.checkOkWithSummary()
     }

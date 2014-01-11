@@ -29,7 +29,7 @@ class IOConstants {
 	static SimpleIO<Option<String>> consoleReadLineOption() {
 		new SimpleIO<Option<String>>() {
 			Option<String> run() {
-				Option.fromNull(System.in.withReader { Reader it ->
+				Option.fromNull(System.in.withReader { java.io.Reader it ->
 					it.readLine()
 				})
 			}

@@ -16,7 +16,7 @@ class SimpleIODemoImperative {
 
     void repl() {
         println(help)
-        System.in.withReader { Reader r ->
+        System.in.withReader { java.io.Reader r ->
             def doLoop = true
             while (doLoop) {
                 println(prompt)

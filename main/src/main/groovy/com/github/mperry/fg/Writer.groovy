@@ -34,9 +34,17 @@ class Writer<W, A> {
         Writer.lift(f.f(value), log, plus)
     }
 
+    def <B> Writer<W, B> map(Closure c) {
+        map(c as F)
+    }
+
     def Writer<W, A> flatMap(F<A, Writer<W, A>> f) {
         def writer = f.f(value)
         Writer.lift(writer.value, plus.f(log, writer.log), plus)
+    }
+
+    def Writer<W, A> flatMap(Closure c) {
+        flatMap(c as F)
     }
 
     static Writer<W, A> lift(A a) {

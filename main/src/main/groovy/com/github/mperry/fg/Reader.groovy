@@ -30,8 +30,16 @@ class Reader<A, B> {
         lift(function.andThen(f))
     }
 
+    def <C> Reader<A, C> map(Closure<C> c) {
+        map(c as F)
+    }
+
     def <C> Reader<A, C> flatMap(F<B, Reader<A, C>> f) {
         lift({A a -> f.f(function.f(a)).f(a)} as F)
+    }
+
+    def <C> Reader<A, C> flatMap(Closure c) {
+        flatMap(c as F)
     }
 
 

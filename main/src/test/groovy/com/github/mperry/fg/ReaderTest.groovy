@@ -3,6 +3,7 @@ package com.github.mperry.fg
 import fj.F
 import org.junit.Test
 
+import static com.github.mperry.fg.Comprehension.foreach
 import static junit.framework.Assert.assertTrue
 
 /**
@@ -19,6 +20,17 @@ class ReaderTest {
         def z = r.f(3)
         println z
         assertTrue(z == 19)
+    }
+
+    @Test
+    void test2() {
+        def r = foreach {
+            a << Reader.lift({ Integer i -> i * 2} as F)
+            b << Reader.lift({ Integer i -> i + 10} as F)
+            yield { a + b }
+        }
+        assertTrue(r.f(3) == 19)
+
     }
 
 }

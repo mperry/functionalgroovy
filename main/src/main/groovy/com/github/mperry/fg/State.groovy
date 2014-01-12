@@ -1,6 +1,7 @@
 package com.github.mperry.fg
 
 import fj.F
+import fj.P
 import fj.P2
 import groovy.transform.Canonical
 import groovy.transform.TypeChecked
@@ -20,11 +21,24 @@ class State<S, A> {
         new State<S1, A1>(f)
     }
 
+    def <B> State<S, B> map(F<A, B> f) {
+        State.lift({ S s ->
+            def p2 = run.f(s)
+            def b = f.f(p2._1())
+            P.p(b, p2._2())
+        } as F)
+    }
+
+    def <B> State<S, B> map(Closure<B> c) {
+        map(c as F)
+    }
+
     @Override
     @TypeChecked(TypeCheckingMode.SKIP)
     def <B, C, D> State<S, C> flatMap(State<S, B> mb, F<B, State<S, C>> f) {
         mb.flatMap(f)
     }
+
 
     @Override
     def <B> State<S, B> flatMap(F<A, State<S, B>> f) {
@@ -35,6 +49,11 @@ class State<S, A> {
             def smb = f.f(a)
             smb.run.f(s2)
         } as F)
+    }
+
+    @Override
+    def <B> State<S, B> flatMap(Closure<State<S, B>> c) {
+        flatMap(c as F)
     }
 
     @Override

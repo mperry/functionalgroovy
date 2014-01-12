@@ -61,7 +61,7 @@ class Comprehension {
 				}
 				process(yield, tail, context, s, lastVar)
 			} else {
-				structure.bind {
+				structure.flatMap {
 					def c = context + [(lastVar): it]
 					process(yield, tail, c, executeGenerator(head.func, c), head.name)
 				}

@@ -1,6 +1,9 @@
 package com.github.mperry.fg
 
+import fj.F
+import fj.P
 import fj.P1
+import fj.P2
 import fj.data.Stream
 import groovy.transform.TypeChecked
 import groovy.transform.TypeCheckingMode
@@ -16,8 +19,8 @@ class KenoTest {
     @Test
     @TypeChecked(TypeCheckingMode.SKIP)
     void test5() {
-        def max = 3
-        def choose = 1
+        def max = 10
+        def choose = 5
         def s2 = Stream.repeat(random)
         def s3 = s2.map { Random r -> r.nextInt(max) + 1 }
 

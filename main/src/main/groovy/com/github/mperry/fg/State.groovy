@@ -16,6 +16,10 @@ class State<S, A> {
 
     F<S, P2<A, S>> run
 
+    P2<A, S> run(S s) {
+        run.f(s)
+    }
+
     @TypeChecked(TypeCheckingMode.SKIP)
     static <S1, A1> State<S1, A1> lift(F<S1, P2<A1, S1>> f) {
         new State<S1, A1>(f)

@@ -2,11 +2,14 @@ package com.github.mperry.fg
 
 import fj.F
 import fj.P
+import fj.P2
+import fj.data.Stream
 import groovy.transform.TypeChecked
 import groovy.transform.TypeCheckingMode
 import org.junit.Test
 
 import static com.github.mperry.fg.Comprehension.foreach
+import static junit.framework.Assert.assertTrue
 
 /**
  * Created by MarkPerry on 13/01/14.
@@ -14,9 +17,17 @@ import static com.github.mperry.fg.Comprehension.foreach
 @TypeChecked
 class StateTest {
 
+    def random = new Random(0)
+    def oracle = [true, true, false, true, true, false]
+    def shortOracle = [true, true, false, true,]
+
+    /**
+     * Tests manually creating a sequence of random booleans using a monad comprehension
+     */
     @Test
     @TypeChecked(TypeCheckingMode.SKIP)
     void test1() {
+
         def s = State.lift({ Random r -> P.p(r.nextBoolean(), r) } as F)
         def s2 = foreach {
             a << s
@@ -25,8 +36,75 @@ class StateTest {
             d << s
             yield { [a, b, c, d] }
         }
-        def p = s2.run.f(new Random(0))
+        def p = s2.run(random)
+        assertTrue(p._1() == shortOracle)
+    }
+
+    void print(P2 p) {
         println "<${p._1()}, ${p._2()}>"
+    }
+
+    /**
+     * Tests manually creating a sequence of random booleans using flatMap/map, instead of a monad comprehension
+     */
+    @Test
+    void test2() {
+        def st1 = State.lift({ Random r -> P.p(r.nextBoolean(), r) } as F)
+        def st2 = st1.flatMap({ Boolean a ->
+            st1.flatMap({ Boolean b ->
+                st1.flatMap({ Boolean c ->
+                    st1.map({ Boolean d -> [a, b, c, d]} as F)
+                } as F)
+            } as F)
+        } as F)
+        def p = st2.run(random)
+        assertTrue(p._1() == shortOracle)
+    }
+
+    /**
+     * Automate creating a sequence of random booleans where the last state is the one to run
+     */
+    @Test
+    @TypeChecked(TypeCheckingMode.SKIP)
+    void test3() {
+        def st1 = State.lift({ Random r ->
+            def b = r.nextBoolean()
+            P.p(P.p(b, [b]), r)
+        } as F)
+        def str1 = Stream.iterate({ State<Random, Boolean> st2 ->
+            st2.flatMap({ P2<Boolean, List<Boolean>> p2 ->
+                State.lift({ Random r ->
+                    def b = r.nextBoolean()
+                    P.p(P.p(b, p2._2() + b), r)
+                } as F)
+            } as F)
+        } as F, st1)
+        def p = str1.take(6).last().run(random)
+//        print(p._1())
+        assertTrue(p._1()._2() == oracle)
+    }
+
+    /**
+     * Builds the sequence of booleans from the fold
+     */
+    @Test
+    @TypeChecked(TypeCheckingMode.SKIP)
+    void test4() {
+        def st1 = State.lift({ Random r -> P.p(r.nextBoolean(), r) } as F)
+        def str1 = Stream.repeat(st1)
+
+        def result = str1.take(6).foldLeft({ State<Random, List<Boolean>> acc ->
+                { State<Random, Boolean> st3 ->
+                    st3.flatMap { Boolean b ->
+                        acc.map { List<Boolean> list ->
+                            [b] + list
+                        }
+                    }
+                } as F
+        } as F, State.lift({ Random r -> P.p([], r)} as F))
+        def p = result.run(random)
+//        println(p._1())
+        assertTrue(p._1() == oracle)
     }
 
 }

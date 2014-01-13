@@ -1,4 +1,7 @@
 package com.github.mperry.fg
+
+import groovy.transform.TypeChecked
+
 /**
  * Created with IntelliJ IDEA.
  * User: MarkPerry
@@ -6,6 +9,7 @@ package com.github.mperry.fg
  * Time: 9:10 PM
  * To change this template use File | Settings | File Templates.
  */
+@TypeChecked
 class Test1 {
 
     void fjAsync() {

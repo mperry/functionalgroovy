@@ -10,7 +10,7 @@ class TypeLambda {
 //        new GroovyClassLoader()
     }
 
-    def <S> Class<? extends State<S, ?>> partialStateApplication(GroovyClassLoader loader, Class<S> stateClass) {
+    def <S> Class<? extends StateM<S, ?>> partialStateApplication(GroovyClassLoader loader, Class<S> stateClass) {
         def stateType = stateClass.simpleName
         def name = "State${stateType}Dynamic"
 
@@ -22,7 +22,7 @@ class TypeLambda {
             import groovy.transform.Canonical
 
             @Canonical
-            class $name<A> extends State<$stateType, A> {
+            class $name<A> extends StateM<$stateType, A> {
 
                 $name(F<$stateType, P2<A, $stateType>> f) {
                     run = f
@@ -45,7 +45,7 @@ class TypeLambda {
         clazz
     }
 
-    def <S> Class<? extends Monad> stateMonad(GroovyClassLoader loader, Class<? extends State<S, ?>> partialStateClass, Class<S> stateClass) {
+    def <S> Class<? extends Monad> stateMonad(GroovyClassLoader loader, Class<? extends StateM<S, ?>> partialStateClass, Class<S> stateClass) {
         def partialStateType = partialStateClass.simpleName
         def stateType = stateClass.simpleName
         def name = "${partialStateType}Monad"

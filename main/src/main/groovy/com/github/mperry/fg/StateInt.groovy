@@ -10,7 +10,7 @@ import groovy.transform.TypeChecked
  */
 @TypeChecked
 @Canonical
-class StateInt<A> extends State<Integer, A> {
+class StateInt<A> extends StateM<Integer, A> {
 
     StateInt(F<Integer, P2<A, Integer>> f) {
         run = f

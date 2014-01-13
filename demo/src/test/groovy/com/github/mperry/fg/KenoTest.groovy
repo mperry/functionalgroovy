@@ -12,6 +12,7 @@ import org.junit.Test
 /**
  * Created by MarkPerry on 13/01/14.
  */
+@TypeChecked
 class KenoTest {
 
     def random = new Random(0)

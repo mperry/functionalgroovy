@@ -8,11 +8,11 @@ import groovy.transform.TypeCheckingMode
  * Created by MarkPerry on 11/01/14.
  */
 @TypeChecked
-class Reader<A, B> {
+class ReaderM<A, B> {
 
     F<A, B> function
 
-    Reader(F<A, B> f) {
+    ReaderM(F<A, B> f) {
         function = f
     }
 
@@ -21,24 +21,33 @@ class Reader<A, B> {
     }
 
     @TypeChecked(TypeCheckingMode.SKIP)
-    static <C, D> Reader<C, D> lift(F<C, D> f) {
-        new Reader(f)
+    static <C, D> ReaderM<C, D> lift(F<C, D> f) {
+        new ReaderM(f)
     }
 
     @TypeChecked(TypeCheckingMode.SKIP)
-   def <C> Reader<A, C> map(F<B, C> f) {
+    static <C, D> ReaderM<C, D> lift(Closure<D> f) {
+        new ReaderM(f as F)
+    }
+
+    @TypeChecked(TypeCheckingMode.SKIP)
+    def <C> ReaderM<A, C> map(F<B, C> f) {
         lift(function.andThen(f))
     }
 
-    def <C> Reader<A, C> map(Closure<C> c) {
+    def <C> ReaderM<A, C> andThen(F<B, C> f) {
+        map(f)
+    }
+
+    def <C> ReaderM<A, C> map(Closure<C> c) {
         map(c as F)
     }
 
-    def <C> Reader<A, C> flatMap(F<B, Reader<A, C>> f) {
+    def <C> ReaderM<A, C> flatMap(F<B, ReaderM<A, C>> f) {
         lift({A a -> f.f(function.f(a)).f(a)} as F)
     }
 
-    def <C> Reader<A, C> flatMap(Closure c) {
+    def <C> ReaderM<A, C> flatMap(Closure c) {
         flatMap(c as F)
     }
 

@@ -28,11 +28,11 @@ class StateIntDynamicMonadTest {
         new TypeLambda()
     }
 
-    Class<? extends State> partialState(Class clazz) {
+    Class<? extends StateM> partialState(Class clazz) {
         lambda().partialStateApplication(loader, clazz)
     }
 
-    Class<? extends Monad<? extends State>> monadClass() {
+    Class<? extends Monad<? extends StateM>> monadClass() {
         lambda().stateMonad(loader, partialState, stateClass)
     }
 
@@ -41,19 +41,19 @@ class StateIntDynamicMonadTest {
     }
 
     @TypeChecked(TypeCheckingMode.SKIP)
-    def <A> Arbitrary<? extends State> arbState(Arbitrary<A> aa) {
+    def <A> Arbitrary<? extends StateM> arbState(Arbitrary<A> aa) {
         arbState(aa, stateClass)
     }
 
     @TypeChecked(TypeCheckingMode.SKIP)
-    def <A> Arbitrary<? extends State> arbState(Arbitrary<A> aa, Class<?> stateType) {
+    def <A> Arbitrary<? extends StateM> arbState(Arbitrary<A> aa, Class<?> stateType) {
         def text = "{${stateType.canonicalName} s -> P.p(a, s)}"
         def sh = new GroovyShell(loader)
         def f = sh.evaluate(text)
         arbitrary(aa.gen.map({ A a -> partialState.newInstance(f as F)} as F))
     }
 
-    Arbitrary<? extends State> arbStateInt() {
+    Arbitrary<? extends StateM> arbStateInt() {
         arbState(arbInteger)
     }
 

@@ -2,6 +2,7 @@ package com.github.mperry.fg
 
 import fj.F
 import fj.P
+import fj.P1
 import fj.P2
 import fj.data.Stream
 import groovy.transform.TypeChecked

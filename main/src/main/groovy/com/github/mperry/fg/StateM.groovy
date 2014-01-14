@@ -65,4 +65,13 @@ class StateM<S, A> {
         lift(f)
     }
 
+    @TypeChecked(TypeCheckingMode.SKIP)
+    static StateM<S, S> get() {
+        lift({ S s -> P.p(s, s) } as F)
+    }
+
+    A eval(S s) {
+        run(s)._1()
+    }
+
 }

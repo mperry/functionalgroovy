@@ -56,6 +56,21 @@ class Lens<A, B> {
         lens.compose(this)
     }
 
+    @TypeChecked(TypeCheckingMode.SKIP)
+    def <C> StateM<A, C> map(F<B, C> f) {
+        // WARNING: this is implemented differently from
+        // http://scalaz.github.io/scalaz/scalaz-2.9.1-6.0.4/doc.sxr/scalaz/Lens.scala.html
+        // I have the tuple in the opposite order, i.e. P.p(a, f.f(get(a)))
+        // I think this is ok as the trait States has the method "state"
+        // def state[S, A](f: S => (S, A)): State[S, A] = new State[S, A] {
+        // the order of the tuple returned by f is swapped compared to me
+        StateM.lift({ A a -> P.p( f.f(get(a)), a )} as F)
+    }
+
+    def <C> StateM<A, C> flatMap(F<B, StateM<A, C>> f) {
+        StateM.lift({ A a -> f.f(get(a)).run(a)} as F)
+    }
+
 //    @TypeChecked(TypeCheckingMode.SKIP)
     def <C> Lens<C, B> compose(Lens<C, A> lens) {
         new Lens(

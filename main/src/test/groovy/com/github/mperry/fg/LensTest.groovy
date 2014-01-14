@@ -49,6 +49,7 @@ class LensTest {
             { Address a -> a.street } as F,
             { Address a, String s -> new Address(a.number, s) } as F2
     )
+
     String oldName = "Joe"
     Integer oldAge = 25
     Integer newAge = 30
@@ -61,8 +62,7 @@ class LensTest {
 
     @Before
     void setUp() {
-//        address = new Address(oldStreetNumber, oldStreet)
-//        person = new Person(oldName, oldAge, address)
+        
     }
 
     @Test

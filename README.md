@@ -16,17 +16,17 @@ I have written an initial [blog post](http://mperry.github.io/2013/07/28/groovy-
 To start using the library add the dependency `com.github.mperry:functionalgroovy-main:0.3-SNAPSHOT` to your Gradle
 project. A simple test script to get going (`test.groovy`) is:
 
+```groovy
+@GrabResolver('https://oss.sonatype.org/content/groups/public')
+@Grab('com.github.mperry:functionalgroovy-core:0.3-SNAPSHOT')
+@Grab('org.functionaljava:functionaljava:3.1')
 
-    @GrabResolver('https://oss.sonatype.org/content/groups/public')
-    @Grab('com.github.mperry:functionalgroovy-core:0.3-SNAPSHOT')
-    @Grab('org.functionaljava:functionaljava:3.1')
-    
-    import com.github.mperry.fg.*
-    
-    1.to(5).each {
-        println it
-    }
+import com.github.mperry.fg.*
 
+1.to(5).each {
+    println it
+}
+```
 
 Run this script using `groovy test.groovy`.
 

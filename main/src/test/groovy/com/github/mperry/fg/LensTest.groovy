@@ -9,6 +9,7 @@ import org.junit.Before
 import org.junit.Test
 
 import static com.github.mperry.fg.Comprehension.foreach
+import static com.github.mperry.fg.StateM.get
 import static junit.framework.Assert.assertTrue
 
 /**
@@ -53,14 +54,14 @@ class LensTest {
     Integer newAge = 30
     String oldStreet = "Hill"
     String newStreet = "Mountain"
-    Integer streetNumber = 10
+    Integer oldStreetNumber = 10
 
-    Address address = new Address(streetNumber, oldStreet)
+    Address address = new Address(oldStreetNumber, oldStreet)
     Person person = new Person(oldName, oldAge, address)
 
     @Before
     void setUp() {
-//        address = new Address(streetNumber, oldStreet)
+//        address = new Address(oldStreetNumber, oldStreet)
 //        person = new Person(oldName, oldAge, address)
     }
 
@@ -93,28 +94,21 @@ class LensTest {
     void test1() {
         def add = 2
         def addSurname = " jones"
-        def state = foreach {
-            age << ageLens.mod({ i -> i + 2 } as F)
+        def streetMod = "Green "
+        def addressStreetL = addressLens.andThen(streetLens)
+        StateM state = foreach {
+            age << ageLens.mod { it + 2 }
+            street << addressStreetL.state()
+            str << { addressStreetL.update(streetMod + street) }
             name << nameLens.state()
             newName << { this.nameLens.update(name + addSurname) }
-            p << StateM.get()
+            p << get()
             yield { p }
         }
         def p2 = state.eval(person)
         println "person $p2"
-        assertTrue(p2.age == oldAge + add && p2.name == oldName + addSurname && p2.address == address)
-    }
-
-    @Test
-    @TypeChecked(TypeCheckingMode.SKIP)
-    void test2() {
-        foreach {
-            a << { 1.to(3) }
-            b << { a.to(10) }
-//            c << { println "$a $b" }
-            yield { 2 }
-
-        }
+        assertTrue(p2.age == oldAge + add && p2.name == oldName + addSurname &&
+                p2.address == new Address(oldStreetNumber, streetMod + oldStreet))
     }
 
 }

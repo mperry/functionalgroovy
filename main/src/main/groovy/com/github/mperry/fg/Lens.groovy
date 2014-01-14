@@ -52,8 +52,12 @@ class Lens<A, B> {
         mod(c as F)
     }
 
+    def <C> Lens<A, C> andThen(Lens<B, C> lens) {
+        lens.compose(this)
+    }
+
 //    @TypeChecked(TypeCheckingMode.SKIP)
-    def <C, D> Lens<C, B> compose(Lens<C, A> lens) {
+    def <C> Lens<C, B> compose(Lens<C, A> lens) {
         new Lens(
             get.o(lens.get),
             { C c, B b -> lens.set(c, set(lens.get(c), b)) } as F2

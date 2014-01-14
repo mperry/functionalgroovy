@@ -48,6 +48,10 @@ class Lens<A, B> {
         } as F)
     }
 
+    StateM<A, B> mod(Closure<B> c) {
+        mod(c as F)
+    }
+
 //    @TypeChecked(TypeCheckingMode.SKIP)
     def <C, D> Lens<C, B> compose(Lens<C, A> lens) {
         new Lens(

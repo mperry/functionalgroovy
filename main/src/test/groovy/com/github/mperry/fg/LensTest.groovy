@@ -48,7 +48,7 @@ class LensTest {
             { Address a -> a.street } as F,
             { Address a, String s -> new Address(a.number, s) } as F2
     )
-    String name = "joe"
+    String oldName = "joe"
     Integer oldAge = 25
     Integer newAge = 30
     String oldStreet = "Hill"
@@ -56,12 +56,12 @@ class LensTest {
     Integer streetNumber = 10
 
     Address address = new Address(streetNumber, oldStreet)
-    Person person = new Person(name, oldAge, address)
+    Person person = new Person(oldName, oldAge, address)
 
     @Before
     void setUp() {
 //        address = new Address(streetNumber, oldStreet)
-//        person = new Person(name, oldAge, address)
+//        person = new Person(oldName, oldAge, address)
     }
 
     @Test
@@ -69,14 +69,14 @@ class LensTest {
     void simple() {
         def p2 = ageLens.set(person, newAge)
         assertTrue(ageLens.get(person) == oldAge)
-        assertTrue(person.name == name && person.age == oldAge && p2.name == name && p2.age == newAge)
+        assertTrue(person.name == oldName && person.age == oldAge && p2.name == oldName && p2.age == newAge)
     }
 
     @Test
     @TypeChecked(TypeCheckingMode.SKIP)
     void mod() {
         def p2 = ageLens.mod(person, { Integer i -> i + 1} as F)
-        assertTrue(person.age == oldAge && p2.name == name && p2.age == oldAge + 1)
+        assertTrue(person.age == oldAge && p2.name == oldName && p2.age == oldAge + 1)
     }
 
     @Test
@@ -91,30 +91,18 @@ class LensTest {
     @Test
     @TypeChecked(TypeCheckingMode.SKIP)
     void test1() {
-        def s = ageLens.mod({ i -> i + 2 } as F)
-        def myLens = nameLens
-        def z = foreach {
-            a << s
-            n << nameLens.state()
-            b << {
-                def myName = n + " jones"
-                myLens.update(myName)
-            }
-            e << {
-                def val = b
-                StateM.get()
-            }
-            yield {
-                e
-            }
+        def add = 2
+        def addSurname = " jones"
+        def state = foreach {
+            age << ageLens.mod({ i -> i + 2 } as F)
+            name << nameLens.state()
+            newName << { this.nameLens.update(name + addSurname) }
+            p << StateM.get()
+            yield { p }
         }
-        def zz = 1
-        def za = z.eval(person)
-        println "done"
-        println "person $za"
-//        println za
-
-
+        def p2 = state.eval(person)
+        println "person $p2"
+        assertTrue(p2.age == oldAge + add && p2.name == oldName + addSurname && p2.address == address)
     }
 
     @Test

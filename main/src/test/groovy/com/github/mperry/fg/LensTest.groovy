@@ -49,7 +49,7 @@ class LensTest {
             { Address a -> a.street } as F,
             { Address a, String s -> new Address(a.number, s) } as F2
     )
-    String oldName = "joe"
+    String oldName = "Joe"
     Integer oldAge = 25
     Integer newAge = 30
     String oldStreet = "Hill"
@@ -93,7 +93,7 @@ class LensTest {
     @TypeChecked(TypeCheckingMode.SKIP)
     void test1() {
         def add = 2
-        def addSurname = " jones"
+        def addSurname = " Smith"
         def streetMod = "Green "
         def street = addressLens.andThen(streetLens)
         def name = nameLens

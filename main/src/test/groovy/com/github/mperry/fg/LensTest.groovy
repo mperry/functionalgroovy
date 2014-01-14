@@ -95,13 +95,16 @@ class LensTest {
         def add = 2
         def addSurname = " jones"
         def streetMod = "Green "
-        def addressStreetL = addressLens.andThen(streetLens)
+        def street = addressLens.andThen(streetLens)
+        def name = nameLens
+        def age = ageLens
+
         StateM state = foreach {
-            age << ageLens.mod { it + 2 }
-            street << addressStreetL.state()
-            str << { addressStreetL.update(streetMod + street) }
-            name << nameLens.state()
-            newName << { this.nameLens.update(name + addSurname) }
+            age1 << age.mod { it + 2 }
+            street1 << street.state()
+            street2 << { street.update(streetMod + street1) }
+            name1 << name.state()
+            newName << { name.update(name1 + addSurname) }
             p << get()
             yield { p }
         }

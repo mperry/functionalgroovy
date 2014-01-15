@@ -112,14 +112,12 @@ class OptionMonadTest {
                 arbF(coarbLong, arbOption(arbString)))
     }
 
-    def <A> Boolean throwsException(P1<A> c, Class error) {
-        c.throwsException(error)
-    }
-
+    /**
+     * join has type signature: def <A> M<A> join(M<M<A>> mma), thus this call is not type safe
+     */
     @Test
     void joinNotTypeSafe() {
         def m = monad()
-        assertTrue(throwsException({ m.join(some(3)) } as P1, ClassCastException.class))
         assertTrue(({ m.join(some(3)) } as P1).throwsException(ClassCastException.class))
     }
 

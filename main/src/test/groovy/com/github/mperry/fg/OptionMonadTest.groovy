@@ -10,6 +10,7 @@ import groovy.transform.TypeCheckingMode
 import org.junit.Test
 
 import static fj.Function.compose
+import static fj.data.Option.*
 import static fj.test.Arbitrary.arbF
 import static fj.test.Arbitrary.arbF
 import static fj.test.Arbitrary.arbF
@@ -46,7 +47,7 @@ class OptionMonadTest {
     void testFlatMap() {
         def m = monad()
         def o1 = m.unit(3)
-        def o2 = m.flatMap(o1, { Integer i -> Option.some(2 * i) } as F)
+        def o2 = m.flatMap(o1, { Integer i -> some(2 * i) } as F)
         assertTrue(o2.some() == 6)
     }
 
@@ -108,6 +109,40 @@ class OptionMonadTest {
     void abstractAssociativity() {
         new MonadLaws().associativity(monad(), arbOption(arbInteger), arbF(coarbInteger, arbOption(arbLong)),
                 arbF(coarbLong, arbOption(arbString)))
+    }
+
+    boolean m1(Closure c, Class clazz) {
+        try {
+            c.call()
+            false
+
+        } catch (Exception e) {
+
+        }
+
+        c.call()
+
+    }
+
+    @Test
+    void join() {
+
+        def m = monad()
+        assertTrue(m.join(some(some(3))) == some(3))
+        // show that join is not type safe
+//        assertTrue(m.join(some(3)) == some(3))
+        assertTrue(m.join(none()) == none())
+        assertTrue(m.join(some(none())) == none())
+
+    }
+
+    @Test
+    void sequence() {
+        def m = monad()
+        assertTrue(m.sequence(Arrays.asList(some(3), none())) == none())
+        assertTrue(m.sequence(Arrays.asList(some(3), some(4))) == some([3, 4]))
+        assertTrue(m.sequence([some(3), some(4)]) == some([3, 4]))
+
     }
 
 }

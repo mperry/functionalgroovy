@@ -58,8 +58,8 @@ abstract class Monad<M> {
     }
 
     def <A> M<List<A>> sequence(List<M<A>> list) {
-        (M<List<A>>) list.inject(unit([])) { M<List<A>> acc, M<A> ma ->
-            map2(ma, acc, { A a, List<A> las -> [a] + las } as F2)
+        (M<List<A>>) list.fold(unit([])) { M<List<A>> acc, M<A> ma ->
+            map2(ma, acc, { A a, List<A> las -> las + [a] } as F2)
         }
     }
 

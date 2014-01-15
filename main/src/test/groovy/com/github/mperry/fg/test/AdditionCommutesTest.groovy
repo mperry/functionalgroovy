@@ -105,7 +105,7 @@ class AdditionCommutesTest {
 			function: { Integer a, Integer b ->
 				a + b == b + a
 			},
-			validator: validator({ Throwable t -> t.getClass() == NullPointerException.class } as F)
+			validator: validator({ Throwable t -> t.isDirectInstanceOf(NullPointerException.class) } as F)
 		)
 	}
 

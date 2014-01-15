@@ -3,6 +3,7 @@ package com.github.mperry.fg
 import fj.F
 import fj.F2
 import fj.F3
+import fj.P1
 import fj.data.Option
 import fj.test.Arbitrary
 import groovy.transform.TypeChecked
@@ -111,29 +112,23 @@ class OptionMonadTest {
                 arbF(coarbLong, arbOption(arbString)))
     }
 
-    boolean m1(Closure c, Class clazz) {
-        try {
-            c.call()
-            false
+    def <A> Boolean throwsException(P1<A> c, Class error) {
+        c.throwsException(error)
+    }
 
-        } catch (Exception e) {
-
-        }
-
-        c.call()
-
+    @Test
+    void joinNotTypeSafe() {
+        def m = monad()
+        assertTrue(throwsException({ m.join(some(3)) } as P1, ClassCastException.class))
+        assertTrue(({ m.join(some(3)) } as P1).throwsException(ClassCastException.class))
     }
 
     @Test
     void join() {
-
         def m = monad()
         assertTrue(m.join(some(some(3))) == some(3))
-        // show that join is not type safe
-//        assertTrue(m.join(some(3)) == some(3))
         assertTrue(m.join(none()) == none())
         assertTrue(m.join(some(none())) == none())
-
     }
 
     @Test
@@ -142,7 +137,6 @@ class OptionMonadTest {
         assertTrue(m.sequence(Arrays.asList(some(3), none())) == none())
         assertTrue(m.sequence(Arrays.asList(some(3), some(4))) == some([3, 4]))
         assertTrue(m.sequence([some(3), some(4)]) == some([3, 4]))
-
     }
 
 }

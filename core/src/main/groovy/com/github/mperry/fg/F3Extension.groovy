@@ -4,6 +4,7 @@ import fj.F
 import fj.F2
 import fj.F3
 import fj.F4
+import fj.P1
 import groovy.transform.TypeChecked
 
 /**
@@ -21,6 +22,10 @@ class F3Extension {
 			f.f(a, b, c)
 		}
 	}
+
+    static <A, B, C, D> P1<D> f_(F3<A, B, C, D> f, A a, B b, C c) {
+        { -> f.f(a, b, c) } as P1
+    }
 
 	static <A, B, C, D> F<A, F<B, F<C, D>>> curry(F3<A, B, C, D> f3) {
 		{ a ->

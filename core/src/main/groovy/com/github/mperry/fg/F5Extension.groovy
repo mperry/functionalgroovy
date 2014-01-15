@@ -2,6 +2,7 @@ package com.github.mperry.fg
 
 import fj.F
 import fj.F5
+import fj.P1
 import groovy.transform.TypeChecked
 
 /**
@@ -27,5 +28,10 @@ class F5Extension {
 			} as F
 		} as F
 	}
+
+    static <A, B, C, D, E, $F> P1<$F> f_(
+            F5<A, B, C, D, E, $F> f, A a, B b, C c, D d, E e) {
+        { -> f.f(a, b, c, d, e) } as P1
+    }
 
 }

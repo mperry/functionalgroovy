@@ -3,6 +3,7 @@ package com.github.mperry.fg
 import fj.F
 import fj.F4
 import fj.F5
+import fj.P1
 import groovy.transform.TypeChecked
 
 /**
@@ -26,5 +27,9 @@ class F4Extension {
 			} as F
 		} as F
 	}
+
+    static <A, B, C, D, E> P1<E> f_(F4<A, B, C, D, E> f, A a, B b, C c, D d) {
+        { -> f.f(a, b, c, d)} as P1
+    }
 
 }

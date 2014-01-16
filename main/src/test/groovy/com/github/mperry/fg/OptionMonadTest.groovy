@@ -118,7 +118,8 @@ class OptionMonadTest {
     }
 
     /**
-     * join has type signature: def <A> M<A> join(M<M<A>> mma), thus this call is not type safe
+     * join has type signature: def <A> M<A> join(M<M<A>> mma), thus this call is not type safe,
+     * despite the Groovy type checker saying it is ok
      */
     @Test
     void joinNotTypeSafe() {

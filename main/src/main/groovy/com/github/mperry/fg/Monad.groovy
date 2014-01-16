@@ -10,7 +10,7 @@ import groovy.transform.TypeCheckingMode
 /**
  * Created by MarkPerry on 30/12/13.
  */
-@TypeChecked
+//@TypeChecked
 abstract class Monad<M> {
 
     abstract <A, B> M<B> flatMap(M<A> ma, F<A, M<B>> f)

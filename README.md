@@ -1,12 +1,18 @@
 Functional Groovy
-================
+=================
 
-[Functional Groovy](https://github.com/mperry/functionalgroovy) is a Groovy extension module for Functional Java,
-enhancing Functional Java for Groovy idioms.
+[Functional Groovy](https://github.com/mperry/functionalgroovy) is a library for doing functional programming
+(FP) in Groovy.  It is an extension module for Functional Java (FJ), enhancing Functional Java using Groovy idioms,
+and adds new FP constructs in Groovy.  The added features includes:
+ * Groovy quickcheck style testing
+ * Adding monadic functions to java.util.List
+ * Monad comprehensions (dynamically typed)
+ * Lenses
+ * Reader, Writer and State monads
+ * A simple IO type
 
 It is divided into two components, core and main. Core enhances Functional Java with Groovy idioms whilst main
-adds further functionality. At the moment main just includes Monadic comprehensions (e.g. supports Scala and
-Haskell like for comprehensions).
+adds further functionality.
 
 I have written an initial [blog post](http://mperry.github.io/2013/07/28/groovy-null-handling.html) covering:
 - some introductory material on functional programming in Groovy
@@ -33,3 +39,7 @@ Run this script using `groovy test.groovy`.
 This project uses
 - JDK 7
 - Gradle 1.9
+- Groovy 2.1.6
+
+I have added a list of [open issues](https://github.com/mperry/functionalgroovy/issues?state=open) so feel free to
+contribute or add usage examples.

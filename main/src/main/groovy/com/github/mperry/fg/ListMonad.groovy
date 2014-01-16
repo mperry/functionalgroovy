@@ -7,17 +7,22 @@ import groovy.transform.TypeCheckingMode
 /**
  * Created by MarkPerry on 10/01/14.
  */
-@TypeChecked
+//@TypeChecked
 class ListMonad extends Monad<List> {
 
     @Override
-    @TypeChecked(TypeCheckingMode.SKIP)
-    def <B, C> List<C> flatMap(List<B> mb, F<B, List<C>> f) {
+//    @TypeChecked(TypeCheckingMode.SKIP)
+    def <B, C> List<C> flatMapTyped(List<B> mb, F<B, List<C>> f) {
         mb.flatMap(f)
     }
 
     @Override
-    @TypeChecked(TypeCheckingMode.SKIP)
+    def <A, B> List flatMap(List ma, F<A, List> f) {
+        flatMapTyped(ma, f)
+    }
+
+    @Override
+//    @TypeChecked(TypeCheckingMode.SKIP)
     def <B> List<B> unit(B b) {
         [b]
     }

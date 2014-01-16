@@ -26,7 +26,11 @@ class OptionExtension {
         option.bind(f as F)
     }
 
-	static <A, B> Option<B> collectMany(Option<A> option, Closure<Option<B>> f) {
+    static <A, B> Option<B> flatMap(Option<A> option, F<A, Option<B>> f) {
+        option.bind(f)
+    }
+
+    static <A, B> Option<B> collectMany(Option<A> option, Closure<Option<B>> f) {
         bind(option, f)
 	}
 

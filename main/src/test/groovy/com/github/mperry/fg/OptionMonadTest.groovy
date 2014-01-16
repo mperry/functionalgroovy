@@ -48,15 +48,20 @@ class OptionMonadTest {
     void testFlatMap() {
         def m = monad()
         def o1 = m.unit(3)
-        def o2 = m.flatMap(o1, { Integer i -> some(2 * i) } as F)
+        def f = { Integer i -> some(2 * i) } as F
+        def o2 = m.flatMap(o1, f)
         assertTrue(o2.some() == 6)
+        assertTrue(m.flatMap(o1, f) == o1.flatMap(f))
     }
 
     @Test
     void testMap() {
         def m = monad()
-        def o2 = m.map(m.unit(3), { Integer i -> (2 * i).toString() } as F)
+        def f = { Integer i -> (2 * i).toString() } as F
+        def o1 = m.unit(3)
+        def o2 = m.map(o1, f)
         assertTrue(o2.some() == 6.toString())
+        assertTrue(m.map(o1, f) == o1.map(f))
     }
 
     // now encode the monad laws
@@ -127,6 +132,9 @@ class OptionMonadTest {
         assertTrue(m.join(some(some(3))) == some(3))
         assertTrue(m.join(none()) == none())
         assertTrue(m.join(some(none())) == none())
+
+        def s = some(some(3))
+        assertTrue(m.join(s) == Option.join(s))
     }
 
     @Test
@@ -135,6 +143,9 @@ class OptionMonadTest {
         assertTrue(m.sequence(Arrays.asList(some(3), none())) == none())
         assertTrue(m.sequence(Arrays.asList(some(3), some(4))) == some([3, 4]))
         assertTrue(m.sequence([some(3), some(4)]) == some([3, 4]))
+
+        def list = [some(3), some(4)]
+        assertTrue(m.sequence(list) == Option.sequence(list.toFJList()).map { fj.data.List l -> l.toJavaList() } )
     }
 
 }

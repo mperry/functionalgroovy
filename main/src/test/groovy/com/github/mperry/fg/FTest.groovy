@@ -4,7 +4,6 @@ import fj.F
 import groovy.transform.TypeChecked
 import org.junit.Test
 
-//import static com.github.mperry.fg.FStaticExtension.unit
 import static org.junit.Assert.assertTrue
 
 /**

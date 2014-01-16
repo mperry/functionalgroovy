@@ -18,7 +18,7 @@ import static fj.test.Coarbitrary.*
 class IdentityTest {
 
     Identity<Unit> monad() {
-        Identity.empty()
+        Identity.idUnit()
     }
 
     @TypeChecked(TypeCheckingMode.SKIP)

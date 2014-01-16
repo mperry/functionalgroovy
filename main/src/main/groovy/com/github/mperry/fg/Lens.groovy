@@ -106,10 +106,6 @@ class Lens<A, B> {
 
     StateM<A, B> update(F<Unit, B> f) {
         update(f.f(Unit.unit()))
-//        StateM.lift({ A a ->
-//            def b = f.f(Unit.unit())
-//            P.p(b, set(a, b))
-//        } as F)
     }
 
     @TypeChecked(TypeCheckingMode.SKIP)

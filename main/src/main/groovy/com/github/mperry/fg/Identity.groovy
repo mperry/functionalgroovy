@@ -19,7 +19,7 @@ class Identity<A> extends Monad<Identity> {
         item = a
     }
 
-    static Identity<Unit> empty() {
+    static Identity<Unit> idUnit() {
         lift(Unit.unit())
     }
 

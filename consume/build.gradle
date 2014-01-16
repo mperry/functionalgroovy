@@ -1,18 +1,23 @@
 
-apply plugin: 'groovy'
-
-//defaultTasks "build"
-
 repositories {
+
     mavenCentral()
     maven {
-        url "https://oss.sonatype.org/content/repositories/snapshots/"
+        url sonatypeSnapshotUrl
+//        url "https://oss.sonatype.org/content/repositories/snapshots/"
+//        url sonatypeRepositoryUrl
+//        url "https://oss.sonatype.org/content/groups/public"
     }
+}
+
+ext {
+    demoVersion = version
+//    demoVersion = "0.3-SNAPSHOT"
 }
 
 dependencies {
     compile "org.codehaus.groovy:groovy:$groovyVersion"
-    compile("com.github.mperry:functionalgroovy-core:0.3-SNAPSHOT") {
+    compile("$groupName:$projectName-core:$demoVersion") {
         changing = true
     }
     testCompile 'junit:junit:4.11'

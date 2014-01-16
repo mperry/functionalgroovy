@@ -25,7 +25,8 @@ subprojects {
 
 		sonatypeBaseUrl = "https://oss.sonatype.org"
 		sonatypeSnapshotUrl = "$sonatypeBaseUrl/content/repositories/snapshots/"
-		sonatypeReleaseUrl = "$sonatypeBaseUrl/service/local/staging/deploy/maven2/"
+        sonatypeRepositoryUrl = "$sonatypeBaseUrl/content/groups/public"
+//		sonatypeReleaseUrl = "$sonatypeBaseUrl/service/local/staging/deploy/maven2/"
 		projectUrl = "https://github.com/mperry/functionalgroovy"
 		projectName = "functionalgroovy"
 		pomProjectName = "FunctionalGroovy"

@@ -15,12 +15,6 @@ Features includes:
 * Reader, Writer and State monads
 * A simple IO type
 
-It is divided into four components: core, main, demo and consume.
-* Core enhances Functional Java with Groovy idioms
-* Main adds new functionality
-* Demo includes examples of FP in Groovy and usage of this library
-* Consume shows how to include FunctionalGroovy in your project
-
 I have written an initial [blog post](http://mperry.github.io/2013/07/28/groovy-null-handling.html) covering:
 * some introductory material on functional programming in Groovy
 * how to begin using the Functional Groovy library
@@ -54,3 +48,9 @@ contribute.  Some ways of contributing are:
 * adding tests
 * adding FP in Groovy examples
 * adding FunctionalGroovy usage examples
+
+Functional Groovy is divided into four components: core, main, demo and consume.
+* Core enhances Functional Java with Groovy idioms
+* Main adds new functionality
+* Demo includes examples of FP in Groovy and usage of this library
+* Consume shows how to include FunctionalGroovy in your project

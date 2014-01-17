@@ -1,8 +1,11 @@
 package com.github.mperry.fg
 
-import fj.F;
-import fj.P;
-import fj.P2;
+import fj.F
+import fj.F2;
+import fj.P
+import fj.P1;
+import fj.P2
+import fj.control.Trampoline;
 import fj.data.Stream
 import groovy.transform.TypeChecked
 import groovy.transform.TypeCheckingMode;
@@ -40,6 +43,26 @@ class ListJavaExtension {
 
 	static <A> fj.data.List<A> toFJList(List<A> list) {
         return fj.data.List.list((A[]) list.toArray());
+    }
+
+    static <A, B> B fold(List<A> list, B b, F2<B, A, B> f) {
+        foldLeft(list, b, f)
+    }
+
+    @TypeChecked(TypeCheckingMode.SKIP)
+    static <A, B> B foldLeft(List<A> list, B b, F2<B, A, B> f) {
+        (B) list.inject(b, f.toClosure())
+    }
+
+    static <A, B> B foldRight(List<A> list, B b, F2<B, A, B> f) {
+        foldRightC(list, f.flip(), b).run()
+    }
+
+    @TypeChecked(TypeCheckingMode.SKIP)
+    static <A, B> Trampoline<B> foldRightC(List<A> list, F2<A, B, B> f, B b) {
+        Trampoline.suspend({ ->
+            list.empty ? Trampoline.pure(b) : foldRightC(list.tail(), f, b).map(f.f(list.head()))
+        } as P1)
     }
 
     static <A, B> java.util.List<B> flatMap(java.util.List<A> list, F<A, List<B>> f) {

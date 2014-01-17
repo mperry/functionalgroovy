@@ -44,6 +44,8 @@ class ListExtensionsTest {
         def list = [1, 2, 3].traverse({ Integer i -> 1.to(i).toJList()} as F)
         println list
 //        assertTrue(list == [[1], [1, 2], [1, 2, 3]])
+
+        // haskell
 //        assertTrue(list == [[1,1,1],[1,1,2],[1,1,3],[1,2,1],[1,2,2],[1,2,3]])
 
     }

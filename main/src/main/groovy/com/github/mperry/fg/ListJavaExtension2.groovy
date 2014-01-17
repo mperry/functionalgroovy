@@ -28,10 +28,6 @@ class ListJavaExtension2 {
         new ListMonad().skip(list)
     }
 
-    static <A> List<List<A>> sequence(List<List<A>> list) {
-        new ListMonad().sequence(list)
-    }
-
     static <A, B> List<List<B>> traverse(List<A> list, F<A, List<B>> f) {
         new ListMonad().traverse(list, f)
     }

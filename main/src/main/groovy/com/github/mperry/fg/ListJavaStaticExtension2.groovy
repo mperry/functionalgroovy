@@ -34,6 +34,10 @@ class ListJavaStaticExtension2 {
         new ListMonad().foldM_(s, b, f)
     }
 
+    static <A> List<List<A>> sequence(List l, List<List<A>> list) {
+        new ListMonad().sequence(list)
+    }
+
     static <A, B, C> F<A, List<C>> compose(List l, F<A, List<B>> f, F<B, List<C>> g) {
         new ListMonad().compose(f, g)
     }

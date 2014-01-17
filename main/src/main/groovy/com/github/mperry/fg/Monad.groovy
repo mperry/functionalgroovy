@@ -66,7 +66,7 @@ abstract class Monad<M> {
 
     def <A, B> M<List<B>> traverse(List<A> list, F<A, M<B>> f) {
         (M<List<B>>) list.inject(unit([])) { M<List<B>> acc, A a ->
-            map2(f.f(a), acc, { B b, List<B> lb -> [b] + lb } as F2)
+            map2(f.f(a), acc, { B b, List<B> lb -> lb + [b] } as F2)
         }
     }
 

@@ -19,9 +19,6 @@ class ListJavaExtension2 {
 //        new ListMonad()
 //    }
 
-    static <A, B, C> List<C> map2(List<A> listA, List<B> listB, F2<A, B, C> f) {
-        new ListMonad().map2(listA, listB, f)
-    }
 
     static <A, B> List<B> as_(List<A> list, B b) {
         new ListMonad().as_(list, b)

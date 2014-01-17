@@ -22,6 +22,10 @@ class ListJavaStaticExtension2 {
         new ListMonad().join(list2)
     }
 
+    static <A, B, C> List<C> map2(List l, List<A> listA, List<B> listB, F2<A, B, C> f) {
+        new ListMonad().map2(listA, listB, f)
+    }
+
     static <A, B> List<A> foldM(List l, Stream<A> s, B b, F2<B, A, List<B>> f) {
         new ListMonad().foldM(s, b, f)
     }

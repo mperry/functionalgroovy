@@ -51,9 +51,11 @@ class ListExtensionsTest {
     }
 
     @Test
+    @TypeChecked(TypeCheckingMode.SKIP)
     void as_() {
         def s = "a"
-//        [1].as_(s)
+        def list = [1, 2].as_(s)
+        println list
 //        assertTrue([1].as_(s) == [s])
     }
 

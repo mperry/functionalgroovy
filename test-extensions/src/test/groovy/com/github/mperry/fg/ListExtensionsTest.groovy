@@ -57,5 +57,11 @@ class ListExtensionsTest {
 //        assertTrue([1].as_(s) == [s])
     }
 
+    @Test
+    void replicateM() {
+
+        def list = [1, 2].replicateM(3)
+        println list
+    }
 
 }

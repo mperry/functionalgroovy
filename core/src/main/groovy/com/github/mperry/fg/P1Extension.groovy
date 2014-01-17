@@ -17,6 +17,10 @@ class P1Extension {
         v.isFail() && ObjectExtension.isSubInstanceOf(v.fail(), error)
     }
 
+    static <A> Boolean throwsException(P1<A> p) {
+        validate(p).isFail()
+    }
+
     static <A> Validation<Exception, A> validate(P1<A> p) {
         try {
             Validation.success(p._1())

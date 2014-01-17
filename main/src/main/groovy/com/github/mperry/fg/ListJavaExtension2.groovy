@@ -4,6 +4,7 @@ import fj.F
 import fj.F2
 import fj.Unit
 import groovy.transform.TypeChecked
+import groovy.transform.TypeCheckingMode
 
 //import groovy.transform.TypeChecked
 //import groovy.transform.TypeCheckingMode
@@ -18,7 +19,7 @@ class ListJavaExtension2 {
 //        new ListMonad()
 //    }
 
-    static <A, B, C> List<A> map2(List<A> listA, List<B> listB, F2<A, B, C> f) {
+    static <A, B, C> List<C> map2(List<A> listA, List<B> listB, F2<A, B, C> f) {
         new ListMonad().map2(listA, listB, f)
     }
 

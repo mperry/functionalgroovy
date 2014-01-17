@@ -23,7 +23,8 @@ abstract class Monad<M> {
         } as F
     }
 
-    def <A> M<A> join(M<M<A>> mma) {
+//    def <A> M<A> join(M<M<A>> mma) {
+    def <A> M<A> join(M<A> mma) {
         flatMap(mma, {M<A> ma -> ma} as F)
     }
 

@@ -49,14 +49,26 @@ class ListJavaExtension {
         foldLeft(list, b, f)
     }
 
+    static <A, B> B fold(List<A> list, B b, Closure<B> f) {
+        fold(list, b, f as F2)
+    }
+
     @TypeChecked(TypeCheckingMode.SKIP)
     static <A, B> B foldLeft(List<A> list, B b, F2<B, A, B> f) {
         (B) list.inject(b, f.toClosure())
     }
 
+    static <A, B> B foldLeft(List<A> list, B b, Closure<B> f) {
+        foldLeft(list, b, f as F2)
+    }
+
     static <A, B> B foldRight(List<A> list, B b, F2<B, A, B> f) {
 //        foldRightT(list, f.flip(), b).run()
         foldRightF(list, b, f)
+    }
+
+    static <A, B> B foldRight(List<A> list, B b, Closure<B> f) {
+        foldRight(list, b, f as F2)
     }
 
     @TypeChecked(TypeCheckingMode.SKIP)

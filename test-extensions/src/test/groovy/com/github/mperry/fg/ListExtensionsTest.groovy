@@ -64,16 +64,18 @@ class ListExtensionsTest {
 //        println list
         def expected = [[1, 3], [2, 3], [1, 4], [2, 4], [1, 5], [2, 5]]
         def haskell = [[1,3],[1,4],[1,5],[2,3],[2,4],[2,5]]
-        assertTrue(list == expected)
+        println list
+        assertTrue(list == haskell)
     }
 
     @Test
     void traverse() {
         def list = [1, 2, 3].traverse({ Integer i -> 1.to(i).toJList()} as F)
-//        println list
+        println list
         def expected = [[1, 1, 1], [1, 2, 1], [1, 1, 2], [1, 2, 2], [1, 1, 3], [1, 2, 3]]
-        assertTrue(list == expected)
+
         def haskell = [[1,1,1],[1,1,2],[1,1,3],[1,2,1],[1,2,2],[1,2,3]]
+        assertTrue(list == haskell)
     }
 
     @Test
@@ -81,8 +83,8 @@ class ListExtensionsTest {
         def list = [1, 2].replicateM(3)
         println list
         def expected = [[1, 1, 1], [2, 1, 1], [1, 2, 1], [2, 2, 1], [1, 1, 2], [2, 1, 2], [1, 2, 2], [2, 2, 2]]
-        assertTrue(list == expected)
         def haskell = [[1,1,1],[1,1,2],[1,2,1],[1,2,2],[2,1,1],[2,1,2],[2,2,1],[2,2,2]]
+        assertTrue(list == haskell)
     }
 
     @Test

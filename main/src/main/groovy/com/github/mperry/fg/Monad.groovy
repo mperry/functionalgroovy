@@ -7,6 +7,8 @@ import fj.data.Stream
 import groovy.transform.TypeChecked
 import groovy.transform.TypeCheckingMode
 
+import static com.github.mperry.fg.Comprehension.foreach
+
 /**
  * Created by MarkPerry on 30/12/13.
  */
@@ -60,18 +62,31 @@ abstract class Monad<M> {
         skip(foldM(s, b, f))
     }
 
+
     def <A> M<List<A>> sequence(List<M<A>> list) {
-        (M<List<A>>) list.fold(unit([])) { M<List<A>> acc, M<A> ma ->
-            map2(ma, acc, { A a, List<A> las -> las + [a] } as F2)
+
+        def k2 = { M<List<A>> acc, M<A> ma ->
+            acc.flatMap { xs ->
+                ma.map { x ->
+                    xs + [x]
+//                    [x] + xs
+                }
+            }
         }
+        list.foldLeft(unit([]), k2)
+
     }
 
     def <A, B> M<List<B>> traverse(List<A> list, F f) {
 //    def <A, B> M<List<B>> traverse(List<A> list, F<A, M<B>> f) {
         (M<List<B>>) list.foldLeft(unit([]), { M<List<B>> acc, A a ->
-            map2(f.f(a), acc, { B b, List<B> lb ->
-                lb + [b]
-            } as F2)
+            acc.flatMap { bs ->
+                def mb = f.f(a)
+                mb.map { b ->
+                    bs + [b]
+                }
+            }
+
         } as F2)
     }
 

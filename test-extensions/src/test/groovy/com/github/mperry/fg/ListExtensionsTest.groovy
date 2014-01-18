@@ -30,20 +30,16 @@ class ListExtensionsTest {
     void map2() {
         def f = { Integer i, Integer j -> i * j } as F2
         def list = List.map2([1, 2], [3, 4], f)
-//        println list
         assertTrue(list == [3, 4, 6, 8])
     }
-
 
     @Test
     @TypeChecked(TypeCheckingMode.SKIP)
     void to() {
         def s = "a"
         def list = [1, 2].to(s)
-        println list
-//        assertTrue([1].to(s) == [s])
+        assertTrue([s, s] == list)
     }
-
 
     @Test
     void skip() {
@@ -54,16 +50,12 @@ class ListExtensionsTest {
     void foldM() {
         def list = List.foldM(1.to(3), 0, { Integer acc, Integer i -> [acc + i] } as F2)
         assertTrue(list == [6])
-
-
     }
 
     @Test
     void foldM_() {
         def list = List.foldM_(1.to(3), 0, { Integer acc, Integer i -> [acc + i] } as F2)
         assertTrue(list == [unit()])
-
-
     }
 
     @Test
@@ -71,9 +63,8 @@ class ListExtensionsTest {
         def list = List.sequence([[1, 2], [3, 4, 5]])
 //        println list
         def expected = [[1, 3], [2, 3], [1, 4], [2, 4], [1, 5], [2, 5]]
+        def haskell = [[1,3],[1,4],[1,5],[2,3],[2,4],[2,5]]
         assertTrue(list == expected)
-
-
     }
 
     @Test
@@ -82,25 +73,20 @@ class ListExtensionsTest {
 //        println list
         def expected = [[1, 1, 1], [1, 2, 1], [1, 1, 2], [1, 2, 2], [1, 1, 3], [1, 2, 3]]
         assertTrue(list == expected)
-//        assertTrue(list == [[1], [1, 2], [1, 2, 3]])
-
-        // haskell
-//        assertTrue(list == [[1,1,1],[1,1,2],[1,1,3],[1,2,1],[1,2,2],[1,2,3]])
-
+        def haskell = [[1,1,1],[1,1,2],[1,1,3],[1,2,1],[1,2,2],[1,2,3]]
     }
 
     @Test
     void replicateM() {
-
         def list = [1, 2].replicateM(3)
         println list
         def expected = [[1, 1, 1], [2, 1, 1], [1, 2, 1], [2, 2, 1], [1, 1, 2], [2, 1, 2], [1, 2, 2], [2, 2, 2]]
         assertTrue(list == expected)
+        def haskell = [[1,1,1],[1,1,2],[1,2,1],[1,2,2],[2,1,1],[2,1,2],[2,2,1],[2,2,2]]
     }
 
     @Test
     void compose() {
-
         def f = { String s -> [s, s] } as F
         def g = { Integer i ->
             1.to(i * 2).toJList().map({ Integer j ->
@@ -109,7 +95,6 @@ class ListExtensionsTest {
         } as F
         def func = List.compose(f, g)
         def list = func.f(3)
-
         def expected = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6].collect { it.toString() }
 //        println "$list == $expected ${list.class} ${expected.class}"
         assertTrue(list == expected)

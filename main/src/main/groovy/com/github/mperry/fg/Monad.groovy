@@ -80,6 +80,14 @@ abstract class Monad<M> {
         sequence(List.repeat(n, ma))
     }
 
+    /**
+     * Right-to-left Kleisli composition of monads. (>=>), with the arguments flipped
+     * http://hackage.haskell.org/package/base-4.6.0.1/docs/Control-Monad.html#v:-60--61--60-
+     * @param l
+     * @param f
+     * @param g
+     * @return
+     */
 //    @TypeChecked(TypeCheckingMode.SKIP)
     def <A, B, C> F<A, M<C>> compose(F<B, M<C>> f, F<A, M<B>> g) {
         { A a ->

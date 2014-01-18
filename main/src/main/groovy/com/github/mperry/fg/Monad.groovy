@@ -36,12 +36,12 @@ abstract class Monad<M> {
         flatMap(ma, { A a -> map(mb, { B b -> f.f(a, b)} as F)} as F)
     }
 
-    def <A, B> M<B> as_(M<A> ma, B b) {
+    def <A, B> M<B> to(M<A> ma, B b) {
         map(ma, { A a -> b } as F)
     }
 
     def <A> M<Unit> skip(M<A> ma) {
-        as_(ma, Unit.unit())
+        to(ma, Unit.unit())
     }
 
     def <A, B> M<B> foldM(Stream<A> s, B b, F2<B, A, M<B>> f) {
@@ -50,7 +50,9 @@ abstract class Monad<M> {
         } else {
             def h = s.head()
             def t = s.tail()._1()
-            flatMap(f.f(b, h), {B bb -> foldM(t, bb, f)} as F)
+            def newF = { B bb -> foldM(t, bb, f)} as F
+            def m = f.f(b, h)
+            flatMap(m, newF)
         }
     }
 
@@ -78,9 +80,12 @@ abstract class Monad<M> {
         sequence(List.repeat(n, ma))
     }
 
-    @TypeChecked(TypeCheckingMode.SKIP)
-    def <A, B, C> F<A, M<C>> compose(F<A, M<B>> f, F<B, M<C>> g) {
-        { A a -> flatMap(f.f(a), g)} as F
+//    @TypeChecked(TypeCheckingMode.SKIP)
+    def <A, B, C> F<A, M<C>> compose(F<B, M<C>> f, F<A, M<B>> g) {
+        { A a ->
+            flatMap(g.f(a), f)
+        } as F
+//        { A a -> flatMap(f.f(a), g)} as F
     }
 
 }

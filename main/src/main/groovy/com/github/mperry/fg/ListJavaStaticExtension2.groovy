@@ -2,6 +2,7 @@ package com.github.mperry.fg
 
 import fj.F
 import fj.F2
+import fj.Unit
 import fj.data.Stream
 import groovy.transform.TypeChecked
 
@@ -30,7 +31,7 @@ class ListJavaStaticExtension2 {
         new ListMonad().foldM(s, b, f)
     }
 
-    static <A, B> List<A> foldM_(List l, Stream<A> s, B b, F2<B, A, List<B>> f) {
+    static <A, B> List<Unit> foldM_(List l, Stream<A> s, B b, F2<B, A, List<B>> f) {
         new ListMonad().foldM_(s, b, f)
     }
 
@@ -38,7 +39,7 @@ class ListJavaStaticExtension2 {
         new ListMonad().sequence(list)
     }
 
-    static <A, B, C> F<A, List<C>> compose(List l, F<A, List<B>> f, F<B, List<C>> g) {
+    static <A, B, C> F<A, List<C>> compose(List l, F<B, List<C>> f,  F<A, List<B>> g) {
         new ListMonad().compose(f, g)
     }
 

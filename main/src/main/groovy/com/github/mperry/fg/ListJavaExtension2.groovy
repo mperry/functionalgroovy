@@ -20,8 +20,8 @@ class ListJavaExtension2 {
 //    }
 
 
-    static <A, B> List<B> as_(List<A> list, B b) {
-        new ListMonad().as_(list, b)
+    static <A, B> List<B> to(List<A> list, B b) {
+        new ListMonad().to(list, b)
     }
 
     static <A> List<Unit> skip(List<A> list) {

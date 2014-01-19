@@ -43,7 +43,6 @@ abstract class Monad<M> {
      * @return
      */
     def <A> M<A> join(M<M<A>> mma) {
-//    def <A> M<A> join(M<A> mma) {
         flatMap(mma, {M<A> ma -> ma} as F)
     }
 
@@ -113,7 +112,6 @@ abstract class Monad<M> {
      * @param f
      * @return
      */
-//    def <A, B> M<List<B>> traverse(List<A> list, F f) {
     def <A, B> M<List<B>> traverse(List<A> list, F<A, M<B>> f) {
         (M<List<B>>) list.foldLeft(unit([]), { M<List<B>> acc, A a ->
             acc.flatMap { bs ->
@@ -122,7 +120,6 @@ abstract class Monad<M> {
                     bs + [b]
                 }
             }
-
         } as F2)
     }
 

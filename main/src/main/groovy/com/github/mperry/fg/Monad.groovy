@@ -11,12 +11,25 @@ import groovy.transform.TypeCheckingMode
 
 /**
  * Created by MarkPerry on 30/12/13.
+ *
+ * @see The Haskell Control.Monad module at http://hackage.haskell.org/package/base-4.6.0.1/docs/Control-Monad.html
  */
 //@TypeChecked
 abstract class Monad<M> {
 
+    /**
+     * Sequentially compose two actions, passing any value produced by the first as an argument to the second.
+     * @param ma
+     * @param f
+     * @return
+     */
     abstract <A, B> M<B> flatMap(M<A> ma, F<A, M<B>> f)
 
+    /**
+     * Inject a value into the monadic type.
+     * @param b
+     * @return
+     */
     abstract <B> M<B> unit(B b)
 
     def <B> F<B, M<B>> unit() {
@@ -25,6 +38,12 @@ abstract class Monad<M> {
         } as F
     }
 
+    /**
+     * The join function is the conventional monad join operator. It is used to remove one level of
+     * monadic structure, projecting its bound argument into the outer level.
+     * @param mma
+     * @return
+     */
     def <A> M<A> join(M<M<A>> mma) {
 //    def <A> M<A> join(M<A> mma) {
         flatMap(mma, {M<A> ma -> ma} as F)
@@ -46,6 +65,14 @@ abstract class Monad<M> {
         to(ma, Unit.unit())
     }
 
+    /**
+     * The foldM function is analogous to foldl, except that its result is encapsulated in a monad. Note
+     * that foldM works from left-to-right over the list arguments.
+     * @param s
+     * @param b
+     * @param f
+     * @return
+     */
     def <A, B> M<B> foldM(Stream<A> s, B b, F2<B, A, M<B>> f) {
         if (s.empty) {
             unit(b)
@@ -62,7 +89,11 @@ abstract class Monad<M> {
         skip(foldM(s, b, f))
     }
 
-
+    /**
+     * Evaluate each action in the sequence from left to right, and collect the results.
+     * @param list
+     * @return
+     */
     def <A> M<List<A>> sequence(List<M<A>> list) {
 
         def k2 = { M<List<A>> acc, M<A> ma ->
@@ -77,6 +108,13 @@ abstract class Monad<M> {
 
     }
 
+    /**
+     * Map each element of a structure to an action, evaluate these actions from left to right
+     * and collect the results.
+     * @param list
+     * @param f
+     * @return
+     */
 //    def <A, B> M<List<B>> traverse(List<A> list, F f) {
     def <A, B> M<List<B>> traverse(List<A> list, F<A, M<B>> f) {
         (M<List<B>>) list.foldLeft(unit([]), { M<List<B>> acc, A a ->
@@ -90,6 +128,12 @@ abstract class Monad<M> {
         } as F2)
     }
 
+    /**
+     * performs the action n times, gathering the results.
+     * @param n
+     * @param ma
+     * @return
+     */
     def <A> M<List<A>> replicateM(Integer n, M<A> ma) {
         sequence(List.repeat(n, ma))
     }

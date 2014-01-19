@@ -7,14 +7,12 @@ import fj.data.Stream
 import groovy.transform.TypeChecked
 import groovy.transform.TypeCheckingMode
 
-//import static com.github.mperry.fg.Comprehension.foreach
-
 /**
  * Created by MarkPerry on 30/12/13.
  *
  * @see The Haskell Control.Monad module at http://hackage.haskell.org/package/base-4.6.0.1/docs/Control-Monad.html
  */
-//@TypeChecked
+@TypeChecked(TypeCheckingMode.SKIP)
 abstract class Monad<M> {
 
     /**

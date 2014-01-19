@@ -7,7 +7,7 @@ import fj.data.Stream
 import groovy.transform.TypeChecked
 import groovy.transform.TypeCheckingMode
 
-import static com.github.mperry.fg.Comprehension.foreach
+//import static com.github.mperry.fg.Comprehension.foreach
 
 /**
  * Created by MarkPerry on 30/12/13.

@@ -25,8 +25,8 @@ abstract class Monad<M> {
         } as F
     }
 
-//    def <A> M<A> join(M<M<A>> mma) {
-    def <A> M<A> join(M<A> mma) {
+    def <A> M<A> join(M<M<A>> mma) {
+//    def <A> M<A> join(M<A> mma) {
         flatMap(mma, {M<A> ma -> ma} as F)
     }
 
@@ -77,8 +77,8 @@ abstract class Monad<M> {
 
     }
 
-    def <A, B> M<List<B>> traverse(List<A> list, F f) {
-//    def <A, B> M<List<B>> traverse(List<A> list, F<A, M<B>> f) {
+//    def <A, B> M<List<B>> traverse(List<A> list, F f) {
+    def <A, B> M<List<B>> traverse(List<A> list, F<A, M<B>> f) {
         (M<List<B>>) list.foldLeft(unit([]), { M<List<B>> acc, A a ->
             acc.flatMap { bs ->
                 def mb = f.f(a)
@@ -90,7 +90,6 @@ abstract class Monad<M> {
         } as F2)
     }
 
-    @TypeChecked(TypeCheckingMode.SKIP)
     def <A> M<List<A>> replicateM(Integer n, M<A> ma) {
         sequence(List.repeat(n, ma))
     }
@@ -103,12 +102,10 @@ abstract class Monad<M> {
      * @param g
      * @return
      */
-//    @TypeChecked(TypeCheckingMode.SKIP)
     def <A, B, C> F<A, M<C>> compose(F<B, M<C>> f, F<A, M<B>> g) {
         { A a ->
             flatMap(g.f(a), f)
         } as F
-//        { A a -> flatMap(f.f(a), g)} as F
     }
 
 }

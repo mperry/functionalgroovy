@@ -2,11 +2,14 @@ package com.github.mperry.fg.test
 
 import fj.F
 import fj.F2
+import fj.P
 import fj.P1
 import groovy.transform.TypeChecked
 import groovy.transform.TypeCheckingMode
 import org.junit.Test
 
+import static fj.data.Option.none
+import static fj.data.Option.some
 import static org.junit.Assert.assertTrue
 
 /**
@@ -76,6 +79,16 @@ class ListJavaExtensionTest {
         def val = p._1()
 //        println val
         assertTrue(val == expected)
+    }
+
+    @Test
+//    @TypeChecked(TypeCheckingMode.SKIP)
+    void unfold() {
+        def list = List.unfold(1, { Integer i ->
+            i > 10 ? none() : some(P.p(i, i + 1))
+        } as F)
+        println list
+
     }
 
 }

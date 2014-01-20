@@ -95,15 +95,13 @@ abstract class Monad<M> {
     def <A> M<List<A>> sequence(List<M<A>> list) {
 
         def k2 = { M<List<A>> acc, M<A> ma ->
-            acc.flatMap { xs ->
-                ma.map { x ->
+            flatMap(acc, { xs ->
+                map(ma, { x ->
                     xs + [x]
-//                    [x] + xs
-                }
-            }
+                } as F)
+            } as F)
         }
         list.foldLeft(unit([]), k2)
-
     }
 
     /**
@@ -115,12 +113,12 @@ abstract class Monad<M> {
      */
     def <A, B> M<List<B>> traverse(List<A> list, F<A, M<B>> f) {
         (M<List<B>>) list.foldLeft(unit([]), { M<List<B>> acc, A a ->
-            acc.flatMap { bs ->
+            flatMap(acc, { bs ->
                 def mb = f.f(a)
-                mb.map { b ->
+                map(mb, { b ->
                     bs + [b]
-                }
-            }
+                } as F)
+            } as F)
         } as F2)
     }
 
@@ -155,11 +153,12 @@ abstract class Monad<M> {
 //            list.foldLeft([], { } as F2)
             def h = list.head()
             def mb = f.f(h)
-            mb.flatMap { Boolean b ->
-                filterM(list.tail(), f).map { List<A> listAs ->
+            flatMap(mb, { Boolean b ->
+                def mList = filterM(list.tail(), f)
+                map(mList, { List<A> listAs ->
                     unit(b ? [h] + listAs : listAs)
-                }
-            }
+                } as F)
+            } as F)
         }
     }
 
@@ -172,33 +171,27 @@ abstract class Monad<M> {
     }
 
     def <A, R> M<R> liftM(M<A> ma, F<A, R> f) {
-        ma.map { A a ->
+        map(ma, { A a ->
             unit(f.f(a))
-        }
+        } as F)
     }
 
     def <A, B, R> M<R> liftM2(M<A> ma, M<B> mb, F2<A, B, R> f) {
-        ma.flatMap { A a ->
-            mb.map { B b ->
+        flatMap(ma, { A a ->
+            map(mb, { B b ->
                 unit(f.f(a, b))
-            }
-        }
+            } as F)
+        } as F)
     }
 
     def <A, B, C, R> M<R> liftM3(M<A> ma, M<B> mb, M<C> mc, F3<A, B, C, R> f) {
-        ma.flatMap { A a ->
-            mb.flatMap { B b ->
-                mc.map { C c ->
+        flatMap(ma, { A a ->
+            flatMap(mb, { B b ->
+                map(mc, { C c ->
                     unit(f.f(a, b, c))
-                }
-            }
-        }
-//        foreach {
-//            a << ma
-//            b << mb
-//            c << mc
-//            yield { unit(f.f(a, b, c)) }
-//        }
+                } as F)
+            } as F)
+        } as F)
     }
 
     def <A, B> M<B> ap(M<A> ma, M<F<A, B>> mf) {

@@ -41,10 +41,17 @@ class ListJavaExtensionTest {
 
     @Test
 //    @TypeChecked(TypeCheckingMode.SKIP)
+    void foldRightTrampoline() {
+//        def list = [1, 2, 3].foldRight(0, { Integer acc, Integer i -> acc + i} as F2)
+        def val = [1, 2, 3].foldRightTrampoline(0, { Integer acc, Integer i -> i + acc } as F2)
+        assertTrue(val.run() == 6)
+    }
+
+    @Test
     void foldRightT() {
 //        def list = [1, 2, 3].foldRight(0, { Integer acc, Integer i -> acc + i} as F2)
-        def val = [1, 2, 3].foldRightTrampoline(0, { Integer i, Integer acc -> i + acc } as F2)
-        assertTrue(val.run() == 6)
+        def val = [1, 2, 3].foldRightT(0, { Integer acc, Integer i -> i + acc } as F2)
+        assertTrue(val == 6)
     }
 
 

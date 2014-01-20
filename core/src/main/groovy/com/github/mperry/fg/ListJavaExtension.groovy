@@ -78,7 +78,10 @@ class ListJavaExtension {
     }
 
     static <A, B> B foldRightT(List<A> list, B b, F2<B, A, B> f) {
-        def t = foldRightTrampoline(list, b, f.flip())
+        def g = { A a2, B b2 ->
+            f.f(b2, a2)
+        } as F2
+        def t = foldRightTrampoline(list, b, g)
         t.run()
     }
 

@@ -18,6 +18,7 @@ import static fj.test.Arbitrary.*
  */
 @Canonical
 //@Immutable
+@TypeChecked
 class Model {
 
 	static final Map NULLABLE_INTEGER = [(Integer.class): Arbitrary.arbNullableInteger()]

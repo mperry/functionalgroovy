@@ -2,6 +2,7 @@ package com.github.mperry.fg.test
 
 import fj.F
 import fj.data.Validation
+import groovy.transform.TypeChecked
 import org.gcontracts.AssertionViolation
 import org.gcontracts.ClassInvariantViolation
 import org.gcontracts.PostconditionViolation
@@ -14,6 +15,7 @@ import org.gcontracts.PreconditionViolation
  * Time: 11:47 AM
  * To change this template use File | Settings | File Templates.
  */
+@TypeChecked
 class DbcContractValidator {
 
     static F<Validation<Throwable, Boolean>, Boolean> validateValidation() {

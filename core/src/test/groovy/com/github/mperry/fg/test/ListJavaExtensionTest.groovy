@@ -84,10 +84,12 @@ class ListJavaExtensionTest {
     @Test
 //    @TypeChecked(TypeCheckingMode.SKIP)
     void unfold() {
+        def max = 10
         def list = List.unfold(1, { Integer i ->
-            i > 10 ? none() : some(P.p(i, i + 1))
+            i > max ? none() : some(P.p(i, i + 1))
         } as F)
-        println list
+//        println list
+        assertTrue(list == 1.to(max).toJavaList())
 
     }
 

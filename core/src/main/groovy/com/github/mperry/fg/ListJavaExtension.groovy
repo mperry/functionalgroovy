@@ -63,8 +63,8 @@ class ListJavaExtension {
     }
 
     static <A, B> B foldRight(List<A> list, B b, F2<B, A, B> f) {
-//        foldRightT(list, f.flip(), b).run()
-        foldRightF(list, b, f)
+        foldRightT(list, b, f)
+//        foldRightF(list, b, f)
     }
 
     static <A, B> B foldRight(List<A> list, B b, Closure<B> f) {
@@ -73,11 +73,17 @@ class ListJavaExtension {
 
     @TypeChecked(TypeCheckingMode.SKIP)
     static <A, B> B foldRightF(List<A> list, B b, F2<B, A, B> f) {
-        list.isEmpty() ? b : foldRightF(list.tail(), f.f(b, list.head()), f)
+//        list.isEmpty() ? b : foldRightF(list.tail(), f.f(b, list.head()), f)
+        list.isEmpty() ? b : f.f(foldRightF(list.tail(), b, f), list.head())
+    }
+
+    static <A, B> B foldRightT(List<A> list, B b, F2<B, A, B> f) {
+        def t = foldRightTrampoline(list, b, f.flip())
+        t.run()
     }
 
     @TypeChecked(TypeCheckingMode.SKIP)
-    static <A, B> Trampoline<B> foldRightT(List<A> list, F2<A, B, B> f, B b) {
+    static <A, B> Trampoline<B> foldRightTrampoline(List<A> list, B b, F2<A, B, B> f) {
         Trampoline.suspend({ ->
             def bool = list.isEmpty()
             if (bool) {
@@ -88,7 +94,7 @@ class ListJavaExtension {
                 def c = f.curry()
                 def f1 = c.f(h)
 //                def f1 = f.f(h)
-                foldRightT(t, f, b).map(f1)
+                foldRightTrampoline(t, b, f).map(f1)
             }
         } as P1)
     }

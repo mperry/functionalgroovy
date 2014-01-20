@@ -40,9 +40,11 @@ class ListJavaExtensionTest {
     }
 
     @Test
+//    @TypeChecked(TypeCheckingMode.SKIP)
     void foldRightT() {
-        def list = [1, 2, 3].foldRight(0, { Integer acc, Integer i -> acc + i} as F2)
-        assertTrue(list == 6)
+//        def list = [1, 2, 3].foldRight(0, { Integer acc, Integer i -> acc + i} as F2)
+        def val = [1, 2, 3].foldRightTrampoline(0, { Integer i, Integer acc -> i + acc } as F2)
+        assertTrue(val.run() == 6)
     }
 
 

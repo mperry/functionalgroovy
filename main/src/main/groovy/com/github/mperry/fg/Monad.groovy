@@ -196,7 +196,7 @@ abstract class Monad<M> {
         } as F)
     }
 
-    def <A, B> M<B> ap(M<F<A, B>> mf, M<A> ma) {
+    def <A, B> M<B> ap(M<A> ma, M<F<A, B>> mf) {
         flatMap(mf, { F<A, B> f ->
             map(ma, { A a ->
                 f.f(a)

@@ -154,8 +154,8 @@ class OptionMonadTest {
     void ap1() {
         def m = monad()
         def of = some({ i -> { j -> i + j } as F } as F)
-        def m1 = m.ap(of, some(2))
-        def m2 = m.ap(m1, some(3))
+        def m1 = m.ap(some(2), of)
+        def m2 = m.ap(some(3), m1)
         assertTrue(m2 == some(5))
     }
 
@@ -166,7 +166,7 @@ class OptionMonadTest {
             i + 1
         } as F
         def m = monad()
-        def m1 = m.ap(some(f), some(1))
+        def m1 = m.ap(some(1), some(f))
         assertTrue(m1 == some(2))
     }
 

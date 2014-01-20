@@ -48,7 +48,9 @@ abstract class Monad<M> {
     }
 
     def <A, B> M<B> map(M<A> ma, F<A, B> f) {
-        flatMap(ma, { A a -> unit(f.f(a)) } as F)
+        flatMap(ma, { A a ->
+            unit(f.f(a))
+        } as F)
     }
 
     def <A, B, C> M<C> map2(M<A> ma, M<B> mb, F2<A, B, C> f) {
@@ -195,11 +197,14 @@ abstract class Monad<M> {
     }
 
     def <A, B> M<B> ap(M<A> ma, M<F<A, B>> mf) {
-        flatMap(mf, { F<A, B> f ->
-            map(ma { A a ->
+
+        def h = { F<A, B> f ->
+            def g = { A a ->
                 f.f(a)
-            } as F)
-        } as F)
+            } as F
+            map(ma, g)
+        } as F
+        flatMap(mf, h)
     }
 
 }

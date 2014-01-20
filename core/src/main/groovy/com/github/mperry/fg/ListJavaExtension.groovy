@@ -50,7 +50,7 @@ class ListJavaExtension {
     }
 
     static <A, B> B fold(List<A> list, B b, Closure<B> f) {
-        fold(list, b, f as F2)
+        foldLeft(list, b, f)
     }
 
     @TypeChecked(TypeCheckingMode.SKIP)
@@ -78,7 +78,8 @@ class ListJavaExtension {
     }
 
     static <A, B> B foldRightT(List<A> list, B b, F2<B, A, B> f) {
-        // Workaround, g is defined as f.flip because using f.flip causes a StackOverflowError
+        // Workaround, g is defined explicitly instead of using f.flip because
+        // using f.flip causes a StackOverflowError
         // I did not look into what caused this error
         def g = { A a2, B b2 ->
             f.f(b2, a2)
@@ -90,16 +91,12 @@ class ListJavaExtension {
     @TypeChecked(TypeCheckingMode.SKIP)
     static <A, B> Trampoline<B> foldRightTrampoline(List<A> list, B b, F2<A, B, B> f) {
         Trampoline.suspend({ ->
-            def bool = list.isEmpty()
-            if (bool) {
+            if (list.empty) {
                 Trampoline.pure(b)
             } else {
                 def t = list.tail()
                 def h = list.head()
-                def c = f.curry()
-                def f1 = c.f(h)
-//                def f1 = f.f(h)
-                foldRightTrampoline(t, b, f).map(f1)
+                foldRightTrampoline(t, b, f).map(f.curry().f(h))
             }
         } as P1)
     }

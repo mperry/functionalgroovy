@@ -82,7 +82,6 @@ class ListJavaExtensionTest {
     }
 
     @Test
-//    @TypeChecked(TypeCheckingMode.SKIP)
     void unfold() {
         def max = 10
         def list = List.unfold(1, { Integer i ->
@@ -90,7 +89,13 @@ class ListJavaExtensionTest {
         } as F)
 //        println list
         assertTrue(list == 1.to(max).toJavaList())
+    }
 
+    @Test
+    void unfoldClosure() {
+        def max = 5
+        def list = List.unfold(1) { Integer it -> it > max ? none() : some(P.p(it, it + 1)) }
+        assertTrue(list == 1.to(max).toJavaList())
     }
 
 }

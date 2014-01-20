@@ -46,4 +46,8 @@ class ListJavaStaticExtension {
         result
     }
 
+    static <A, B> List<A> unfold(List list, B b, Closure<Option<P2<A, B>>> f) {
+        unfold(list, b, f as F)
+    }
+
 }

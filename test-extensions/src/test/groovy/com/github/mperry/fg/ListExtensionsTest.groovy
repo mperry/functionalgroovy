@@ -96,4 +96,41 @@ class ListExtensionsTest {
         assertTrue(list == expected)
     }
 
+    @Test
+    void filterM() {
+        // TODO
+    }
+
+    @Test
+    void when() {
+        // TODO
+    }
+
+    @Test
+    void unless() {
+        // TODO
+    }
+
+    @Test
+    void liftM() {
+
+        // TODO
+
+    }
+
+    @Test
+    void liftM2() {
+        // TODO
+    }
+
+    @Test
+    void liftM3() {
+        // TODO
+    }
+
+    @Test
+    void ap() {
+        // TODO
+    }
+
 }

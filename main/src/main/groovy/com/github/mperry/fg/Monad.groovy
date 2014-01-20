@@ -2,6 +2,7 @@ package com.github.mperry.fg
 
 import fj.F
 import fj.F2
+import fj.F3
 import fj.Unit
 import fj.data.Stream
 import groovy.transform.TypeChecked
@@ -145,6 +146,64 @@ abstract class Monad<M> {
         { A a ->
             flatMap(g.f(a), f)
         } as F
+    }
+
+    def <A> M<List<A>> filterM(List<A> list, F<A, M<Boolean>> f) {
+        if (list.empty) {
+            unit([])
+        } else {
+//            list.foldLeft([], { } as F2)
+            def h = list.head()
+            def mb = f.f(h)
+            mb.flatMap { Boolean b ->
+                filterM(list.tail(), f).map { List<A> listAs ->
+                    unit(b ? [h] + listAs : listAs)
+                }
+            }
+        }
+    }
+
+    def M<Unit> when(Boolean b, M<Unit> m) {
+        b ? m : unit(Unit.unit())
+    }
+
+    def M<Unit> unless(Boolean b, M<Unit> m) {
+        when(!b, m)
+    }
+
+    def <A, R> M<R> liftM(M<A> ma, F<A, R> f) {
+        ma.map { A a ->
+            unit(f.f(a))
+        }
+    }
+
+    def <A, B, R> M<R> liftM2(M<A> ma, M<B> mb, F2<A, B, R> f) {
+        ma.flatMap { A a ->
+            mb.map { B b ->
+                unit(f.f(a, b))
+            }
+        }
+    }
+
+    def <A, B, C, R> M<R> liftM3(M<A> ma, M<B> mb, M<C> mc, F3<A, B, C, R> f) {
+        ma.flatMap { A a ->
+            mb.flatMap { B b ->
+                mc.map { C c ->
+                    unit(f.f(a, b, c))
+                }
+            }
+        }
+//        foreach {
+//            a << ma
+//            b << mb
+//            c << mc
+//            yield { unit(f.f(a, b, c)) }
+//        }
+    }
+
+    def <A, B> M<B> ap(M<A> ma, M<F<A, B>> mf) {
+        // TODO
+
     }
 
 }

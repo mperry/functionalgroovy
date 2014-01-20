@@ -78,6 +78,8 @@ class ListJavaExtension {
     }
 
     static <A, B> B foldRightT(List<A> list, B b, F2<B, A, B> f) {
+        // Workaround, g is defined as f.flip because using f.flip causes a StackOverflowError
+        // I did not look into what caused this error
         def g = { A a2, B b2 ->
             f.f(b2, a2)
         } as F2

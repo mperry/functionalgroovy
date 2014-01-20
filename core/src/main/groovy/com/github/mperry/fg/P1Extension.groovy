@@ -29,4 +29,22 @@ class P1Extension {
         }
     }
 
+    static <A> Boolean throwsError(P1<A> p, Class error) {
+        def v = validateWithError(p)
+        v.isFail() && ObjectExtension.isSubInstanceOf(v.fail(), error)
+    }
+
+    static <A> Boolean throwsError(P1<A> p) {
+        validateWithError(p).isFail()
+    }
+
+    static <A> Validation<Error, A> validateWithError(P1<A> p) {
+        try {
+            Validation.success(p._1())
+        } catch (Error e) {
+            Validation.fail(e)
+        }
+    }
+
+
 }

@@ -73,6 +73,11 @@ class StreamExtension {
 	}
 
     @TypeChecked(TypeCheckingMode.SKIP)
+    static <A> List<A> toJavaList(Stream<A> s) {
+        s.toCollection().toList()
+    }
+
+    @TypeChecked(TypeCheckingMode.SKIP)
 	static <A> Stream<A> combos(Stream<A> s1, Stream<A> s2) {
 		s1.bind { A s1Val ->
 			s2.map { A s2Val ->

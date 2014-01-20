@@ -47,7 +47,7 @@ class ReaderM<A, B> {
         lift({A a -> f.f(function.f(a)).f(a)} as F)
     }
 
-    def <C> ReaderM<A, C> flatMap(Closure c) {
+    def <C> ReaderM<A, C> flatMap(Closure<ReaderM<A, C>> c) {
         flatMap(c as F)
     }
 

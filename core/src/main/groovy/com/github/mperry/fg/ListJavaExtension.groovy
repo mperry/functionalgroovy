@@ -53,9 +53,14 @@ class ListJavaExtension {
         foldLeft(list, b, f)
     }
 
-    @TypeChecked(TypeCheckingMode.SKIP)
+//    @TypeChecked(TypeCheckingMode.SKIP)
     static <A, B> B foldLeft(List<A> list, B b, F2<B, A, B> f) {
-        (B) list.inject(b, f.toClosure())
+        // foldLeft(list.tail(), f.f(b, list.head()), f)
+        def acc = b
+        for (A a: list) {
+            acc = f.f(acc, a)
+        }
+        acc
     }
 
     static <A, B> B foldLeft(List<A> list, B b, Closure<B> f) {

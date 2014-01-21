@@ -10,6 +10,7 @@ import org.junit.Test
 
 import static fj.data.Option.none
 import static fj.data.Option.some
+import static java.util.List.*
 import static org.junit.Assert.assertTrue
 
 /**
@@ -21,6 +22,21 @@ class ListJavaExtensionTest {
     @Test
     void foldListLeft() {
         assertTrue([1, 2, 3].foldLeft(0, { Integer acc, Integer i -> acc + i} as F2) == 6)
+        assertTrue([1, 2, 3].foldLeft(0) { Integer acc, Integer i -> acc + i } == 6)
+    }
+
+    @Test
+    void foldListLeftR() {
+        def c = { Integer acc, Integer i -> acc + i}
+        assertTrue([1, 2, 3].foldLeftR(0, c as F2) == 6)
+        assertTrue([1, 2, 3].foldLeftR(0, c) == 6)
+        def max = 10 ** 4
+        def p = { ->
+            (1..max).toList().foldLeftR(0, c)
+        } as P1
+//        assertTrue(p._1() == 6)
+        assertTrue(p.throwsError(StackOverflowError.class))
+//        assertTrue(p._1() == 6)
     }
 
     @Test
@@ -82,13 +98,22 @@ class ListJavaExtensionTest {
     }
 
     @Test
+    void foldRightNoOverflow2() {
+        def high = (Integer) 10 ** 4
+        def list = (1..high).toList()
+        def val = list.foldRightT(0, { Integer acc, Integer i -> acc + i } as F2)
+        def expected = 50005000
+        assertTrue(val == expected)
+    }
+
+
+    @Test
     void unfold() {
         def max = 10
-        def list = List.unfold(1, { Integer i ->
-            i > max ? none() : some(P.p(i, i + 1))
+        def list = List.unfold(1, { Integer seed ->
+            seed > max ? none() : some(P.p(seed, seed + 1))
         } as F)
-//        println list
-        assertTrue(list == 1.to(max).toJavaList())
+        assertTrue(list == (1..max).toList())
     }
 
     @Test

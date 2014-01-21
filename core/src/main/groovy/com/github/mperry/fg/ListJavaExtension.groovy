@@ -55,7 +55,6 @@ class ListJavaExtension {
 
 //    @TypeChecked(TypeCheckingMode.SKIP)
     static <A, B> B foldLeft(List<A> list, B b, F2<B, A, B> f) {
-        // foldLeft(list.tail(), f.f(b, list.head()), f)
         def acc = b
         for (A a: list) {
             acc = f.f(acc, a)
@@ -65,6 +64,19 @@ class ListJavaExtension {
 
     static <A, B> B foldLeft(List<A> list, B b, Closure<B> f) {
         foldLeft(list, b, f as F2)
+    }
+
+    /**
+     * Fold left with recursion
+     */
+    @TypeChecked(TypeCheckingMode.SKIP)
+    static <A, B> B foldLeftR(List<A> list, B b, F2<B, A, B> f) {
+        list.empty ? b : foldLeftR(list.tail(), f.f(b, list.head()), f)
+    }
+
+    @TypeChecked(TypeCheckingMode.SKIP)
+    static <A, B> B foldLeftR(List<A> list, B b, Closure<B> f) {
+        list.empty ? b : foldLeftR(list.tail(), f.call(b, list.head()), f)
     }
 
     static <A, B> B foldRight(List<A> list, B b, F2<B, A, B> f) {

@@ -4,15 +4,11 @@ repositories {
     mavenCentral()
     maven {
         url sonatypeSnapshotUrl
-//        url "https://oss.sonatype.org/content/repositories/snapshots/"
-//        url sonatypeRepositoryUrl
-//        url "https://oss.sonatype.org/content/groups/public"
     }
 }
 
 ext {
     demoVersion = version
-//    demoVersion = "0.3-SNAPSHOT"
 }
 
 dependencies {

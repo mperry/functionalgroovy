@@ -20,12 +20,12 @@ I have written an initial [blog post](http://mperry.github.io/2013/07/28/groovy-
 * how to begin using the Functional Groovy library
 * handling `null`s by binding through the `Option` type, monadic comprehensions and monadic lifting
 
-To start using the library add the dependency `com.github.mperry:functionalgroovy-main:0.3-SNAPSHOT` to your Gradle
+To start using the library add the dependency `com.github.mperry:functionalgroovy-main:0.3` to your Gradle
 project. A simple test script to get going (`test.groovy`) is:
 
 ```groovy
 @GrabResolver('https://oss.sonatype.org/content/groups/public')
-@Grab('com.github.mperry:functionalgroovy-core:0.3-SNAPSHOT')
+@Grab('com.github.mperry:functionalgroovy-core:0.3')
 @Grab('org.functionaljava:functionaljava:3.1')
 
 import com.github.mperry.fg.*

@@ -10,7 +10,7 @@ subprojects {
 	apply plugin: "java"
 	apply plugin: "maven"
 
-	version = "0.3-SNAPSHOT"
+	version = "0.3"
 
 	ext {
         // sonatypeUsername and sonatypePassword stored in %USERPROFILE%/.gradle/gradle.properties,

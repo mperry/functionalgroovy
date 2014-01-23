@@ -26,15 +26,15 @@ class YCombinator {
      * @return
      */
     static def Y(Closure f) {
+        def g = { Closure x ->
+            x(x)
+        }
         def h = { x ->
-            { y ->
+            f { y ->
                 x(x)(y)
             }
         }
-        def g = { Closure x ->
-            f(h(x))
-        }
-        h(g)
-    }  //fx represents functional, f function
+        g(h)
+    }
 
 }

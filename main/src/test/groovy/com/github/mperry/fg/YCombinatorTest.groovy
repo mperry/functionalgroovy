@@ -14,10 +14,14 @@ class YCombinatorTest {
     void testFib() {
 
         Closure fib = {Closure f ->
-            {int n -> n < 2 ? n: f(n-1) + f(n-2) }
+            { int n ->
+                n < 2 ? n: f(n-1) + f(n-2)
+            }
         }
 
-        def x = YCombinator.Y(fib)(6)
+        def f = YCombinator.Y(fib)
+        def x = f(6)
+
         println x
         Assert.assertTrue(x == 8)
     }

@@ -8,12 +8,6 @@ import groovy.transform.TypeChecked
 //@TypeChecked
 class YCombinator {
 
-    static def c2(def f) {
-        { x ->
-            f(f)(x)
-        }
-    }
-
     /**
      * Strict applicative order Y combinator
      *
@@ -26,15 +20,13 @@ class YCombinator {
      * @return
      */
     static def Y(Closure f) {
-        def g = { Closure x ->
-            x(x)
-        }
-        def h = { x ->
+        def h = { Closure x ->
+            // y is the value passed in
             f { y ->
                 x(x)(y)
             }
         }
-        g(h)
+        h(h)
     }
 
 }

@@ -19,5 +19,3 @@ dependencies {
     }
     testCompile gradleJunit
 }
-
-uploadArchives.enabled = false

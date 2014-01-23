@@ -6,5 +6,3 @@ ext {
 dependencies {
 	compile project(":main")
 }
-
-uploadArchives.enabled = false

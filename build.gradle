@@ -83,10 +83,10 @@ subprojects {
 	}
 
     signing {
-        required { ["core", "main"].contains(project.name) }
         sign configurations.archives
     }
 
+    uploadArchives.enabled = false
 	uploadArchives {
 		repositories {
 			mavenDeployer {

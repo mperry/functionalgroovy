@@ -8,13 +8,13 @@ repositories {
 }
 
 ext {
-    demoVersion = version
+    demoVersion = consumeVersion
 }
 
 dependencies {
-    compile "org.codehaus.groovy:groovy:$groovyVersion"
+    compile gradleGroovy
     compile("$groupName:$projectName-core:$demoVersion") {
         changing = true
     }
-    testCompile 'junit:junit:4.11'
+    testCompile gradleJunit
 }

@@ -13,10 +13,10 @@ subprojects {
     ext {
         snap = "-SNAPSHOT"
     }
-	version = "0.3"
+	version = "0.4$snap"
 
 	ext {
-        consumeVersion = "$version"
+        consumeVersion = version
 
         // sonatypeUsername and sonatypePassword stored in %USERPROFILE%/.gradle/gradle.properties,
         // otherwise override with -PsonatypeUsername=user -PsonatypePassword=pwd

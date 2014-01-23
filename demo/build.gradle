@@ -16,3 +16,5 @@ dependencies {
 	compile gradleFj
 	testCompile gradleJunit
 }
+
+uploadArchives.enabled = false

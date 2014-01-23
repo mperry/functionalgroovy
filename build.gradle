@@ -16,7 +16,7 @@ subprojects {
 	version = "0.3"
 
 	ext {
-        consumeVersion = "$version$snap"
+        consumeVersion = "$version"
 
         // sonatypeUsername and sonatypePassword stored in %USERPROFILE%/.gradle/gradle.properties,
         // otherwise override with -PsonatypeUsername=user -PsonatypePassword=pwd
@@ -82,9 +82,16 @@ subprojects {
 		archives sourcesJar
 	}
 
+    signing {
+        required { ["core", "main"].contains(project.name) }
+        sign configurations.archives
+    }
+
 	uploadArchives {
 		repositories {
 			mavenDeployer {
+                beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
 				repository(url: sonatypeUploadUrl) {
 					authentication(userName: sonatypeUsername, password: sonatypePassword)
 				}

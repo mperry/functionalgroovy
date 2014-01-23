@@ -3,7 +3,8 @@ repositories {
 
     mavenCentral()
     maven {
-        url sonatypeSnapshotUrl
+//        url sonatypeSnapshotUrl
+        url sonatypeRepositoryUrl
     }
 }
 
@@ -18,3 +19,5 @@ dependencies {
     }
     testCompile gradleJunit
 }
+
+uploadArchives.enabled = false

@@ -11,3 +11,5 @@ dependencies {
     testCompile gradleJunit
     testCompile "org.gcontracts:gcontracts-core:1+"
 }
+
+uploadArchives.enabled = true

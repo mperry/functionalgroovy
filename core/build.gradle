@@ -7,3 +7,5 @@ dependencies {
 	compile gradleFj
 	compile gradleJunit
 }
+
+uploadArchives.enabled = true

@@ -14,11 +14,27 @@ class YCombinator {
         }
     }
 
-    static def Y(Closure fx) {
-        def g = { Closure f ->
-            fx(c2(f))
+    /**
+     * Strict applicative order Y combinator
+     *
+     * (define Y
+     *      (lambda (f)
+     *          ((lambda (x) (x x))
+     *          (lambda (x) (f (lambda (y) ((x x) y)))))))
+     *
+     * @param fx
+     * @return
+     */
+    static def Y(Closure f) {
+        def h = { x ->
+            { y ->
+                x(x)(y)
+            }
         }
-        c2(g)
+        def g = { Closure x ->
+            f(h(x))
+        }
+        h(g)
     }  //fx represents functional, f function
 
 }

@@ -123,4 +123,28 @@ class ListJavaExtensionTest {
         assertTrue(list == 1.to(max).toJavaList())
     }
 
+    @Test
+    void testCollate() {
+        def list = collate([1, 2, 3 ,4], 3, 1)
+        def list2 = collate2([1, 2, 3 ,4], 3, 1)
+//        println list
+        def expected = [[1, 2, 3], [2, 3, 4], [3, 4], [4]]
+        assertTrue(list == expected)
+        assertTrue(list2 == expected)
+
+    }
+
+    List<List<Integer>> collate(List<Integer> list, int size, int step) {
+        List.unfold(list) { List<Integer> it ->
+           it.empty ? none() : some(P.p(it.take(size), it.drop(step)))
+        }
+    }
+
+    @TypeChecked(TypeCheckingMode.SKIP)
+    List<List<Integer>> collate2(List<Integer> list, int size, int step) {
+        List.unfold(list) {
+            it.empty ? none() : some(P.p(it.take(size), it.drop(step)))
+        }
+    }
+
 }

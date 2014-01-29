@@ -4,10 +4,12 @@ import fj.F
 import fj.F2
 import fj.P
 import fj.P1
+import fj.P2
 import groovy.transform.TypeChecked
 import groovy.transform.TypeCheckingMode
 import org.junit.Test
 
+import static fj.P.*
 import static fj.data.Option.none
 import static fj.data.Option.some
 import static java.util.List.*
@@ -111,7 +113,7 @@ class ListJavaExtensionTest {
     void unfold() {
         def max = 10
         def list = List.unfold(1, { Integer seed ->
-            seed > max ? none() : some(P.p(seed, seed + 1))
+            seed > max ? none() : some(p(seed, seed + 1))
         } as F)
         assertTrue(list == (1..max).toList())
     }
@@ -119,7 +121,7 @@ class ListJavaExtensionTest {
     @Test
     void unfoldClosure() {
         def max = 5
-        def list = List.unfold(1) { Integer it -> it > max ? none() : some(P.p(it, it + 1)) }
+        def list = List.unfold(1) { Integer it -> it > max ? none() : some(p(it, it + 1)) }
         assertTrue(list == 1.to(max).toJavaList())
     }
 
@@ -127,24 +129,48 @@ class ListJavaExtensionTest {
     void testCollate() {
         def list = collate([1, 2, 3 ,4], 3, 1)
         def list2 = collate2([1, 2, 3 ,4], 3, 1)
+        def list3 = collate3([1, 2, 3 ,4], 3)
 //        println list
         def expected = [[1, 2, 3], [2, 3, 4], [3, 4], [4]]
         assertTrue(list == expected)
         assertTrue(list2 == expected)
+        assertTrue(list3 == expected)
 
     }
 
+    /**
+     * Implement collate using unfold
+     */
     List<List<Integer>> collate(List<Integer> list, int size, int step) {
         List.unfold(list) { List<Integer> it ->
-           it.empty ? none() : some(P.p(it.take(size), it.drop(step)))
+           it.empty ? none() : some(p(it.take(size), it.drop(step)))
         }
     }
 
+    /**
+     * Implement collate using unfold using minimal characters
+     */
     @TypeChecked(TypeCheckingMode.SKIP)
     List<List<Integer>> collate2(List<Integer> list, int size, int step) {
         List.unfold(list) {
-            it.empty ? none() : some(P.p(it.take(size), it.drop(step)))
+            it.empty ? none() : some(p(it.take(size), it.drop(step)))
         }
+    }
+
+    /**
+     * Implement collate using Java 8 compatible operations, take/limit, drop/skip
+     * Java 8 did have zip for streams
+     * http://download.java.net/lambda/b78/docs/api/java/util/stream/Streams.html
+     * but does not look like it exists for latest version
+     * http://download.java.net/jdk8/docs/api/
+     */
+    List<List<Integer>> collate3(List<Integer> list, int size) {
+        def dropList = 0..list.size() - 1
+        def zipped = List.repeat(list.size(), list).zip(dropList)
+        def result = zipped.map { P2<List<Integer>, Integer> p ->
+            p._1().drop(p._2()).take(size)
+        }
+        result
     }
 
 }

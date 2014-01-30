@@ -22,10 +22,10 @@ I have written an initial blog post on [Groovy Null Handling using Bind, Compreh
 * handling `null`s by binding through the `Option` type, monadic comprehensions and monadic lifting
 
 The full list of related posts are:
-* "Groovy Null Handling Using Bind, Comprehensions and Lift":http://mperry.github.io/2013/07/28/groovy-null-handling.html
-* "Specification Based Testing":http://mperry.github.io/2013/12/09/specification-based-testing.html
-* "Referentially Transparent Input/Output in Groovy":http://mperry.github.io/2014/01/03/referentially-transparent-io.html
-* "Folds and Unfolds":http://mperry.github.io/2014/01/21/folds-and-unfolds.html
+* [Groovy Null Handling Using Bind, Comprehensions and Lift](http://mperry.github.io/2013/07/28/groovy-null-handling.html)
+* [Specification Based Testing](http://mperry.github.io/2013/12/09/specification-based-testing.html)
+* [Referentially Transparent Input/Output in Groovy](http://mperry.github.io/2014/01/03/referentially-transparent-io.html)
+* [Folds and Unfolds](http://mperry.github.io/2014/01/21/folds-and-unfolds.html)
 
 To start using the library add the dependency `com.github.mperry:functionalgroovy-main:0.4-SNAPSHOT` to your Gradle
 project. A simple test script to get going (`test.groovy`) is:

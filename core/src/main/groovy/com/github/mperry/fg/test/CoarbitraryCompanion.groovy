@@ -11,9 +11,9 @@ import groovy.transform.TypeCheckingMode
 @TypeChecked
 class CoarbitraryCompanion {
 
-    @TypeChecked(TypeCheckingMode.SKIP)
-    static <A> Coarbitrary<List<A>> coarbJavaList(Coarbitrary<A> ca) {
-        Coarbitrary.coarbList(ca).compose({ List list -> list.toFJList() } as F)
+//    @TypeChecked(TypeCheckingMode.SKIP)
+    static <A> Coarbitrary<java.util.List<A>> coarbJavaList(Coarbitrary<A> ca) {
+        Coarbitrary.coarbList(ca).compose({ java.util.List list -> list.toFJList() } as F)
     }
 
 }

@@ -14,4 +14,5 @@ import groovy.transform.TypeChecked
  */
 @TypeChecked
 class GenStaticExtension {
+
 }

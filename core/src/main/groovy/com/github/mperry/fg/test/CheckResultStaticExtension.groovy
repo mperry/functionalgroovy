@@ -18,7 +18,8 @@ import static com.github.mperry.fg.test.ArgStaticExtension.argShowNullable
 class CheckResultStaticExtension {
 
 	static Show<CheckResult> summaryNullable(CheckResult cr) {
-		CheckResult.summary(ShowWorkaroundJava.argShowNullable())
+        CheckResultCompanion.summaryNullable()
+//		CheckResult.summary(ShowWorkaroundJava.argShowNullable())
 	}
 
 }

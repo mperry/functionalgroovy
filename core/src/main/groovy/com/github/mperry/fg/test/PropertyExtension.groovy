@@ -30,7 +30,7 @@ class PropertyExtension {
     @TypeChecked(TypeCheckingMode.SKIP)
 	static CheckResult checkBooleanWithNullableSummary(Property p, boolean b) {
 		def cr = p.check()
-		CheckResult.summaryNullable().println(cr)
+		CheckResultCompanion.summaryNullable().println(cr)
 		assertTrue(cr.isOk() == b)
 		cr
 	}

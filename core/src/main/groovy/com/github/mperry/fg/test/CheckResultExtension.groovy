@@ -25,11 +25,9 @@ class CheckResultExtension {
 		CheckResult.summary.println(cr)
 	}
 
-    @TypeChecked(TypeCheckingMode.SKIP)
+//    @TypeChecked(TypeCheckingMode.SKIP)
 	static Unit printlnSummaryNullable(CheckResult cr) {
-//        CheckResult.summaryNullable().println(cr)
-		CheckResultStaticExtension.summaryNullable().println(cr)
-//		CheckResultExtension.nullableSummary()
+		CheckResultCompanion.summaryNullable().println(cr)
 	}
 
 	static boolean isOk(CheckResult cr) {

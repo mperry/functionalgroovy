@@ -10,7 +10,7 @@ import org.junit.Test
  * Created by MarkPerry on 20/12/13.
  */
 @TypeChecked
-class StackOverflow {
+class StackOverflowTest {
 
     @Test
     @TypeChecked(TypeCheckingMode.SKIP)

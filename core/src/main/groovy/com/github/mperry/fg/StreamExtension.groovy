@@ -40,7 +40,12 @@ class StreamExtension {
         s.bind(c as F)
     }
 
-	static <A, B> Stream<B> collectMany(Stream<A> s, Closure<Stream<B>> c) {
+    static <A, B> Stream<B> flatMap(Stream<A> s, F<A, Stream<B>> f) {
+        s.bind(f)
+    }
+
+
+    static <A, B> Stream<B> collectMany(Stream<A> s, Closure<Stream<B>> c) {
         bind(s, c)
 	}
 

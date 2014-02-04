@@ -10,6 +10,7 @@ dependencies {
 
     testCompile gradleJunit
     testCompile "org.gcontracts:gcontracts-core:1+"
+    testRuntime 'com.h2database:h2:1.3.175'
 }
 
 uploadArchives.enabled = true

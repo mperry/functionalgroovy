@@ -54,10 +54,17 @@ class SqlExtension {
         }
     }
 
+    @TypeChecked(TypeCheckingMode.SKIP)
     static F<ResultSet, GroovyRowResult> rowResult() {
-        { ResultSet rs ->
-            rs.toRowResult()
-        } as F
+//        return new F<ResultSet, GroovyRowResult>() {
+//            @Override
+//            GroovyRowResult f(ResultSet resultSet) {
+//                resultSet.toRowResult()
+//            }
+//        }
+        def f = { ResultSet rs -> rs.toRowResult() }
+        def g = f as F<ResultSet, GroovyRowResult>
+        g
     }
 
     static <A, B> B foldRowResult(Sql sql, String query, F<Stream<GroovyRowResult>, B> g) {

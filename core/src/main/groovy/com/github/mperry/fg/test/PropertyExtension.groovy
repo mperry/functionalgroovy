@@ -1,7 +1,11 @@
 package com.github.mperry.fg.test
 
+import fj.Show
 import fj.Unit
+import fj.test.CheckResult
 import fj.test.Property
+import groovy.transform.TypeChecked
+import groovy.transform.TypeCheckingMode
 
 import static org.junit.Assert.assertTrue
 
@@ -12,28 +16,23 @@ import static org.junit.Assert.assertTrue
  * Time: 1:46 AM
  * To change this template use File | Settings | File Templates.
  */
+@TypeChecked
 class PropertyExtension {
 
-	static Unit checkOkWithSummary(Property p) {
-		def cr = p.check()
-		cr.printlnSummary()
-		assertTrue(cr.isOk())
-		Unit.unit()
-	}
-
-	static Unit checkOkWithNullableSummary(Property p) {
+	static CheckResult checkOkWithSummary(Property p) {
 		checkBooleanWithNullableSummary(p, true)
-//		def cr = p.check()
-//		cr.printlnSummaryNullable()
-//		assertTrue(cr.isOk())
-//		Unit.unit()
 	}
 
-	static Unit checkBooleanWithNullableSummary(Property p, boolean b) {
+	static CheckResult checkOkWithNullableSummary(Property p) {
+		checkBooleanWithNullableSummary(p, true)
+	}
+
+    @TypeChecked(TypeCheckingMode.SKIP)
+	static CheckResult checkBooleanWithNullableSummary(Property p, boolean b) {
 		def cr = p.check()
-		cr.printlnSummaryNullable()
+		CheckResultCompanion.summaryNullable().println(cr)
 		assertTrue(cr.isOk() == b)
-		Unit.unit()
+		cr
 	}
 
 

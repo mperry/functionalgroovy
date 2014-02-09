@@ -1,6 +1,7 @@
 package com.github.mperry.fg
 
 import groovy.transform.TypeChecked
+import groovy.transform.TypeCheckingMode
 
 /**
  * Created with IntelliJ IDEA.
@@ -9,6 +10,7 @@ import groovy.transform.TypeChecked
  * Time: 12:36 AM
  * To change this template use File | Settings | File Templates.
  */
+@TypeChecked
 class Comprehension {
 
 	private static final String GUARD = "guard"
@@ -45,7 +47,7 @@ class Comprehension {
 	 * lastVar in the context
 	 * strucutre must have map, filter and bind implemented
 	 */
-	//	@TypeChecked
+    @TypeChecked(TypeCheckingMode.SKIP)
 	private def process(Closure<?> yield, List<Generator> gs, Map<String, ?> context, def structure, String lastVar) {
 		if (gs.size() == 0) {
 			structure.map {
@@ -61,7 +63,7 @@ class Comprehension {
 				}
 				process(yield, tail, context, s, lastVar)
 			} else {
-				structure.bind {
+				structure.flatMap {
 					def c = context + [(lastVar): it]
 					process(yield, tail, c, executeGenerator(head.func, c), head.name)
 				}
@@ -74,7 +76,7 @@ class Comprehension {
 		name == GUARD
 	}
 
-//	@TypeChecked
+	@TypeChecked(TypeCheckingMode.SKIP)
 	private void methodMissing(String name, args) {
 		addGenerator(new Generator(name: name, func: args[0], guard: isGuard(name)))
 	}

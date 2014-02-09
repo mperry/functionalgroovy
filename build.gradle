@@ -1,13 +1,70 @@
 
-apply from: "properties.gradle"
-
-defaultTasks 'build'
+allprojects {
+	defaultTasks 'build'
+	
+}
 
 subprojects {
 	apply plugin: "signing"
 	apply plugin: "groovy"
 	apply plugin: "java"
 	apply plugin: "maven"
+
+    ext {
+        snap = "-SNAPSHOT"
+    }
+	version = "0.4$snap"
+
+	ext {
+        consumeVersion = version
+
+        // sonatypeUsername and sonatypePassword stored in %USERPROFILE%/.gradle/gradle.properties,
+        // otherwise override with -PsonatypeUsername=user -PsonatypePassword=pwd
+        if (!project.hasProperty("sonatypeUsername")) {
+            sonatypeUsername = ""
+        }
+        if (!project.hasProperty("sonatypePassword")) {
+            sonatypePassword = ""
+        }
+//        println "Sonatype credentials: sonatypeUsername $sonatypeUsername sonatypePassword $sonatypePassword"
+
+		sonatypeBaseUrl = "https://oss.sonatype.org"
+		sonatypeSnapshotUrl = "$sonatypeBaseUrl/content/repositories/snapshots/"
+        sonatypeRepositoryUrl = "$sonatypeBaseUrl/content/groups/public"
+		sonatypeReleaseUrl = "$sonatypeBaseUrl/service/local/staging/deploy/maven2/"
+        sonatypeUploadUrl = version.endsWith(snap) ? sonatypeSnapshotUrl : sonatypeReleaseUrl
+
+		projectUrl = "https://github.com/mperry/functionalgroovy"
+		projectName = "functionalgroovy"
+		pomProjectName = "FunctionalGroovy"
+		baseJarName = "$projectName-$name"
+		groupName = "com.github.mperry"
+		scmGitFile = "scm:git@github.com:mperry/functionalgroovy.git"
+		projectDescription = "FunctionalGroovy enhances FunctionalJava for Groovy"
+		sourceCompatibility = "1.7"
+		founder = "Mark Perry"
+		founderUsername = "mperry"
+		organisation = groupName
+		groovyVersion = "2.1.6"
+
+		gradleGroovy = "org.codehaus.groovy:groovy-all:$groovyVersion"
+		gradleFj = "org.functionaljava:functionaljava:3.1"
+		gradleJunit = "junit:junit:4.10"
+
+	}
+
+	group = project.groupName
+
+	repositories {
+		mavenCentral()
+	}
+
+	jar {
+		baseName baseJarName
+		manifest {
+			attributes 'Created-By': project.founder, 'Signature-Version': project.version
+		}
+	}
 
 	task groovydocJar(type: Jar, dependsOn: groovydoc) {
 		classifier = 'javadoc'
@@ -25,50 +82,53 @@ subprojects {
 		archives sourcesJar
 	}
 
+    signing {
+        sign configurations.archives
+    }
+
+    uploadArchives.enabled = false
 	uploadArchives {
 		repositories {
 			mavenDeployer {
-				repository(url: sonatypeSnapshotUrl) {
+                beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+				repository(url: sonatypeUploadUrl) {
 					authentication(userName: sonatypeUsername, password: sonatypePassword)
 				}
+				pom {
+					groupId = project.groupName
+					project {
+						name pomProjectName
+						packaging 'jar'
+						description projectDescription
+						url projectUrl
 
-				pom.project {
-					name 'FunctionalGroovy'
-					packaging 'jar'
-					description 'FunctionalGroovy enhances FunctionalJava with Groovy idioms'
-					url 'https://github.com/mperry/functionalgroovy'
+						scm {
+							url "${projectUrl}.git"
+							connection scmGitFile
+							developerConnection scmGitFile
+						}
 
-					scm {
-						url 'https://github.com/mperry/functionalgroovy.git'
-						connection 'scm:git@github.com:mperry/functionalgroovy.git'
-						developerConnection 'scm:git@github.com:mperry/functionalgroovy.git'
-					}
+						licenses {
+							license {
+								name 'The Apache Software License, Version 2.0'
+								url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+								distribution 'repo'
+							}
+						}
 
-					licenses {
-						license {
-							name 'The Apache Software License, Version 2.0'
-							url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-							distribution 'repo'
+						developers {
+							developer {
+								id project.founderUsername
+								name project.founder
+							}
 						}
 					}
 
-					developers {
-						developer {
-							id 'mperry'
-							name 'Mark Perry'
-						}
-					}
 				}
+
 			}
 		}
 	}
 
-}
-
-task clean << {
-	file("$projectDir/build").deleteDir()
-}
-
-task wrapper(type: Wrapper) {
-  gradleVersion = '1.6'
 }

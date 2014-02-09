@@ -20,6 +20,8 @@ class Generator {
 	Closure func
 	Boolean guard = false
 
+    static Boolean ALLOW_UKNOWN_TYPES = true
+
 	// left shift should only accept a Functor or Monad
 
 	def leftShift(final Stream s) {
@@ -43,7 +45,12 @@ class Generator {
 	}
 
 	def leftShift(final Object o) {
-		throw new UnsupportedOperationException("Comprehension not supported for object $o with class ${o.class.canonicalName}")
+        if (ALLOW_UKNOWN_TYPES) {
+            func = { o }
+        } else {
+            throw new UnsupportedOperationException("Comprehension not supported for object $o with class ${o.class.canonicalName}")
+        }
+
 	}
 
 }

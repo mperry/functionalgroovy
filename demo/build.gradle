@@ -1,36 +1,18 @@
 
-apply plugin: 'java'
-apply plugin: 'groovy'
 apply plugin: 'application'
-//apply plugin: "maven"
 
-defaultTasks 'build'
-
-mainClassName = "com.github.mperry.fg.IO3Demo"
+mainClassName = "com.github.mperry.fg.SimpleIODemoFunctional"
 
 ext {
-	artifactId = name
-	applicationName = projectName
 }
 
 run {
 	standardInput = System.in
 }
 
-repositories {
-	mavenCentral()
-}
-
 dependencies {
-	compile project(":functionalgroovy-main")
-	compile "org.codehaus.groovy:groovy-all:$groovyVersion"
-	compile "org.functionaljava:functionaljava:3.1"
-	compile "junit:junit:4.10"
+	compile project(":main")
+	compile gradleGroovy
+	compile gradleFj
+	testCompile gradleJunit
 }
-
-//jar {
-//	baseName artifactId
-//	manifest {
-//		attributes 'Created-By': founder, 'Signature-Version': version
-//	}
-//}

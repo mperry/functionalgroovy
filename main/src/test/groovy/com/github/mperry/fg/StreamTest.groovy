@@ -1,5 +1,8 @@
 package com.github.mperry.fg
 
+import fj.P1
+import groovy.transform.TypeChecked
+import groovy.transform.TypeCheckingMode
 import org.junit.Test
 import fj.data.Stream
 
@@ -15,12 +18,13 @@ import fj.F2
  * Time: 2:03 AM
  * To change this template use File | Settings | File Templates.
  */
+@TypeChecked
 class StreamTest {
 
 	@Test
 	void simple() {
 		def s = Stream.range(1)
-		def s2 = s.filter {it % 2 == 0}.take(4)
+		def s2 = s.filter { Integer it -> it % 2 == 0}.take(4)
 		assertTrue(s2.toJList() == [2, 4, 6, 8])
 	}
 
@@ -49,7 +53,7 @@ class StreamTest {
 
 	@Test
 	void mapWithSubstreams() {
-		def b = 1.to(2).map{it.to(4)}
+		def b = 1.to(2).map{ Integer it -> it.to(4)}
 		assertTrue(b.toJList() == [[1, 2, 3, 4], [2, 3, 4]])
 	}
 
@@ -66,9 +70,10 @@ class StreamTest {
 	}
 
 	@Test
+    @TypeChecked(TypeCheckingMode.SKIP)
 	void fold() {
 		def s = 1.to(5)
-		def f2 = {Integer x -> {Integer y -> x + y} as F } as F
+		def f2 = { Integer x -> { Integer y -> x + y } as F } as F
 		def a = s.foldLeft(f2, 0)
 		def b = s.foldLeft({Integer x, Integer y -> x + y} as F2, 0)
 		def c = s.fold(0, {Integer x, Integer y -> x + y})
@@ -77,5 +82,20 @@ class StreamTest {
 		assertTrue(c == 15)
 	}
 
+    @Test
+    @TypeChecked(TypeCheckingMode.SKIP)
+    void streamFlatMapOverflows() {
+        def max = 1000000
+        def p = { ->
+            def s = 1.to(max).map { Integer i ->
+                [i, i + 1]
+            }.flatMap { List<Integer> list ->
+                Stream.stream(list[0], list[1])
+            }
+            def list = s.toJavaList()
+            println list
+        } as P1
+        assertTrue(p.throwsError(StackOverflowError.class))
+    }
 
 }

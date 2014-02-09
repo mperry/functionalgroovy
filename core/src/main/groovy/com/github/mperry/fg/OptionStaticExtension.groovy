@@ -5,6 +5,7 @@ import fj.F2
 import fj.F3
 import fj.data.Option
 import groovy.transform.TypeChecked
+import groovy.transform.TypeCheckingMode
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,14 +14,14 @@ import groovy.transform.TypeChecked
  * Time: 12:40 PM
  * To change this template use File | Settings | File Templates.
  */
+@TypeChecked
 class OptionStaticExtension {
 
-//	@TypeChecked
+    @TypeChecked(TypeCheckingMode.SKIP)
 	public static <A> Option<A> unit(Option option, A value) {
 		Option.<A>some(value)
 	}
 
-//	@TypeChecked
 	public static <A, B> F<Option<A>, Option<B>> liftM1(Option o, F<A, B> f) {
 		{ Option<A> oa, Option<B> ob ->
 			oa.map({ A a ->
@@ -29,7 +30,6 @@ class OptionStaticExtension {
 		} as F
 	}
 
-//	@TypeChecked
 	public static <A, B, C> F2<Option<A>, Option<B>, Option<C>> liftM2(Option o, F2<A, B, C> f) {
 		{
 			Option<A> oa, Option<B> ob ->
@@ -41,7 +41,6 @@ class OptionStaticExtension {
 		} as F2
 	}
 
-	@TypeChecked
 	public static <A, B, C, D> F3<Option<A>, Option<B>, Option<C>, Option<D>> liftM3(Option o, F3<A, B, C, D> f) {
 		{
 			Option<A> oa, Option<B> ob, Option<C> oc ->
@@ -54,6 +53,5 @@ class OptionStaticExtension {
 				} as F)
 		} as F3
 	}
-
 
 }

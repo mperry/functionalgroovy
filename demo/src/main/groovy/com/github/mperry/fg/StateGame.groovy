@@ -10,6 +10,7 @@ import org.junit.Assert
 import org.junit.Test
 
 import static fj.P.*
+import static org.junit.Assert.*
 
 
 /**
@@ -24,15 +25,9 @@ class StateGame {
 
     @Test
     void test1() {
-        def s = playGame("tiitd")
-        def i = s.eval(P.p(true, 0))
-        println i
         def r = run([P.p("tiitd", true, 0), P.p("tiitd", false, 0)])
         def expected = [-1, 2]
-
-        println r
-        Assert.assertTrue(r == expected)
-
+        assertTrue(r == expected)
     }
 
     List<Integer> run(List<P3<String, Boolean, Integer>> list) {
@@ -55,9 +50,7 @@ class StateGame {
             StateM.put(P.p(!on, score))
         } else {
             StateM.put(P.p(on, score))
-
         }
-
     }
 
     StateM<P2<Boolean, Integer>, Integer> playGame(String s) {
@@ -67,33 +60,12 @@ class StateGame {
             }
         } else {
             StateM.<P2<Boolean, Integer>>get().flatMap { P2<Boolean, Integer> p ->
-                def h = s[0]
-
-                def on = p._1()
-                def score = p._2()
-                def result = command(h, p)
-//                if (on && h == increment) {
-//                    result = StateM.put(P.p(on, score + 1))
-//                } else if (on && h == decrement) {
-//                    result = StateM.put(P.p(on, score - 1))
-//                } else if (h == toggle) {
-//                    result = StateM.put(P.p(!on, score))
-//                } else {
-//                    result = StateM.put(P.p(on, score))
-//
-//                }
+                def result = command(s[0], p)
                 result.flatMap({ Unit u ->
-                    def tail = s.substring(1)
-                    playGame(tail)
-
+                    playGame(s.substring(1))
                 } as F)
-
-
             }
-
         }
-
-
     }
 
 }

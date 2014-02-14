@@ -26,6 +26,11 @@ class StateM<S, A> {
         new StateM<S1, A1>(f)
     }
 
+    @TypeChecked(TypeCheckingMode.SKIP)
+    static <S1, A1> StateM<S1, A1> unit(A1 a) {
+        lift({ S1 s -> P.p(a, s)} as F)
+    }
+
     def <B> StateM<S, B> map(F<A, B> f) {
         StateM.lift({ S s ->
             def p2 = run.f(s)
@@ -68,9 +73,7 @@ class StateM<S, A> {
 
     @TypeChecked(TypeCheckingMode.SKIP)
     static <S1> StateM<S1, S1> get() {
-        lift({
-            S1 s -> P.p(s, s)
-        } as F)
+        lift({ S1 s -> P.p(s, s) } as F)
     }
 
     @TypeChecked(TypeCheckingMode.SKIP)
@@ -80,6 +83,10 @@ class StateM<S, A> {
 
     A eval(S s) {
         run(s)._1()
+    }
+
+    S exec(S s) {
+        run(s)._2()
     }
 
 }

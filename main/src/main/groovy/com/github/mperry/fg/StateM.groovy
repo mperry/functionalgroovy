@@ -3,6 +3,7 @@ package com.github.mperry.fg
 import fj.F
 import fj.P
 import fj.P2
+import fj.Unit
 import groovy.transform.Canonical
 import groovy.transform.TypeChecked
 import groovy.transform.TypeCheckingMode
@@ -66,8 +67,15 @@ class StateM<S, A> {
     }
 
     @TypeChecked(TypeCheckingMode.SKIP)
-    static StateM<S, S> get() {
-        lift({ S s -> P.p(s, s) } as F)
+    static <S1> StateM<S1, S1> get() {
+        lift({
+            S1 s -> P.p(s, s)
+        } as F)
+    }
+
+    @TypeChecked(TypeCheckingMode.SKIP)
+    static <S1, Z> StateM<S1, Unit> put(S1 s) {
+        StateM.lift({ Z z -> P.p(Unit.unit(), s)} as F)
     }
 
     A eval(S s) {

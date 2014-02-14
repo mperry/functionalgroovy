@@ -31,21 +31,21 @@ class LensTest {
         String street
     }
 
-    def nameLens = Lens.lift(
+    Lens<Person, String> nameLens = Lens.lift(
             { Person p -> p.name } as F,
             { Person p, String name -> new Person(name, p.age, p.address) } as F2
     )
 
-    def ageLens = new Lens<Person, Integer>(
+    Lens<Person, Integer> ageLens = new Lens<Person, Integer>(
             { Person p -> p.age } as F,
             { Person p, Integer i -> new Person(p.name, i, p.address) } as F2
     )
 
-    def addressLens = new Lens<Person, Address>(
+    Lens<Person, Address> addressLens = new Lens<Person, Address>(
             { Person p -> p.address } as F,
             { Person p, Address a -> new Person(p.name, p.age, a) } as F2
     )
-    def streetLens = new Lens<Address, String>(
+    Lens<Address, String> streetLens = new Lens<Address, String>(
             { Address a -> a.street } as F,
             { Address a, String s -> new Address(a.number, s) } as F2
     )
@@ -112,6 +112,43 @@ class LensTest {
         println "person $p2"
         assertTrue(p2.age == oldAge + add && p2.name == oldName + addSurname &&
                 p2.address == new Address(oldStreetNumber, streetMod + oldStreet))
+    }
+
+    Person eval(StateM<Person, Person> state) {
+        (Person) state.eval(person)
+    }
+
+    StateM<Person, Person> createState(Integer add, String addSurname, String streetMod) {
+        def street = addressLens.andThen(streetLens)
+        def state = ageLens.mod { Integer it -> it + 2 }.flatMap { Integer age1 ->
+            street.state().flatMap { String street1 ->
+                street.update(streetMod + street1).flatMap { String street2 ->
+                    nameLens.state().flatMap { String name1 ->
+                        nameLens.update(name1 + addSurname).flatMap { String newName ->
+                            StateM.<Person>get().map { Person p ->
+                                p
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        state
+    }
+
+    @Test
+//    @TypeChecked(TypeCheckingMode.SKIP)
+    void test2() {
+        def add = 2
+        def addSurname = " Smith"
+        def streetMod = "Green "
+
+        def state = createState(add, addSurname, streetMod)
+        def p2 = eval(state)
+        println "person $p2"
+        assertTrue(p2.age == oldAge + add && p2.name == oldName + addSurname &&
+                p2.address == new Address(oldStreetNumber, streetMod + oldStreet))
+
     }
 
 }

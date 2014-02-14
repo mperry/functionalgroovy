@@ -39,14 +39,13 @@ class StateGame {
     }
 
     StateM<P2<Boolean, Integer>, Unit> command(String s, P2<Boolean, Integer> p) {
-        def h = s
         def on = p._1()
         def score = p._2()
-        if (on && h == increment) {
+        if (on && s == increment) {
             StateM.put(P.p(on, score + 1))
-        } else if (on && h == decrement) {
+        } else if (on && s == decrement) {
             StateM.put(P.p(on, score - 1))
-        } else if (h == toggle) {
+        } else if (s == toggle) {
             StateM.put(P.p(!on, score))
         } else {
             StateM.put(P.p(on, score))

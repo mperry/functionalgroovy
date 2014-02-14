@@ -74,8 +74,8 @@ class StateM<S, A> {
     }
 
     @TypeChecked(TypeCheckingMode.SKIP)
-    static <S1, Z> StateM<S1, Unit> put(S1 s) {
-        StateM.lift({ Z z -> P.p(Unit.unit(), s)} as F)
+    static <S1> StateM<S1, Unit> put(S1 s) {
+        StateM.lift({ Object z -> P.p(Unit.unit(), s)} as F)
     }
 
     A eval(S s) {

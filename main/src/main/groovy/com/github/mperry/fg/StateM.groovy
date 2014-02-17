@@ -15,14 +15,14 @@ import groovy.transform.TypeCheckingMode
 @Canonical
 class StateM<S, A> {
 
-    F<S, P2<A, S>> run
+    F<S, P2<S, A>> run
 
-    P2<A, S> run(S s) {
+    P2<S, A> run(S s) {
         run.f(s)
     }
 
     @TypeChecked(TypeCheckingMode.SKIP)
-    static <S1, A1> StateM<S1, A1> lift(F<S1, P2<A1, S1>> f) {
+    static <S1, A1> StateM<S1, A1> lift(F<S1, P2<S1, A1>> f) {
         new StateM<S1, A1>(f)
     }
 
@@ -36,14 +36,14 @@ class StateM<S, A> {
 
     @TypeChecked(TypeCheckingMode.SKIP)
     static <S1, A1> StateM<S1, A1> unit(A1 a) {
-        lift({ S1 s -> P.p(a, s)} as F)
+        lift({ S1 s -> P.p(s, a)} as F)
     }
 
     def <B> StateM<S, B> map(F<A, B> f) {
         StateM.lift({ S s ->
             def p2 = run.f(s)
-            def b = f.f(p2._1())
-            P.p(b, p2._2())
+            def b = f.f(p2._2())
+            P.p(p2._1(), b)
         } as F)
     }
 
@@ -51,7 +51,7 @@ class StateM<S, A> {
         StateM.<S>get().flatMap { S s ->
             StateM.lift({ S s2 ->
 //                def s3 = f.f(s)
-                P.p(Unit.unit(), f.f(s))
+                P.p(f.f(s), Unit.unit())
             } as F)
 
         }
@@ -61,8 +61,9 @@ class StateM<S, A> {
         map(c as F)
     }
 
-    def <B> StateM<S, B> mapState(F<P2<A, S>, P2<B, S>> f) {
-        lift({ S s ->
+    @TypeChecked(TypeCheckingMode.SKIP)
+    def <B> StateM<S, B> mapState(F<P2<S, A>, P2<S, B>> f) {
+        new StateM<S, B>({ S s ->
             def p = run(s)
             f.f(p)
         } as F)
@@ -79,8 +80,8 @@ class StateM<S, A> {
     def <B> StateM<S, B> flatMap(F<A, StateM<S, B>> f) {
         new StateM<S, B>({ S s ->
             def p = run.f(s)
-            def a = p._1()
-            def s2 = p._2()
+            def a = p._2()
+            def s2 = p._1()
             def smb = f.f(a)
             smb.run.f(s2)
         } as F)
@@ -92,7 +93,7 @@ class StateM<S, A> {
     }
 
     @Override
-    def <S1, A1> StateM<S1, A1> unit(F<S1, P2<A1, S1>> f) {
+    def <S1, A1> StateM<S1, A1> unit(F<S1, P2<S1, A1>> f) {
         lift(f)
     }
 
@@ -113,7 +114,7 @@ class StateM<S, A> {
     StateM<S, S> toValue() {
         lift({ S s ->
             def p = run.f(s)
-            def s2 = p._2()
+            def s2 = p._1()
             P.p(s2, s2)
         } as F)
 
@@ -121,15 +122,15 @@ class StateM<S, A> {
 
     @TypeChecked(TypeCheckingMode.SKIP)
     static <S1> StateM<S1, Unit> put(S1 s) {
-        StateM.lift({ Object z -> P.p(Unit.unit(), s)} as F)
+        StateM.lift({ Object z -> P.p(s, Unit.unit())} as F)
     }
 
     A eval(S s) {
-        run(s)._1()
+        run(s)._2()
     }
 
     S exec(S s) {
-        run(s)._2()
+        run(s)._1()
     }
 
     @TypeChecked(TypeCheckingMode.SKIP)

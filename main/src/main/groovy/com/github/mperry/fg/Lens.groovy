@@ -44,7 +44,7 @@ class Lens<A, B> {
     StateM<A, B> mod(F<B, B> f) {
         StateM.lift({ A a ->
             def b = f.f(get(a))
-            P.p(b, set(a, b))
+            P.p(set(a, b), b)
         } as F)
     }
 
@@ -64,7 +64,7 @@ class Lens<A, B> {
         // I think this is ok as the trait States has the method "state"
         // def state[S, A](f: S => (S, A)): State[S, A] = new State[S, A] {
         // the order of the tuple returned by f is swapped compared to me
-        StateM.lift({ A a -> P.p( f.f(get(a)), a )} as F)
+        StateM.lift({ A a -> P.p(a, f.f(get(a)))} as F)
     }
 
     def <C> StateM<A, C> flatMap(F<B, StateM<A, C>> f) {
@@ -100,7 +100,7 @@ class Lens<A, B> {
     @TypeChecked(TypeCheckingMode.SKIP)
     StateM<A, B> update(B b) {
         StateM.lift({ A a ->
-            P.p(b, set(a, b))
+            P.p(set(a, b), b)
         } as F)
     }
 
@@ -110,7 +110,7 @@ class Lens<A, B> {
 
     @TypeChecked(TypeCheckingMode.SKIP)
     StateM<A, B> state() {
-        StateM.lift({ A a -> P.p(get(a), a)} as F)
+        StateM.lift({ A a -> P.p(a, get(a))} as F)
     }
 
     static <K, V> Lens<Map<K, V>, Option<V>> mapLens(K k) {

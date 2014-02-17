@@ -28,7 +28,7 @@ class StateTest {
     @TypeChecked(TypeCheckingMode.SKIP)
     void test1() {
 
-        def s = StateM.lift({ Random r -> P.p(r.nextBoolean(), r) } as F)
+        def s = StateM.lift({ Random r -> P.p(r, r.nextBoolean()) } as F)
         def s2 = foreach {
             a << s
             b << s
@@ -37,7 +37,7 @@ class StateTest {
             yield { [a, b, c, d] }
         }
         def p = s2.run(random)
-        assertTrue(p._1() == shortOracle)
+        assertTrue(p._2() == shortOracle)
     }
 
     void print(P2 p) {
@@ -49,7 +49,7 @@ class StateTest {
      */
     @Test
     void test2() {
-        def st1 = StateM.lift({ Random r -> P.p(r.nextBoolean(), r) } as F)
+        def st1 = StateM.lift({ Random r -> P.p(r, r.nextBoolean()) } as F)
         def st2 = st1.flatMap({ Boolean a ->
             st1.flatMap({ Boolean b ->
                 st1.flatMap({ Boolean c ->
@@ -58,7 +58,7 @@ class StateTest {
             } as F)
         } as F)
         def p = st2.run(random)
-        assertTrue(p._1() == shortOracle)
+        assertTrue(p._2() == shortOracle)
     }
 
     /**
@@ -69,19 +69,19 @@ class StateTest {
     void test3() {
         def st1 = StateM.lift({ Random r ->
             def b = r.nextBoolean()
-            P.p(P.p(b, [b]), r)
+            P.p(r, P.p(b, [b]))
         } as F)
         def str1 = Stream.iterate({ StateM<Random, Boolean> st2 ->
             st2.flatMap({ P2<Boolean, List<Boolean>> p2 ->
                 StateM.lift({ Random r ->
                     def b = r.nextBoolean()
-                    P.p(P.p(b, p2._2() + b), r)
+                    P.p(r, P.p(b, p2._2() + b))
                 } as F)
             } as F)
         } as F, st1)
         def p = str1.take(6).last().run(random)
 //        print(p._1())
-        assertTrue(p._1()._2() == oracle)
+        assertTrue(p._2()._2() == oracle)
     }
 
     /**
@@ -90,7 +90,7 @@ class StateTest {
     @Test
     @TypeChecked(TypeCheckingMode.SKIP)
     void test4() {
-        def st1 = StateM.lift({ Random r -> P.p(r.nextBoolean(), r) } as F)
+        def st1 = StateM.lift({ Random r -> P.p(r, r.nextBoolean()) } as F)
         def str1 = Stream.repeat(st1)
 
         def result = str1.take(6).foldLeft({ StateM<Random, List<Boolean>> acc ->
@@ -101,10 +101,10 @@ class StateTest {
                         }
                     }
                 } as F
-        } as F, StateM.lift({ Random r -> P.p([], r)} as F))
+        } as F, StateM.lift({ Random r -> P.p(r, [])} as F))
         def p = result.run(random)
 //        println(p._1())
-        assertTrue(p._1() == oracle)
+        assertTrue(p._2() == oracle)
     }
 
 }

@@ -26,6 +26,14 @@ class StateM<S, A> {
         new StateM<S1, A1>(f)
     }
 
+//    @TypeChecked(TypeCheckingMode.SKIP)
+    static <S1> StateM<S1, S1> liftS(F<S1, S1> f) {
+        StateM.<S1, S1>lift({ S1 s ->
+            def s2 = f.f(s)
+            P.p(s2, s2)
+        } as F)
+    }
+
     @TypeChecked(TypeCheckingMode.SKIP)
     static <S1, A1> StateM<S1, A1> unit(A1 a) {
         lift({ S1 s -> P.p(a, s)} as F)
@@ -39,8 +47,25 @@ class StateM<S, A> {
         } as F)
     }
 
+    static StateM<S, Unit> modify(F<S, S> f) {
+        StateM.<S>get().flatMap { S s ->
+            StateM.lift({ S s2 ->
+//                def s3 = f.f(s)
+                P.p(Unit.unit(), f.f(s))
+            } as F)
+
+        }
+    }
+
     def <B> StateM<S, B> map(Closure<B> c) {
         map(c as F)
+    }
+
+    def <B> StateM<S, B> mapState(F<P2<A, S>, P2<B, S>> f) {
+        lift({ S s ->
+            def p = run(s)
+            f.f(p)
+        } as F)
     }
 
     @Override
@@ -73,7 +98,25 @@ class StateM<S, A> {
 
     @TypeChecked(TypeCheckingMode.SKIP)
     static <S1> StateM<S1, S1> get() {
-        lift({ S1 s -> P.p(s, s) } as F)
+        StateM.<S1>lift({ S1 s -> P.p(s, s) } as F)
+    }
+
+    StateM<S, S> gets() {
+        StateM.lift({ S s ->
+            def p = run(s)
+            def s2 = p._2()
+            P.p(s2, s2)
+        } as F)
+
+    }
+
+    StateM<S, S> toValue() {
+        lift({ S s ->
+            def p = run.f(s)
+            def s2 = p._2()
+            P.p(s2, s2)
+        } as F)
+
     }
 
     @TypeChecked(TypeCheckingMode.SKIP)
@@ -87,6 +130,15 @@ class StateM<S, A> {
 
     S exec(S s) {
         run(s)._2()
+    }
+
+    @TypeChecked(TypeCheckingMode.SKIP)
+    StateM<S, A> withs(F<S, S> f) {
+        lift(f.andThen(run))
+    }
+
+    static StateM<S, A> gets(F<S, A> f) {
+        StateM.get().map({ S s -> f.f(s)} as F)
     }
 
 }

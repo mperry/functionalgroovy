@@ -2,9 +2,12 @@ package com.github.mperry.fg
 
 import fj.F
 import fj.P
+import fj.P1
 import fj.P2
 import fj.P3
 import fj.Unit
+import fj.control.Trampoline
+import fj.data.Stream
 import groovy.transform.TypeChecked
 import org.junit.Assert
 import org.junit.Test
@@ -23,11 +26,27 @@ class StateGame {
     String decrement = "d"
     String toggle = "t"
 
+    String overflow = "tiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitdtiitd"
+
     @Test
     void test1() {
         def r = run([P.p("tiitd", true, 0), P.p("tiitd", false, 0)])
         def expected = [-1, 2]
         assertTrue(r == expected)
+    }
+
+    @Test
+    void testOverflow() {
+        def p = { ->
+            playEval(overflow, false, 0)
+        } as P1
+//        assertTrue(p.throwsError(StackOverflowError.class))
+        assertTrue(p.throwsStackOverflow())
+    }
+
+    @Test
+    void testNoOverflow() {
+        // TODO, I suspect I need to use State transformer here
     }
 
     List<Integer> run(List<P3<String, Boolean, Integer>> list) {
@@ -36,6 +55,12 @@ class StateGame {
             def i = s.eval(P.p(p._2(), p._3()))
             i
         }
+    }
+
+    Integer playEval(String s, Boolean toggle, Integer start) {
+        def state = playGame(s)
+        def i = state.eval(P.p(toggle, start))
+        (Integer) i
     }
 
     StateM<P2<Boolean, Integer>, Unit> command(String s, P2<Boolean, Integer> p) {

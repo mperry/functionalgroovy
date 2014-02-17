@@ -34,6 +34,10 @@ class P1Extension {
         v.isFail() && ObjectExtension.isSubInstanceOf(v.fail(), error)
     }
 
+    static <A> Boolean throwsStackOverflow(P1<A> p) {
+        throwsError(p, StackOverflowError.class)
+    }
+
     static <A> Boolean throwsError(P1<A> p) {
         validateWithError(p).isFail()
     }

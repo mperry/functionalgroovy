@@ -70,7 +70,7 @@ class StateM<S, A> {
 
     @Override
     @TypeChecked(TypeCheckingMode.SKIP)
-    def <B, C, D> StateM<S, C> flatMap(StateM<S, B> mb, F<B, StateM<S, C>> f) {
+    static <S, B, C> StateM<S, C> flatMap(StateM<S, B> mb, F<B, StateM<S, C>> f) {
         mb.flatMap(f)
     }
 

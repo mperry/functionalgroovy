@@ -41,7 +41,7 @@ class StateM<S, A> {
 
     def <B> StateM<S, B> map(F<A, B> f) {
         StateM.lift({ S s ->
-            def p2 = run.f(s)
+            def p2 = run(s)
             def b = f.f(p2._2())
             P.p(p2._1(), b)
         } as F)
@@ -79,11 +79,11 @@ class StateM<S, A> {
     @Override
     def <B> StateM<S, B> flatMap(F<A, StateM<S, B>> f) {
         new StateM<S, B>({ S s ->
-            def p = run.f(s)
+            def p = run(s)
             def a = p._2()
             def s2 = p._1()
             def smb = f.f(a)
-            smb.run.f(s2)
+            smb.run(s2)
         } as F)
     }
 
@@ -113,7 +113,7 @@ class StateM<S, A> {
 
     StateM<S, S> toValue() {
         lift({ S s ->
-            def p = run.f(s)
+            def p = run(s)
             def s2 = p._1()
             P.p(s2, s2)
         } as F)

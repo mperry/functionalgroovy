@@ -99,7 +99,8 @@ class State<S, A> {
 
     @TypeChecked(TypeCheckingMode.SKIP)
     static <S1> State<S1, S1> get() {
-        State.<S1>lift({ S1 s -> P.p(s, s) } as F)
+        def f = { S1 s -> P.p(s, s) }
+        State.<S1>lift(f as F)
     }
 
     State<S, S> gets() {

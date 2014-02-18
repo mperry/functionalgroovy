@@ -106,19 +106,9 @@ class State<S, A> {
     State<S, S> gets() {
         State.lift({ S s ->
             def p = run(s)
-            def s2 = p._2()
-            P.p(s2, s2)
-        } as F)
-
-    }
-
-    State<S, S> toValue() {
-        lift({ S s ->
-            def p = run(s)
             def s2 = p._1()
             P.p(s2, s2)
         } as F)
-
     }
 
     @TypeChecked(TypeCheckingMode.SKIP)

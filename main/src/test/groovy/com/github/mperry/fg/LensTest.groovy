@@ -9,7 +9,7 @@ import org.junit.Before
 import org.junit.Test
 
 import static com.github.mperry.fg.Comprehension.foreach
-import static com.github.mperry.fg.StateM.get
+import static State.get
 import static junit.framework.Assert.assertTrue
 
 /**
@@ -99,7 +99,7 @@ class LensTest {
         def name = nameLens
         def age = ageLens
 
-        StateM state = foreach {
+        State state = foreach {
             age1 << age.mod { it + 2 }
             street1 << street.state()
             street2 << { street.update(streetMod + street1) }
@@ -114,18 +114,18 @@ class LensTest {
                 p2.address == new Address(oldStreetNumber, streetMod + oldStreet))
     }
 
-    Person eval(StateM<Person, Person> state) {
+    Person eval(State<Person, Person> state) {
         (Person) state.eval(person)
     }
 
-    StateM<Person, Person> createState(Integer add, String addSurname, String streetMod) {
+    State<Person, Person> createState(Integer add, String addSurname, String streetMod) {
         def street = addressLens.andThen(streetLens)
         def state = ageLens.mod { Integer it -> it + 2 }.flatMap { Integer age1 ->
             street.state().flatMap { String street1 ->
                 street.update(streetMod + street1).flatMap { String street2 ->
                     nameLens.state().flatMap { String name1 ->
                         nameLens.update(name1 + addSurname).flatMap { String newName ->
-                            StateM.<Person>get().map { Person p ->
+                            State.<Person>get().map { Person p ->
                                 p
                             }
                         }

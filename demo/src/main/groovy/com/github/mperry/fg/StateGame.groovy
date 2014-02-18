@@ -6,13 +6,9 @@ import fj.P1
 import fj.P2
 import fj.P3
 import fj.Unit
-import fj.control.Trampoline
-import fj.data.Stream
 import groovy.transform.TypeChecked
-import org.junit.Assert
 import org.junit.Test
 
-import static fj.P.*
 import static org.junit.Assert.*
 
 
@@ -63,27 +59,27 @@ class StateGame {
         (Integer) i
     }
 
-    StateM<P2<Boolean, Integer>, Unit> command(String s, P2<Boolean, Integer> p) {
+    State<P2<Boolean, Integer>, Unit> command(String s, P2<Boolean, Integer> p) {
         def on = p._1()
         def score = p._2()
         if (on && s == increment) {
-            StateM.put(P.p(on, score + 1))
+            State.put(P.p(on, score + 1))
         } else if (on && s == decrement) {
-            StateM.put(P.p(on, score - 1))
+            State.put(P.p(on, score - 1))
         } else if (s == toggle) {
-            StateM.put(P.p(!on, score))
+            State.put(P.p(!on, score))
         } else {
-            StateM.put(P.p(on, score))
+            State.put(P.p(on, score))
         }
     }
 
-    StateM<P2<Boolean, Integer>, Integer> playGame(String s) {
+    State<P2<Boolean, Integer>, Integer> playGame(String s) {
         if (s.length() == 0) {
-            StateM.<P2<Boolean, Integer>>get().map { P2<Boolean, Integer> p ->
+            State.<P2<Boolean, Integer>>get().map { P2<Boolean, Integer> p ->
                 p._2()
             }
         } else {
-            StateM.<P2<Boolean, Integer>>get().flatMap { P2<Boolean, Integer> p ->
+            State.<P2<Boolean, Integer>>get().flatMap { P2<Boolean, Integer> p ->
                 def result = command(s[0], p)
                 result.flatMap({ Unit u ->
                     playGame(s.substring(1))

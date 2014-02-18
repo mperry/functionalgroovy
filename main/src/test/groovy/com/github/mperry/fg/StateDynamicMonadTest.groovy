@@ -43,12 +43,12 @@ class StateDynamicMonadTest {
 
     }
 
-    def <A> void leftIdentity(Monad m, Arbitrary<? extends StateM> arbState,
+    def <A> void leftIdentity(Monad m, Arbitrary<? extends State> arbState,
                               Arbitrary<A> arbAction, Coarbitrary<A> coarbAction) {
         new MonadLaws().leftIdentity(m, arbF(coarbAction, arbState), arbAction)
     }
 
-    void rightIdentity(Monad m, Arbitrary<? extends StateM> arbState) {
+    void rightIdentity(Monad m, Arbitrary<? extends State> arbState) {
         new MonadLaws().rightIdentity(m, arbState)
     }
 
@@ -78,7 +78,7 @@ class StateDynamicMonadTest {
     }
 
     @TypeChecked(TypeCheckingMode.SKIP)
-    def <A> Arbitrary<? extends StateM> arbState(GroovyClassLoader loader, Arbitrary<A> arbAction, Class<?> stateClass,
+    def <A> Arbitrary<? extends State> arbState(GroovyClassLoader loader, Arbitrary<A> arbAction, Class<?> stateClass,
                                                 Class<?> partialStateClass) {
         def text = "{${stateClass.canonicalName} s -> P.p(a, s)}"
         def sh = new GroovyShell(loader)

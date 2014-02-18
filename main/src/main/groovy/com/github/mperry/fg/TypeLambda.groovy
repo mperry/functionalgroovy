@@ -10,7 +10,7 @@ class TypeLambda {
 //        new GroovyClassLoader()
     }
 
-    def <S> Class<? extends StateM<S, ?>> partialStateApplication(GroovyClassLoader loader, Class<S> stateClass) {
+    def <S> Class<? extends State<S, ?>> partialStateApplication(GroovyClassLoader loader, Class<S> stateClass) {
         def stateType = stateClass.simpleName
         def name = "State${stateType}Dynamic"
 
@@ -22,17 +22,17 @@ class TypeLambda {
             import groovy.transform.Canonical
 
             @Canonical
-            class $name<A> extends StateM<$stateType, A> {
+            class $name<A> extends State<$stateType, A> {
 
-                $name(F<$stateType, P2<A, $stateType>> f) {
+                $name(F<$stateType, P2<$stateType, A>> f) {
                     run = f
                 }
 
                 def <B> $name<B> flatMap(F<A, $name<B>> f) {
                     new $name<B>({ $stateType s ->
                         def p = run.f(s)
-                        def a = p._1()
-                        def s2 = p._2()
+                        def a = p._2()
+                        def s2 = p._1()
                         def sib = f.f(a)
                         sib.run.f(s2)
                     } as F)
@@ -45,7 +45,7 @@ class TypeLambda {
         clazz
     }
 
-    def <S> Class<? extends Monad> stateMonad(GroovyClassLoader loader, Class<? extends StateM<S, ?>> partialStateClass, Class<S> stateClass) {
+    def <S> Class<? extends Monad> stateMonad(GroovyClassLoader loader, Class<? extends State<S, ?>> partialStateClass, Class<S> stateClass) {
         def partialStateType = partialStateClass.simpleName
         def stateType = stateClass.simpleName
         def name = "${partialStateType}Monad"
@@ -65,7 +65,7 @@ class TypeLambda {
                 }
 
                 def <B> $partialStateType<B> unit(B b) {
-                    new $partialStateType<B>({ $stateType s -> P.p(b, s) } as F)
+                    new $partialStateType<B>({ $stateType s -> P.p(s, b) } as F)
                 }
 
             }

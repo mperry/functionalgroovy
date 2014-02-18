@@ -41,14 +41,14 @@ class Lens<A, B> {
         set(a, f.f(get(a)))
     }
 
-    StateM<A, B> mod(F<B, B> f) {
-        StateM.lift({ A a ->
+    State<A, B> mod(F<B, B> f) {
+        State.lift({ A a ->
             def b = f.f(get(a))
             P.p(set(a, b), b)
         } as F)
     }
 
-    StateM<A, B> mod(Closure<B> c) {
+    State<A, B> mod(Closure<B> c) {
         mod(c as F)
     }
 
@@ -57,18 +57,18 @@ class Lens<A, B> {
     }
 
     @TypeChecked(TypeCheckingMode.SKIP)
-    def <C> StateM<A, C> map(F<B, C> f) {
+    def <C> State<A, C> map(F<B, C> f) {
         // WARNING: this is implemented differently from
         // http://scalaz.github.io/scalaz/scalaz-2.9.1-6.0.4/doc.sxr/scalaz/Lens.scala.html
         // I have the tuple in the opposite order, i.e. P.p(a, f.f(get(a)))
         // I think this is ok as the trait States has the method "state"
         // def state[S, A](f: S => (S, A)): State[S, A] = new State[S, A] {
         // the order of the tuple returned by f is swapped compared to me
-        StateM.lift({ A a -> P.p(a, f.f(get(a)))} as F)
+        State.lift({ A a -> P.p(a, f.f(get(a)))} as F)
     }
 
-    def <C> StateM<A, C> flatMap(F<B, StateM<A, C>> f) {
-        StateM.lift({ A a -> f.f(get(a)).run(a)} as F)
+    def <C> State<A, C> flatMap(F<B, State<A, C>> f) {
+        State.lift({ A a -> f.f(get(a)).run(a)} as F)
     }
 
 //    @TypeChecked(TypeCheckingMode.SKIP)
@@ -98,19 +98,19 @@ class Lens<A, B> {
     }
 
     @TypeChecked(TypeCheckingMode.SKIP)
-    StateM<A, B> update(B b) {
-        StateM.lift({ A a ->
+    State<A, B> update(B b) {
+        State.lift({ A a ->
             P.p(set(a, b), b)
         } as F)
     }
 
-    StateM<A, B> update(F<Unit, B> f) {
+    State<A, B> update(F<Unit, B> f) {
         update(f.f(Unit.unit()))
     }
 
     @TypeChecked(TypeCheckingMode.SKIP)
-    StateM<A, B> state() {
-        StateM.lift({ A a -> P.p(a, get(a))} as F)
+    State<A, B> state() {
+        State.lift({ A a -> P.p(a, get(a))} as F)
     }
 
     static <K, V> Lens<Map<K, V>, Option<V>> mapLens(K k) {

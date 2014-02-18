@@ -1,14 +1,11 @@
 package com.github.mperry.fg.state
 
-import com.github.mperry.fg.StateM
+import com.github.mperry.fg.State
 import fj.F
 import fj.P
-import fj.P2
-import fj.Unit
 import groovy.transform.Canonical
 import groovy.transform.TypeChecked
 import groovy.transform.TypeCheckingMode
-import org.junit.Test
 
 import static com.github.mperry.fg.state.Input.*
 
@@ -25,8 +22,8 @@ class Machine {
 
 
     @TypeChecked(TypeCheckingMode.SKIP)
-    static StateM<Machine, Machine> simulate(List<Input> list) {
-        def s2 = StateM.<Machine>get()
+    static State<Machine, Machine> simulate(List<Input> list) {
+        def s2 = State.<Machine>get()
 //        def s = StateM.<Machine, Machine>lift({ Machine m ->
 //            P.p(m, m)
 //        } as F)
@@ -34,7 +31,7 @@ class Machine {
 
     }
 
-    static StateM<Machine, Machine> simulate(List<Input> list, StateM<Machine, Machine> state) {
+    static State<Machine, Machine> simulate(List<Input> list, State<Machine, Machine> state) {
         if (list.empty) {
             state
         } else {
@@ -43,7 +40,7 @@ class Machine {
             def s4 = state.map { Machine m ->
                 next(m, h)
             }
-            def s3 = new StateM<Machine, Machine>({ Machine m ->
+            def s3 = new State<Machine, Machine>({ Machine m ->
                 def m2 = next(m, h)
                 P.p(m2, m2)
             } as F)

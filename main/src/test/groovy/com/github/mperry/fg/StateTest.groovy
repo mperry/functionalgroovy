@@ -28,7 +28,7 @@ class StateTest {
     @TypeChecked(TypeCheckingMode.SKIP)
     void test1() {
 
-        def s = StateM.lift({ Random r -> P.p(r, r.nextBoolean()) } as F)
+        def s = State.lift({ Random r -> P.p(r, r.nextBoolean()) } as F)
         def s2 = foreach {
             a << s
             b << s
@@ -49,7 +49,7 @@ class StateTest {
      */
     @Test
     void test2() {
-        def st1 = StateM.lift({ Random r -> P.p(r, r.nextBoolean()) } as F)
+        def st1 = State.lift({ Random r -> P.p(r, r.nextBoolean()) } as F)
         def st2 = st1.flatMap({ Boolean a ->
             st1.flatMap({ Boolean b ->
                 st1.flatMap({ Boolean c ->
@@ -67,13 +67,13 @@ class StateTest {
     @Test
     @TypeChecked(TypeCheckingMode.SKIP)
     void test3() {
-        def st1 = StateM.lift({ Random r ->
+        def st1 = State.lift({ Random r ->
             def b = r.nextBoolean()
             P.p(r, P.p(b, [b]))
         } as F)
-        def str1 = Stream.iterate({ StateM<Random, Boolean> st2 ->
+        def str1 = Stream.iterate({ State<Random, Boolean> st2 ->
             st2.flatMap({ P2<Boolean, List<Boolean>> p2 ->
-                StateM.lift({ Random r ->
+                State.lift({ Random r ->
                     def b = r.nextBoolean()
                     P.p(r, P.p(b, p2._2() + b))
                 } as F)
@@ -90,18 +90,18 @@ class StateTest {
     @Test
     @TypeChecked(TypeCheckingMode.SKIP)
     void test4() {
-        def st1 = StateM.lift({ Random r -> P.p(r, r.nextBoolean()) } as F)
+        def st1 = State.lift({ Random r -> P.p(r, r.nextBoolean()) } as F)
         def str1 = Stream.repeat(st1)
 
-        def result = str1.take(6).foldLeft({ StateM<Random, List<Boolean>> acc ->
-                { StateM<Random, Boolean> st3 ->
+        def result = str1.take(6).foldLeft({ State<Random, List<Boolean>> acc ->
+                { State<Random, Boolean> st3 ->
                     st3.flatMap { Boolean b ->
                         acc.map { List<Boolean> list ->
                             [b] + list
                         }
                     }
                 } as F
-        } as F, StateM.lift({ Random r -> P.p(r, [])} as F))
+        } as F, State.lift({ Random r -> P.p(r, [])} as F))
         def p = result.run(random)
 //        println(p._1())
         assertTrue(p._2() == oracle)

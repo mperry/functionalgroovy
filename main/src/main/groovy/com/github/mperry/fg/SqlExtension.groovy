@@ -29,6 +29,18 @@ class SqlExtension {
         stream(rs).map(f)
     }
 
+    static <A> rx.Observable<A> observableRowResult(ResultSet rs, F<GroovyRowResult, A> f) {
+        rx.Observable.from(streamRowResult(rs, f))
+    }
+
+    static <A> rx.Observable<A> observableResultSet(ResultSet rs, F<ResultSet, A> f) {
+        rx.Observable.from(streamResultSet(rs, f))
+    }
+
+    static <A> rx.Observable<Integer> observableRowResultI(ResultSet rs, F<GroovyRowResult, A> f) {
+        rx.Observable.from(Stream.stream(1, 2, 3))
+    }
+
     static <A, B> B fold(Sql sql, String query, F<Stream<ResultSet>, B> g) {
         fold(sql, query, Function.identity(), g)
     }

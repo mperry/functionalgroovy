@@ -7,6 +7,7 @@ dependencies {
 	compile project(":core")
 	compile "org.gcontracts:gcontracts-core:1+"
     compile "org.codehaus.gpars:gpars:1.1.0"
+    compile("com.netflix.rxjava:rxjava-core:0.+")
 
     testCompile gradleJunit
     testCompile "org.gcontracts:gcontracts-core:1+"

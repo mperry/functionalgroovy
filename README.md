@@ -46,9 +46,9 @@ Run this script using `groovy test.groovy`.
 
 This project uses:
 * JDK 7
-* Gradle 1.10
-* Groovy 2.1.6
-* Intellij Community Edition 13.0.2
+* Gradle 1.11
+* Groovy 2.2.2
+* Intellij Community Edition 13.1
 
 I have added a list of [open issues](https://github.com/mperry/functionalgroovy/issues?state=open) so feel free to
 contribute.  Some ways of contributing are:

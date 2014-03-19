@@ -71,7 +71,7 @@ class Lens<A, B> {
         State.lift({ A a -> f.f(get(a)).run(a)} as F)
     }
 
-//    @TypeChecked(TypeCheckingMode.SKIP)
+    @TypeChecked(TypeCheckingMode.SKIP)
     def <C> Lens<C, B> compose(Lens<C, A> lens) {
         new Lens(
             get.o(lens.get),
@@ -79,6 +79,7 @@ class Lens<A, B> {
         )
     }
 
+    @TypeChecked(TypeCheckingMode.SKIP)
     def <C, D> Lens<P2<A, C>, P2<B, D>> product(Lens<C, D> lens) {
         new Lens(
                 { P2<A, C> p -> P.p(get(p._1()), lens.get(p._2())) } as F,
@@ -113,6 +114,7 @@ class Lens<A, B> {
         State.lift({ A a -> P.p(a, get(a))} as F)
     }
 
+    @TypeChecked(TypeCheckingMode.SKIP)
     static <K, V> Lens<Map<K, V>, Option<V>> mapLens(K k) {
         new Lens(
                 { Map m -> Option.fromNull(m.get(k)) } as F,

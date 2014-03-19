@@ -20,6 +20,8 @@ import static fj.data.Option.some
 @TypeChecked
 class AdditionCommutesTest {
 
+    String ambiguousNullMessage = "Ambiguous method overloading for method java.lang.Integer#plus"
+
 	@Test
 	void commutes() {
 		specAssert { Integer a, Integer b ->
@@ -105,7 +107,11 @@ class AdditionCommutesTest {
 			function: { Integer a, Integer b ->
 				a + b == b + a
 			},
-			validator: validator({ Throwable t -> t.isDirectInstanceOf(NullPointerException.class) } as F)
+			validator: validator({ Throwable t ->
+                def a = t.isDirectInstanceOf(NullPointerException.class)
+                def b = t.isDirectInstanceOf(GroovyRuntimeException.class) && t.getMessage().contains(ambiguousNullMessage)
+                a || b
+            } as F)
 		)
 	}
 
@@ -121,7 +127,9 @@ class AdditionCommutesTest {
 						a + b == b + a
 					} catch (NullPointerException e) {
 						(a == null || b == null)
-					}
+					} catch (GroovyRuntimeException e) {
+                        e.getMessage().contains(ambiguousNullMessage)
+                    }
 				}
 		)
 	}

@@ -58,12 +58,6 @@ class StreamTest {
 	}
 
 	@Test
-	void mixedToJList() {
-		def a = Stream.stream(1, 2.to(3))
-		assertTrue(a.toJList() == [1, [2, 3]])
-	}
-
-	@Test
 	void simpleToJList() {
 		def a = 1.to(3)
 		assertTrue(a.toJList() == [1, 2, 3])

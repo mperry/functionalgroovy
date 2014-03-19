@@ -7,6 +7,7 @@ import fj.P2
 import fj.P3
 import fj.Unit
 import groovy.transform.TypeChecked
+import groovy.transform.TypeCheckingMode
 import org.junit.Test
 
 import static org.junit.Assert.*
@@ -53,6 +54,7 @@ class StateGame {
         }
     }
 
+    @TypeChecked(TypeCheckingMode.SKIP)
     Integer playEval(String s, Boolean toggle, Integer start) {
         def state = playGame(s)
         def i = state.eval(P.p(toggle, start))

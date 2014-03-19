@@ -85,6 +85,7 @@ class OptionMonadTest {
 
     // Right identity: m >>= return == m
     @Test
+    @TypeChecked(TypeCheckingMode.SKIP)
     void rightIdentity() {
         def p = property(arbOption(arbInteger), {
             Option<Integer> o ->

@@ -69,14 +69,12 @@ class State<S, A> {
         } as F)
     }
 
-    @Override
     @TypeChecked(TypeCheckingMode.SKIP)
     static <S, B, C> State<S, C> flatMap(State<S, B> mb, F<B, State<S, C>> f) {
         mb.flatMap(f)
     }
 
 
-    @Override
     def <B> State<S, B> flatMap(F<A, State<S, B>> f) {
         new State<S, B>({ S s ->
             def p = run(s)
@@ -87,12 +85,10 @@ class State<S, A> {
         } as F)
     }
 
-    @Override
     def <B> State<S, B> flatMap(Closure<State<S, B>> c) {
         flatMap(c as F)
     }
 
-    @Override
     def <S1, A1> State<S1, A1> unit(F<S1, P2<S1, A1>> f) {
         lift(f)
     }

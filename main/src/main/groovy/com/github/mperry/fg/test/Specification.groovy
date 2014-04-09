@@ -32,14 +32,16 @@ class Specification {
 	static final int MAX_ARGS = 5
 	static final Map<Integer, Class<?>> FUNC_TYPES = [1: F, 2: F2, 3: F3, 4: F4, 5: F5, 6: F6, 7: F7, 8: F8]
 
+    @TypeChecked(TypeCheckingMode.SKIP)
 	static Property createProp(Map<Class<?>, Arbitrary> map, Option<Closure<Boolean>> pre, Closure<Boolean> c, F<Validation<Throwable, Boolean>, Boolean> validation) {
 		def list = c.getParameterTypes()
-		def arbOpts = list.collect { Class it -> map.containsKey(it) ? Option.some(map[it]) : Option.none() }
-		def allMapped = arbOpts.forAll { Option it -> it.isSome() }
+		def listOptArbs = list.collect { Class it -> map.containsKey(it) ? Option.some(map[it]) : Option.<Arbitrary>none() }
+		def allMapped = listOptArbs.forAll { Option it -> it.isSome() }
 		if (!allMapped) {
 			throw new Exception("Not all function parameter types were found: ${list.findAll { !map.containsKey(it)}}")
 		}
-		dynamicCreateProp(arbOpts.collect { Option<Arbitrary> it -> it.some() }, pre, c, validation)
+        def listArb = listOptArbs.collect { Option<Arbitrary> it -> it.some() }
+		dynamicCreateProp(listArb, pre, c, validation)
 	}
 
 	@TypeChecked(TypeCheckingMode.SKIP)

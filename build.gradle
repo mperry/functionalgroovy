@@ -13,10 +13,10 @@ subprojects {
     ext {
         snap = "-SNAPSHOT"
     }
-	version = "0.4"
+	version = "0.5$snap".toString()
 
 	ext {
-        consumeVersion = "0.4$snap"
+        consumeVersion = "0.4"
 
         // sonatypeUsername and sonatypePassword stored in %USERPROFILE%/.gradle/gradle.properties,
         // otherwise override with -PsonatypeUsername=user -PsonatypePassword=pwd
@@ -45,7 +45,7 @@ subprojects {
 		founder = "Mark Perry"
 		founderUsername = "mperry"
 		organisation = groupName
-        groovyVersion = "2.2.2"
+        groovyVersion = "2.3.+"
 
 		gradleGroovy = "org.codehaus.groovy:groovy-all:$groovyVersion"
 		gradleFj = "org.functionaljava:functionaljava:3.1"

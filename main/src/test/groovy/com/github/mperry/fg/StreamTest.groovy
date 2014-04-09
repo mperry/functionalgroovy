@@ -76,7 +76,7 @@ class StreamTest {
 		assertTrue(c == 15)
 	}
 
-    @Test
+//    @Test
     @TypeChecked(TypeCheckingMode.SKIP)
     void streamFlatMapOverflows() {
         def max = 1000000

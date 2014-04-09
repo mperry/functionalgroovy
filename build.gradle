@@ -48,7 +48,8 @@ subprojects {
         groovyVersion = "2.3.+"
 
 		gradleGroovy = "org.codehaus.groovy:groovy-all:$groovyVersion"
-		gradleFj = "org.functionaljava:functionaljava:3.1"
+		gradleFj = "$groupName:functionaljava:4.1-SNAPSHOT"
+//        gradleFj = "org.functionaljava:functionaljava:3.1"
 		gradleJunit = "junit:junit:4.10"
 
 	}
@@ -56,6 +57,7 @@ subprojects {
 	group = project.groupName
 
 	repositories {
+        mavenLocal()
 		mavenCentral()
 	}
 

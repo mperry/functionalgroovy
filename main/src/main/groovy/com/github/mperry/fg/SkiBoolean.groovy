@@ -5,7 +5,7 @@ import fj.F2
 /**
  * Created by MarkPerry on 15/01/14.
  */
-abstract class SkiBoolean<A, B, C> extends F2<A, B, C> {
+abstract class SkiBoolean<A, B, C> implements F2<A, B, C> {
 
 
 

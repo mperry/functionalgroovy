@@ -1,6 +1,7 @@
 package com.github.mperry.fg
 
 import fj.F
+import fj.F1Functions
 import fj.Function
 import fj.data.Stream
 import groovy.sql.GroovyRowResult
@@ -80,7 +81,7 @@ class SqlExtension {
     }
 
     static <A, B> B foldRowResult(Sql sql, String query, F<GroovyRowResult, A> f, F<Stream<A>, B> g) {
-        fold(sql, query, f.o(rowResult()), g)
+        fold(sql, query, F1Functions.o(f, rowResult()), g)
     }
 
     static Stream<ResultSet> stream(ResultSet rs) {

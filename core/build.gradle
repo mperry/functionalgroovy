@@ -1,4 +1,6 @@
 
+import org.apache.tools.ant.filters.*
+
 ext {
 }
 
@@ -9,3 +11,9 @@ dependencies {
 }
 
 uploadArchives.enabled = true
+
+processResources {
+    doFirst {
+        filter(org.apache.tools.ant.filters.ReplaceTokens, tokens: [version: project.version])
+    }
+}

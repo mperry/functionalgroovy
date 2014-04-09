@@ -1,5 +1,6 @@
 package com.github.mperry.fg
 
+import com.github.mperry.fg.typeclass.Monad
 import fj.F
 import fj.test.Arbitrary
 import fj.test.Coarbitrary

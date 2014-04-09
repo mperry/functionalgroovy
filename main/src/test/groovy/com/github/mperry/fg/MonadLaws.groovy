@@ -1,5 +1,6 @@
 package com.github.mperry.fg
 
+import com.github.mperry.fg.typeclass.Monad
 import fj.F
 import fj.F2
 import fj.F3
@@ -7,13 +8,7 @@ import fj.test.Arbitrary
 import groovy.transform.TypeChecked
 import groovy.transform.TypeCheckingMode
 
-import static fj.test.Arbitrary.arbF
-import static fj.test.Arbitrary.arbInteger
-import static fj.test.Arbitrary.arbOption
-import static fj.test.Arbitrary.arbString
-import static fj.test.Coarbitrary.coarbInteger
 import static fj.test.Property.prop
-import static fj.test.Property.property
 import static fj.test.Property.property
 
 /**

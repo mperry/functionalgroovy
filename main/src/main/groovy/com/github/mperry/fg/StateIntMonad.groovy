@@ -1,9 +1,8 @@
 package com.github.mperry.fg
 
+import com.github.mperry.fg.typeclass.Monad
 import fj.F
 import fj.P
-import fj.P2
-import fj.Unit
 import groovy.transform.Canonical
 import groovy.transform.TypeChecked
 import groovy.transform.TypeCheckingMode
@@ -13,7 +12,7 @@ import groovy.transform.TypeCheckingMode
  */
 @TypeChecked
 @Canonical
-class StateIntMonad extends Monad<StateInt>  {
+class StateIntMonad extends Monad<StateInt> {
 
     @Override
     @TypeChecked(TypeCheckingMode.SKIP)

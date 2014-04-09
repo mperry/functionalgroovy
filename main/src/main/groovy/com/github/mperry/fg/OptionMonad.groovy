@@ -1,5 +1,6 @@
 package com.github.mperry.fg
 
+import com.github.mperry.fg.typeclass.Monad
 import fj.F
 import fj.data.Option
 import groovy.transform.TypeChecked

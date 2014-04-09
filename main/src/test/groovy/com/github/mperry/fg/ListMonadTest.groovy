@@ -1,17 +1,14 @@
 package com.github.mperry.fg
 
-import com.github.mperry.fg.test.ArbitraryCompanion
-import fj.test.Coarbitrary
+import com.github.mperry.fg.typeclass.Monad
 import groovy.transform.TypeChecked
 import groovy.transform.TypeCheckingMode
 import org.junit.Test
 
 import static com.github.mperry.fg.test.ArbitraryCompanion.*
-import static com.github.mperry.fg.test.ArbitraryStaticExtension.arbJavaList
 import static fj.test.Arbitrary.arbF
 import static fj.test.Arbitrary.*
 import static fj.test.Coarbitrary.*
-import static fj.test.Coarbitrary.coarbString
 
 /**
  * Created by MarkPerry on 10/01/14.

@@ -1,5 +1,7 @@
 package com.github.mperry.fg
 
+import com.github.mperry.fg.typeclass.Monad
+
 /**
  * Created by MarkPerry on 9/01/14.
  */
@@ -20,6 +22,7 @@ class TypeLambda {
             import fj.F
             import fj.P2
             import groovy.transform.Canonical
+            import com.github.mperry.fg.typeclass.Monad
 
             @Canonical
             class $name<A> extends State<$stateType, A> {
@@ -57,6 +60,7 @@ class TypeLambda {
             import fj.P2
             import fj.P
             import groovy.transform.Canonical
+            import com.github.mperry.fg.typeclass.Monad
 
             @Canonical
             class $name extends Monad<$partialStateType> {

@@ -26,7 +26,6 @@ abstract class Applicative<App> implements Functor<App> {
      */
     abstract <A, B> App<B> apply(App<F<A, B>> t1, App<A> t2)
 
-
     def <A, B> App<A> left(App<A> a1, App<B> a2) {
         a1
     }

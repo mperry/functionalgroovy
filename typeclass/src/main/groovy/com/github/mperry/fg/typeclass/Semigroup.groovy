@@ -13,8 +13,5 @@ interface Semigroup<A> {
      */
     A append(A a1, A a2)
 
-
-
-
-
 }
+

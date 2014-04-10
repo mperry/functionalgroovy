@@ -16,7 +16,7 @@ interface Functor<T> {
      * fmap id = id
      * fmap (g . h) = (fmap g) . (fmap h)
      */
-    abstract <A, B> T<B> fmap(T<A> fa, F<A, B> f)
+    abstract <A, B> T<B> fmap(F<A, B> f, T<A> fa)
 
 
 

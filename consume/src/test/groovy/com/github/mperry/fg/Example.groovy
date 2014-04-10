@@ -22,7 +22,4 @@ class Example {
         }
     }
 
-    void test2() {
-//        def e = F.<Integer>unit{ Integer a -> 2 * a }.o{ Integer a -> a + 1 }
-    }
 }

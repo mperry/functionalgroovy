@@ -1,29 +1,24 @@
 package com.github.mperry.fg
 
+import com.github.mperry.fg.typeclass.concrete.OptionMonad
 import fj.F
 import fj.F2
 import fj.F3
 import fj.P1
 import fj.data.Option
-import fj.test.Arbitrary
 import groovy.transform.TypeChecked
 import groovy.transform.TypeCheckingMode
 import org.junit.Test
 
-import static fj.Function.compose
 import static fj.data.Option.*
 import static fj.test.Arbitrary.arbF
-import static fj.test.Arbitrary.arbF
-import static fj.test.Arbitrary.arbF
 import static fj.test.Arbitrary.arbInteger
-import static fj.test.Arbitrary.arbList
 import static fj.test.Arbitrary.arbLong
 import static fj.test.Arbitrary.arbOption
 import static fj.test.Arbitrary.arbString
 import static fj.test.Coarbitrary.coarbInteger
 import static fj.test.Coarbitrary.coarbLong
 import static fj.test.Property.prop
-import static fj.test.Property.property
 import static fj.test.Property.property
 import static org.junit.Assert.assertTrue
 

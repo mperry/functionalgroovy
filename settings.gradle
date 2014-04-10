@@ -1,2 +1,2 @@
 
-include 'core', 'main', 'demo', 'consume', "test-extensions"
+include 'core', "typeclass", 'main', 'demo', 'consume', "test-extensions"

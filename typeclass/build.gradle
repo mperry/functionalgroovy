@@ -1,0 +1,12 @@
+
+ext {
+
+}
+
+uploadArchives.enabled = true
+
+dependencies {
+	compile project(":core")
+}
+
+

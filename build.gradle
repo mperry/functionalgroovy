@@ -16,7 +16,7 @@ subprojects {
 	version = "0.5$snap".toString()
 
 	ext {
-        consumeVersion = "0.4"
+        consumeVersion = "0.5-SNAPSHOT"
 
         // sonatypeUsername and sonatypePassword stored in %USERPROFILE%/.gradle/gradle.properties,
         // otherwise override with -PsonatypeUsername=user -PsonatypePassword=pwd

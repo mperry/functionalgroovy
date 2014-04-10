@@ -16,6 +16,14 @@ import groovy.transform.TypeCheckingMode
 @TypeChecked(TypeCheckingMode.SKIP)
 abstract class Monad<M> extends Applicative<M> {
 
+
+    // Implement Functor's single method
+    def <A, B> M<B> fmap(F<A, B> f, M<A> ma) {
+        liftM(ma, f)
+    }
+
+    // Implement Applicative's two methods, pure and apply
+
     def <A> M<A> pure(A a) {
         unit(a)
     }
@@ -24,9 +32,6 @@ abstract class Monad<M> extends Applicative<M> {
         ap(t2, t1)
     }
 
-    def <A, B> M<B> fmap(F<A, B> f, M<A> ma) {
-        liftM(ma, f)
-    }
 
     /**
      * Sequentially compose two actions, passing any value produced by the first as an argument to the second.

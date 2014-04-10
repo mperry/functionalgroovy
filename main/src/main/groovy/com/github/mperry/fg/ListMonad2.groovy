@@ -9,7 +9,7 @@ import groovy.transform.TypeCheckingMode
  * Created by MarkPerry on 10/01/14.
  */
 //@TypeChecked
-class ListMonad extends Monad<List> {
+class ListMonad2 extends Monad<List> {
 
     @TypeChecked(TypeCheckingMode.SKIP)
     def <B, C> List<C> flatMapTyped(List<B> mb, F<B, List<C>> f) {

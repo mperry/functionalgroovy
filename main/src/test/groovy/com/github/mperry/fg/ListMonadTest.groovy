@@ -1,6 +1,7 @@
 package com.github.mperry.fg
 
 import com.github.mperry.fg.typeclass.Monad
+import com.github.mperry.fg.typeclass.concrete.ListMonad
 import groovy.transform.TypeChecked
 import groovy.transform.TypeCheckingMode
 import org.junit.Test
@@ -17,7 +18,7 @@ import static fj.test.Coarbitrary.*
 class ListMonadTest {
 
     Monad monad() {
-        new ListMonad()
+        new ListMonad<Integer>()
     }
 
     @Test

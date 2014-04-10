@@ -7,14 +7,14 @@ import fj.P2
 /**
  * Created by MarkPerry on 10/04/2014.
  */
-class ListApplicative<A> extends Applicative<List<A>> {
+class ListApplicative extends Applicative<List> {
     @Override
     def <A> List<A> pure(A a) {
         [a]
     }
 
     @Override
-    def <A, B> List<A> apply(List<F<A, B>> fs, List<A> list) {
+    def <A, B> List<B> apply(List<F<A, B>> fs, List<A> list) {
         list.zip(fs).collect { P2<A, F<A, B>> p ->
             p._2().f(p._1())
         }

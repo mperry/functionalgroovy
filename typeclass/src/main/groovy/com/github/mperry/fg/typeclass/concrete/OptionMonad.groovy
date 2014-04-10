@@ -7,7 +7,7 @@ import fj.data.Option
 /**
  * Created by MarkPerry on 10/04/2014.
  */
-class OptionMonad<A> extends Monad<Option<A>> {
+class OptionMonad extends Monad<Option> {
 
     @Override
     def <A, B> Option<B> flatMap(Option<A> ma, F<A, Option<B>> f) {

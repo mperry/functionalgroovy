@@ -6,7 +6,7 @@ import fj.F
 /**
  * Created by MarkPerry on 10/04/2014.
  */
-class ListMonad<A> extends Monad<List<A>> {
+class ListMonad extends Monad<List> {
 
     @Override
     def <A, B> List<B> flatMap(List<A> ma, F<A, List<B>> f) {

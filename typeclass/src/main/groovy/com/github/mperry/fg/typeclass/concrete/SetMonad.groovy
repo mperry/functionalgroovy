@@ -6,15 +6,15 @@ import fj.F
 /**
  * Created by MarkPerry on 10/04/2014.
  */
-class SetMonad<A> extends Monad<Set<A>> {
+class SetMonad extends Monad<Set> {
 
     static <B> Set<B> defaultSet() {
         new TreeSet<B>()
     }
 
     @Override
-    def <A, B> Set<A> flatMap(Set<A> ma, F<A, Set<A>> f) {
-        def result = this.<A>defaultSet()
+    def <A, B> Set<B> flatMap(Set<A> ma, F<A, Set<B>> f) {
+        def result = this.<B>defaultSet()
         for (A a: ma) {
             result.addAll(f.f(a))
         }

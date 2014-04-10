@@ -7,7 +7,7 @@ import fj.data.Option
 /**
  * Created by MarkPerry on 10/04/2014.
  */
-class OptionApplicative<A> extends Applicative<Option<A>> {
+class OptionApplicative extends Applicative<Option> {
 
     @Override
     def <A> Option<A> pure(A a) {

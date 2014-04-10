@@ -7,7 +7,7 @@ import fj.data.Option
 /**
  * Created by MarkPerry on 10/04/2014.
  */
-class OptionFunctor<A> implements Functor<Option<A>> {
+class OptionFunctor implements Functor<Option> {
 
     @Override
     def <A, B> Option<B> fmap(F<A, B> f, Option<A> fa) {

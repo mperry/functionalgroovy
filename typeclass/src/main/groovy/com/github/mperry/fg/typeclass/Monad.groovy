@@ -14,7 +14,19 @@ import groovy.transform.TypeCheckingMode
  * @see The Haskell Control.Monad module at http://hackage.haskell.org/package/base-4.6.0.1/docs/Control-Monad.html
  */
 @TypeChecked(TypeCheckingMode.SKIP)
-abstract class Monad<M> {
+abstract class Monad<M> extends Applicative<M> {
+
+    def <A> M<A> pure(A a) {
+        unit(a)
+    }
+
+    def <A, B> M<B> apply(M<F<A, B>> t1, M<A> t2) {
+        ap(t2, t1)
+    }
+
+    def <A, B> M<B> fmap(F<A, B> f, M<A> ma) {
+        liftM(ma, f)
+    }
 
     /**
      * Sequentially compose two actions, passing any value produced by the first as an argument to the second.

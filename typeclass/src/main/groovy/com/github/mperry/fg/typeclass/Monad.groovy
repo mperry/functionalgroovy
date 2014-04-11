@@ -201,7 +201,7 @@ abstract class Monad<M> extends Applicative<M> {
      * when debug (putStr "Debugging\n")
      * will output the string Debugging\n if the Boolean value debug is True, and
      * otherwise do nothing.
-     * when :: Monad m => Bool -> m () -> m () Source
+     * when :: Monad m => Bool -> m () -> m ()
      */
     def M<Unit> when(Boolean b, M<Unit> m) {
         b ? m : unit(Unit.unit())

@@ -23,6 +23,9 @@ class ListJavaExtension2 {
         new ListMonad()
     }
 
+    static <A, B> List<B> ap(List<A> ma, List<F<A, B>> mf) {
+        monad().ap(ma, mf)
+    }
 
     static <A, B> List<B> to(List<A> list, B b) {
         monad().to(list, b)
@@ -40,6 +43,21 @@ class ListJavaExtension2 {
         monad().replicateM(n, list)
     }
 
+    static <A> List<List<A>> filterM(List<A> list, F<A, List<Boolean>> f) {
+        monad().filterM(list, f)
+    }
+
+    static <A, B> List<B> liftM(List<A> ma, F<A, B> f) {
+        monad().liftM(ma, f)
+    }
+
+    static <A, B, R> List<R> liftM2(List<A> ma, List<B> mb, F2<A, B, R> f) {
+        monad().liftM2(ma, mb, f)
+    }
+
+    static <A, B, C, R> List<R> liftM3(List<A> ma, List<B> mb, List<C> mc, F3<A, B, C, R> f) {
+        monad().liftM3(ma, mb, mc, f)
+    }
 
     // Applicative
 
@@ -52,16 +70,16 @@ class ListJavaExtension2 {
     }
 
 
-    def <A, B> List<B> liftA(List<A> a1, F<A, B> f) {
+    static <A, B> List<B> liftA(List<A> a1, F<A, B> f) {
         a1.map(f)
     }
 
 
-    def <A, B, C> List<C> liftA2(List<A> listAs, List<B> listBs, F2<A, B, C> f) {
+    static <A, B, C> List<C> liftA2(List<A> listAs, List<B> listBs, F2<A, B, C> f) {
         applicative().liftA2(f, listAs, listBs)
     }
 
-    def <A, B, C, D> List<D> liftA3(List<A> apa, List<B> apb, List<C> apc, F3<A, B, C, D> f) {
+    static <A, B, C, D> List<D> liftA3(List<A> apa, List<B> apb, List<C> apc, F3<A, B, C, D> f) {
         applicative().liftA3(f, apa, apb, apc)
     }
 

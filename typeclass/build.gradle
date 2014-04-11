@@ -6,7 +6,12 @@ ext {
 uploadArchives.enabled = true
 
 dependencies {
+    compile gradleGroovy
+    compile(gradleFj) {
+        changing = true
+    }
 	compile project(":core")
+    testCompile gradleJunit
 }
 
 

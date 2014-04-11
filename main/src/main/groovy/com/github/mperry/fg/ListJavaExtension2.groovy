@@ -1,7 +1,12 @@
 package com.github.mperry.fg
 
+import com.github.mperry.fg.typeclass.concrete.ListApplicative
+import com.github.mperry.fg.typeclass.concrete.ListFunctor
 import com.github.mperry.fg.typeclass.concrete.ListMonad
 import fj.F
+import fj.F2
+import fj.F2Functions
+import fj.F3
 import fj.Unit
 import groovy.transform.TypeChecked
 
@@ -36,5 +41,28 @@ class ListJavaExtension2 {
     }
 
 
+    // Applicative
+
+    static ListApplicative applicative() {
+        new ListApplicative()
+    }
+
+    static <A, B> List<B> apply(List<A> list, List<F<A, B>> listFs) {
+        applicative().apply(listFs, list)
+    }
+
+
+    def <A, B> List<B> liftA(List<A> a1, F<A, B> f) {
+        a1.map(f)
+    }
+
+
+    def <A, B, C> List<C> liftA2(List<A> listAs, List<B> listBs, F2<A, B, C> f) {
+        applicative().liftA2(f, listAs, listBs)
+    }
+
+    def <A, B, C, D> List<D> liftA3(List<A> apa, List<B> apb, List<C> apc, F3<A, B, C, D> f) {
+        applicative().liftA3(f, apa, apb, apc)
+    }
 
 }

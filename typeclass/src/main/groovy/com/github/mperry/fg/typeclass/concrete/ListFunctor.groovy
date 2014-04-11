@@ -10,7 +10,7 @@ class ListFunctor implements Functor<List> {
 
     @Override
     def <A, B> List<B> fmap(F<A, B> f, List<A> list) {
-        list.collect(f)
+        list.map(f)
     }
 
 }

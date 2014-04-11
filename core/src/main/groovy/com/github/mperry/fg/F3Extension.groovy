@@ -28,9 +28,9 @@ class F3Extension {
     }
 
 	static <A, B, C, D> F<A, F<B, F<C, D>>> curry(F3<A, B, C, D> f3) {
-		{ a ->
-			{ b ->
-				{ c ->
+		{ A a ->
+			{ B b ->
+				{ C c ->
 					f3.f(a, b, c)
 				} as F
 			} as F

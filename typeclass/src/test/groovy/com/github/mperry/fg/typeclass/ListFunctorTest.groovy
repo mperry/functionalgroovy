@@ -13,8 +13,10 @@ class ListFunctorTest {
     @Test
     void test1() {
         def f = new ListFunctor<List<Integer>>()
-        def actual = f.fmap({ Integer i -> i * 2}, [1, 2, 3])
-        assertTrue(actual == [2, 4, 6])
+        def param = [1, 2, 3]
+        def c = { Integer i -> i * 2 }
+        def actual = f.fmap(c, param)
+        assertTrue(actual == param.collect(c))
     }
 
 }

@@ -10,44 +10,55 @@ import groovy.transform.TypeCheckingMode
 
 /**
  * Created by MarkPerry on 30/12/13.
+ * @see http://hackage.haskell.org/package/base-4.7.0.0/docs/Control-Monad.html
  *
- * @see The Haskell Control.Monad module at http://hackage.haskell.org/package/base-4.6.0.1/docs/Control-Monad.html
+ * TODO:
+ * replicateM_, mapAndUnzipM, zipWithM, zipWithM_, liftM4, liftM5
  */
 @TypeChecked(TypeCheckingMode.SKIP)
+//@TypeChecked
 abstract class Monad<M> extends Applicative<M> {
 
-
-    // Implement Functor's single method
+    /**
+     * Implements Functor interface using Monad combinators
+     * fmap :: (a -> b) -> f a -> f b
+     */
     def <A, B> M<B> fmap(F<A, B> f, M<A> ma) {
         liftM(ma, f)
     }
 
-    // Implement Applicative's two methods, pure and apply
-
+    /**
+     * Implements Applicative.pure using Monad combinators
+     * pure  :: a -> f a
+     */
     def <A> M<A> pure(A a) {
         unit(a)
     }
 
+    /**
+     * Implements Applicative.apply using Monad combinators
+     * (<*>) :: f (a -> b) -> f a -> f b
+     */
     def <A, B> M<B> apply(M<F<A, B>> t1, M<A> t2) {
         ap(t2, t1)
     }
 
-
     /**
-     * Sequentially compose two actions, passing any value produced by the first as an argument to the second.
-     * @param ma
-     * @param f
-     * @return
+     * Sequentially compose two actions, passing any value produced by the first as
+     * an argument to the second.
+     * (>>=) :: forall a b. m a -> (a -> m b) -> m b
      */
     abstract <A, B> M<B> flatMap(M<A> ma, F<A, M<B>> f)
 
     /**
      * Inject a value into the monadic type.
-     * @param b
-     * @return
+     * return :: a -> m a
      */
     abstract <B> M<B> unit(B b)
 
+    /**
+     * Returns a function representing unit
+     */
     def <B> F<B, M<B>> unit() {
         { B b ->
             unit(b)
@@ -55,10 +66,9 @@ abstract class Monad<M> extends Applicative<M> {
     }
 
     /**
-     * The join function is the conventional monad join operator. It is used to remove one level of
-     * monadic structure, projecting its bound argument into the outer level.
-     * @param mma
-     * @return
+     * The join function is the conventional monad join operator. It is used to remove
+     * one level of monadic structure, projecting its bound argument into the outer level.
+     * join :: Monad m => m (m a) -> m a
      */
     def <A> M<A> join(M<M<A>> mma) {
         flatMap(mma, {M<A> ma -> ma} as F)
@@ -83,12 +93,11 @@ abstract class Monad<M> extends Applicative<M> {
     }
 
     /**
-     * The foldM function is analogous to foldl, except that its result is encapsulated in a monad. Note
-     * that foldM works from left-to-right over the list arguments.
-     * @param s
-     * @param b
-     * @param f
-     * @return
+     * The foldM function is analogous to foldl, except that its result is encapsulated
+     * in a monad. Note that foldM works from left-to-right over the list arguments.
+     * This could be an issue where (>>) and the `folded function' are not commutative.
+     * foldM :: Monad m => (a -> b -> m a) -> a -> [b] -> m a
+     * Arguments are in different order
      */
     def <A, B> M<B> foldM(Stream<A> s, B b, F2<B, A, M<B>> f) {
         if (s.empty) {
@@ -102,6 +111,10 @@ abstract class Monad<M> extends Applicative<M> {
         }
     }
 
+    /**
+     * Like foldM, but discards the result.
+     * foldM_ :: Monad m => (a -> b -> m a) -> a -> [b] -> m ()
+     */
     def <A, B> M<Unit> foldM_(Stream<A> s, B b, F2<B, A, M<B>> f) {
         skip(foldM(s, b, f))
     }
@@ -142,10 +155,8 @@ abstract class Monad<M> extends Applicative<M> {
     }
 
     /**
-     * performs the action n times, gathering the results.
-     * @param n
-     * @param ma
-     * @return
+     * replicateM n act performs the action n times, gathering the results.
+     * replicateM :: Monad m => Int -> m a -> m [a] Source
      */
     def <A> M<List<A>> replicateM(Integer n, M<A> ma) {
         sequence(List.repeat(n, ma))
@@ -165,11 +176,15 @@ abstract class Monad<M> extends Applicative<M> {
         } as F
     }
 
+    /**
+     * This generalizes the list-based filter function.
+     * Arguments flipped compared to Haskell representation
+     * filterM :: Monad m => (a -> m Bool) -> [a] -> m [a] Source
+     */
     def <A> M<List<A>> filterM(List<A> list, F<A, M<Boolean>> f) {
         if (list.empty) {
             unit([])
         } else {
-//            list.foldLeft([], { } as F2)
             def h = list.head()
             def mb = f.f(h)
             flatMap(mb, { Boolean b ->
@@ -181,20 +196,42 @@ abstract class Monad<M> extends Applicative<M> {
         }
     }
 
+    /**
+     * Conditional execution of monadic expressions. For example,
+     * when debug (putStr "Debugging\n")
+     * will output the string Debugging\n if the Boolean value debug is True, and
+     * otherwise do nothing.
+     * when :: Monad m => Bool -> m () -> m () Source
+     */
     def M<Unit> when(Boolean b, M<Unit> m) {
         b ? m : unit(Unit.unit())
     }
 
+    /**
+     * The reverse of when.
+     * unless :: Monad m => Bool -> m () -> m () Source
+     */
     def M<Unit> unless(Boolean b, M<Unit> m) {
         when(!b, m)
     }
 
-    def <A, R> M<R> liftM(M<A> ma, F<A, R> f) {
+    /**
+     * Promote a function to a monad.
+     * liftM :: Monad m => (a1 -> r) -> m a1 -> m r
+     */
+    def <A, B> M<B> liftM(M<A> ma, F<A, B> f) {
         map(ma, { A a ->
             unit(f.f(a))
         } as F)
     }
 
+    /**
+     * Promote a function to a monad, scanning the monadic arguments from left to
+     * right. For example,
+     * liftM2 (+) [0,1] [0,2] = [0,2,1,3]
+     * liftM2 (+) (Just 1) Nothing = Nothing
+     * liftM2 :: Monad m => (a1 -> a2 -> r) -> m a1 -> m a2 -> m r
+     */
     def <A, B, R> M<R> liftM2(M<A> ma, M<B> mb, F2<A, B, R> f) {
         flatMap(ma, { A a ->
             map(mb, { B b ->
@@ -203,6 +240,11 @@ abstract class Monad<M> extends Applicative<M> {
         } as F)
     }
 
+    /**
+     * Promote a function to a monad, scanning the monadic arguments from left to
+     * right (cf. liftM2).
+     * liftM3 :: Monad m => (a1 -> a2 -> a3 -> r) -> m a1 -> m a2 -> m a3 -> m r
+     */
     def <A, B, C, R> M<R> liftM3(M<A> ma, M<B> mb, M<C> mc, F3<A, B, C, R> f) {
         flatMap(ma, { A a ->
             flatMap(mb, { B b ->
@@ -213,6 +255,14 @@ abstract class Monad<M> extends Applicative<M> {
         } as F)
     }
 
+    /**
+     * In many situations, the liftM operations can be replaced by uses of ap, which
+     * promotes function application.
+     * return f `ap` x1 `ap` ... `ap` xn
+     * is equivalent to
+     * liftMn f x1 x2 ... xn
+     * ap :: Monad m => m (a -> b) -> m a -> m b Source
+     */
     def <A, B> M<B> ap(M<A> ma, M<F<A, B>> mf) {
         flatMap(mf, { F<A, B> f ->
             map(ma, { A a ->

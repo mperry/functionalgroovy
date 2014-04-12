@@ -130,7 +130,18 @@ class ListExtensionsTest {
 
     @Test
     void ap() {
-        // TODO
+        // Haskell:
+        // Prelude Control.Monad> ap (map (\x -> (\i -> i * (x + 2))) [3..5]) [1..4]
+        // [5,10,15,20,6,12,18,24,7,14,21,28]
+
+        def fs = 3.to(5).map { Integer i ->
+            def f = { Integer j -> j * (i + 2)}
+            f as F
+        }.toJavaList()
+        def actual = 1.to(4).toJavaList().ap(fs)
+        def expected = [5,10,15,20,6,12,18,24,7,14,21,28]
+        println actual
+        assertTrue(actual == expected)
     }
 
 }

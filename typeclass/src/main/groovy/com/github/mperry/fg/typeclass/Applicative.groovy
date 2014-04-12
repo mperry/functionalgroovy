@@ -1,10 +1,9 @@
 package com.github.mperry.fg.typeclass
 
+import com.github.mperry.fg.Functions
 import fj.F
 import fj.F2
-import fj.F2Functions
 import fj.F3
-import fj.F3Functions
 import fj.Function
 import groovy.transform.TypeChecked
 
@@ -59,7 +58,7 @@ abstract class Applicative<App> implements Functor<App> {
      * liftA2 :: Applicative f => (a -> b -> c) -> f a -> f b -> f c
      */
     def <A, B, C> App<C> liftA2(F2<A, B, C> f, App<A> apa, App<B> apb) {
-        apply(fmap(F2Functions.curry(f), apa), apb)
+        apply(fmap(Functions.curry(f), apa), apb)
     }
 
     /**

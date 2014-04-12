@@ -1,7 +1,6 @@
 package com.github.mperry.fg
 
 import fj.F
-import fj.F1Functions
 import groovy.transform.TypeChecked
 import org.junit.Test
 
@@ -19,9 +18,10 @@ class FTest {
 
     @Test
     void test1() {
-        def f = F1Functions.o(F.<Integer>unit{Integer i -> i + 1}, {Integer i -> i * 3} as F<Integer, Integer>)
+        def e = F.<Integer>unit{Integer i -> i + 1}
+        def f = Functions.o(e, {Integer i -> i * 3} as F<Integer, Integer>)
         def g = F.<Integer>unit{Integer i -> i + 1}
-        def h = F1Functions.o(g, {Integer i -> i * 3} as F)
+        def h = Functions.o(g, {Integer i -> i * 3} as F)
         assertTrue(4  == f.f(1))
     }
 }

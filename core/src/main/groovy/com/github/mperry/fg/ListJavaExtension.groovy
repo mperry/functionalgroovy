@@ -2,7 +2,6 @@ package com.github.mperry.fg
 
 import fj.F
 import fj.F2
-import fj.F2Functions;
 import fj.P
 import fj.P1;
 import fj.P2
@@ -114,7 +113,7 @@ class ListJavaExtension {
             } else {
                 def t = list.tail()
                 def h = list.head()
-                foldRightTrampoline(t, b, f).map(F2Functions.curry(f).f(h))
+                foldRightTrampoline(t, b, f).map(Functions.curry(f).f(h))
             }
         } as P1)
     }

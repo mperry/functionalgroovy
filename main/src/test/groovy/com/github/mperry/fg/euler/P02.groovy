@@ -1,8 +1,7 @@
 package com.github.mperry.fg.euler
 
-import fj.F1Functions
+import com.github.mperry.fg.Functions
 import fj.F2
-import fj.F2Functions
 import fj.data.Stream
 import groovy.transform.TypeChecked
 import org.junit.Test
@@ -26,7 +25,8 @@ class P02 extends GroovyTestCase {
 	@TypeChecked
 	Stream<Integer> fibMethodChecked(int a, int b) {
 		def f = (this.&fibMethodChecked as F2<Integer, Integer, Stream<Integer>>)
-		Stream.cons(a, F1Functions.lazy(F2Functions.curry(f).f(b)).f(a + b))
+        def g = Functions.curry(f).f(b)
+		Stream.cons(a, Functions.lazy(g).f(a + b))
 	}
 
 	Closure<Stream<Integer>> fibCUnchecked = { int a, int b ->

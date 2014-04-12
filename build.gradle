@@ -49,8 +49,8 @@ subprojects {
 
 		gradleGroovy = "org.codehaus.groovy:groovy-all:$groovyVersion"
 //		gradleFj = "$groupName:functionaljava:4.1-SNAPSHOT"
-        gradleFj = "org.functionaljava:functionaljava:4.1-SNAPSHOT"
-//        gradleFj = "org.functionaljava:functionaljava:3.1"
+//        gradleFj = "org.functionaljava:functionaljava:4.1-SNAPSHOT"
+        gradleFj = "org.functionaljava:functionaljava:3.1"
 		gradleJunit = "junit:junit:4.10"
 
 	}

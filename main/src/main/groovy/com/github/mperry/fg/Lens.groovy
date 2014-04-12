@@ -1,7 +1,6 @@
 package com.github.mperry.fg
 
 import fj.F
-import fj.F1Functions
 import fj.F2
 import fj.P
 import fj.P2
@@ -75,7 +74,7 @@ class Lens<A, B> {
     @TypeChecked(TypeCheckingMode.SKIP)
     def <C> Lens<C, B> compose(Lens<C, A> lens) {
         new Lens(
-            F1Functions.o(get, lens.get),
+            Functions.o(get, lens.get),
             { C c, B b -> lens.set(c, set(lens.get(c), b)) } as F2
         )
     }

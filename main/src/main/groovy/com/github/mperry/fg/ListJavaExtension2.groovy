@@ -5,7 +5,6 @@ import com.github.mperry.fg.typeclass.concrete.ListFunctor
 import com.github.mperry.fg.typeclass.concrete.ListMonad
 import fj.F
 import fj.F2
-import fj.F2Functions
 import fj.F3
 import fj.Unit
 import groovy.transform.TypeChecked

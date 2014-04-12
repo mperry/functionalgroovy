@@ -69,9 +69,8 @@ class ListJavaExtension2 {
         applicative().apply(listFs, list)
     }
 
-
     static <A, B> List<B> liftA(List<A> a1, F<A, B> f) {
-        a1.map(f)
+        applicative().liftA(f, a1)
     }
 
 

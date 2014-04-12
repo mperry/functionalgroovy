@@ -9,7 +9,7 @@ import fj.F
 class SetMonad extends Monad<Set> {
 
     static <B> Set<B> defaultSet() {
-        new TreeSet<B>()
+        new HashSet<B>()
     }
 
     @Override

@@ -111,6 +111,19 @@ abstract class Monad<M> extends Applicative<M> {
         }
     }
 
+    def <A, B> M<B> foldM(List<A> s, B b, F2<B, A, M<B>> f) {
+        if (s.empty) {
+            unit(b)
+        } else {
+            def h = s.head()
+            def t = s.tail()
+            def newF = { B bb -> foldM(t, bb, f)} as F
+            def m = f.f(b, h)
+            flatMap(m, newF)
+        }
+    }
+
+
     /**
      * Like foldM, but discards the result.
      * foldM_ :: Monad m => (a -> b -> m a) -> a -> [b] -> m ()
@@ -118,6 +131,11 @@ abstract class Monad<M> extends Applicative<M> {
     def <A, B> M<Unit> foldM_(Stream<A> s, B b, F2<B, A, M<B>> f) {
         skip(foldM(s, b, f))
     }
+
+    def <A, B> M<Unit> foldM_(List<A> s, B b, F2<B, A, M<B>> f) {
+        skip(foldM(s, b, f))
+    }
+
 
     /**
      * Evaluate each action in the sequence from left to right, and collect the results.

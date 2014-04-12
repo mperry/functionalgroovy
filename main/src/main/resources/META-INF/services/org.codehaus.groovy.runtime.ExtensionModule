@@ -1,5 +1,5 @@
 moduleName=functionalgroovy-main
 moduleVersion=@version@
-extensionClasses=com.github.mperry.fg.SimpleIOExtension,com.github.mperry.fg.ListJavaExtension2,com.github.mperry.fg.StreamExtension2,com.github.mperry.fg.SqlExtension
-staticExtensionClasses=com.github.mperry.fg.SimpleIOStaticExtension,com.github.mperry.fg.ListJavaStaticExtension2,com.github.mperry.fg.StreamStaticExtension2
+extensionClasses=com.github.mperry.fg.SimpleIOExtension,com.github.mperry.fg.ListJavaExtension2,com.github.mperry.fg.StreamExtension2,com.github.mperry.fg.SqlExtension,com.github.mperry.fg.SetExtension2,com.github.mperry.fg.CollectionExtension2
+staticExtensionClasses=com.github.mperry.fg.SimpleIOStaticExtension,com.github.mperry.fg.ListJavaStaticExtension2,com.github.mperry.fg.StreamStaticExtension2,com.github.mperry.fg.SetStaticExtension2,com.github.mperry.fg.CollectionStaticExtension2
 

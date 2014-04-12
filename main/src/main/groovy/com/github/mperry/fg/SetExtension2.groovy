@@ -15,7 +15,11 @@ import groovy.transform.TypeChecked
 @TypeChecked
 class SetExtension2 {
 
-    static Monad monad() {
+    static <A> Set<A> create() {
+        new HashSet<A>()
+    }
+
+    static SetMonad monad() {
         new SetMonad()
     }
 
@@ -33,7 +37,11 @@ class SetExtension2 {
     }
 
     static <A, B> Set<B> map(Set<A> ma, F<A, B> f) {
-        ma.collect(f.toClosure())
+        def result = this.<B>create()
+        for (A a: ma) {
+            result.add(f.f(a))
+        }
+        result
     }
 
     static <A, B, C> Set<C> map2(Set<A> ma, Set<B> mb, F2<A, B, C> f) {

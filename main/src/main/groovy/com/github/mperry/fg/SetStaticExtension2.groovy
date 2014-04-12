@@ -7,6 +7,7 @@ import fj.F2
 import fj.Unit
 import fj.data.Stream
 import groovy.transform.TypeChecked
+import groovy.transform.TypeCheckingMode
 
 /**
  * Created by MarkPerry on 12/04/2014.
@@ -14,7 +15,7 @@ import groovy.transform.TypeChecked
 @TypeChecked
 class SetStaticExtension2 {
 
-    static Monad monad() {
+    static SetMonad monad() {
         new SetMonad()
     }
 
@@ -34,7 +35,6 @@ class SetStaticExtension2 {
     static <A> Set<A> join(Set z, Set<Set<A>> mma) {
         monad().join(mma)
     }
-
 
     static <A, B> Set<B> foldM(Set z, List<A> list, B b, F2<B, A, Set<B>> f) {
         monad().foldM(list, b, f)
@@ -63,7 +63,5 @@ class SetStaticExtension2 {
     static <A> Set<List<A>> filterM(Set z, List<A> list, F<A, Set<Boolean>> f) {
         monad().filterM(list, f)
     }
-
-
 
 }

@@ -80,6 +80,7 @@ class SqlExtension {
         foldRowResult(sql, query, f as F)
     }
 
+    @TypeChecked(TypeCheckingMode.SKIP)
     static <A, B> B foldRowResult(Sql sql, String query, F<GroovyRowResult, A> f, F<Stream<A>, B> g) {
         fold(sql, query, F1Functions.o(f, rowResult()), g)
     }

@@ -59,7 +59,6 @@ class ListMonadExtensionsTest {
     @Test
     void sequence() {
         def list = List.sequence([[1, 2], [3, 4, 5]])
-//        println list
         def haskell = [[1,3],[1,4],[1,5],[2,3],[2,4],[2,5]]
         assertTrue(list == haskell)
     }
@@ -67,7 +66,6 @@ class ListMonadExtensionsTest {
     @Test
     void traverse() {
         def list = [1, 2, 3].traverse({ Integer i -> 1.to(i).toJList()} as F)
-//        println list
         def haskell = [[1,1,1],[1,1,2],[1,1,3],[1,2,1],[1,2,2],[1,2,3]]
         assertTrue(list == haskell)
     }
@@ -75,7 +73,6 @@ class ListMonadExtensionsTest {
     @Test
     void replicateM() {
         def list = [1, 2].replicateM(3)
-//        println list
         def haskell = [[1,1,1],[1,1,2],[1,2,1],[1,2,2],[2,1,1],[2,1,2],[2,2,1],[2,2,2]]
         assertTrue(list == haskell)
     }
@@ -100,7 +97,6 @@ class ListMonadExtensionsTest {
             [i > 0]
         } as F
         def actual = List.filterM([2, 1, 0, -1], f)
-//        println actual
         assertTrue(actual == [[2, 1]])
     }
 
@@ -127,7 +123,6 @@ class ListMonadExtensionsTest {
     @Test
     void liftM2() {
         def actual = [0, 1].liftM2([0, 2], {Integer i, Integer j -> i + j})
-//        println actual
         assertTrue(actual == [0, 2, 1, 3])
     }
 
@@ -148,7 +143,6 @@ class ListMonadExtensionsTest {
         }.toJavaList()
         def actual = 1.to(4).toJavaList().ap(fs)
         def expected = [5,10,15,20,6,12,18,24,7,14,21,28]
-//        println actual
         assertTrue(actual == expected)
     }
 

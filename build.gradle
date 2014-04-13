@@ -43,7 +43,7 @@ subprojects {
 		groupName = "com.github.mperry"
 		scmGitFile = "scm:git@github.com:mperry/functionalgroovy.git"
 		projectDescription = "FunctionalGroovy enhances FunctionalJava for Groovy"
-		sourceCompatibility = "1.7"
+
 		founder = "Mark Perry"
 		founderUsername = "mperry"
 		organisation = groupName
@@ -57,6 +57,8 @@ subprojects {
 
 	}
 
+    sourceCompatibility = "1.7"
+    targetCompatibility = sourceCompatibility
     archivesBaseName = baseJarName
     group = project.groupName
 

@@ -38,6 +38,8 @@ subprojects {
 		projectName = "functionalgroovy"
 		pomProjectName = "FunctionalGroovy"
 		baseJarName = "$projectName-$name"
+
+
 		groupName = "com.github.mperry"
 		scmGitFile = "scm:git@github.com:mperry/functionalgroovy.git"
 		projectDescription = "FunctionalGroovy enhances FunctionalJava for Groovy"
@@ -55,15 +57,16 @@ subprojects {
 
 	}
 
-	group = project.groupName
+    archivesBaseName = baseJarName
+    group = project.groupName
 
 	repositories {
-        mavenLocal()
+
 		mavenCentral()
+        mavenLocal()
 	}
 
 	jar {
-		baseName baseJarName
 		manifest {
 			attributes 'Created-By': project.founder, 'Signature-Version': project.version
 		}

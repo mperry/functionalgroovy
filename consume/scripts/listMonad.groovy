@@ -2,9 +2,6 @@
 //@GrabResolver('https://oss.sonatype.org/content/groups/public')
 @GrabResolver('https://oss.sonatype.org/content/repositories/snapshots/')
 @Grab('com.github.mperry:functionalgroovy-main:0.5-SNAPSHOT')
-@Grab('org.functionaljava:functionaljava:3.1')
-
-import com.github.mperry.fg.*
 import fj.F
 import fj.F2
 import groovy.transform.TypeChecked
@@ -12,10 +9,7 @@ import groovy.transform.TypeCheckingMode
 import org.junit.Test
 
 import static fj.Unit.unit
-import static fj.Unit.unit
-import static fj.Unit.unit
 import static junit.framework.Assert.assertTrue
-
 
 @TypeChecked
 class ListMonadExtensionsTest {
@@ -52,13 +46,13 @@ class ListMonadExtensionsTest {
 
     @Test
     void foldM() {
-        def list = List.foldM((1..3).toList(), 0, { Integer acc, Integer i -> [acc + i] } as F2)
+        def list = List.foldM(1.to(3), 0, { Integer acc, Integer i -> [acc + i] } as F2)
         assertTrue(list == [6])
     }
 
     @Test
     void foldM_() {
-        def list = List.foldM_((1..3).toList(), 0, { Integer acc, Integer i -> [acc + i] } as F2)
+        def list = List.foldM_(1.to(3), 0, { Integer acc, Integer i -> [acc + i] } as F2)
         assertTrue(list == [unit()])
     }
 
@@ -72,7 +66,7 @@ class ListMonadExtensionsTest {
 
     @Test
     void traverse() {
-        def list = [1, 2, 3].traverse({ Integer i -> (1..i).toList()} as F)
+        def list = [1, 2, 3].traverse({ Integer i -> 1.to(i).toJList()} as F)
 //        println list
         def haskell = [[1,1,1],[1,1,2],[1,1,3],[1,2,1],[1,2,2],[1,2,3]]
         assertTrue(list == haskell)
@@ -90,7 +84,7 @@ class ListMonadExtensionsTest {
     void compose() {
         def f = { String s -> [s, s] } as F
         def g = { Integer i ->
-            (1..i * 2).toList().map({ Integer j ->
+            1.to(i * 2).toJavaList().map({ Integer j ->
                 j.toString()
             } as F)
         } as F
@@ -127,7 +121,6 @@ class ListMonadExtensionsTest {
             i * 2
         }
         def expected = source.map { Integer it -> it * 2 }
-//        println actual
         assertTrue(expected == actual)
     }
 
@@ -146,15 +139,14 @@ class ListMonadExtensionsTest {
     }
 
     @Test
-    @TypeChecked(TypeCheckingMode.SKIP)
     void ap() {
         // Haskell:
         // Prelude Control.Monad> ap (map (\x -> (\i -> i * (x + 2))) [3..5]) [1..4]
-        def fs = (3..5).toList().map({ Integer i ->
+        def fs = 3.to(5).map { Integer i ->
             def f = { Integer j -> j * (i + 2)}
-            f
-        })
-        def actual = (1..4).toList().ap(fs)
+            f as F
+        }.toJavaList()
+        def actual = 1.to(4).toJavaList().ap(fs)
         def expected = [5,10,15,20,6,12,18,24,7,14,21,28]
 //        println actual
         assertTrue(actual == expected)

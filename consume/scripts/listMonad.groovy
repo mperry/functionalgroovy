@@ -1,5 +1,6 @@
 
-@GrabResolver('https://oss.sonatype.org/content/groups/public')
+//@GrabResolver('https://oss.sonatype.org/content/groups/public')
+@GrabResolver('https://oss.sonatype.org/content/repositories/snapshots/')
 @Grab('com.github.mperry:functionalgroovy-main:0.5-SNAPSHOT')
 @Grab('org.functionaljava:functionaljava:3.1')
 
@@ -145,13 +146,14 @@ class ListMonadExtensionsTest {
     }
 
     @Test
+    @TypeChecked(TypeCheckingMode.SKIP)
     void ap() {
         // Haskell:
         // Prelude Control.Monad> ap (map (\x -> (\i -> i * (x + 2))) [3..5]) [1..4]
-        def fs = (3..5).toList().map { Integer i ->
+        def fs = (3..5).toList().map({ Integer i ->
             def f = { Integer j -> j * (i + 2)}
-            f as F
-        }
+            f
+        })
         def actual = (1..4).toList().ap(fs)
         def expected = [5,10,15,20,6,12,18,24,7,14,21,28]
 //        println actual

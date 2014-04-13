@@ -37,6 +37,14 @@ class ListJavaStaticExtension2 {
         monad().foldM_(s, b, f)
     }
 
+    static <A, B> List<B> foldM(List z, List<A> s, B b, F2<B, A, List<B>> f) {
+        monad().foldM(s, b, f)
+    }
+
+    static <A, B> List<Unit> foldM_(List l, List<A> s, B b, F2<B, A, List<B>> f) {
+        monad().foldM_(s, b, f)
+    }
+
     static <A> List<List<A>> sequence(List l, List<List<A>> list) {
         monad().sequence(list)
     }

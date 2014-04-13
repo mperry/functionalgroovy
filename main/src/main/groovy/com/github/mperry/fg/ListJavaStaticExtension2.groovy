@@ -29,7 +29,7 @@ class ListJavaStaticExtension2 {
         monad().filterM(list, f)
     }
 
-    static <A, B> List<A> foldM(List l, Stream<A> s, B b, F2<B, A, List<B>> f) {
+    static <A, B> List<B> foldM(List l, Stream<A> s, B b, F2<B, A, List<B>> f) {
         monad().foldM(s, b, f)
     }
 

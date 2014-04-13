@@ -14,7 +14,7 @@ import static junit.framework.Assert.assertTrue
  * Created by MarkPerry on 16/01/14.
  */
 @TypeChecked
-class ListExtensionsTest {
+class ListMonadExtensionsTest {
 
     @Test
     void join() {
@@ -29,7 +29,7 @@ class ListExtensionsTest {
     @Test
     void map2() {
         def f = { Integer i, Integer j -> i * j } as F2
-        def list = List.map2([1, 2], [3, 4], f)
+        def list = [1, 2].map2([3, 4], f)
         assertTrue(list == [3, 4, 6, 8])
     }
 
@@ -86,7 +86,7 @@ class ListExtensionsTest {
     void compose() {
         def f = { String s -> [s, s] } as F
         def g = { Integer i ->
-            1.to(i * 2).toJList().map({ Integer j ->
+            1.to(i * 2).toJavaList().map({ Integer j ->
                 j.toString()
             } as F)
         } as F
@@ -98,50 +98,66 @@ class ListExtensionsTest {
 
     @Test
     void filterM() {
-        // TODO
+        def f = { Integer i ->
+            [i > 0]
+        } as F
+        def actual = List.filterM([2, 1, 0, -1], f)
+//        println actual
+        assertTrue(actual == [[2, 1]])
     }
 
     @Test
     void when() {
-        // TODO
+        // TODO: not sure if this is applicable
     }
 
     @Test
     void unless() {
-        // TODO
+        // TODO: not sure if this is applicable
     }
 
     @Test
     void liftM() {
-
-        // TODO
-
+        def source = [1, 2, 3]
+        def actual = source.liftM { Integer i ->
+            i * 2
+        }
+        def expected = source.map { Integer it -> it * 2 }
+//        println actual
+        assertTrue(expected == actual)
     }
 
     @Test
     void liftM2() {
-        // TODO
+        def actual = [0, 1].liftM2([0, 2], {Integer i, Integer j -> i + j})
+//        println actual
+        assertTrue(actual == [0, 2, 1, 3])
     }
 
     @Test
     void liftM3() {
-        // TODO
+        def actual = [0, 1].liftM3([0, 2], [0, 4], {Integer i, Integer j, Integer k -> i + j + k })
+        def expected = [0, 4, 2, 6, 1, 5, 3, 7]
+        assertTrue(actual == expected)
     }
 
     @Test
     void ap() {
         // Haskell:
         // Prelude Control.Monad> ap (map (\x -> (\i -> i * (x + 2))) [3..5]) [1..4]
-        // [5,10,15,20,6,12,18,24,7,14,21,28]
-
         def fs = 3.to(5).map { Integer i ->
             def f = { Integer j -> j * (i + 2)}
             f as F
         }.toJavaList()
         def actual = 1.to(4).toJavaList().ap(fs)
         def expected = [5,10,15,20,6,12,18,24,7,14,21,28]
-        println actual
+//        println actual
         assertTrue(actual == expected)
+    }
+
+    @Test
+    void apply() {
+        // same implementation as ap
     }
 
 }

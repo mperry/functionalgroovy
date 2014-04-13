@@ -42,10 +42,6 @@ class ListJavaExtension2 {
         monad().replicateM(n, list)
     }
 
-    static <A> List<List<A>> filterM(List<A> list, F<A, List<Boolean>> f) {
-        monad().filterM(list, f)
-    }
-
     static <A, B> List<B> liftM(List<A> ma, F<A, B> f) {
         monad().liftM(ma, f)
     }
@@ -56,6 +52,11 @@ class ListJavaExtension2 {
 
     static <A, B, C, R> List<R> liftM3(List<A> ma, List<B> mb, List<C> mc, F3<A, B, C, R> f) {
         monad().liftM3(ma, mb, mc, f)
+    }
+
+
+    static <A, B, C> List<C> map2(List<A> listA, List<B> listB, F2<A, B, C> f) {
+        monad().map2(listA, listB, f)
     }
 
     // Applicative

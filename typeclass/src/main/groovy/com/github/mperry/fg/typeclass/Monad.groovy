@@ -197,7 +197,7 @@ abstract class Monad<M> extends Applicative<M> {
     /**
      * This generalizes the list-based filter function.
      * Arguments flipped compared to Haskell representation
-     * filterM :: Monad m => (a -> m Bool) -> [a] -> m [a] Source
+     * filterM :: Monad m => (a -> m Bool) -> [a] -> m [a]
      */
     def <A> M<List<A>> filterM(List<A> list, F<A, M<Boolean>> f) {
         if (list.empty) {
@@ -208,7 +208,7 @@ abstract class Monad<M> extends Applicative<M> {
             flatMap(mb, { Boolean b ->
                 def mList = filterM(list.tail(), f)
                 map(mList, { List<A> listAs ->
-                    unit(b ? [h] + listAs : listAs)
+                    b ? [h] + listAs : listAs
                 } as F)
             } as F)
         }
@@ -239,7 +239,7 @@ abstract class Monad<M> extends Applicative<M> {
      */
     def <A, B> M<B> liftM(M<A> ma, F<A, B> f) {
         map(ma, { A a ->
-            unit(f.f(a))
+            f.f(a)
         } as F)
     }
 
@@ -253,7 +253,7 @@ abstract class Monad<M> extends Applicative<M> {
     def <A, B, R> M<R> liftM2(M<A> ma, M<B> mb, F2<A, B, R> f) {
         flatMap(ma, { A a ->
             map(mb, { B b ->
-                unit(f.f(a, b))
+                f.f(a, b)
             } as F)
         } as F)
     }
@@ -267,7 +267,7 @@ abstract class Monad<M> extends Applicative<M> {
         flatMap(ma, { A a ->
             flatMap(mb, { B b ->
                 map(mc, { C c ->
-                    unit(f.f(a, b, c))
+                    f.f(a, b, c)
                 } as F)
             } as F)
         } as F)

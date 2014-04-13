@@ -24,8 +24,9 @@ class ListJavaStaticExtension2 {
         monad().join(list2)
     }
 
-    static <A, B, C> List<C> map2(List l, List<A> listA, List<B> listB, F2<A, B, C> f) {
-        monad().map2(listA, listB, f)
+
+    static <A> List<List<A>> filterM(List z, List<A> list, F<A, List<Boolean>> f) {
+        monad().filterM(list, f)
     }
 
     static <A, B> List<A> foldM(List l, Stream<A> s, B b, F2<B, A, List<B>> f) {

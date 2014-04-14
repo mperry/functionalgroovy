@@ -17,7 +17,7 @@ import static junit.framework.Assert.assertTrue
  * Created by MarkPerry on 13/04/2014.
  */
 @TypeChecked
-class OptionMonadExtensionTest {
+class OptionMonadExtensionTest3 {
 
     OptionMonad monad() {
         new OptionMonad()

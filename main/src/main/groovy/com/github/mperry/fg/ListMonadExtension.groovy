@@ -16,7 +16,7 @@ import groovy.transform.TypeChecked
  * Created by MarkPerry on 16/01/14.
  */
 @TypeChecked
-class ListJavaExtension2 {
+class ListMonadExtension {
 
     static ListMonad monad() {
         new ListMonad()

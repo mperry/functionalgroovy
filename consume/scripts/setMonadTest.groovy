@@ -1,4 +1,6 @@
 
+// from https://github.com/mperry/functionalgroovy/blob/master/test-extensions/src/test/groovy/com/github/mperry/fg/SetMonadExtensionTest.groovy
+
 //@GrabResolver('https://oss.sonatype.org/content/groups/public')
 @GrabResolver('https://oss.sonatype.org/content/repositories/snapshots/')
 @Grab('com.github.mperry:functionalgroovy-main:0.5-SNAPSHOT')

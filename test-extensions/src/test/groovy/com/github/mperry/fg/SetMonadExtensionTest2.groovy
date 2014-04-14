@@ -17,7 +17,7 @@ import static junit.framework.Assert.assertTrue
  * Created by MarkPerry on 13/04/2014.
  */
 @TypeChecked
-class SetMonadExtensionTest {
+class SetMonadExtensionTest2 {
 
     SetMonad monad() {
         new SetMonad()

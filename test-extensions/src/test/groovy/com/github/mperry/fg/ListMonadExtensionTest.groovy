@@ -1,6 +1,8 @@
 package com.github.mperry.fg
 
+import com.github.mperry.fg.typeclass.Monad
 import com.github.mperry.fg.typeclass.concrete.ListMonad
+import com.github.mperry.fg.typeclass.trait.*
 import fj.F
 import fj.F2
 import fj.F3

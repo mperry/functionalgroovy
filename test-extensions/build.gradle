@@ -5,4 +5,5 @@ ext {
 
 dependencies {
 	compile project(":main")
+    compile project(":typeclass-traits")
 }

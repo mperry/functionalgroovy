@@ -6,6 +6,7 @@ import fj.F
 import fj.F2
 import fj.function.Integers
 import groovy.transform.TypeChecked
+import groovy.transform.TypeCheckingMode
 import org.junit.Test
 
 import static fj.Function.uncurryF2
@@ -34,6 +35,7 @@ class SetMonadExtensionTest {
     }
 
     @Test
+    @TypeChecked(TypeCheckingMode.SKIP)
     void filterM() {
         def f = { Integer i -> [i > 0].toSet()} as F
         def source = [-1, 2, 0, 1, -1]
@@ -41,6 +43,7 @@ class SetMonadExtensionTest {
 //        println actual
         def expected = [[2, 1]].toSet()
         assertTrue(monad().filterM(source, f) == expected)
+        // TODO: next line doesn't typecheck with Groovy-2.3.0-beta-2
         assertTrue(Set.filterM(source, f) == expected)
     }
 
@@ -103,11 +106,13 @@ class SetMonadExtensionTest {
     }
 
     @Test
+    @TypeChecked(TypeCheckingMode.SKIP)
     void replicateM() {
         def n = 3
         def s = [1, 2].toSet()
 //        println actual
         def expected = [[1, 1, 1], [2, 2, 1], [1, 2, 2], [2, 1, 1], [1, 1, 2], [2, 2, 2], [2, 1, 2], [1, 2, 1]].toSet()
+        // TODO: next 2 lines don't typecheck with Groovy 2.3.0-beta-2
         assertTrue(monad().replicateM(n, s) == expected)
         assertTrue(s.replicateM(n) == expected)
     }

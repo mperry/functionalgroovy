@@ -15,7 +15,7 @@ ext {
 
 dependencies {
     compile gradleGroovy
-    compile("$groupName:$projectName-core:$demoVersion") {
+    compile("$groupName:$projectName-main:$demoVersion") {
         changing = true
     }
     testCompile gradleJunit

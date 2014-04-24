@@ -3,3 +3,9 @@
 language: groovy
 jdk: 
 - openjdk7
+
+env:
+- secure: "Xv6ITZIEX+0wrev44Tzkg76oIzVYK2uOTb+Iubx/syhi9pyeA8MXhg6np7rV62bEs0KsXSygjdlYPlJKx5Gzq4e7MZQ/TZjC5Niu37tpRrI5Gc2f33I/VlYWvvKKoQzGgNf13oOAWHt84Vchk6zdJINLq71nRk+921fO7Ssl3VE="
+- secure: "tXjIV6JUt+1gKfL0qYzyY4jzbJG6kk32f7RmQn3vYmJXLxgNBnCDkOQ9GkJuiBld8GG2nsvAY4m34LmaxJzKzA/bZNzdkT7427ozAaGsQSRHHyc+/2UGOw/T3K3zF02h0W++yVTNHWuzXHCkitAlsw7esp9u97FdhqP08vzMLC0="
+
+

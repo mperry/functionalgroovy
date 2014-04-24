@@ -1,0 +1,5 @@
+
+# http://lint.travis-ci.org/
+language: groovy
+jdk: 
+- openjdk7

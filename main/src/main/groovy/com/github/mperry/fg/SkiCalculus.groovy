@@ -56,6 +56,8 @@ class SkiCalculus {
         { X x, Y y -> False(x, y) } as F2
     }
 
+    // workaround for Groovy 2.3.0-rc-1, should type check
+    @TypeChecked(TypeCheckingMode.SKIP)
     def <A, B, C> Either<A, B> not(F2<A, B, C> f) {
         def val = f.f(False_(), True_())
         (val instanceof A) ? left(val) : Either.right(val)

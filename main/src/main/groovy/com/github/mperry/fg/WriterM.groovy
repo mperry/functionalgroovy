@@ -3,6 +3,7 @@ package com.github.mperry.fg
 import fj.F
 import fj.F2
 import groovy.transform.TypeChecked
+import groovy.transform.TypeCheckingMode
 
 /**
  * Created by MarkPerry on 11/01/14.
@@ -22,14 +23,18 @@ class WriterM<W, A> {
         plus = f
     }
 
-    static WriterM<W, A> lift(A a, W w, F2<W, W, W> f) {
+    static <W2, A2> WriterM<W2, A2> lift(A2 a, W2 w, F2<W2, W2, W2> f) {
         new WriterM(a, w, f)
     }
 
+    // workaround for Groovy 2.3.0-rc-1, should type check
+    @TypeChecked(TypeCheckingMode.SKIP)
     def WriterM<W, A> tell(W w) {
         WriterM.lift(value, plus.f(log, w), plus)
     }
 
+    // workaround for Groovy 2.3.0-rc-1, should type check
+    @TypeChecked(TypeCheckingMode.SKIP)
     def <B> WriterM<W, B> map(F<A, B> f) {
         WriterM.lift(f.f(value), log, plus)
     }
@@ -38,6 +43,8 @@ class WriterM<W, A> {
         map(c as F)
     }
 
+    // workaround for Groovy 2.3.0-rc-1, should type check
+    @TypeChecked(TypeCheckingMode.SKIP)
     def WriterM<W, A> flatMap(F<A, WriterM<W, A>> f) {
         def writer = f.f(value)
         WriterM.lift(writer.value, plus.f(log, writer.log), plus)
@@ -47,16 +54,16 @@ class WriterM<W, A> {
         flatMap(c as F)
     }
 
-    static WriterM<W, A> lift(A a) {
+    static <W2, A2> WriterM<W2, A2> lift(A2 a) {
         WriterM.lift(a, STRING_EMPTY, STRING_CONCAT)
     }
 
-    static WriterM<W, A> log(A a) {
+    static <W2, A2> WriterM<W2, A2> log(A2 a) {
         WriterM.lift(a, LOG_FUNCTION.f(a), STRING_CONCAT)
     }
 
-    static F<A, WriterM<W, A>> log() {
-        { A a -> WriterM.lift(a, LOG_FUNCTION.f(a), STRING_CONCAT) } as F
+    static <W2, A2> F<A2, WriterM<W2, A2>> log() {
+        { A2 a -> WriterM.lift(a, LOG_FUNCTION.f(a), STRING_CONCAT) } as F
     }
 
     static F<Object, String> LOG_FUNCTION = { Object o -> "Added $o to the log\n"} as F

@@ -26,7 +26,8 @@ class State<S, A> {
         new State<S1, A1>(f)
     }
 
-//    @TypeChecked(TypeCheckingMode.SKIP)
+    // workaround for Groovy 2.3.0-rc-1, should type check
+    @TypeChecked(TypeCheckingMode.SKIP)
     static <S1> State<S1, S1> liftS(F<S1, S1> f) {
         State.<S1, S1>lift({ S1 s ->
             def s2 = f.f(s)
@@ -47,6 +48,8 @@ class State<S, A> {
         } as F)
     }
 
+    // workaround for Groovy 2.3.0-rc-1, should type check
+    @TypeChecked(TypeCheckingMode.SKIP)
     static State<S, Unit> modify(F<S, S> f) {
         State.<S>get().flatMap { S s ->
             State.lift({ S s2 ->
@@ -99,6 +102,8 @@ class State<S, A> {
         State.<S1>lift(f as F)
     }
 
+    // workaround for Groovy 2.3.0-rc-1, should type check
+    @TypeChecked(TypeCheckingMode.SKIP)
     State<S, S> gets() {
         State.lift({ S s ->
             def p = run(s)

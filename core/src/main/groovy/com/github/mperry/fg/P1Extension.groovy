@@ -5,6 +5,7 @@ import fj.P1
 import fj.data.Option
 import fj.data.Validation
 import groovy.transform.TypeChecked
+import groovy.transform.TypeCheckingMode
 
 /**
  * Created by MarkPerry on 15/01/14.
@@ -21,9 +22,10 @@ class P1Extension {
         validate(p).isFail()
     }
 
+    @TypeChecked(TypeCheckingMode.SKIP)
     static <A> Validation<Exception, A> validate(P1<A> p) {
         try {
-            Validation.success(p._1())
+            Validation.<Exception, A>success(p._1())
         } catch (Exception e) {
             Validation.fail(e)
         }
@@ -42,6 +44,7 @@ class P1Extension {
         validateWithError(p).isFail()
     }
 
+    @TypeChecked(TypeCheckingMode.SKIP)
     static <A> Validation<Error, A> validateWithError(P1<A> p) {
         try {
             Validation.success(p._1())

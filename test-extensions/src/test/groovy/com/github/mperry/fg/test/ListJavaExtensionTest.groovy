@@ -173,4 +173,11 @@ class ListJavaExtensionTest {
         result
     }
 
+    @Test
+    void intersperse() {
+        assertTrue([].intersperse(0) == [])
+        assertTrue([1].intersperse(0) == [1])
+        assertTrue([1, 2, 3].intersperse(0) == [1, 0, 2, 0, 3])
+    }
+
 }

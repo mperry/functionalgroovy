@@ -41,7 +41,20 @@ class ListJavaExtension {
 		map(list, f)
 	}
 
-	static <A> fj.data.List<A> toFJList(List<A> list) {
+
+    static <A> List<A> intersperse(java.util.List<A> list, A sep) {
+        def result = []
+        for (int i = 0; i < list.size(); i++) {
+            if (i > 0) {
+                result.add(sep)
+            }
+            result.add(list[i])
+        }
+        result
+    }
+
+
+    static <A> fj.data.List<A> toFJList(List<A> list) {
         return fj.data.List.list((A[]) list.toArray());
     }
 

@@ -1,11 +1,16 @@
 
+
+Boolean doSigning() {
+    signingEnabled.trim() == "true"
+}
+
 allprojects {
 	defaultTasks 'build'
 	
 }
 
 subprojects {
-	apply plugin: "signing"
+
 	apply plugin: "groovy"
 	apply plugin: "java"
 	apply plugin: "maven"
@@ -90,15 +95,20 @@ subprojects {
 		archives sourcesJar
 	}
 
-    signing {
-        sign configurations.archives
+    if (doSigning()) {
+        apply plugin: "signing"
+        signing {
+            sign configurations.archives
+        }
     }
 
     uploadArchives.enabled = false
 	uploadArchives {
 		repositories {
 			mavenDeployer {
-                beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+                if (doSigning()) {
+                    beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+                }
 
 				repository(url: sonatypeUploadUrl) {
 					authentication(userName: sonatypeUsername, password: sonatypePassword)

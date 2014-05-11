@@ -16,6 +16,11 @@ Features includes:
 * A simple IO type
 * Y Combinator
 
+The project has some cloud build servers I used to experiment with including:
+* [Cloudbees BuildHive](https://buildhive.cloudbees.com/job/mperry/job/functionalgroovy/)
+* [Cloudbees Jenkins Build](https://mperry.ci.cloudbees.com/job/functionalgroovy/)
+* [Travis CI](https://travis-ci.org/mperry/functionalgroovy)
+
 I have written an initial blog post on [Groovy Null Handling using Bind, Comprehensions and Lift](http://mperry.github.io/2013/07/28/groovy-null-handling.html) covering:
 * some introductory material on functional programming in Groovy
 * how to begin using the Functional Groovy library

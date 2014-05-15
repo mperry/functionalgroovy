@@ -1,7 +1,9 @@
 package com.github.mperry.fg
 
 import fj.F
+import fj.F1Functions
 import fj.F2
+import fj.F2Functions
 import fj.P1
 import groovy.transform.TypeChecked
 import groovy.transform.TypeCheckingMode
@@ -13,11 +15,11 @@ import groovy.transform.TypeCheckingMode
 class Functions {
 
     static <A, B, C> F<A, F<B, C>> curry(F2<A, B, C> f) {
-        f.curry()
+        F2Functions.curry(f)
     }
 
     static <A, B, C> F<C, B> o(F<A, B> f, F<C, A> g) {
-        f.o(g)
+        F1Functions.o(f, g)
     }
 
     @TypeChecked(TypeCheckingMode.SKIP)
@@ -26,7 +28,7 @@ class Functions {
     }
 
     static <A, B> F<A, P1<B>> lazy(F<A, B> f) {
-        f.lazy()
+        F1Functions.lazy(f)
     }
 
 }

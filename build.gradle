@@ -17,11 +17,13 @@ subprojects {
 
     ext {
         snap = "-SNAPSHOT"
+        isSnapshot = false
+        baseVersion = "0.5"
     }
-	version = "0.5$snap".toString()
+	version = baseVersion + (isSnapshot ? snap : "")
 
 	ext {
-        consumeVersion = "0.5-SNAPSHOT"
+        consumeVersion = "0.5$snap"
 
         // sonatypeUsername and sonatypePassword stored in %USERPROFILE%/.gradle/gradle.properties,
         // otherwise override with -PsonatypeUsername=user -PsonatypePassword=pwd
@@ -37,7 +39,7 @@ subprojects {
 		sonatypeSnapshotUrl = "$sonatypeBaseUrl/content/repositories/snapshots/"
         sonatypeRepositoryUrl = "$sonatypeBaseUrl/content/groups/public"
 		sonatypeReleaseUrl = "$sonatypeBaseUrl/service/local/staging/deploy/maven2/"
-        sonatypeUploadUrl = version.endsWith(snap) ? sonatypeSnapshotUrl : sonatypeReleaseUrl
+        sonatypeUploadUrl = isSnapshot ? sonatypeSnapshotUrl : sonatypeReleaseUrl
 
 		projectUrl = "https://github.com/mperry/functionalgroovy"
 		projectName = "functionalgroovy"

@@ -18,20 +18,10 @@ subprojects {
     ext {
         snap = "-SNAPSHOT"
     }
-	version = "0.5$snap".toString()
+	version = "0.5.1$snap".toString()
 
 	ext {
-        consumeVersion = "0.5-SNAPSHOT"
-
-        // sonatypeUsername and sonatypePassword stored in %USERPROFILE%/.gradle/gradle.properties,
-        // otherwise override with -PsonatypeUsername=user -PsonatypePassword=pwd
-        if (!project.hasProperty("sonatypeUsername")) {
-            sonatypeUsername = ""
-        }
-        if (!project.hasProperty("sonatypePassword")) {
-            sonatypePassword = ""
-        }
-//        println "Sonatype credentials: sonatypeUsername $sonatypeUsername sonatypePassword $sonatypePassword"
+        consumeVersion = "0.5"
 
 		sonatypeBaseUrl = "https://oss.sonatype.org"
 		sonatypeSnapshotUrl = "$sonatypeBaseUrl/content/repositories/snapshots/"
@@ -44,7 +34,6 @@ subprojects {
 		pomProjectName = "FunctionalGroovy"
 		baseJarName = "$projectName-$name"
 
-
 		groupName = "com.github.mperry"
 		scmGitFile = "scm:git@github.com:mperry/functionalgroovy.git"
 		projectDescription = "FunctionalGroovy enhances FunctionalJava for Groovy"
@@ -55,9 +44,7 @@ subprojects {
         groovyVersion = "2.2.+"
 
 		gradleGroovy = "org.codehaus.groovy:groovy-all:$groovyVersion"
-//		gradleFj = "$groupName:functionaljava:4.1-SNAPSHOT"
-//        gradleFj = "org.functionaljava:functionaljava:4.1-SNAPSHOT"
-        gradleFj = "org.functionaljava:functionaljava:4.1-SNAPSHOT"
+        gradleFj = "org.functionaljava:functionaljava:4.1"
 		gradleJunit = "junit:junit:4.10"
 
 	}
@@ -68,11 +55,9 @@ subprojects {
     group = project.groupName
 
 	repositories {
-
 		mavenCentral()
-        mavenLocal()
         maven {
-            url "https://oss.sonatype.org/content/groups/public"
+            url sonatypeRepositoryUrl
         }
 	}
 

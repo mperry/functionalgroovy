@@ -7,9 +7,7 @@ uploadArchives.enabled = true
 
 dependencies {
     compile gradleGroovy
-    compile(gradleFj) {
-        changing = true
-    }
+    compile gradleFj
 	compile project(":core")
     testCompile gradleJunit
 }

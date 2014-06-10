@@ -13,6 +13,5 @@ run {
 dependencies {
 	compile project(":main")
 	compile gradleGroovy
-//	compile gradleFj
 	testCompile gradleJunit
 }

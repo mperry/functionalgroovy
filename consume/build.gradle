@@ -1,22 +1,19 @@
 
 repositories {
 
-    mavenLocal()
     mavenCentral()
     maven {
-//        url sonatypeSnapshotUrl
         url sonatypeRepositoryUrl
     }
 }
 
 ext {
-    demoVersion = consumeVersion
+
 }
 
 dependencies {
     compile gradleGroovy
-    compile("$groupName:$projectName-main:$demoVersion") {
-        changing = true
-    }
+    compile gradleFj
+    compile "$groupName:$projectName-main:$consumeVersion"
     testCompile gradleJunit
 }

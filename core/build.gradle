@@ -6,9 +6,7 @@ ext {
 
 dependencies {
 	compile gradleGroovy
-	compile(gradleFj) {
-        changing = true
-    }
+	compile gradleFj
 	compile gradleJunit
 }
 

@@ -1,6 +1,4 @@
 
-import org.apache.tools.ant.filters.*
-
 ext {
 
 }

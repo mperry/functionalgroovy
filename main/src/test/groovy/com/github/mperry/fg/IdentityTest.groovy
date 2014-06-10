@@ -43,6 +43,7 @@ class IdentityTest {
     }
 
     @Test
+    @TypeChecked(TypeCheckingMode.SKIP)
     void associativity() {
         new MonadLaws().associativity(monad(), arbIdInteger(), arbF(coarbInteger, arbId(arbString)), arbF(Coarbitrary.coarbString, arbId(arbLong)))
     }

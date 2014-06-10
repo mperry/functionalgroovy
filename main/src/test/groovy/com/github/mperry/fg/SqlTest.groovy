@@ -43,6 +43,7 @@ class SqlTest {
         sql.close()
     }
 
+    @TypeChecked(TypeCheckingMode.SKIP)
     static void resourceSetup() {
         time("setup") {
             sql = Sql.newInstance('jdbc:h2:mem:', 'org.h2.Driver')

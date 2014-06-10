@@ -34,6 +34,7 @@ class ListMonadTest {
     }
 
     @Test
+    @TypeChecked(TypeCheckingMode.SKIP)
     void associativity() {
         new MonadLaws().associativity(monad(), arbJavaList(arbInteger), arbFInvariant(arbJavaList(arbString)), arbFInvariant(arbJavaList(arbLong)))
     }

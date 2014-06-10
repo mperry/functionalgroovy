@@ -108,6 +108,7 @@ class OptionMonadTest {
     }
 
     @Test
+    @TypeChecked(TypeCheckingMode.SKIP)
     void abstractAssociativity() {
         new MonadLaws().associativity(monad(), arbOption(arbInteger), arbF(coarbInteger, arbOption(arbLong)),
                 arbF(coarbLong, arbOption(arbString)))

@@ -51,6 +51,7 @@ class StateIntMonadTest {
     }
 
     @Test
+    @TypeChecked(TypeCheckingMode.SKIP)
     void associativity() {
         new MonadLaws().associativity(monad(), arbStateInt(), arbF(coarbInteger, arbState(arbString)),
             arbF(coarbString, arbState(arbLong)))

@@ -46,12 +46,13 @@ class StateGame {
         // TODO, I suspect I need to use State transformer here
     }
 
+    @TypeChecked(TypeCheckingMode.SKIP)
     List<Integer> run(List<P3<String, Boolean, Integer>> list) {
-        list.map { P3<String, Boolean, Integer> p ->
+        list.map({ P3<String, Boolean, Integer> p ->
             def s = playGame(p._1())
             def i = s.eval(P.p(p._2(), p._3()))
             i
-        }
+        } as F)
     }
 
     @TypeChecked(TypeCheckingMode.SKIP)
@@ -75,6 +76,7 @@ class StateGame {
         }
     }
 
+    @TypeChecked(TypeCheckingMode.SKIP)
     State<P2<Boolean, Integer>, Integer> playGame(String s) {
         if (s.length() == 0) {
             State.<P2<Boolean, Integer>>get().map { P2<Boolean, Integer> p ->
@@ -83,9 +85,9 @@ class StateGame {
         } else {
             State.<P2<Boolean, Integer>>get().flatMap { P2<Boolean, Integer> p ->
                 def result = command(s[0], p)
-                result.flatMap({ Unit u ->
+                result.flatMap { Unit u ->
                     playGame(s.substring(1))
-                } as F)
+                }
             }
         }
     }

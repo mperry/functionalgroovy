@@ -6,6 +6,7 @@ import fj.F
 import fj.F2
 import fj.function.Integers
 import groovy.transform.TypeChecked
+import groovy.transform.TypeCheckingMode
 import org.junit.Test
 
 import static fj.Function.uncurryF2
@@ -24,6 +25,7 @@ class SetMonadExtensionTest {
     }
 
     @Test
+    @TypeChecked(TypeCheckingMode.SKIP)
     void ap() {
         def f = { Integer i -> i + 1} as F
         def source = [1, 1, 2].toSet()

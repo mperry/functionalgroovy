@@ -17,7 +17,10 @@ subprojects {
 
     ext {
         snap = "-SNAPSHOT"
+        isSnapshot = false
+        baseVersion = "0.5"
     }
+
 	version = "0.5.1$snap".toString()
 
 	ext {
@@ -27,7 +30,7 @@ subprojects {
 		sonatypeSnapshotUrl = "$sonatypeBaseUrl/content/repositories/snapshots/"
         sonatypeRepositoryUrl = "$sonatypeBaseUrl/content/groups/public"
 		sonatypeReleaseUrl = "$sonatypeBaseUrl/service/local/staging/deploy/maven2/"
-        sonatypeUploadUrl = version.endsWith(snap) ? sonatypeSnapshotUrl : sonatypeReleaseUrl
+        sonatypeUploadUrl = isSnapshot ? sonatypeSnapshotUrl : sonatypeReleaseUrl
 
 		projectUrl = "https://github.com/mperry/functionalgroovy"
 		projectName = "functionalgroovy"

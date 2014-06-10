@@ -1,0 +1,4 @@
+moduleName=functionalgroovy-java8
+moduleVersion=@version@
+extensionClasses=com.github.mperry.fg.Function1Extension,com.github.mperry.fg.Function2Extension,com.github.mperry.fg.OptionalExtension
+staticExtensionClasses=com.github.mperry.fg.OptionalStaticExtension

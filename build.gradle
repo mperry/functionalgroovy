@@ -17,11 +17,11 @@ subprojects {
 
     ext {
         snap = "-SNAPSHOT"
-        isSnapshot = false
-        baseVersion = "0.5"
+        isSnapshot = true
+        baseVersion = "0.5.1"
     }
 
-	version = "0.5.1$snap".toString()
+	version = "$baseVersion$snap".toString()
 
 	ext {
         consumeVersion = "0.5"

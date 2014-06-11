@@ -56,8 +56,12 @@ class OptionalExtension {
      *
      * @return This optional value or <code>null</code> if there is no value.
      */
-   static <A> A toNull(Optional<A> o1) {
-       o1.orElse(null)
-   }
+    static <A> A toNull(Optional<A> o1) {
+        o1.orElse((A) null)
+    }
+
+    static <A> Optional<A> orElse(Optional<A> o1, Optional<A> o2) {
+        o1.isPresent() ? o1 : o2
+    }
 
 }

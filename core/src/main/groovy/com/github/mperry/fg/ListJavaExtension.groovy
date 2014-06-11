@@ -23,6 +23,36 @@ import java.util.List;
 @TypeChecked
 class ListJavaExtension {
 
+    /**
+     * Immutable prepend element to list
+     */
+    static <A> List<A> cons(List<A> list1, A a) {
+        def result = Arrays.asList(a)
+        result.addAll(list1)
+        result
+    }
+
+    static <A> F<List<A>, List<A>> cons(A a) {
+        { List<A> list ->
+            cons(list, a)
+        } as F
+    }
+
+    static <A> F<List<A>, List<A>> snoc(A a) {
+        { List<A> list ->
+            snoc(list, a)
+        } as F
+    }
+
+    /**
+     * Immutable append element to list
+     */
+    static <A> List<A> snoc(List<A> list1, A a) {
+        def result = new ArrayList<A>(list1)
+        result.add(a)
+        result
+    }
+
 	public static <A, B> List<P2<A, B>> zip(List<A> list1, List<B> list2) {
 		def result = []
 		def min = Math.min(list1.size(), list2.size())

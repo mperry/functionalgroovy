@@ -3,4 +3,6 @@ apply plugin: 'groovy'
 
 dependencies {
     compile gradleGroovy
+    compile project(":core")
+    compile "org.functionaljava:functionaljava-java8:4.2-SNAPSHOT"
 }

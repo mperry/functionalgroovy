@@ -1,6 +1,8 @@
 
 apply plugin: 'groovy'
 
+uploadArchives.enabled = true
+
 dependencies {
     compile gradleGroovy
     compile project(":core")

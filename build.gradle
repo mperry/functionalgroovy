@@ -44,7 +44,7 @@ subprojects {
 		founder = "Mark Perry"
 		founderUsername = "mperry"
 		organisation = groupName
-        groovyVersion = "2.3.2"
+        groovyVersion = "2.3.3"
 
 		gradleGroovy = "org.codehaus.groovy:groovy-all:$groovyVersion"
         gradleFj = "org.functionaljava:functionaljava:4.2-SNAPSHOT"

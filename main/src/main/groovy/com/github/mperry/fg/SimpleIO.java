@@ -1,6 +1,7 @@
 package com.github.mperry.fg;
 
 import fj.F;
+import fj.P1;
 import fj.Unit;
 import fj.control.Trampoline;
 import fj.control.parallel.Strategy;
@@ -79,6 +80,14 @@ public abstract class SimpleIO<A> {
 		return new SimpleIO<B>() {
 			public B run() {
 				return b;
+			}
+		};
+	}
+
+	static public <B> SimpleIO<B> lift(final P1<B> p) {
+		return new SimpleIO<B>() {
+			public B run() {
+				return p._1();
 			}
 		};
 	}

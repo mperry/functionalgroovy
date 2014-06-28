@@ -18,10 +18,11 @@ import static junit.framework.Assert.assertTrue
  * Created by MarkPerry on 13/04/2014.
  */
 @TypeChecked
+//@TypeChecked(TypeCheckingMode.SKIP)
 class SetMonadExtensionTest {
 
-    SetMonad monad() {
-        new SetMonad()
+    SetMonad<Integer> monad() {
+        new SetMonad<Integer>()
     }
 
     @Test

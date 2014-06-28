@@ -1,5 +1,6 @@
 package com.github.mperry.fg.typeclass
 
+import com.github.mperry.fg.ListOps
 import fj.F
 import fj.F2
 import fj.F3
@@ -15,8 +16,8 @@ import groovy.transform.TypeCheckingMode
  * TODO:
  * replicateM_, mapAndUnzipM, zipWithM, zipWithM_, liftM4, liftM5
  */
-@TypeChecked(TypeCheckingMode.SKIP)
-//@TypeChecked
+//@TypeChecked(TypeCheckingMode.SKIP)
+@TypeChecked
 abstract class Monad<M> extends Applicative<M> {
 
     /**
@@ -145,8 +146,8 @@ abstract class Monad<M> extends Applicative<M> {
     def <A> M<List<A>> sequence(List<M<A>> list) {
 
         def k2 = { M<List<A>> acc, M<A> ma ->
-            flatMap(acc, { xs ->
-                map(ma, { x ->
+            flatMap(acc, { List<A> xs ->
+                map(ma, { A x ->
                     xs + [x]
                 } as F)
             } as F)
@@ -163,9 +164,9 @@ abstract class Monad<M> extends Applicative<M> {
      */
     def <A, B> M<List<B>> traverse(List<A> list, F<A, M<B>> f) {
         (M<List<B>>) list.foldLeft(unit([]), { M<List<B>> acc, A a ->
-            flatMap(acc, { bs ->
+            flatMap(acc, { List<B> bs ->
                 def mb = f.f(a)
-                map(mb, { b ->
+                map(mb, { B b ->
                     bs + [b]
                 } as F)
             } as F)
@@ -208,7 +209,7 @@ abstract class Monad<M> extends Applicative<M> {
             flatMap(mb, { Boolean b ->
                 def mList = filterM(list.tail(), f)
                 map(mList, { List<A> listAs ->
-                    b ? [h] + listAs : listAs
+                    b ? ListOps.plus(h, listAs) : listAs
                 } as F)
             } as F)
         }

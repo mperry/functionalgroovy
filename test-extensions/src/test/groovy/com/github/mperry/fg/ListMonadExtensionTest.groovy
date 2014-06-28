@@ -16,10 +16,11 @@ import static junit.framework.Assert.assertTrue
  * Created by MarkPerry on 16/01/14.
  */
 @TypeChecked
+//@TypeChecked(TypeCheckingMode.SKIP)
 class ListMonadExtensionTest {
 
-    ListMonad monad() {
-        new ListMonad()
+    static ListMonad<Integer> monad() {
+        new ListMonad<Integer>()
     }
 
     @Test

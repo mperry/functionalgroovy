@@ -18,7 +18,7 @@ subprojects {
     ext {
         snap = "-SNAPSHOT"
         isSnapshot = true
-        baseVersion = "0.5.1"
+        baseVersion = "0.6"
     }
 
 	version = "$baseVersion$snap".toString()

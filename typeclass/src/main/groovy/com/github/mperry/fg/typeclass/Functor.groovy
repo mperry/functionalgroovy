@@ -2,6 +2,7 @@ package com.github.mperry.fg.typeclass
 
 import fj.F
 import groovy.transform.TypeChecked
+import groovy.transform.TypeCheckingMode
 
 /**
  * Created by MarkPerry on 9/04/2014.
@@ -13,6 +14,7 @@ import groovy.transform.TypeChecked
  * fmap (g . h) = (fmap g) . (fmap h)
  */
 @TypeChecked
+//@TypeChecked(TypeCheckingMode.SKIP)
 interface Functor<T> {
 
     /**

@@ -21,6 +21,7 @@ import groovy.transform.TypeChecked
  * ignore right value: u <* v = pure const <*> u <*> v
  */
 @TypeChecked
+//@TypeChecked(TypeCheckingMode.SKIP)
 abstract class Applicative<App> implements Functor<App> {
 
     /**

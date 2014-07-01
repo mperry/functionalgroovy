@@ -20,8 +20,8 @@ import static junit.framework.Assert.assertTrue
 //@TypeChecked(TypeCheckingMode.SKIP)
 class OptionMonadExtensionTest {
 
-    OptionMonad<Integer> monad() {
-        new OptionMonad<Integer>()
+    OptionMonad monad() {
+        new OptionMonad()
     }
 
     @Test

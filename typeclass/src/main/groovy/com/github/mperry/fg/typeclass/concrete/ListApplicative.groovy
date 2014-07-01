@@ -10,7 +10,7 @@ import groovy.transform.TypeChecked
  */
 @TypeChecked
 //@TypeChecked(TypeCheckingMode.SKIP)
-class ListApplicative<A> extends Applicative<List> {
+class ListApplicative extends Applicative<List> {
 
     @Override
     def <A> List<A> pure(A a) {
@@ -18,14 +18,14 @@ class ListApplicative<A> extends Applicative<List> {
     }
 
     @Override
-    def <B> List<B> apply(List<F<A, B>> fs, List<A> list) {
+    def <A, B> List<B> apply(List<F<A, B>> fs, List<A> list) {
         list.zip(fs).collect { P2<A, F<A, B>> p ->
             p._2().f(p._1())
         }
     }
 
     @Override
-    def <B> List<B> fmap(F<A, B> f, List<A> list) {
+    def <A, B> List<B> fmap(F<A, B> f, List<A> list) {
         list.collect(f)
     }
 

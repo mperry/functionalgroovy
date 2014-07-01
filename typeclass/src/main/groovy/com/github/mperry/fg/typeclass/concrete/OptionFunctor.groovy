@@ -10,10 +10,10 @@ import groovy.transform.TypeChecked
  */
 @TypeChecked
 //@TypeChecked(TypeCheckingMode.SKIP)
-class OptionFunctor<A> implements Functor<Option> {
+class OptionFunctor implements Functor<Option> {
 
     @Override
-    def <B> Option<B> fmap(F<A, B> f, Option<A> fa) {
+    def <A, B> Option<B> fmap(F<A, B> f, Option<A> fa) {
         fa.map(f)
     }
 }

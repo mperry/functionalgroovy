@@ -9,15 +9,15 @@ import groovy.transform.TypeChecked
  */
 @TypeChecked
 //@TypeChecked(TypeCheckingMode.SKIP)
-class ListMonad<A> extends Monad<List> {
+class ListMonad extends Monad<List> {
 
     @Override
-    def <B> List<B> flatMap(List<A> ma, F<A, List<B>> f) {
+    def <A, B> List<B> flatMap(List<A> ma, F<A, List<B>> f) {
         ma.flatMap(f)
     }
 
     @Override
-    def List<A> unit(A a) {
+    def <A> List<A> unit(A a) {
         [a]
     }
 }

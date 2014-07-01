@@ -9,14 +9,14 @@ import groovy.transform.TypeChecked
  */
 @TypeChecked
 //@TypeChecked(TypeCheckingMode.SKIP)
-class SetMonad<A> extends Monad<Set> {
+class SetMonad extends Monad<Set> {
 
     static <B> Set<B> defaultSet() {
         new HashSet<B>()
     }
 
     @Override
-    def <B> Set<B> flatMap(Set<A> ma, F<A, Set<B>> f) {
+    def <A, B> Set<B> flatMap(Set<A> ma, F<A, Set<B>> f) {
         def result = this.<B>defaultSet()
         for (A a: ma) {
             result.addAll(f.f(a))

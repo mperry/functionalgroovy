@@ -9,10 +9,10 @@ import groovy.transform.TypeChecked
  */
 @TypeChecked
 //@TypeChecked(TypeCheckingMode.SKIP)
-class ListFunctor<A> implements Functor<List> {
+class ListFunctor implements Functor<List> {
 
     @Override
-    def <B> List<B> fmap(F<A, B> f, List<A> list) {
+    def <A, B> List<B> fmap(F<A, B> f, List<A> list) {
         list.map(f)
     }
 

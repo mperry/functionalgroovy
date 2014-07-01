@@ -19,8 +19,8 @@ import static junit.framework.Assert.assertTrue
 //@TypeChecked(TypeCheckingMode.SKIP)
 class ListMonadExtensionTest {
 
-    static ListMonad<Integer> monad() {
-        new ListMonad<Integer>()
+    static ListMonad monad() {
+        new ListMonad()
     }
 
     @Test

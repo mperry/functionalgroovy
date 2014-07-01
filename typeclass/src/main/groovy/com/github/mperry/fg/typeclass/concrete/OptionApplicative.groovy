@@ -10,15 +10,15 @@ import groovy.transform.TypeChecked
  */
 @TypeChecked
 //@TypeChecked(TypeCheckingMode.SKIP)
-class OptionApplicative<A> extends Applicative<Option> {
+class OptionApplicative extends Applicative<Option> {
 
     @Override
-    def Option<A> pure(A a) {
+    def <A> Option<A> pure(A a) {
         Option.some(a)
     }
 
     @Override
-    def <B> Option<B> apply(Option<F<A, B>> optF, Option<A> o) {
+    def <A, B> Option<B> apply(Option<F<A, B>> optF, Option<A> o) {
         o.flatMap { A a ->
             optF.map { F<A, B> f ->
                 f.f(a)
@@ -27,7 +27,7 @@ class OptionApplicative<A> extends Applicative<Option> {
     }
 
     @Override
-    def <B> Option<B> fmap(F<A, B> f, Option<A> fa) {
+    def <A, B> Option<B> fmap(F<A, B> f, Option<A> fa) {
         fa.map(f)
     }
 }

@@ -10,19 +10,15 @@ import groovy.transform.TypeChecked
  */
 @TypeChecked
 //@TypeChecked(TypeCheckingMode.SKIP)
-class OptionMonad<A> extends Monad<Option> {
-
-	static <B> OptionMonad<B> monad() {
-		new OptionMonad<B>()
-	}
+class OptionMonad extends Monad<Option> {
 
     @Override
-    def <B> Option<B> flatMap(Option<A> ma, F<A, Option<B>> f) {
+    def <A, B> Option<B> flatMap(Option<A> ma, F<A, Option<B>> f) {
         ma.flatMap(f)
     }
 
 	@Override
-    def <B> Option<A> unit(A a) {
+    def <A> Option<A> unit(A a) {
         Option.some(a)
     }
 

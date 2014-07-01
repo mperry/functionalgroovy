@@ -21,8 +21,8 @@ import static junit.framework.Assert.assertTrue
 //@TypeChecked(TypeCheckingMode.SKIP)
 class SetMonadExtensionTest {
 
-    SetMonad<Integer> monad() {
-        new SetMonad<Integer>()
+    SetMonad monad() {
+        new SetMonad()
     }
 
     @Test

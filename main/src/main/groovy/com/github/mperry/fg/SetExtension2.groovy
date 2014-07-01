@@ -23,9 +23,9 @@ class SetExtension2 {
         new HashSet<A>()
     }
 
-    static <A, B> Set<B> fmap(Set<A> ma, F<A, B> f) {
-        monad().fmap(f, ma)
-    }
+//    static <A, B> Set<B> map(Set<A> ma, F<A, B> f) {
+//        monad().map(f, ma)
+//    }
 
 
     static <A, B> Set<B> apply(Set<A> sa, Set<F<A, B>> sf) {

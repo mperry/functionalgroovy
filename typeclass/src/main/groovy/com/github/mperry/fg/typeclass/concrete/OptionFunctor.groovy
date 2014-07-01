@@ -13,7 +13,7 @@ import groovy.transform.TypeChecked
 class OptionFunctor implements Functor<Option> {
 
     @Override
-    def <A, B> Option<B> fmap(F<A, B> f, Option<A> fa) {
+    def <A, B> Option<B> map(F<A, B> f, Option<A> fa) {
         fa.map(f)
     }
 }

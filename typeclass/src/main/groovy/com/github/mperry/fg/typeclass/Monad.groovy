@@ -24,7 +24,8 @@ abstract class Monad<M> extends Applicative<M> {
      * Implements Functor interface using Monad combinators
      * fmap :: (a -> b) -> f a -> f b
      */
-    def <A, B> M<B> fmap(F<A, B> f, M<A> ma) {
+    @Override
+    def <A, B> M<B> map(F<A, B> f, M<A> ma) {
         liftM(ma, f)
     }
 
@@ -32,6 +33,7 @@ abstract class Monad<M> extends Applicative<M> {
      * Implements Applicative.pure using Monad combinators
      * pure  :: a -> f a
      */
+    @Override
     def <A> M<A> pure(A a) {
         unit(a)
     }
@@ -40,6 +42,7 @@ abstract class Monad<M> extends Applicative<M> {
      * Implements Applicative.apply using Monad combinators
      * (<*>) :: f (a -> b) -> f a -> f b
      */
+    @Override
     def <A, B> M<B> apply(M<F<A, B>> t1, M<A> t2) {
         ap(t2, t1)
     }

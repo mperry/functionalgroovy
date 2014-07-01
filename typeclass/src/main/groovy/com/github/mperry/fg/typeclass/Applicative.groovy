@@ -59,14 +59,14 @@ abstract class Applicative<App> implements Functor<App> {
      * liftA2 :: Applicative f => (a -> b -> c) -> f a -> f b -> f c
      */
     def <A, B, C> App<C> liftA2(F2<A, B, C> f, App<A> apa, App<B> apb) {
-        apply(fmap(Functions.curry(f), apa), apb)
+        apply(map(Functions.curry(f), apa), apb)
     }
 
     /**
      * liftA3 :: Applicative f => (a -> b -> c -> d) -> f a -> f b -> f c -> f d
      */
     def <A, B, C, D> App<D> liftA3(F3<A, B, C, D> f, App<A> apa, App<B> apb, App<C> apc) {
-        apply(apply(fmap(Function.curry(f), apa), apb), apc)
+        apply(apply(map(Function.curry(f), apa), apb), apc)
     }
 
 }

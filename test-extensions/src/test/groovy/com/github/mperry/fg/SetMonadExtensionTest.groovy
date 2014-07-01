@@ -52,8 +52,8 @@ class SetMonadExtensionTest {
         def f = Integers.negate
         def source = [2, 3].toSet()
         def expected = [-2, -3].toSet()
-        assertTrue(monad().fmap(f, source) == expected)
-        assertTrue(source.fmap(f) == expected)
+        assertTrue(monad().map(f, source) == expected)
+        assertTrue(source.map(f) == expected)
     }
 
     @Test

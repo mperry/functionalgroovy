@@ -4,6 +4,7 @@ import com.github.mperry.fg.Functions
 import fj.F2
 import fj.data.Stream
 import groovy.transform.TypeChecked
+import groovy.transform.TypeCheckingMode
 import org.junit.Test
 
 /*
@@ -16,6 +17,8 @@ import org.junit.Test
  * four million, find the sum of the even-valued terms.
  *
  */
+//@TypeChecked
+@TypeChecked(TypeCheckingMode.SKIP)
 class P02 extends GroovyTestCase {
 
 	Stream<Integer> fibMethodUnchecked(int a, int b) {

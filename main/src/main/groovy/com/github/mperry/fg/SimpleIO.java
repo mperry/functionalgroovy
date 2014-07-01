@@ -19,6 +19,7 @@ import java.util.concurrent.Future;
  * Time: 11:47 AM
  * To change this template use File | Settings | File Templates.
  */
+@TypeChecked
 public abstract class SimpleIO<A> {
 
     public abstract A run();

@@ -6,6 +6,7 @@ import fj.P2
 import fj.data.Option
 import fj.data.Stream
 import groovy.transform.TypeChecked
+import groovy.transform.TypeCheckingMode
 import org.junit.Ignore
 import org.junit.Test
 
@@ -16,7 +17,8 @@ import org.junit.Test
  * Find the largest palindrome made from the product of two 3-digit numbers.
  *
  */
-
+//@TypeChecked
+@TypeChecked(TypeCheckingMode.SKIP)
 class P04 extends GroovyTestCase {
 
 	@TypeChecked

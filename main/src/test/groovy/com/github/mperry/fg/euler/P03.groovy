@@ -1,6 +1,8 @@
 package com.github.mperry.fg.euler
 
 import fj.data.Stream
+import groovy.transform.TypeChecked
+import groovy.transform.TypeCheckingMode
 import org.junit.Test
 
 /*
@@ -9,6 +11,8 @@ import org.junit.Test
  * What is the largest prime factor of the number 600851475143 ?
  *
  */
+//@TypeChecked
+@TypeChecked(TypeCheckingMode.SKIP)
 class P03 extends GroovyTestCase {
 
 	Stream<Integer> factors(BigInteger n) {

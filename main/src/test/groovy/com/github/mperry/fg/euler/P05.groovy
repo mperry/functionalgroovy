@@ -5,6 +5,7 @@ import fj.data.Enumerator
 import fj.data.Stream
 import groovy.transform.CompileStatic
 import groovy.transform.TypeChecked
+import groovy.transform.TypeCheckingMode
 import org.junit.Ignore
 import org.junit.Test
 
@@ -26,6 +27,8 @@ import org.junit.Test
  *
  */
 
+//@TypeChecked
+@TypeChecked(TypeCheckingMode.SKIP)
 class P05 extends GroovyTestCase {
 
 	boolean divisible(int num, int min, int max) {

@@ -1,10 +1,12 @@
 package com.github.mperry.fg
 
 import com.github.mperry.fg.typeclass.Monad
+import groovy.transform.TypeChecked
 
 /**
  * Created by MarkPerry on 9/01/14.
  */
+@TypeChecked
 class TypeLambda {
 
     def GroovyClassLoader newLoader() {

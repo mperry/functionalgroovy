@@ -8,7 +8,6 @@ import groovy.transform.TypeChecked
  * Created by MarkPerry on 10/04/2014.
  */
 @TypeChecked
-//@TypeChecked(TypeCheckingMode.SKIP)
 class ListFunctor implements Functor<List> {
 
     @Override

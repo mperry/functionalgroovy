@@ -14,12 +14,9 @@ import groovy.transform.TypeCheckingMode
  * fmap (g . h) = (fmap g) . (fmap h)
  */
 @TypeChecked
-//@TypeChecked(TypeCheckingMode.SKIP)
 interface Functor<T> {
-
     /**
-     * fmap :: (a -> b) -> f a -> f b
+     * map :: (a -> b) -> f a -> f b
      */
     abstract <A, B> T<B> map(F<A, B> f, T<A> fa)
-
 }

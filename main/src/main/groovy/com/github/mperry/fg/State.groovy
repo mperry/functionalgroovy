@@ -1,6 +1,7 @@
 package com.github.mperry.fg
 
 import fj.F
+import fj.F1Functions
 import fj.P
 import fj.P2
 import fj.Unit
@@ -21,12 +22,10 @@ class State<S, A> {
         run.f(s)
     }
 
-    @TypeChecked(TypeCheckingMode.SKIP)
     static <S1, A1> State<S1, A1> lift(F<S1, P2<S1, A1>> f) {
         new State<S1, A1>(f)
     }
 
-//    @TypeChecked(TypeCheckingMode.SKIP)
     static <S1> State<S1, S1> liftS(F<S1, S1> f) {
         State.<S1, S1>lift({ S1 s ->
             def s2 = f.f(s)
@@ -34,7 +33,6 @@ class State<S, A> {
         } as F)
     }
 
-    @TypeChecked(TypeCheckingMode.SKIP)
     static <S1, A1> State<S1, A1> unit(A1 a) {
         lift({ S1 s -> P.p(s, a)} as F)
     }
@@ -61,7 +59,6 @@ class State<S, A> {
         map(c as F)
     }
 
-    @TypeChecked(TypeCheckingMode.SKIP)
     def <B> State<S, B> mapState(F<P2<S, A>, P2<S, B>> f) {
         new State<S, B>({ S s ->
             def p = run(s)
@@ -69,7 +66,6 @@ class State<S, A> {
         } as F)
     }
 
-    @TypeChecked(TypeCheckingMode.SKIP)
     static <S, B, C> State<S, C> flatMap(State<S, B> mb, F<B, State<S, C>> f) {
         mb.flatMap(f)
     }
@@ -93,7 +89,6 @@ class State<S, A> {
         lift(f)
     }
 
-    @TypeChecked(TypeCheckingMode.SKIP)
     static <S1> State<S1, S1> get() {
         def f = { S1 s -> P.p(s, s) }
         State.<S1>lift(f as F)
@@ -107,7 +102,6 @@ class State<S, A> {
         } as F)
     }
 
-    @TypeChecked(TypeCheckingMode.SKIP)
     static <S1> State<S1, Unit> put(S1 s) {
         State.lift({ Object z -> P.p(s, Unit.unit())} as F)
     }
@@ -120,9 +114,8 @@ class State<S, A> {
         run(s)._1()
     }
 
-    @TypeChecked(TypeCheckingMode.SKIP)
     State<S, A> withs(F<S, S> f) {
-        lift(f.andThen(run))
+        lift(F1Functions.andThen(f, run))
     }
 
     static State<S, A> gets(F<S, A> f) {

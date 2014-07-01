@@ -17,16 +17,16 @@ import static fj.test.Coarbitrary.*
 @TypeChecked
 class IdentityTest {
 
-    Identity<Unit> monad() {
-        Identity.idUnit()
+    IdentityM<Unit> monad() {
+        IdentityM.idUnit()
     }
 
     @TypeChecked(TypeCheckingMode.SKIP)
-    def <A> Arbitrary<Identity<A>> arbId(Arbitrary<A> aa) {
-        arbitrary(aa.gen.map({ A a -> Identity.lift(a) } as F))
+    def <A> Arbitrary<IdentityM<A>> arbId(Arbitrary<A> aa) {
+        arbitrary(aa.gen.map({ A a -> IdentityM.lift(a) } as F))
     }
 
-    Arbitrary<Identity<Integer>> arbIdInteger() {
+    Arbitrary<IdentityM<Integer>> arbIdInteger() {
         arbId(arbInteger)
     }
 

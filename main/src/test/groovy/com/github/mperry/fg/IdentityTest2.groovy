@@ -1,13 +1,12 @@
 package com.github.mperry.fg
 
 import fj.F
-import fj.F2
 import fj.Unit
 import groovy.transform.TypeChecked
 import groovy.transform.TypeCheckingMode
 import org.junit.Test
 
-import static com.github.mperry.fg.Identity.lift
+import static IdentityM.lift
 import static junit.framework.Assert.assertTrue
 
 /**
@@ -16,8 +15,8 @@ import static junit.framework.Assert.assertTrue
 @TypeChecked
 class IdentityTest2 {
 
-    Identity<Unit> monad() {
-        Identity.idUnit()
+    IdentityM<Unit> monad() {
+        IdentityM.idUnit()
     }
 
     @Test
@@ -58,7 +57,7 @@ class IdentityTest2 {
     @Test
     @TypeChecked(TypeCheckingMode.SKIP)
     void traverse() {
-        F<Integer, Identity<Integer>> f = { Integer i -> lift(i + 1) }  as F
+        F<Integer, IdentityM<Integer>> f = { Integer i -> lift(i + 1) }  as F
 //        as F<Integer, Identity<Integer>>
 //        as F
 //        as F<Integer, Identity<Integer>>

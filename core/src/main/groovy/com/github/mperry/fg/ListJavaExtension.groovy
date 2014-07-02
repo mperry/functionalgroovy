@@ -112,14 +112,14 @@ class ListJavaExtension {
     /**
      * Fold left with recursion
      */
-    @TypeChecked(TypeCheckingMode.SKIP)
+//    @TypeChecked(TypeCheckingMode.SKIP)
     static <A, B> B foldLeftR(List<A> list, B b, F2<B, A, B> f) {
         list.empty ? b : foldLeftR(list.tail(), f.f(b, list.head()), f)
     }
 
-    @TypeChecked(TypeCheckingMode.SKIP)
+//    @TypeChecked(TypeCheckingMode.SKIP)
     static <A, B> B foldLeftR(List<A> list, B b, Closure<B> f) {
-        list.empty ? b : foldLeftR(list.tail(), f.call(b, list.head()), f)
+        list.empty ? b : foldLeftR(list.tail(), (B) f.call(b, list.head()), f)
     }
 
     static <A, B> B foldRight(List<A> list, B b, F2<B, A, B> f) {
@@ -127,11 +127,18 @@ class ListJavaExtension {
 //        foldRightF(list, b, f)
     }
 
+    static <A, B> B foldRight2(List<A> list, B b, F2<A, B, B> f) {
+        foldRightTrampoline(list, b, f).run()
+//        list.foldRight(b, f)
+//        foldRightF(list, b, f)
+    }
+
+
     static <A, B> B foldRight(List<A> list, B b, Closure<B> f) {
         foldRight(list, b, f as F2)
     }
 
-    @TypeChecked(TypeCheckingMode.SKIP)
+//    @TypeChecked(TypeCheckingMode.SKIP)
     static <A, B> B foldRightF(List<A> list, B b, F2<B, A, B> f) {
 //        list.isEmpty() ? b : foldRightF(list.tail(), f.f(b, list.head()), f)
         list.isEmpty() ? b : f.f(foldRightF(list.tail(), b, f), list.head())
@@ -148,7 +155,7 @@ class ListJavaExtension {
         t.run()
     }
 
-    @TypeChecked(TypeCheckingMode.SKIP)
+//    @TypeChecked(TypeCheckingMode.SKIP)
     static <A, B> Trampoline<B> foldRightTrampoline(List<A> list, B b, F2<A, B, B> f) {
         Trampoline.suspend({ ->
             if (list.empty) {

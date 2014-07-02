@@ -9,7 +9,6 @@ import groovy.transform.TypeChecked
  * Created by MarkPerry on 10/04/2014.
  */
 @TypeChecked
-//@TypeChecked(TypeCheckingMode.SKIP)
 class OptionApplicative extends Applicative<Option> {
 
     @Override
@@ -30,4 +29,5 @@ class OptionApplicative extends Applicative<Option> {
     def <A, B> Option<B> map(Option<A> fa, F<A, B> f) {
         fa.map(f)
     }
+
 }

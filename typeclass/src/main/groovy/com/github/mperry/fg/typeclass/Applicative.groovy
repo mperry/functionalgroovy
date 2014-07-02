@@ -1,9 +1,12 @@
 package com.github.mperry.fg.typeclass
 
 import com.github.mperry.fg.Functions
+import com.github.mperry.fg.ListOps
 import fj.F
+import fj.F1Functions
 import fj.F2
 import fj.F3
+import fj.F3Functions
 import fj.Function
 import groovy.transform.TypeChecked
 
@@ -61,11 +64,41 @@ abstract class Applicative<App> implements Functor<App> {
         apply(map(apa, Functions.curry(f)), apb)
     }
 
+    def <A, B, C> F3<F2<A, B, C>, App<A>, App<B>, App<C>> liftA2_() {
+        { F2<A, B, C> f2, App<A> a, App<B> b ->
+            liftA2(f2, a, b)
+        } as F3
+    }
+
     /**
      * liftA3 :: Applicative f => (a -> b -> c -> d) -> f a -> f b -> f c -> f d
      */
     def <A, B, C, D> App<D> liftA3(F3<A, B, C, D> f, App<A> apa, App<B> apb, App<C> apc) {
         apply(apply(map(apa, Function.curry(f)), apb), apc)
+    }
+
+    def <A> App<List<A>> sequenceA(List<App<A>> list) {
+        def cons = {
+            A a, List<A> listAs -> ListOps.plus(a, listAs)
+        } as F2
+
+        def cons_ = {
+            A a ->
+                { List<A> listAs -> ListOps.plus(a, listAs) } as F
+        } as F
+//        fj.data.List.cons_()
+        def f2 = F3Functions.f(liftA2_(), cons)
+        list.foldRight2(pure([]), f2)
+
+
+        // recursive
+//        if (list.empty) {
+//            pure([])
+//        } else {
+//            def h = list.head()
+//            def t = list.tail()
+//            apply(map(h, cons_), sequenceA(t))
+//        }
     }
 
 }

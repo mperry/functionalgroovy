@@ -17,7 +17,7 @@ class ListFunctorTest {
         def f = new ListFunctor()
         def param = [1, 2, 3]
         def c = { Integer i -> i * 2 }
-        def actual = f.map(c, param)
+        def actual = f.map(param, c)
         assertTrue(actual == param.collect(c))
     }
 

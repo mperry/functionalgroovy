@@ -27,7 +27,7 @@ class OptionApplicative extends Applicative<Option> {
     }
 
     @Override
-    def <A, B> Option<B> map(F<A, B> f, Option<A> fa) {
+    def <A, B> Option<B> map(Option<A> fa, F<A, B> f) {
         fa.map(f)
     }
 }

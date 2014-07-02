@@ -41,7 +41,7 @@ class OptionMonadExtensionTest {
 
     @Test
     void fmap() {
-        def actual = monad().map(Integers.negate, some(1))
+        def actual = monad().map(some(1), Integers.negate)
         assertTrue(actual == some(-1))
     }
 

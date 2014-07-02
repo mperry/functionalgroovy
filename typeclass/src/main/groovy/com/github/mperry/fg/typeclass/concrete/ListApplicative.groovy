@@ -25,7 +25,7 @@ class ListApplicative extends Applicative<List> {
     }
 
     @Override
-    def <A, B> List<B> map(F<A, B> f, List<A> list) {
+    def <A, B> List<B> map(List<A> list, F<A, B> f) {
         list.collect(f)
     }
 

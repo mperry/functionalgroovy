@@ -17,6 +17,7 @@ import groovy.transform.TypeCheckingMode
 interface Functor<T> {
     /**
      * map :: (a -> b) -> f a -> f b
+     * order of first and second parameters reversed here to fit Groovy style
      */
-    abstract <A, B> T<B> map(F<A, B> f, T<A> fa)
+    abstract <A, B> T<B> map(T<A> fa, F<A, B> f)
 }

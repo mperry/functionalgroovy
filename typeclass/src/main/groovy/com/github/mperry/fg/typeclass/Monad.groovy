@@ -25,8 +25,10 @@ abstract class Monad<M> extends Applicative<M> {
      * fmap :: (a -> b) -> f a -> f b
      */
     @Override
-    def <A, B> M<B> map(F<A, B> f, M<A> ma) {
-        liftM(ma, f)
+    def <A, B> M<B> map(M<A> ma, F<A, B> f) {
+        flatMap(ma, { A a ->
+            unit(f.f(a))
+        } as F)
     }
 
     /**
@@ -78,11 +80,11 @@ abstract class Monad<M> extends Applicative<M> {
         flatMap(mma, {M<A> ma -> ma} as F)
     }
 
-    def <A, B> M<B> map(M<A> ma, F<A, B> f) {
-        flatMap(ma, { A a ->
-            unit(f.f(a))
-        } as F)
-    }
+//    def <A, B> M<B> map(M<A> ma, F<A, B> f) {
+//        flatMap(ma, { A a ->
+//            unit(f.f(a))
+//        } as F)
+//    }
 
     def <A, B, C> M<C> map2(M<A> ma, M<B> mb, F2<A, B, C> f) {
         flatMap(ma, { A a -> map(mb, { B b -> f.f(a, b)} as F)} as F)

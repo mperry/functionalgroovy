@@ -15,39 +15,10 @@ import groovy.transform.TypeCheckingMode
 @TypeChecked
 class OptionExtension {
 
-	/**
-	 * (M a) -> (a -> M b) -> (M b)
-	 */
-	public static <A, B> Option<B> bind(Option<A> option, Closure<Option<B>> f) {
-		option.bind(f as F)
-	}
-
-    static <A, B> Option<B> flatMap(Option<A> option, Closure<Option<B>> f) {
-        option.bind(f as F)
-    }
-
     static <A, B> Option<B> flatMap(Option<A> option, F<A, Option<B>> f) {
         option.bind(f)
     }
 
-    static <A, B> Option<B> collectMany(Option<A> option, Closure<Option<B>> f) {
-        bind(option, f)
-	}
 
-	public static <A, B> Option<B> map(Option<A> option, Closure<B> f) {
-		option.map(f as F)
-	}
-
-	static <A, B> Option<B> collect(Option<A> option, Closure<B> f) {
-        map(option, f)
-	}
-
-	static <A> Option<A> filter(Option<A> option, Closure<Boolean> f) {
-		option.filter(f as F)
-	}
-
-	static <A> Option<A> findAll(Option<A> option, Closure<Boolean> f) {
-        filter(option, f)
-	}
 
 }

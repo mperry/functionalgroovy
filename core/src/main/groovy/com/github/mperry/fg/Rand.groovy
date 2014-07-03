@@ -22,14 +22,14 @@ class Rand {
         P.p(i, nextRng)
     }
 
-    P2<Integer, Rand> positiveInt() {
+    P2<Integer, Rand> nextNatural() {
         def p = nextInt()
         def i = p._1()
         P.p(i < 0 ? -(i + 1) : i, p._2())
     }
 
     P2<Double, Rand> nextDouble() {
-        def p = positiveInt()
+        def p = nextNatural()
         P.p(p._1() / (Integer.MAX_VALUE.toDouble() + 1), p._2())
     }
 

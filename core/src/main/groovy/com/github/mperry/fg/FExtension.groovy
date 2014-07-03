@@ -19,8 +19,4 @@ class FExtension {
 		{ A a -> f.f(a) }
 	}
 
-    static<A, B> P1<B> f_(F<A, B> f, A a) {
-        { -> f.f(a) } as P1
-    }
-
 }

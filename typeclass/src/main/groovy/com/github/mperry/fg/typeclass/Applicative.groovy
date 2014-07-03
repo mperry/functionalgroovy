@@ -1,6 +1,6 @@
 package com.github.mperry.fg.typeclass
 
-import com.github.mperry.fg.Functions
+//import com.github.mperry.fg.Functions
 import com.github.mperry.fg.ListOps
 import fj.F
 import fj.F1Functions
@@ -61,7 +61,7 @@ abstract class Applicative<App> implements Functor<App> {
      * liftA2 :: Applicative f => (a -> b -> c) -> f a -> f b -> f c
      */
     def <A, B, C> App<C> liftA2(F2<A, B, C> f, App<A> apa, App<B> apb) {
-        apply(map(apa, Functions.curry(f)), apb)
+        apply(map(apa, Function.curry(f)), apb)
     }
 
     def <A, B, C> F3<F2<A, B, C>, App<A>, App<B>, App<C>> liftA2_() {
@@ -88,7 +88,7 @@ abstract class Applicative<App> implements Functor<App> {
         } as F
 //        fj.data.List.cons_()
         def f2 = F3Functions.f(liftA2_(), cons)
-        list.foldRight2(pure([]), f2)
+        list.foldRight(pure([]), f2)
 
 
         // recursive

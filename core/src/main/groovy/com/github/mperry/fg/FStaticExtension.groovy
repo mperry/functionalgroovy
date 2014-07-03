@@ -13,8 +13,8 @@ import groovy.transform.TypeChecked
 @TypeChecked
 class FStaticExtension {
 
-    public static <A, B> F<A, B> unit(F f, Closure<B> closure) {
-        closure as F<A, B>
-    }
+	public static <A, B> F<A, B> unit(F z, Closure<B> closure) {
+		closure as F<A, B>
+	}
 
 }

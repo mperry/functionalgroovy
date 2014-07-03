@@ -21,8 +21,8 @@ class F2Extension {
 		}
 	}
 
-    static <A, B, C> P1<C> f_(F2<A, B, C> f, A a, B b) {
-        { -> f.f(a, b) } as P1
-    }
+//    static <A, B, C> P1<C> f_(F2<A, B, C> f, A a, B b) {
+//        { -> f.f(a, b) } as P1
+//    }
 
 }

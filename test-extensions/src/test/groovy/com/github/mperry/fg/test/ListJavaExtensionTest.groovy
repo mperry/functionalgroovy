@@ -52,12 +52,12 @@ class ListJavaExtensionTest {
     }
 
     @Test
-    @TypeChecked(TypeCheckingMode.SKIP)
+//    @TypeChecked(TypeCheckingMode.SKIP)
     void listFoldRight() {
         def original = 1.to(4).toJavaList()
-        def list = original.foldRightT([], { List<Integer> list, Integer i ->
+        def list = original.foldRightT([], { Integer i, List<Integer> list ->
             list + [i]
-        } as F2)
+        })
 //        println list
         assertTrue(list == original.reverse())
     }
@@ -80,7 +80,7 @@ class ListJavaExtensionTest {
         def high = (Integer) 10 ** 4
         def list = 1.to(high).toJavaList()
         def p = { ->
-            list.foldRightF(0, { Integer acc, Integer i -> acc + i } as F2)
+            list.foldRightR(0, { Integer i, Integer acc -> acc + i } as F2)
         } as P1
         assertTrue(p.throwsError(StackOverflowError.class))
     }

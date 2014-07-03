@@ -1,6 +1,7 @@
 package com.github.mperry.fg
 
 import fj.F
+import fj.F2
 import fj.data.Option
 import groovy.transform.TypeChecked
 import groovy.transform.TypeCheckingMode
@@ -15,10 +16,6 @@ import groovy.transform.TypeCheckingMode
 @TypeChecked
 class CollectionExtension {
 
-	static <A, B> List<B> map(Collection<A> collection, Closure<B> f) {
-		collection.collect(f)
-	}
-
     static <A, B> List<B> map(Collection<A> collection, F<A, B> f) {
         collection.collect(FExtension.toClosure(f))
     }
@@ -27,8 +24,8 @@ class CollectionExtension {
         collection.findAll(FExtension.toClosure(f))
     }
 
-    static <A, B> B fold(Collection<A> collection, B initial, F<A, B> f) {
-        collection.inject(initial, FExtension.toClosure(f))
+    static <A, B> B fold(Collection<A> collection, B initial, F2<A, B, B> f) {
+        collection.inject(initial, { B b, A a -> f.f(a, b)})
     }
 
     static <A, B> List<B> flatMap(Collection<A> c, F<A, List<B>> f) {
@@ -40,7 +37,7 @@ class CollectionExtension {
     }
 
     static <A> Boolean forAll(Collection<A> c, F<A, Boolean> f) {
-        !exists(c, { A a -> f.f(a) == false } as F)
+        !exists(c, { A a -> f.f(a) == false })
     }
 
     static <A> Option<A> findFirst(Collection<A> c, F<A, Boolean> f) {

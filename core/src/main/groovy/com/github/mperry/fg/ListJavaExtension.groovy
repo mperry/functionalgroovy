@@ -1,7 +1,9 @@
 package com.github.mperry.fg
 
 import fj.F
+import fj.F1Functions
 import fj.F2
+import fj.Function
 import fj.P
 import fj.P1;
 import fj.P2
@@ -38,11 +40,7 @@ class ListJavaExtension {
         } as F
     }
 
-    static <A> F<List<A>, List<A>> snoc(A a) {
-        { List<A> list ->
-            snoc(list, a)
-        } as F
-    }
+
 
     /**
      * Immutable append element to list
@@ -62,15 +60,10 @@ class ListJavaExtension {
 		result
 	}
 
-	@TypeChecked(TypeCheckingMode.SKIP)
+//	@TypeChecked(TypeCheckingMode.SKIP)
 	public static <A, B> java.util.List<B> map(java.util.List<A> list, F<A, B> f) {
-        list.map(f.toClosure())
+		list.collect(FExtension.toClosure(f))
 	}
-
-	static <A, B> java.util.List<B> collect(java.util.List<A> list, F<A, B> f) {
-		map(list, f)
-	}
-
 
     static <A> List<A> intersperse(java.util.List<A> list, A sep) {
         def result = []
@@ -83,21 +76,21 @@ class ListJavaExtension {
         result
     }
 
-
     static <A> fj.data.List<A> toFJList(List<A> list) {
         return fj.data.List.list((A[]) list.toArray());
     }
 
+	// consistent with fj.data.List
     static <A, B> B fold(List<A> list, B b, F2<B, A, B> f) {
         foldLeft(list, b, f)
     }
 
-    static <A, B> B fold(List<A> list, B b, Closure<B> f) {
-        foldLeft(list, b, f)
-    }
-
+	static <A, B> B foldLeft(List<A> list, B b, F2<B, A, B> f) {
+		foldLeftI(list, b, f)
+	}
 //    @TypeChecked(TypeCheckingMode.SKIP)
-    static <A, B> B foldLeft(List<A> list, B b, F2<B, A, B> f) {
+	// imperative
+    static <A, B> B foldLeftI(List<A> list, B b, F2<B, A, B> f) {
         def acc = b
         for (A a: list) {
             acc = f.f(acc, a)
@@ -105,9 +98,6 @@ class ListJavaExtension {
         acc
     }
 
-    static <A, B> B foldLeft(List<A> list, B b, Closure<B> f) {
-        foldLeft(list, b, f as F2)
-    }
 
     /**
      * Fold left with recursion
@@ -117,41 +107,32 @@ class ListJavaExtension {
         list.empty ? b : foldLeftR(list.tail(), f.f(b, list.head()), f)
     }
 
-//    @TypeChecked(TypeCheckingMode.SKIP)
-    static <A, B> B foldLeftR(List<A> list, B b, Closure<B> f) {
-        list.empty ? b : foldLeftR(list.tail(), (B) f.call(b, list.head()), f)
-    }
 
-    static <A, B> B foldRight(List<A> list, B b, F2<B, A, B> f) {
+
+	// consistent with fj.data.List
+    static <A, B> B foldRight(List<A> list, B b, F2<A, B, B> f) {
         foldRightT(list, b, f)
-//        foldRightF(list, b, f)
-    }
-
-    static <A, B> B foldRight2(List<A> list, B b, F2<A, B, B> f) {
-        foldRightTrampoline(list, b, f).run()
-//        list.foldRight(b, f)
-//        foldRightF(list, b, f)
+//        foldRightR(list, b, f)
     }
 
 
-    static <A, B> B foldRight(List<A> list, B b, Closure<B> f) {
-        foldRight(list, b, f as F2)
-    }
 
+	// consistent with fj.data.List
 //    @TypeChecked(TypeCheckingMode.SKIP)
-    static <A, B> B foldRightF(List<A> list, B b, F2<B, A, B> f) {
+    static <A, B> B foldRightR(List<A> list, B b, F2<A, B, B> f) {
 //        list.isEmpty() ? b : foldRightF(list.tail(), f.f(b, list.head()), f)
-        list.isEmpty() ? b : f.f(foldRightF(list.tail(), b, f), list.head())
+        list.isEmpty() ? b : f.f(list.head(), foldRightR(list.tail(), b, f))
     }
 
-    static <A, B> B foldRightT(List<A> list, B b, F2<B, A, B> f) {
+	// consistent with fj.data.List
+    static <A, B> B foldRightT(List<A> list, B b, F2<A, B, B> f) {
         // Workaround, g is defined explicitly instead of using f.flip because
         // using f.flip causes a StackOverflowError
         // I did not look into what caused this error
-        def g = { A a2, B b2 ->
-            f.f(b2, a2)
-        } as F2
-        def t = foldRightTrampoline(list, b, g)
+//        def g = { A a2, B b2 ->
+//            f.f(b2, a2)
+//        } as F2
+        def t = foldRightTrampoline(list, b, f)
         t.run()
     }
 
@@ -163,7 +144,7 @@ class ListJavaExtension {
             } else {
                 def t = list.tail()
                 def h = list.head()
-                foldRightTrampoline(t, b, f).map(Functions.curry(f).f(h))
+                foldRightTrampoline(t, b, f).map(Function.curry(f).f(h))
             }
         } as P1)
     }

@@ -16,25 +16,10 @@ import groovy.transform.TypeChecked
 @TypeChecked
 class F6Extension {
 
-	static <A, B, C, D, E, $F, G> F<A, F<B, F<C, F<D, F<E, F<$F, G>>>>>> curry(F6<A, B, C, D, E, $F, G> f6) {
-		{ a ->
-			{ b ->
-				{ c ->
-					{ d ->
-						{ e ->
-							{ f ->
-								f6.f(a, b, c, d, e, f)
-							} as F
-						} as F
-					} as F
-				} as F
-			} as F
-		} as F
+	static <A, B, C, D, E, $F, G> Closure<G> toClosure(F6<A, B, C, D, E, $F, G> func) {
+		{ A a, B b, C c, D d, E e, $F f ->
+			func.f(a, b, c, d, e, f)
+		}
 	}
-
-    static <A, B, C, D, E, $F, G> P1<G> f_(F6<A, B, C, D, E, $F, G> f6,
-                                           A a, B b, C c, D d, E e, $F f) {
-        { -> f6.f(a, b, c, d, e, f) } as P1
-    }
 
 }

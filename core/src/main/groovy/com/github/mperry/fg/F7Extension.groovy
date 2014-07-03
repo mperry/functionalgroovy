@@ -16,28 +16,10 @@ import groovy.transform.TypeChecked
 @TypeChecked
 class F7Extension {
 
-	static <A, B, C, D, E, $F, G, H> F<A, F<B, F<C, F<D, F<E, F<$F, F<G, H>>>>>>> curry(F7<A, B, C, D, E, $F, G, H> f7) {
-		{ a ->
-			{ b ->
-				{ c ->
-					{ d ->
-						{ e ->
-							{ f ->
-								{ g ->
-									f7.f(a, b, c, d, e, f, g)
-								} as F
-							} as F
-						} as F
-					} as F
-				} as F
-			} as F
-		} as F
+	static <A, B, C, D, E, $F, G, H> Closure<H> toClosure(F7<A, B, C, D, E, $F, G, H> func) {
+		{ A a, B b, C c, D d, E e, $F f, G g ->
+			func.f(a, b, c, d, e, f, g)
+		}
 	}
-
-
-    static <A, B, C, D, E, $F, G, H> P1<H> f_(F7<A, B, C, D, E, $F, G, H> f7,
-                                           A a, B b, C c, D d, E e, $F f, G g) {
-        { -> f7.f(a, b, c, d, e, f, g) } as P1
-    }
 
 }

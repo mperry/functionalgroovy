@@ -1,6 +1,7 @@
 package com.github.mperry.fg
 
 import fj.F
+import fj.F1Functions
 import groovy.transform.TypeChecked
 import groovy.transform.TypeCheckingMode
 
@@ -25,7 +26,7 @@ class ReaderM<A, B> {
     }
 
     def <C> ReaderM<A, C> map(F<B, C> f) {
-        lift(Functions.andThen(function, f))
+        lift(F1Functions.andThen(function, f))
     }
 
     def <C> ReaderM<A, C> andThen(F<B, C> f) {

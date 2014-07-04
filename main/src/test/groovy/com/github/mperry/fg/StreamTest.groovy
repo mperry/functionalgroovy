@@ -70,7 +70,7 @@ class StreamTest {
 		def f2 = { Integer x -> { Integer y -> x + y } as F } as F
 		def a = s.foldLeft(f2, 0)
 		def b = s.foldLeft({Integer x, Integer y -> x + y} as F2, 0)
-		def c = s.fold(0, {Integer x, Integer y -> x + y})
+		def c = s.foldLeft({Integer x, Integer y -> x + y} as F2, 0)
 		assertTrue(a == 15)
 		assertTrue(b == 15)
 		assertTrue(c == 15)

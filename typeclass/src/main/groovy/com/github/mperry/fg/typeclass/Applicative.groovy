@@ -81,24 +81,12 @@ abstract class Applicative<App> implements Functor<App> {
         def cons = {
             A a, List<A> listAs -> ListOps.plus(a, listAs)
         } as F2
-
-        def cons_ = {
-            A a ->
-                { List<A> listAs -> ListOps.plus(a, listAs) } as F
-        } as F
-//        fj.data.List.cons_()
+//        def cons_ = {
+//            A a ->
+//                { List<A> listAs -> ListOps.plus(a, listAs) } as F
+//        } as F
         def f2 = F3Functions.f(liftA2_(), cons)
         list.foldRight(pure([]), f2)
-
-
-        // recursive
-//        if (list.empty) {
-//            pure([])
-//        } else {
-//            def h = list.head()
-//            def t = list.tail()
-//            apply(map(h, cons_), sequenceA(t))
-//        }
     }
 
 }

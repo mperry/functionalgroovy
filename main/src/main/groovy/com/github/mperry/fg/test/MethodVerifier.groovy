@@ -23,9 +23,9 @@ import java.lang.reflect.Method
  * Time: 1:12 PM
  * To change this template use File | Settings | File Templates.
  */
+//@TypeChecked
 @TypeChecked(TypeCheckingMode.SKIP)
 class MethodVerifier {
-
 
 	def gens = [(Integer.class): Arbitrary.arbInteger, (int.class): Arbitrary.arbInteger, (String.class): Arbitrary.arbString]
 	def funcs = [1: F, 2: F2, 3: F3, 4: F4, 5: F5, 6: F6, 7: F7, 8: F8]

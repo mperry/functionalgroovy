@@ -1,6 +1,7 @@
 package com.github.mperry.fg.euler
 
 import com.github.mperry.fg.Comprehension
+import fj.F2
 import fj.P
 import fj.P2
 import fj.data.Option
@@ -55,9 +56,9 @@ class P04 extends GroovyTestCase {
 
 	@TypeChecked
 	int highest(int limit) {
-		p(limit).fold(0) { Integer acc, Integer val ->
+		p(limit).foldLeft({ Integer acc, Integer val ->
 			acc > val ? acc : val
-		}
+		} as F2, 0)
 	}
 
 	@Test

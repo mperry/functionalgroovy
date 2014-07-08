@@ -1,5 +1,6 @@
 package com.github.mperry.fg.euler
 
+import fj.F2
 import groovy.transform.TypeChecked
 import junit.framework.TestCase
 import org.junit.Test
@@ -17,9 +18,9 @@ class P01 extends GroovyTestCase {
 	def f(int min, int max) {
 		min.to(max).filter { Integer it ->
 			it % 3 == 0 || it % 5 == 0
-		}.fold(0) { Integer acc, Integer val ->
+		}.foldLeft({ Integer acc, Integer val ->
 			acc + val
-		}
+		} as F2, 0)
 	}
 
 	@Test

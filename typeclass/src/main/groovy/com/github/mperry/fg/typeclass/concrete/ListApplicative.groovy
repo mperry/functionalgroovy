@@ -18,14 +18,10 @@ class ListApplicative extends Applicative<List> {
 
     @Override
     def <A, B> List<B> apply(List<F<A, B>> fs, List<A> list) {
-//        list.zip(fs).collect { P2<A, F<A, B>> p ->
-//            p._2().f(p._1())
-//        }
         fs.flatMap { F<A, B> f ->
-            list.map({ A a ->
+            list.map { A a ->
                 f.f(a)
-            } as F)
-
+            }
         }
     }
 

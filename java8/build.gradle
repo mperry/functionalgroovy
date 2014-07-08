@@ -3,6 +3,8 @@ apply plugin: 'groovy'
 
 uploadArchives.enabled = true
 
+sourceCompatibility = "1.8"
+
 dependencies {
     compile gradleGroovy
     compile project(":core")

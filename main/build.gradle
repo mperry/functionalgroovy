@@ -3,9 +3,6 @@ ext {
 
 }
 
-sourceCompatibility = "1.8"
-targetCompatibility = sourceCompatibility
-
 dependencies {
 	compile project(":core")
     compile project(":typeclass")

@@ -22,8 +22,8 @@ class WriterM<W, A> {
         plus = f
     }
 
-    static WriterM<W, A> lift(A a, W w, F2<W, W, W> f) {
-        new WriterM(a, w, f)
+    static <W, B> WriterM<W, B> lift(B b, W w, F2<W, W, W> f) {
+        new WriterM(b, w, f)
     }
 
     def WriterM<W, A> tell(W w) {
@@ -34,28 +34,20 @@ class WriterM<W, A> {
         WriterM.lift(f.f(value), log, plus)
     }
 
-    def <B> WriterM<W, B> map(Closure c) {
-        map(c as F)
-    }
-
-    def WriterM<W, A> flatMap(F<A, WriterM<W, A>> f) {
+    def <B> WriterM<W, B> flatMap(F<A, WriterM<W, B>> f) {
         def writer = f.f(value)
         WriterM.lift(writer.value, plus.f(log, writer.log), plus)
     }
 
-    def WriterM<W, A> flatMap(Closure c) {
-        flatMap(c as F)
+    static <B> WriterM<String, B> lift(B b) {
+        WriterM.lift(b, STRING_EMPTY, STRING_CONCAT)
     }
 
-    static WriterM<W, A> lift(A a) {
-        WriterM.lift(a, STRING_EMPTY, STRING_CONCAT)
-    }
-
-    static WriterM<W, A> log(A a) {
+    static <A> WriterM<String, A> log(A a) {
         WriterM.lift(a, LOG_FUNCTION.f(a), STRING_CONCAT)
     }
 
-    static F<A, WriterM<W, A>> log() {
+    static <A, W> F<A, WriterM<String, A>> log() {
         { A a -> WriterM.lift(a, LOG_FUNCTION.f(a), STRING_CONCAT) } as F
     }
 

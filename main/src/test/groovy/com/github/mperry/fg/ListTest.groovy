@@ -13,6 +13,11 @@ import static junit.framework.Assert.assertTrue
 class ListTest {
 
     @Test
+    void flatMap() {
+
+    }
+
+    @Test
     void join() {
 //        assertTrue(List.join([[1, 2], [3, 4], []]) == [1, 2, 3, 4])
     }

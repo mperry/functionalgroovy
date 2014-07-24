@@ -13,11 +13,11 @@ import static com.github.mperry.fg.ReaderM.lift
 class ConfigReader {
 
     static ReaderM<Config, Option<User>> user(Integer id) {
-        lift { Config c -> c.userRepository.get(id) }
+        ReaderM.<Config, Option<User>>lift { Config c -> c.userRepository.get(id) }
     }
 
     static ReaderM<Config, Option<User>> user(String username) {
-        lift { Config c -> c.userRepository.find(username) }
+        ReaderM.<Config, Option<User>>lift { Config c -> c.userRepository.find(username) }
     }
 
     static ReaderM<Config, Option<String>> userEmail(Integer id) {
@@ -25,7 +25,7 @@ class ConfigReader {
     }
 
     static ReaderM<Config, String> mailService() {
-        lift { Config c -> c.mailServer }
+        ReaderM.<Config, String>lift { Config c -> c.mailServer }
     }
 
 }

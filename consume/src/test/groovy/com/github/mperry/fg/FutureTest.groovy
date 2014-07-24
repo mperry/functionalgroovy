@@ -1,7 +1,6 @@
 package com.github.mperry.fg
 
 import fj.P1
-import fj.P1Functions
 import fj.control.parallel.Promise
 import fj.control.parallel.Strategy
 import fj.data.Option
@@ -43,7 +42,7 @@ class FutureTest {
 
     P1<Option<Integer>> transform(String val) {
         def p = Strategy.obtain(future(val))
-        P1Functions.map(p) { String s -> Option.parseInt.f(s) }
+        p.map { String s -> Option.parseInt.f(s) }
     }
 
     Promise<String> transform2(String val) {

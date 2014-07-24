@@ -35,7 +35,6 @@ class StreamExtension {
 		new ArrayList<A>(s.toCollection())
     }
 
-    @TypeChecked(TypeCheckingMode.SKIP)
 	static <A> Stream<A> combos(Stream<A> s1, Stream<A> s2) {
 		s1.bind { A s1Val ->
 			s2.map { A s2Val ->

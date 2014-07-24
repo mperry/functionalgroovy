@@ -17,7 +17,6 @@ import groovy.transform.TypeCheckingMode
 @TypeChecked
 class OptionStaticExtension {
 
-//    @TypeChecked(TypeCheckingMode.SKIP)
 	public static <A> Option<A> unit(Option option, A value) {
 		Option.<A>some(value)
 	}

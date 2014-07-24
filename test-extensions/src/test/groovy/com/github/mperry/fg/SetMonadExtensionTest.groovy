@@ -28,7 +28,7 @@ class SetMonadExtensionTest {
     @Test
     @TypeChecked(TypeCheckingMode.SKIP)
     void ap() {
-        def f = { Integer i -> i + 1} as F
+        def f = { Integer i -> i + 1} as F<Integer, Integer>
         def source = [1, 1, 2].toSet()
         def fs = [f, f].toSet()
         def expected = [2, 3].toSet()

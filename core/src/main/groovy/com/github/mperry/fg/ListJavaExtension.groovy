@@ -60,7 +60,6 @@ class ListJavaExtension {
 		result
 	}
 
-//	@TypeChecked(TypeCheckingMode.SKIP)
 	public static <A, B> java.util.List<B> map(java.util.List<A> list, F<A, B> f) {
 		list.collect(FExtension.toClosure(f))
 	}
@@ -88,7 +87,7 @@ class ListJavaExtension {
 	static <A, B> B foldLeft(List<A> list, B b, F2<B, A, B> f) {
 		foldLeftI(list, b, f)
 	}
-//    @TypeChecked(TypeCheckingMode.SKIP)
+
 	// imperative
     static <A, B> B foldLeftI(List<A> list, B b, F2<B, A, B> f) {
         def acc = b
@@ -102,7 +101,6 @@ class ListJavaExtension {
     /**
      * Fold left with recursion
      */
-//    @TypeChecked(TypeCheckingMode.SKIP)
     static <A, B> B foldLeftR(List<A> list, B b, F2<B, A, B> f) {
         list.empty ? b : foldLeftR(list.tail(), f.f(b, list.head()), f)
     }
@@ -118,7 +116,6 @@ class ListJavaExtension {
 
 
 	// consistent with fj.data.List
-//    @TypeChecked(TypeCheckingMode.SKIP)
     static <A, B> B foldRightR(List<A> list, B b, F2<A, B, B> f) {
 //        list.isEmpty() ? b : foldRightF(list.tail(), f.f(b, list.head()), f)
         list.isEmpty() ? b : f.f(list.head(), foldRightR(list.tail(), b, f))
@@ -136,7 +133,6 @@ class ListJavaExtension {
         t.run()
     }
 
-//    @TypeChecked(TypeCheckingMode.SKIP)
     static <A, B> Trampoline<B> foldRightTrampoline(List<A> list, B b, F2<A, B, B> f) {
         Trampoline.suspend({ ->
             if (list.empty) {

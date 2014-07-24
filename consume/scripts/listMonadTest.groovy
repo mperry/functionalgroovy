@@ -34,7 +34,6 @@ class ListMonadExtensionsTest {
     }
 
     @Test
-    @TypeChecked(TypeCheckingMode.SKIP)
     void to() {
         def s = "a"
         def list = [1, 2].to(s)

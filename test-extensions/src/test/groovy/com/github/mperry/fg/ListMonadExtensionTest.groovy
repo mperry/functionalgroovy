@@ -51,7 +51,7 @@ class ListMonadExtensionTest {
     }
 
     @Test
-    @TypeChecked(TypeCheckingMode.SKIP)
+//    @TypeChecked(TypeCheckingMode.SKIP)
     void to() {
         def s = "a"
         def source = [1, 2]

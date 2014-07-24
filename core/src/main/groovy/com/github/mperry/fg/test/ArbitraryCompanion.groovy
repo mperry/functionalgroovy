@@ -1,5 +1,6 @@
 package com.github.mperry.fg.test
 
+import com.github.mperry.fg.ListFJExtension
 import fj.F
 import fj.test.Arbitrary
 import fj.test.Coarbitrary
@@ -20,10 +21,10 @@ class ArbitraryCompanion {
         arbitrary(g)
     }
 
-    @TypeChecked(TypeCheckingMode.SKIP)
+//    @TypeChecked(TypeCheckingMode.SKIP)
     static <A> Gen<java.util.List<A>> gen(Gen<A> gen) {
         Gen.listOf(gen).map({ fj.data.List list ->
-            list.toJavaList()
+            ListFJExtension.toJavaList(list)
         } as F)
     }
 

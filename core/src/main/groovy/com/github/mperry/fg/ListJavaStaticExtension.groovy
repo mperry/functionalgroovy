@@ -12,7 +12,6 @@ import groovy.transform.TypeCheckingMode
 @TypeChecked
 class ListJavaStaticExtension {
 
-    @TypeChecked(TypeCheckingMode.SKIP)
     public static <A> java.util.List<A> repeat(List list, Integer n, A a) {
         def result = []
         for (int i = 0; i < n; i++) {
@@ -28,7 +27,6 @@ class ListJavaStaticExtension {
      * @param f
      * @return
      */
-//    @TypeChecked(TypeCheckingMode.SKIP)
     static <A, B> List<A> unfold(List list, B b, F<B, Option<P2<A, B>>> f) {
         def result = []
         def val = b

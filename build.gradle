@@ -21,7 +21,7 @@ subprojects {
         baseVersion = "0.6"
     }
 
-	version = "$baseVersion$snap".toString()
+	version = "$baseVersion${isSnapshot ? snap : ""}".toString()
 
 	ext {
         consumeVersion = "0.5"
@@ -45,9 +45,10 @@ subprojects {
 		founderUsername = "mperry"
 		organisation = groupName
         groovyVersion = "2.3.4"
+        fjVersion = "4.2$snap"
 
 		gradleGroovy = "org.codehaus.groovy:groovy-all:$groovyVersion"
-        gradleFj = "org.functionaljava:functionaljava:4.2-SNAPSHOT"
+        gradleFj = "org.functionaljava:functionaljava:$fjVersion"
 		gradleJunit = "junit:junit:4.10"
 
 	}

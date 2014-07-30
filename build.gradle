@@ -1,4 +1,12 @@
 
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath('com.ofg:uptodate-gradle-plugin:0.0.3')
+    }
+}
 
 Boolean doSigning() {
     signingEnabled.trim() == "true"
@@ -6,7 +14,6 @@ Boolean doSigning() {
 
 allprojects {
 	defaultTasks 'build'
-	
 }
 
 subprojects {
@@ -14,6 +21,7 @@ subprojects {
 	apply plugin: "groovy"
 	apply plugin: "java"
 	apply plugin: "maven"
+    apply plugin: "uptodate"
 
     ext {
         snap = "-SNAPSHOT"

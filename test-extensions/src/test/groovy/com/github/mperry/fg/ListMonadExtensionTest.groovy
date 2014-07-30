@@ -4,11 +4,10 @@ import com.github.mperry.fg.typeclass.concrete.ListMonad
 import fj.F
 import fj.F2
 import fj.F3
-import fj.Unit
 import groovy.transform.TypeChecked
-import groovy.transform.TypeCheckingMode
 import org.junit.Test
 
+import static fj.P.p
 import static fj.Unit.unit
 import static junit.framework.Assert.assertTrue
 
@@ -38,6 +37,16 @@ class ListMonadExtensionTest {
         def expected = [2, 4, 6]
         assertTrue(source.map(f) == expected)
         assertTrue(monad().map(source, f) == expected)
+    }
+
+    @Test
+    void flatMap() {
+        def bs = [1, 2]
+        def cs = [3, 4]
+        def actual = monad().flatMap(bs, { Integer b -> cs.map { Integer c -> [b, c]}})
+        def expected = [[1, 3], [1, 4], [2, 3], [2, 4]]
+//        println("expected: $expected, actual: $actual")
+        assertTrue(actual == expected)
     }
 
     @Test

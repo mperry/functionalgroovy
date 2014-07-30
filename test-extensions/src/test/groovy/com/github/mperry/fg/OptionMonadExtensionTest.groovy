@@ -3,7 +3,8 @@ package com.github.mperry.fg
 import com.github.mperry.fg.typeclass.concrete.OptionMonad
 import fj.F
 import fj.F2
-import fj.Function
+import fj.P
+import fj.P2
 import fj.data.Option
 import fj.function.Integers
 import groovy.transform.TypeChecked
@@ -17,11 +18,28 @@ import static junit.framework.Assert.assertTrue
  * Created by MarkPerry on 13/04/2014.
  */
 @TypeChecked
-//@TypeChecked(TypeCheckingMode.SKIP)
 class OptionMonadExtensionTest {
 
     OptionMonad monad() {
         new OptionMonad()
+    }
+
+    @Test
+    void div() {
+        def base = 32
+        def input = [P.p(2, 2), P.p(0, 2)]
+        def result = input.collect { P2<Integer, Integer> p ->
+            def o1 = monad().flatMap(some(base), { Integer x -> safeDiv(x, (Integer) p._1())})
+            def o2 = monad().flatMap(o1, { Integer y -> safeDiv(y, (Integer) p._2())})
+            o2
+        }
+        println result
+        def expected = [some(8), none()]
+        assertTrue(result == expected)
+    }
+
+    static Option<Integer> safeDiv(Integer num, Integer denom) {
+        denom == 0 ? Option.<Integer>none() : some(num.intdiv(denom).intValue())
     }
 
     @Test

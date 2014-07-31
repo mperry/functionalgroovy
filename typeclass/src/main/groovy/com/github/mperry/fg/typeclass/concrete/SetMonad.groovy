@@ -8,7 +8,6 @@ import groovy.transform.TypeChecked
  * Created by MarkPerry on 10/04/2014.
  */
 @TypeChecked
-//@TypeChecked(TypeCheckingMode.SKIP)
 class SetMonad extends Monad<Set> {
 
     static <B> Set<B> defaultSet() {

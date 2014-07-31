@@ -15,7 +15,6 @@ import static junit.framework.Assert.assertTrue
  * Created by MarkPerry on 16/01/14.
  */
 @TypeChecked
-//@TypeChecked(TypeCheckingMode.SKIP)
 class ListMonadExtensionTest {
 
     static ListMonad monad() {
@@ -60,7 +59,6 @@ class ListMonadExtensionTest {
     }
 
     @Test
-//    @TypeChecked(TypeCheckingMode.SKIP)
     void to() {
         def s = "a"
         def source = [1, 2]

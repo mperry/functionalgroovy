@@ -17,7 +17,6 @@ import static junit.framework.Assert.assertTrue
  * Created by MarkPerry on 15/07/2014.
  */
 @TypeChecked
-//@TypeChecked(TypeCheckingMode.SKIP)
 class IOMonadTest {
 
 

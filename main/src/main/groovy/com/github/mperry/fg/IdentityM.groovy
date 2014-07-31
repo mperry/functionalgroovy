@@ -27,7 +27,6 @@ class IdentityM<A> extends Monad<IdentityM> {
         new IdentityM<B>(b)
     }
 
-//    @TypeChecked(TypeCheckingMode.SKIP)
     @Override
     def <B, C> IdentityM<C> flatMap(IdentityM<B> mb, F<B, IdentityM<C>> f) {
         f.f(mb.item)

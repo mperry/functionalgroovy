@@ -31,7 +31,6 @@ class IdentityTest {
     }
 
     @Test
-//    @TypeChecked(TypeCheckingMode.SKIP)
     void leftIdentity() {
         def f = arbF(coarbInteger, arbIdInteger())
         new MonadLaws().leftIdentity(monad(), f, arbInteger)

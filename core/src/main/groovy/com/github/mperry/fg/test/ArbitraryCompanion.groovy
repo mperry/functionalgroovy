@@ -21,7 +21,6 @@ class ArbitraryCompanion {
         arbitrary(g)
     }
 
-//    @TypeChecked(TypeCheckingMode.SKIP)
     static <A> Gen<java.util.List<A>> gen(Gen<A> gen) {
         Gen.listOf(gen).map({ fj.data.List list ->
             ListFJExtension.toJavaList(list)

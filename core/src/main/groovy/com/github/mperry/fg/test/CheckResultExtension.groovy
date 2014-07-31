@@ -25,7 +25,6 @@ class CheckResultExtension {
 		CheckResult.summary.println(cr)
 	}
 
-//    @TypeChecked(TypeCheckingMode.SKIP)
 	static Unit printlnSummaryNullable(CheckResult cr) {
 		CheckResultCompanion.summaryNullable().println(cr)
 	}

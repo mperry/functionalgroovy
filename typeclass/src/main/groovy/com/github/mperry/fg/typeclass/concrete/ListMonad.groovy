@@ -2,6 +2,7 @@ package com.github.mperry.fg.typeclass.concrete
 
 import com.github.mperry.fg.typeclass.Monad
 import fj.F
+import fj.F2
 import groovy.transform.TypeChecked
 
 /**
@@ -15,8 +16,10 @@ class ListMonad extends Monad<List> {
         ma.flatMap(f)
     }
 
+
     @Override
     def <A> List<A> unit(A a) {
         [a]
     }
+
 }

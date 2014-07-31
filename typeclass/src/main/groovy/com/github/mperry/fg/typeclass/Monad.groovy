@@ -56,6 +56,12 @@ abstract class Monad<M> extends Applicative<M> {
      */
     abstract <A, B> M<B> flatMap(M<A> ma, F<A, M<B>> f)
 
+    def <A, B> F2<M<A>, F<A, M<B>>, M<B>> flatMap() {
+        { M<A> ma, F<A, M<B>> f ->
+            flatMap(ma, f)
+        } as F2
+    }
+
     /**
      * Inject a value into the monadic type.
      * return :: a -> m a

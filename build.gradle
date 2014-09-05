@@ -52,8 +52,8 @@ subprojects {
 		founder = "Mark Perry"
 		founderUsername = "mperry"
 		organisation = groupName
-        groovyVersion = "2.3.4"
-        fjVersion = "4.2-beta-1"
+        groovyVersion = "2.3.6"
+        fjVersion = "4.2-beta-2-SNAPSHOT"
 
 		gradleGroovy = "org.codehaus.groovy:groovy-all:$groovyVersion"
         gradleFj = "org.functionaljava:functionaljava:$fjVersion"
@@ -68,9 +68,9 @@ subprojects {
 
 	repositories {
 		mavenCentral()
-//        maven {
-//            url sonatypeRepositoryUrl
-//        }
+        maven {
+            url sonatypeRepositoryUrl
+        }
 	}
 
 	jar {

@@ -14,7 +14,7 @@ class IOMonad extends Monad<IO> {
 
     @Override
     def <A> IO<A> unit(A a) {
-        { -> a } as IO
+        { -> a } as IO<A>
     }
 
     @Override

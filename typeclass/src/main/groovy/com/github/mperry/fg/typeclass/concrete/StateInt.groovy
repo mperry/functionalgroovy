@@ -1,15 +1,14 @@
-package com.github.mperry.fg
+package com.github.mperry.fg.typeclass.concrete
 
 import fj.F
 import fj.P2
-import groovy.transform.Canonical
+import fj.data.State
 import groovy.transform.TypeChecked
 
 /**
- * Created by MarkPerry on 9/01/14.
+ * Created by MarkPerry on 15/10/2014.
  */
 @TypeChecked
-@Canonical
 class StateInt<A> extends State<Integer, A> {
 
     StateInt(F<Integer, P2<Integer, A>> f) {
@@ -25,6 +24,10 @@ class StateInt<A> extends State<Integer, A> {
             def sib = f.f(a)
             sib.run.f(s2)
         } as F)
+    }
+
+    static <A> StateInt<A> unit(F<Integer, P2<Integer, A>> f) {
+        new StateInt<A>(f)
     }
 
 }

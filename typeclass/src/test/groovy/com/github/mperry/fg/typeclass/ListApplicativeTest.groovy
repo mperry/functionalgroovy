@@ -3,6 +3,7 @@ package com.github.mperry.fg.typeclass
 import com.github.mperry.fg.typeclass.concrete.ListApplicative
 import com.github.mperry.fg.typeclass.concrete.ListFunctor
 import fj.F
+import fj.F2
 import fj.F2Functions
 import groovy.transform.TypeChecked
 import org.junit.Test
@@ -22,7 +23,7 @@ class ListApplicativeTest {
 
 		def list1 = (1..3).toList().map { { Integer a -> 4 + a } as F }
 		def list2 = app.apply(list1, [1, 2, 3])
-        def list3 = listFunctor.map([1, 2, 3], F2Functions.curry({ Integer a, Integer b -> a * b }))
+        def list3 = listFunctor.map([1, 2, 3], F2Functions.curry({ Integer a, Integer b -> a * b } as F2<Integer, Integer, Integer>))
         def list4 = app.apply(list3, [1, 2, 3])
 
         println list1

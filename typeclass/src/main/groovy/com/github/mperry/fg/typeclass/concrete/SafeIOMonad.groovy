@@ -15,13 +15,13 @@ import groovy.transform.TypeChecked
 class SafeIOMonad extends Monad<SafeIO> {
 
     @Override
-    def <A, E extends IOException> SafeIO<E, A> unit(A a) {
-        { -> Validation.success(a) } as SafeIO
+    def <A> SafeIO<A> unit(A a) {
+        { -> a } as SafeIO
     }
 
     @Override
-    def <A, B, E extends IOException> SafeIO<E, B> flatMap(SafeIO<E, A> io, F<A, SafeIO<E, B>> f) {
-        { -> io.run().bind({ A a -> f.f(a).run()}) } as SafeIO<B>
+    def <A, B> SafeIO<B> flatMap(SafeIO<A> io, F<A, SafeIO<B>> f) {
+        { -> IOFunctions.flatMap(io, { A a -> { -> f.f(a).run() } as IO<B> }) } as SafeIO<B>
     }
 
 }

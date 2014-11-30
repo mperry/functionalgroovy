@@ -1,4 +1,4 @@
 
 rootProject.name = "functionalgroovy"
 
-include 'core', "typeclass", 'main', 'demo', "test-extensions", "consume", "java8"
+include 'core', "typeclass", 'main', 'demo', "test-extensions", "consume", "java8", "kind"

@@ -1,0 +1,16 @@
+
+ext {
+
+}
+
+uploadArchives.enabled = true
+
+dependencies {
+    compile gradleGroovy
+    compile gradleFj
+	compile project(":core")
+    compile project(":typeclass")
+    testCompile gradleJunit
+}
+
+

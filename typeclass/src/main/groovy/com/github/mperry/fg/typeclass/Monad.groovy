@@ -286,6 +286,8 @@ abstract class Monad<M> extends Applicative<M> {
     }
 
     /**
+     * Sequence computations and combine their results.
+     *
      * In many situations, the liftM operations can be replaced by uses of ap, which
      * promotes function application.
      * return f `ap` x1 `ap` ... `ap` xn

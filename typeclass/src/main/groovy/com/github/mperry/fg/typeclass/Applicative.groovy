@@ -27,11 +27,13 @@ import groovy.transform.TypeChecked
 abstract class Applicative<App> implements Functor<App> {
 
     /**
+     * lift value into Applicative
      * pure  :: a -> f a
      */
     abstract <A> App<A> pure(A a)
 
     /**
+     * Sequence computations and combine their results
      * (<*>) :: f (a -> b) -> f a -> f b
      */
     abstract <A, B> App<B> apply(App<F<A, B>> t1, App<A> t2)

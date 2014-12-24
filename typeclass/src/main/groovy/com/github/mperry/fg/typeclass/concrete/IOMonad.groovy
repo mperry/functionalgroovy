@@ -14,12 +14,13 @@ class IOMonad extends Monad<IO> {
 
     @Override
     def <A> IO<A> unit(A a) {
-        { -> a } as IO
+        { -> a } as IO<A>
     }
 
     @Override
     def <A, B> IO<B> flatMap(IO<A> io, F<A, IO<B>> f) {
-        IOFunctions.bind(io, f)
+//        IOFunctions.bind(io, f)
+        { -> f.f(io.run()).run() } as IO<B>
     }
 
 }

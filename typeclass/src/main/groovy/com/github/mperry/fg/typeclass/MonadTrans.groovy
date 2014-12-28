@@ -1,5 +1,6 @@
 package com.github.mperry.fg.typeclass
 
+import fj.F
 import groovy.transform.TypeChecked
 
 /**
@@ -11,6 +12,9 @@ import groovy.transform.TypeChecked
 @TypeChecked
 abstract class MonadTrans<T> {
 
-    abstract <A, M> T<M, A> lift(M<A> m, Monad<M> monad)
+    abstract <A, M> T<M, A> unit(M<A> m, Monad<M> monad)
+
+    abstract <M, A, B> T<M, B> flatMap(T<M, A> t, Monad<M> m, F<A, T<M, B>> f)
+
 
 }

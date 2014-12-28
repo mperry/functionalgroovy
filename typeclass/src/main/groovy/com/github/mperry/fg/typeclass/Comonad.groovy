@@ -1,11 +1,12 @@
 package com.github.mperry.fg.typeclass
 
+import com.github.mperry.fg.YCombinator
 import fj.F
 import fj.F1Functions
 import fj.F2
 import fj.F2Functions
 import groovy.transform.TypeChecked
-
+import groovy.transform.TypeCheckingMode
 
 import static fj.F2Functions.*
 
@@ -62,14 +63,20 @@ abstract class Comonad<CM> implements Functor<CM> {
         { CM<F<CM<A>, A>> cm -> wfix(cm) } as F
     }
 
-    /*
-    def <A> CM<A> cfix(F<CM<A>, A> f) {
-        def result = F2Functions.f(flip(extend()), f)
-        // TODO: call fix(result)
-        // hard to do: implement at some future point
-        throw new UnsupportedOperationException("Yet to be implemented")
-    }
-    */
+//    @TypeChecked(TypeCheckingMode.SKIP)
+//    def <A> CM<A> cfix(F<CM<A>, A> f) {
+////        def id = { CM<A> cm -> cm } as F
+////        def id2 = { Z z -> Z }
+//        def result = F2Functions.f(flip(extend()), f);
+//        return YCombinator.Y({ def g -> { def a -> result.f(a) } })
+////        this.map(result, id)
+////        def result = flip(extend()).f(f, id)
+//        // TODO: call fix(result)
+//
+//        // hard to do: implement at some future point
+////        throw new UnsupportedOperationException("Yet to be implemented")
+//    }
+
 
     /**
      * (=>=) :: Comonad w => (w a -> b) -> (w b -> c) -> w a -> c

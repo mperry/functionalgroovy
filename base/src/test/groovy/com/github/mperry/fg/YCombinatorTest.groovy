@@ -19,7 +19,7 @@ class YCombinatorTest {
                 n < 2 ? n : f(n - 1) + f(n - 2)
             }
         }
-        def f = YCombinator.Y(fib)
+        def f = YCombinator.Y2(fib)
         def x = f(6)
 
         println x

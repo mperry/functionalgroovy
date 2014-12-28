@@ -9,7 +9,7 @@ dependencies {
     compile gradleGroovy
     compile gradleFj
 	compile project(":core")
-    compile project(":base")
+
     testCompile gradleJunit
 }
 

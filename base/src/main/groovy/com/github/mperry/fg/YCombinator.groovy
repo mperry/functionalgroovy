@@ -29,4 +29,9 @@ class YCombinator {
         h(h)
     }
 
+    static def Y2(def f) {
+        f({ x -> Y2(f)(x)})
+
+    }
+
 }

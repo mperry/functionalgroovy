@@ -2,7 +2,7 @@
 # http://lint.travis-ci.org/
 language: groovy
 jdk: 
-- openjdk8
+- oraclejdk8
 
 env:
 - secure: "Xv6ITZIEX+0wrev44Tzkg76oIzVYK2uOTb+Iubx/syhi9pyeA8MXhg6np7rV62bEs0KsXSygjdlYPlJKx5Gzq4e7MZQ/TZjC5Niu37tpRrI5Gc2f33I/VlYWvvKKoQzGgNf13oOAWHt84Vchk6zdJINLq71nRk+921fO7Ssl3VE="

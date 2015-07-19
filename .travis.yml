@@ -1,6 +1,9 @@
 
 # http://lint.travis-ci.org/
 language: groovy
+
+sudo: false
+
 jdk: 
 - oraclejdk8
 

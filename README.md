@@ -19,6 +19,7 @@ Features includes:
 The project has some cloud build servers I used to experiment with including:
 * [Cloudbees Jenkins Build](https://mperry.ci.cloudbees.com/job/functionalgroovy/)
 * [Sonatype Functional Groovy Artifacts](https://oss.sonatype.org/content/groups/public/com/github/mperry/)
+* [Travis CI Build](https://travis-ci.org/mperry/functionalgroovy/builds)
 
 I have written an initial blog post on [Groovy Null Handling using Bind, Comprehensions and Lift](http://mperry.github.io/2013/07/28/groovy-null-handling.html) covering:
 * some introductory material on functional programming in Groovy

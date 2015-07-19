@@ -26,13 +26,13 @@ subprojects {
     ext {
         snap = "-SNAPSHOT"
         isSnapshot = true
-        baseVersion = "0.7"
+        baseVersion = "0.8"
     }
 
 	version = "$baseVersion${isSnapshot ? snap : ""}".toString()
 
 	ext {
-        consumeVersion = "0.6"
+        consumeVersion = "0.7"
 
 		sonatypeBaseUrl = "https://oss.sonatype.org"
 		sonatypeSnapshotUrl = "$sonatypeBaseUrl/content/repositories/snapshots/"

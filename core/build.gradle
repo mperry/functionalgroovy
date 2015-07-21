@@ -7,6 +7,8 @@ ext {
 dependencies {
 	compile gradleGroovy
 	compile gradleFj
+    compile gradleFj
+    compile gradleFjQuickcheck
 	compile gradleJunit
 }
 

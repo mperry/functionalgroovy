@@ -24,7 +24,7 @@ class P04 extends GroovyTestCase {
 
 	@TypeChecked
 	P2<Integer, Integer> limits(int i) {
-		P.p((int) i / 10, i - 1)
+		P.p((i / 10).intValue(), i - 1)
 	}
 
 	@TypeChecked

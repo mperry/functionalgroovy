@@ -75,20 +75,20 @@ class ListJavaExtensionTest {
 
      @Test
     void foldRightOverflow() {
-        def high = (Integer) 10 ** 4
-        def list = 1.to(high).toJavaList()
+        def high = (10 ** 4).intValue()
+        List<Integer> list = 1.to(high).toJavaList()
         def p = { ->
-            list.foldRightR(0, { Integer i, Integer acc -> acc + i } as F2)
+            list.foldRightR(0.intValue(), { Integer i, Integer acc -> acc + i } as F2<Integer, Integer, Integer>)
         } as P1
         assertTrue(p.throwsError(StackOverflowError.class))
     }
 
     @Test
     void foldRightNoOverflow() {
-        def high = (Integer) 10 ** 4
+        def high = (10 ** 4).intValue()
         def list = 1.to(high).toJavaList()
         def p = { ->
-            list.foldRightT(0, { Integer acc, Integer i -> acc + i } as F2)
+            list.foldRightT(0, { Integer acc, Integer i -> acc + i } as F2<Integer, Integer, Integer>)
         } as P1
         def expected = 50005000
 //        assertTrue(!p.throwsError(StackOverflowError.class))

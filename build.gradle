@@ -5,8 +5,11 @@ buildscript {
     }
     dependencies {
         classpath('com.ofg:uptodate-gradle-plugin:0.0.5')
+		classpath "io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.5.3"
     }
 }
+
+apply plugin: 'io.codearte.nexus-staging'
 
 Boolean doSigning() {
     signingEnabled.trim() == "true"
@@ -149,6 +152,11 @@ subprojects {
 
 			}
 		}
+	}
+
+	nexusStaging {
+		packageGroup = groupName
+		stagingProfileId = "18c97e5ca65cb6"
 	}
 
 }
